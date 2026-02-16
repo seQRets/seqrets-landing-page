@@ -1,5 +1,6 @@
 import { Monitor, RefreshCw, CreditCard, Usb, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import desktopMockup from "@/assets/desktop-mockup.png";
 
 const perks = [
   { icon: Monitor, label: "Code-signed binary for macOS, Windows & Linux" },
@@ -14,7 +15,12 @@ const DesktopCTA = () => {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
       <div className="container mx-auto px-4 md:px-8">
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="mx-auto max-w-4xl">
+          <div className="mb-10 overflow-hidden rounded-xl border border-border/50">
+            <img src={desktopMockup} alt="seQRets Desktop App" className="w-full object-cover" />
+          </div>
+
+          <div className="text-center">
           {/* Coming soon badge */}
           <div className="mx-auto mb-8 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5">
             <span className="relative flex h-2 w-2">
@@ -61,6 +67,7 @@ const DesktopCTA = () => {
                 Build from Source
               </a>
             </Button>
+          </div>
           </div>
         </div>
       </div>
