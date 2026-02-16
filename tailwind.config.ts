@@ -57,6 +57,8 @@ export default {
         },
         "section-alt": "hsl(var(--section-alt))",
         "section-warm": "hsl(var(--section-warm))",
+        "warm-surface": "hsl(var(--warm-surface))",
+        "warm-border": "hsl(var(--warm-border))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
