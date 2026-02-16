@@ -1,5 +1,6 @@
 import { ArrowRight, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import heroLogo from "@/assets/hero-logo.png";
 
 const HeroSection = () => {
   return (
@@ -12,6 +13,8 @@ const HeroSection = () => {
 
       <div className="container relative z-10 mx-auto px-4 text-center md:px-8">
         <div className="mx-auto max-w-4xl">
+          <img src={heroLogo} alt="seQRets logo" className="mx-auto mb-8 h-24 w-auto md:h-32" />
+
           <p className="mb-6 font-display text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">
             Secure · Split · Share
           </p>
