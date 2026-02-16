@@ -1,4 +1,5 @@
-import { Monitor, RefreshCw, CreditCard, Usb, Github } from "lucide-react";
+import { Monitor, RefreshCw, CreditCard, Usb, Github, ShoppingBag } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import appDark from "@/assets/app-dark.png";
 import appLight from "@/assets/app-light.png";
@@ -64,8 +65,11 @@ const DesktopCTA = () => {
           </div>
 
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Button size="lg" className="font-display font-semibold px-8" disabled>
-              Join the Waitlist
+            <Button size="lg" className="font-display font-semibold px-8" asChild>
+              <Link to="/shop">
+                <ShoppingBag className="mr-2 h-4 w-4" />
+                Browse the Shop
+              </Link>
             </Button>
             <Button variant="outline" size="lg" className="font-display font-semibold px-8 border-border/50" asChild>
               <a href="https://github.com/seqrets" target="_blank" rel="noopener noreferrer">

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import navbarIcon from "@/assets/navbar-icon.png";
@@ -8,6 +9,7 @@ const navLinks = [
   { label: "How It Works", href: "#how-it-works" },
   { label: "Security", href: "#security" },
   { label: "Desktop App", href: "#desktop" },
+  { label: "Shop", href: "/shop", isRoute: true },
 ];
 
 const Navbar = () => {
@@ -22,15 +24,25 @@ const Navbar = () => {
 
         {/* Desktop nav */}
         <div className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) =>
+            link.isRoute ? (
+              <Link
+                key={link.href}
+                to={link.href}
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {link.label}
+              </a>
+            )
+          )}
           <Button asChild size="sm" className="font-display font-semibold">
             <a href="https://seqrets.app" target="_blank" rel="noopener noreferrer">
               Get Started Free
@@ -47,16 +59,27 @@ const Navbar = () => {
       {/* Mobile menu */}
       {open && (
         <div className="border-t border-border/50 bg-background px-4 pb-6 pt-4 md:hidden">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setOpen(false)}
-              className="block py-3 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) =>
+            link.isRoute ? (
+              <Link
+                key={link.href}
+                to={link.href}
+                onClick={() => setOpen(false)}
+                className="block py-3 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className="block py-3 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {link.label}
+              </a>
+            )
+          )}
           <Button asChild size="sm" className="mt-4 w-full font-display font-semibold">
             <a href="https://seqrets.app" target="_blank" rel="noopener noreferrer">
               Get Started Free
