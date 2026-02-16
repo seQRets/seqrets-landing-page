@@ -1,7 +1,7 @@
 import { Lock, Split, QrCode } from "lucide-react";
 import stepSecure from "@/assets/step-secure.png";
 import stepSplit from "@/assets/step-split.png";
-import stepShare from "@/assets/qard-sample.png";
+import stepShare from "@/assets/step-share.png";
 const steps = [
   {
     icon: Lock,
