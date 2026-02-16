@@ -3,7 +3,7 @@ import { Lock, Split, QrCode } from "lucide-react";
 const steps = [
   {
     icon: Lock,
-    title: "Encrypt",
+    title: "Secure",
     description:
       "Your secret is encrypted locally using military-grade XChaCha20-Poly1305 with a key derived from Argon2id. Nothing leaves your device.",
   },
@@ -15,7 +15,7 @@ const steps = [
   },
   {
     icon: QrCode,
-    title: "Distribute",
+    title: "Share",
     description:
       "Each share becomes a Qard — a QR code you can print, store on smart cards, or give to trusted people. Reconstruct only when needed.",
   },
