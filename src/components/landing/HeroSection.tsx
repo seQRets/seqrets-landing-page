@@ -1,4 +1,5 @@
-import { ArrowRight, Clock } from "lucide-react";
+import { ArrowRight, Clock, ShoppingBag } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import heroLogo from "@/assets/hero-logo.png";
 
@@ -42,10 +43,10 @@ const HeroSection = () => {
               className="font-display text-base font-semibold px-8 border-border/50"
               asChild
             >
-              <a href="#desktop">
-                <Clock className="mr-2 h-4 w-4" />
-                Desktop App — Coming Soon
-              </a>
+              <Link to="/shop">
+                <ShoppingBag className="mr-2 h-4 w-4" />
+                Browse Gear
+              </Link>
             </Button>
           </div>
         </div>
