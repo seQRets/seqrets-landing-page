@@ -1,4 +1,5 @@
 import { ShieldCheck, Atom, Eye, Lock } from "lucide-react";
+import securityVisual from "@/assets/security-visual.png";
 
 const techStack = [
   {
@@ -36,6 +37,10 @@ const SecuritySection = () => {
             Your secret is encrypted <em>before</em> it's split. Even if every share were compromised,
             attackers still face military-grade encryption.
           </p>
+
+          <div className="mx-auto mt-8 mb-4 max-w-2xl overflow-hidden rounded-xl">
+            <img src={securityVisual} alt="Zero-knowledge security architecture" className="w-full object-cover opacity-80" />
+          </div>
         </div>
 
         <div className="mx-auto max-w-4xl grid gap-6 md:grid-cols-3 mb-12">
