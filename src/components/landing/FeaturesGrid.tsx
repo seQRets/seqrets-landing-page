@@ -50,11 +50,20 @@ const FeaturesGrid = () => {
           {features.map((f) => (
             <div
               key={f.title}
-              className="rounded-xl border border-border/50 bg-card/30 p-6 transition-all duration-300 hover:border-primary/20 hover:bg-card/60"
+              className={`rounded-xl border p-6 transition-all duration-300 ${
+                f.title === "Smart Card Support"
+                  ? "border-primary/40 bg-primary/10 hover:border-primary/60 hover:bg-primary/15"
+                  : "border-border/50 bg-card/30 hover:border-primary/20 hover:bg-card/60"
+              }`}
             >
               <f.icon className="mb-4 h-6 w-6 text-primary" />
               <h3 className="mb-2 font-display text-lg font-semibold text-foreground">{f.title}</h3>
               <p className="text-sm leading-relaxed text-muted-foreground">{f.description}</p>
+              {f.title === "Smart Card Support" && (
+                <span className="mt-3 inline-block rounded-full bg-primary/20 px-3 py-0.5 font-display text-xs font-semibold text-primary">
+                  Desktop Exclusive
+                </span>
+              )}
             </div>
           ))}
         </div>
