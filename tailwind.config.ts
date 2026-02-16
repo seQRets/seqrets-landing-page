@@ -55,6 +55,8 @@ export default {
           DEFAULT: "hsl(var(--warm))",
           muted: "hsl(var(--warm-muted))",
         },
+        "section-alt": "hsl(var(--section-alt))",
+        "section-warm": "hsl(var(--section-warm))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

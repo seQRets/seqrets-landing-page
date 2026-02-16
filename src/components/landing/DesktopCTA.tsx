@@ -10,7 +10,7 @@ const perks = [
 
 const DesktopCTA = () => {
   return (
-    <section id="desktop" className="relative py-24 md:py-32">
+    <section id="desktop" className="relative py-24 md:py-32 bg-section-warm">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
       <div className="container mx-auto px-4 md:px-8">
