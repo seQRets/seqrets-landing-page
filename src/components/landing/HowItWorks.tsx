@@ -23,7 +23,7 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <section id="how-it-works" className="relative py-24 md:py-32">
+    <section id="how-it-works" className="relative py-24 md:py-32 bg-section-alt">
       <div className="container mx-auto px-4 md:px-8">
         <div className="text-center mb-16">
           <p className="font-display text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground mb-4">

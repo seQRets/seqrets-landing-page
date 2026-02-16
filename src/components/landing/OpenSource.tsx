@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 
 const OpenSource = () => {
   return (
-    <section className="py-24 md:py-32">
+    <section className="py-24 md:py-32 bg-section-alt">
       <div className="container mx-auto px-4 md:px-8">
         <div className="mx-auto max-w-4xl rounded-2xl border border-border/50 bg-card/30 p-8 md:p-12">
           <div className="grid gap-8 md:grid-cols-2 md:items-center">

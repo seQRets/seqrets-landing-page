@@ -20,7 +20,7 @@ const techStack = [
 
 const SecuritySection = () => {
   return (
-    <section id="security" className="relative py-24 md:py-32">
+    <section id="security" className="relative py-24 md:py-32 bg-section-alt">
       {/* Subtle divider glow */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
