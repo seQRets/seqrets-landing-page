@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import logoLight from "@/assets/logo-light.png";
+import navbarIcon from "@/assets/navbar-icon.png";
 
 const navLinks = [
   { label: "Features", href: "#features" },
@@ -17,7 +17,7 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">
         <a href="#" className="flex items-center gap-3">
-          <img src={logoLight} alt="seQRets" className="h-8 w-auto" />
+          <img src={navbarIcon} alt="seQRets" className="h-9 w-auto rounded-md" />
         </a>
 
         {/* Desktop nav */}
