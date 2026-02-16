@@ -16,7 +16,7 @@ const HeroSection = () => {
           <img src={heroLogo} alt="seQRets logo" className="mx-auto mb-8 h-48 w-auto md:h-64" />
 
           <h1 className="font-display text-5xl font-bold leading-tight tracking-tight md:text-7xl lg:text-8xl">
-            <span className="text-gradient">Your Secrets,</span>
+            <span className="text-foreground font-black">Your Secrets,</span>
             <br />
             <span className="text-foreground">Split Into</span>
             <br />
