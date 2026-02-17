@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import navbarIcon from "@/assets/navbar-icon.png";
-import heroLogo from "@/assets/hero-logo.png";
 
 interface Product {
   name: string;
@@ -157,14 +156,8 @@ const Shop = () => {
 
       <main className="pt-16">
         {/* Hero */}
-        <section className="relative overflow-hidden py-24 md:py-32" style={{ backgroundColor: '#2b2a2b' }}>
-          {/* Ambient glow */}
-          <div className="pointer-events-none absolute inset-0">
-            <div className="absolute left-1/2 top-1/3 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/5 blur-[120px] animate-pulse-glow" />
-            <div className="absolute right-1/4 bottom-1/4 h-[300px] w-[300px] rounded-full bg-warm-muted/5 blur-[100px] animate-pulse-glow" style={{ animationDelay: "1.5s" }} />
-          </div>
-
-          <div className="container relative z-10 mx-auto px-4 md:px-8">
+        <section className="relative py-20 md:py-28">
+          <div className="container mx-auto px-4 md:px-8">
             <Link
               to="/"
               className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -174,8 +167,6 @@ const Shop = () => {
             </Link>
 
             <div className="mx-auto max-w-3xl text-center">
-              <img src={heroLogo} alt="seQRets logo" className="mx-auto mb-8 h-32 w-auto md:h-44" />
-
               <div className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
