@@ -1,8 +1,9 @@
-import { ArrowLeft, Monitor, Shield, Package, CreditCard, BookOpen, Flame, Lock, Mail } from "lucide-react";
+import { Monitor, Shield, Package, CreditCard, BookOpen, Flame, Lock, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import navbarIcon from "@/assets/navbar-icon.png";
+import heroLogo from "@/assets/hero-logo.png";
 
 interface Product {
   name: string;
@@ -154,22 +155,32 @@ const Shop = () => {
         </div>
       </nav>
 
-      <main className="pt-16">
+      <main>
+        {/* Coming Soon Banner */}
+        <div className="pt-16">
+          <div className="flex items-center justify-center gap-2 bg-primary/10 border-b border-primary/20 px-4 py-2.5">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+            </span>
+            <span className="font-display text-sm font-semibold text-primary">Shop Coming Soon — Join the waitlist to get notified</span>
+          </div>
+        </div>
+
         {/* Hero */}
-        <section className="relative py-20 md:py-28">
-          <div className="container mx-auto px-4 md:px-8">
+        <section className="relative py-24 md:py-32 overflow-hidden">
+          {/* Background glow effects */}
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full bg-primary/5 blur-[100px]" />
+            <div className="absolute top-0 right-0 w-[300px] h-[300px] rounded-full bg-warm-muted/5 blur-[80px]" />
+          </div>
+          <div className="container relative mx-auto px-4 md:px-8">
             <div className="mx-auto max-w-3xl text-center">
-              <div className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
-                </span>
-                <span className="font-display text-sm font-semibold text-primary">Coming Soon</span>
-              </div>
-              <h1 className="font-display text-4xl font-bold md:text-5xl lg:text-6xl text-foreground mb-4">
+              <img src={heroLogo} alt="seQRets" className="mx-auto mb-8 h-20 w-auto md:h-24" />
+              <h1 className="font-display text-4xl font-black md:text-5xl text-foreground mb-5">
                 The seQRets Shop
               </h1>
-              <p className="text-lg text-muted-foreground max-w-xl mx-auto">
+              <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto leading-relaxed">
                 Hardware, software, and kits to protect your secrets — from everyday backups to generational inheritance.
               </p>
             </div>
