@@ -15,7 +15,7 @@ const HeroSection = () => {
         <div className="mx-auto max-w-4xl">
           <img src={heroLogo} alt="seQRets logo" className="mx-auto mb-8 h-48 w-auto md:h-64" />
 
-          <h1 className="font-display text-5xl font-bold leading-tight tracking-tight md:text-7xl lg:text-8xl">
+          <h1 className="font-display text-4xl font-bold leading-tight tracking-tight md:text-6xl lg:text-7xl">
             <span className="text-foreground font-black">Your Secrets,</span>
             <br />
             <span className="text-foreground">Split Into</span>
