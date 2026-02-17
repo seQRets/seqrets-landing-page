@@ -1,4 +1,4 @@
-import { Monitor, Shield, Package, CreditCard, BookOpen, Flame, Lock, Mail } from "lucide-react";
+import { Monitor, Shield, Package, CreditCard, BookOpen, Flame, Lock, Mail, Store } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -176,6 +176,9 @@ const Shop = () => {
           </div>
           <div className="container relative mx-auto px-4 md:px-8">
             <div className="mx-auto max-w-3xl text-center">
+              <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 border border-primary/20">
+                <Store className="h-7 w-7 text-primary" />
+              </div>
               <h1 className="font-display text-4xl font-black md:text-5xl text-foreground mb-5">
                 The seQRets Shop
               </h1>
