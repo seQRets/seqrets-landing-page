@@ -176,7 +176,6 @@ const Shop = () => {
           </div>
           <div className="container relative mx-auto px-4 md:px-8">
             <div className="mx-auto max-w-3xl text-center">
-              <img src={heroLogo} alt="seQRets" className="mx-auto mb-8 h-20 w-auto md:h-24" />
               <h1 className="font-display text-4xl font-black md:text-5xl text-foreground mb-5">
                 The seQRets Shop
               </h1>
