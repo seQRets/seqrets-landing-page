@@ -158,14 +158,6 @@ const Shop = () => {
         {/* Hero */}
         <section className="relative py-20 md:py-28">
           <div className="container mx-auto px-4 md:px-8">
-            <Link
-              to="/"
-              className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to Home
-            </Link>
-
             <div className="mx-auto max-w-3xl text-center">
               <div className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5">
                 <span className="relative flex h-2 w-2">
