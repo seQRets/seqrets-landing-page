@@ -2,6 +2,9 @@ import { Link } from "react-router-dom";
 import { Shield, QrCode, Users, CreditCard, MessageSquare, ArrowLeft } from "lucide-react";
 import screenshotRestore from "@/assets/screenshot-restore.png";
 import screenshotBob from "@/assets/screenshot-bob.png";
+import screenshotSecure from "@/assets/screenshot-secure.png";
+import screenshotSmartcard from "@/assets/screenshot-smartcard.png";
+import screenshotInheritance from "@/assets/screenshot-inheritance.png";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
@@ -9,6 +12,7 @@ import Footer from "@/components/landing/Footer";
 const sections = [
   {
     id: "secure",
+    screenshot: screenshotSecure,
     icon: Shield,
     title: "Secure Secrets",
     description:
@@ -36,6 +40,7 @@ const sections = [
   },
   {
     id: "inheritance",
+    screenshot: screenshotInheritance,
     icon: Users,
     title: "Inheritance Plans",
     description:
@@ -49,6 +54,7 @@ const sections = [
   },
   {
     id: "smartcard",
+    screenshot: screenshotSmartcard,
     icon: CreditCard,
     title: "Smart Card Function",
     description:
