@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import navbarIcon from "@/assets/navbar-icon.png";
 
 const navLinks = [
+  { label: "Home", href: "/", isRoute: true },
   { label: "Features", href: "#features" },
   { label: "How It Works", href: "#how-it-works" },
   { label: "Security", href: "#security" },
