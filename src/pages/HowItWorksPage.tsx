@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { Shield, QrCode, Users, CreditCard, ArrowLeft } from "lucide-react";
+import { Shield, QrCode, Users, CreditCard, MessageSquare, ArrowLeft } from "lucide-react";
 import screenshotRestore from "@/assets/screenshot-restore.png";
+import screenshotBob from "@/assets/screenshot-bob.png";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
@@ -57,6 +58,20 @@ const sections = [
       "Write individual Qards to NFC cards with one tap",
       "Cards are portable, durable, and offline by nature",
       "Read cards back anytime to restore your secrets",
+    ],
+  },
+  {
+    id: "bob-ai",
+    screenshot: screenshotBob,
+    icon: MessageSquare,
+    title: "Ask Bob AI Assistant",
+    description:
+      "Bob AI Assistant — Google Gemini-powered AI for application and inheritance setup guidance and questions (optional, user-provided API key). Can be disconnected at any time by removing the API key from within the chat interface.",
+    details: [
+      "Open the Bob AI chat from within the app",
+      "Enter your own Google Gemini API key to activate",
+      "Ask questions about secrets, inheritance plans, or app features",
+      "Remove your API key anytime to disconnect the assistant",
     ],
   },
 ];
