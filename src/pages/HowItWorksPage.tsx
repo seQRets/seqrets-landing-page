@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Shield, QrCode, Users, CreditCard, MessageSquare, ArrowLeft } from "lucide-react";
+import { Shield, QrCode, Users, CreditCard, MessageSquare, ArrowLeft, X } from "lucide-react";
 import screenshotRestore from "@/assets/screenshot-restore.png";
 import screenshotBob from "@/assets/screenshot-bob.png";
 import screenshotSecure from "@/assets/screenshot-secure.png";
@@ -83,6 +84,8 @@ const sections = [
 ];
 
 const HowItWorksPage = () => {
+  const [lightbox, setLightbox] = useState<string | null>(null);
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -119,7 +122,10 @@ const HowItWorksPage = () => {
                 <div className={`mx-auto max-w-6xl grid gap-10 md:gap-16 items-center md:grid-cols-2 ${isEven ? "" : "md:[direction:rtl]"}`}>
                   {/* Screenshot placeholder */}
                   <div className={`${isEven ? "" : "md:[direction:ltr]"}`}>
-                    <div className="aspect-video rounded-xl border border-border/50 bg-card/50 flex items-center justify-center overflow-hidden">
+                    <div
+                      className={`aspect-video rounded-xl border border-border/50 bg-card/50 flex items-center justify-center overflow-hidden ${section.screenshot ? "cursor-pointer transition-transform hover:scale-[1.02]" : ""}`}
+                      onClick={() => section.screenshot && setLightbox(section.screenshot)}
+                    >
                       {section.screenshot ? (
                         <img src={section.screenshot} alt={section.title} className="w-full h-full object-cover" />
                       ) : (
@@ -174,6 +180,27 @@ const HowItWorksPage = () => {
         </div>
       </main>
       <Footer />
+
+      {/* Lightbox */}
+      {lightbox && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 cursor-pointer"
+          onClick={() => setLightbox(null)}
+        >
+          <button
+            className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors"
+            onClick={() => setLightbox(null)}
+          >
+            <X className="h-8 w-8" />
+          </button>
+          <img
+            src={lightbox}
+            alt="Screenshot enlarged"
+            className="max-w-full max-h-[90vh] rounded-xl shadow-2xl object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </div>
   );
 };
