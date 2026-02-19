@@ -92,12 +92,6 @@ const HowItWorksPage = () => {
       <main className="pt-24 pb-16">
         {/* Hero */}
         <div className="container mx-auto px-4 md:px-8 mb-20">
-          <Link to="/#how-it-works">
-            <Button variant="ghost" size="sm" className="mb-8 text-muted-foreground hover:text-foreground">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Home
-            </Button>
-          </Link>
           <div className="mx-auto max-w-3xl text-center">
             <p className="font-display text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground mb-4">
               How It Works
