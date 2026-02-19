@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Shield, QrCode, Users, CreditCard, ArrowLeft } from "lucide-react";
+import screenshotRestore from "@/assets/screenshot-restore.png";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
@@ -20,6 +21,7 @@ const sections = [
   },
   {
     id: "restore",
+    screenshot: screenshotRestore,
     icon: QrCode,
     title: "Restore Secrets",
     description:
@@ -97,10 +99,14 @@ const HowItWorksPage = () => {
                   {/* Screenshot placeholder */}
                   <div className={`${isEven ? "" : "md:[direction:ltr]"}`}>
                     <div className="aspect-video rounded-xl border border-border/50 bg-card/50 flex items-center justify-center overflow-hidden">
-                      <div className="text-center p-8">
-                        <Icon className="mx-auto h-12 w-12 text-muted-foreground/40 mb-3" />
-                        <p className="text-sm text-muted-foreground/60">Screenshot coming soon</p>
-                      </div>
+                      {section.screenshot ? (
+                        <img src={section.screenshot} alt={section.title} className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="text-center p-8">
+                          <Icon className="mx-auto h-12 w-12 text-muted-foreground/40 mb-3" />
+                          <p className="text-sm text-muted-foreground/60">Screenshot coming soon</p>
+                        </div>
+                      )}
                     </div>
                   </div>
 
