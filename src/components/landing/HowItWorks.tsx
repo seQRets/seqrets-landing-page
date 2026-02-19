@@ -1,4 +1,6 @@
 import { Lock, Split, QrCode } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import stepSecure from "@/assets/step-secure.png";
 import stepSplit from "@/assets/step-split.png";
 import stepShare from "@/assets/step-share.png";
@@ -57,9 +59,16 @@ const HowItWorks = () => {
           ))}
         </div>
 
-        <p className="mt-12 text-center text-sm text-muted-foreground">
-          🔒 Everything runs 100% locally — your secrets never leave your device.
-        </p>
+        <div className="mt-12 text-center space-y-4">
+          <p className="text-sm text-muted-foreground">
+            🔒 Everything runs 100% locally — your secrets never leave your device.
+          </p>
+          <Link to="/how-it-works">
+            <Button variant="outline" size="lg" className="font-display font-semibold mt-2">
+              Learn More →
+            </Button>
+          </Link>
+        </div>
       </div>
     </section>
   );
