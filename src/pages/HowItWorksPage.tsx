@@ -138,7 +138,7 @@ const HowItWorksPage = () => {
                         <Icon className="h-5 w-5 text-primary" />
                       </div>
                       <span className="font-display text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">
-                        Step {i + 1}
+                        Feature
                       </span>
                     </div>
                     <h2 className="font-display text-3xl font-bold text-foreground mb-4">
@@ -166,11 +166,11 @@ const HowItWorksPage = () => {
 
         {/* Bottom CTA */}
         <div className="container mx-auto px-4 md:px-8 mt-24 text-center">
-          <a href="https://seqrets.app" target="_blank" rel="noopener noreferrer">
+          <Link to="/shop">
             <Button size="lg" className="font-display font-semibold">
-              Try the Free Web App →
+              Browse the Shop →
             </Button>
-          </a>
+          </Link>
         </div>
       </main>
       <Footer />
