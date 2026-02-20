@@ -5,7 +5,7 @@ import laptopMockup from "@/assets/desktop-mockup.png";
 
 const HeroSection = () => {
   return (
-    <section className="relative flex min-h-[93vh] items-center overflow-hidden pt-16" style={{ backgroundColor: '#2b2a2b' }}>
+    <section className="relative flex min-h-screen items-center overflow-hidden py-32" style={{ backgroundColor: '#2b2a2b' }}>
       {/* Ambient glow */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/2 top-1/3 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/5 blur-[120px] animate-pulse-glow" />
@@ -16,7 +16,7 @@ const HeroSection = () => {
         <div className="flex flex-col items-center gap-12 lg:flex-row lg:gap-16">
           {/* Left: Text content */}
           <div className="flex-1 text-center lg:text-left">
-            <img src={heroLogo} alt="seQRets logo" className="mx-auto mb-8 h-36 w-auto md:h-48 lg:mx-0" />
+            <img src={heroLogo} alt="seQRets logo" className="mx-auto mb-8 h-27 w-auto md:h-36 lg:mx-0" />
 
             <h1 className="font-display text-4xl font-bold leading-tight tracking-tight md:text-6xl lg:text-7xl">
               <span className="text-foreground font-black">Your Secrets,</span>
