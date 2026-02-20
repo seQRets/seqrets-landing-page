@@ -25,10 +25,7 @@ const HeroSection = () => {
             </h1>
 
             <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl lg:mx-0">
-              Encrypt and split your seed phrases, private keys, and sensitive data into
-              QR-coded fragments called Qards. No single piece reveals anything — reconstruction
-              requires a threshold of Qards plus your password. Everything runs locally on your
-              device, with no servers or cloud storage involved.
+              What happens to your passwords, access codes, account information, and digital assets when you're no longer around? seQRets helps you protect your most sensitive information today — and make sure the right people can access it tomorrow. Nothing stored online. Nothing shared with anyone you don't choose.
             </p>
 
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row lg:justify-start">
