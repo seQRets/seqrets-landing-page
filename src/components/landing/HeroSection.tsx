@@ -41,7 +41,7 @@ const HeroSection = () => {
 
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row lg:justify-start">
               <Button asChild size="lg" className="font-display text-base font-semibold px-8">
-                <a href="https://seqrets.app" target="_blank" rel="noopener noreferrer">
+                <a href="https://app.seqrets.app" target="_blank" rel="noopener noreferrer">
                   Try the Free Web App
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
