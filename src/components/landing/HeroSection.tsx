@@ -25,9 +25,10 @@ const HeroSection = () => {
             </h1>
 
             <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl lg:mx-0">
-              seQRets uses Shamir's Secret Sharing to encrypt and split your most sensitive data into
-              multiple QR-coded fragments. No single piece reveals anything — only the right combination
-              can reconstruct your secret.
+              Encrypt and split your seed phrases, private keys, and sensitive data into
+              QR-coded fragments called Qards. No single piece reveals anything — reconstruction
+              requires a threshold of Qards plus your password. Everything runs locally on your
+              device, with no servers or cloud storage involved.
             </p>
 
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row lg:justify-start">
