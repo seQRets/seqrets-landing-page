@@ -19,11 +19,9 @@ const HeroSection = () => {
             <img src={heroLogo} alt="seQRets logo" className="mx-auto mb-8 h-27 w-auto md:h-36 lg:mx-0" />
 
             <h1 className="font-display text-4xl font-bold leading-tight tracking-tight md:text-6xl lg:text-7xl">
-              <span className="text-foreground font-black">Your Secrets,</span>
+              <span className="text-foreground font-black">Protect What</span>
               <br />
-              <span className="text-foreground">Split Into</span>
-              <br />
-              <span className="text-foreground">Unbreakable Pieces</span>
+              <span className="text-foreground">Matters Most</span>
             </h1>
 
             <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl lg:mx-0">
