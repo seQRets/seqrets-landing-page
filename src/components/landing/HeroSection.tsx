@@ -55,28 +55,44 @@ const HeroSection = () => {
 
           {/* Right: Laptop mockup */}
           <div className="flex-1 flex justify-center lg:justify-end">
-            <div className="relative w-full max-w-[600px]">
-              {/* Laptop screen */}
-              <div className="rounded-t-xl border border-border/30 bg-[#1a1a1a] p-2 shadow-2xl shadow-black/50">
-                {/* Screen bezel top bar */}
-                <div className="mb-1 flex items-center gap-1.5 px-2 py-1">
-                  <span className="h-2 w-2 rounded-full bg-[#ff5f57]" />
-                  <span className="h-2 w-2 rounded-full bg-[#febc2e]" />
-                  <span className="h-2 w-2 rounded-full bg-[#28c840]" />
+            <div className="relative w-full max-w-[580px]" style={{ perspective: '1200px' }}>
+              <div
+                className="relative"
+                style={{ transform: 'rotateY(-6deg) rotateX(2deg)' }}
+              >
+                {/* Screen lid */}
+                <div className="relative rounded-[12px] bg-[#232323] p-[6px] shadow-[0_20px_80px_-20px_rgba(0,0,0,0.8)]">
+                  {/* Inner bezel */}
+                  <div className="relative overflow-hidden rounded-[6px] border border-[#0a0a0a] bg-black">
+                    {/* Camera notch */}
+                    <div className="absolute left-1/2 top-0 z-10 h-[6px] w-[80px] -translate-x-1/2 rounded-b-full bg-[#232323]">
+                      <div className="absolute left-1/2 top-[2px] h-[2px] w-[2px] -translate-x-1/2 rounded-full bg-[#1a3a1a]" />
+                    </div>
+                    {/* Screenshot */}
+                    <img
+                      src={appScreenshot}
+                      alt="seQRets desktop application showing the Secure Secret interface"
+                      className="relative z-0 block w-full"
+                    />
+                  </div>
                 </div>
-                {/* Screenshot */}
-                <img
-                  src={appScreenshot}
-                  alt="seQRets desktop application showing the Secure Secret interface"
-                  className="w-full rounded-sm"
-                />
+
+                {/* Hinge */}
+                <div className="relative z-20 mx-auto h-[3px] w-[94%] rounded-b-sm bg-gradient-to-b from-[#2a2a2a] to-[#1d1d1d]" />
+
+                {/* Base / keyboard deck */}
+                <div className="relative z-20 mx-auto w-[106%] -translate-x-[3%]">
+                  <div className="h-[11px] rounded-b-[10px] bg-gradient-to-b from-[#2e2e2e] via-[#252525] to-[#1c1c1c] shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+                    {/* Trackpad indent */}
+                    <div className="absolute left-1/2 top-[2px] h-[1px] w-[60px] -translate-x-1/2 rounded-full bg-[#383838]" />
+                  </div>
+                  {/* Front lip */}
+                  <div className="mx-auto h-[2px] w-[98%] rounded-b-lg bg-[#1a1a1a]" />
+                </div>
+
+                {/* Reflection / glow under laptop */}
+                <div className="absolute -bottom-10 left-1/2 h-20 w-2/3 -translate-x-1/2 rounded-full bg-primary/8 blur-3xl" />
               </div>
-              {/* Laptop base */}
-              <div className="relative mx-auto h-4 w-[110%] -translate-x-[5%] rounded-b-xl bg-gradient-to-b from-[#2a2a2a] to-[#1a1a1a] shadow-lg shadow-black/30">
-                <div className="absolute left-1/2 top-0 h-1 w-16 -translate-x-1/2 rounded-b-md bg-[#3a3a3a]" />
-              </div>
-              {/* Glow under laptop */}
-              <div className="absolute -bottom-8 left-1/2 h-16 w-3/4 -translate-x-1/2 rounded-full bg-primary/10 blur-2xl" />
             </div>
           </div>
         </div>
