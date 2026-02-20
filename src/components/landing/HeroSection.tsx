@@ -1,7 +1,7 @@
 import { ArrowRight, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroLogo from "@/assets/hero-logo.png";
-import laptopMockup from "@/assets/desktop-mockup.png";
+import laptopMockup from "@/assets/laptop2.png";
 
 const HeroSection = () => {
   return (
