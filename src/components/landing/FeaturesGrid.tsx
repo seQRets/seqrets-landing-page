@@ -42,7 +42,7 @@ const FeaturesGrid = () => {
             Features
           </p>
           <h2 className="font-display text-4xl font-bold md:text-5xl text-foreground">
-            Everything You Need to Protect What Matters
+            Powerful Tools, Zero Compromise
           </h2>
         </div>
 
