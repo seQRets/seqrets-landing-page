@@ -1,7 +1,7 @@
 import { ArrowRight, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroLogo from "@/assets/hero-logo.png";
-import appScreenshot from "@/assets/app-dark.png";
+import laptopMockup from "@/assets/desktop-mockup.png";
 
 const HeroSection = () => {
   return (
@@ -55,44 +55,14 @@ const HeroSection = () => {
 
           {/* Right: Laptop mockup */}
           <div className="flex-1 flex justify-center lg:justify-end">
-            <div className="relative w-full max-w-[580px]" style={{ perspective: '1200px' }}>
-              <div
-                className="relative"
-                style={{ transform: 'rotateY(-6deg) rotateX(2deg)' }}
-              >
-                {/* Screen lid */}
-                <div className="relative rounded-[12px] bg-[#232323] p-[6px] shadow-[0_20px_80px_-20px_rgba(0,0,0,0.8)]">
-                  {/* Inner bezel */}
-                  <div className="relative overflow-hidden rounded-[6px] border border-[#0a0a0a] bg-black">
-                    {/* Camera notch */}
-                    <div className="absolute left-1/2 top-0 z-10 h-[6px] w-[80px] -translate-x-1/2 rounded-b-full bg-[#232323]">
-                      <div className="absolute left-1/2 top-[2px] h-[2px] w-[2px] -translate-x-1/2 rounded-full bg-[#1a3a1a]" />
-                    </div>
-                    {/* Screenshot */}
-                    <img
-                      src={appScreenshot}
-                      alt="seQRets desktop application showing the Secure Secret interface"
-                      className="relative z-0 block w-full"
-                    />
-                  </div>
-                </div>
-
-                {/* Hinge */}
-                <div className="relative z-20 mx-auto h-[3px] w-[94%] rounded-b-sm bg-gradient-to-b from-[#2a2a2a] to-[#1d1d1d]" />
-
-                {/* Base / keyboard deck */}
-                <div className="relative z-20 mx-auto w-[106%] -translate-x-[3%]">
-                  <div className="h-[11px] rounded-b-[10px] bg-gradient-to-b from-[#2e2e2e] via-[#252525] to-[#1c1c1c] shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
-                    {/* Trackpad indent */}
-                    <div className="absolute left-1/2 top-[2px] h-[1px] w-[60px] -translate-x-1/2 rounded-full bg-[#383838]" />
-                  </div>
-                  {/* Front lip */}
-                  <div className="mx-auto h-[2px] w-[98%] rounded-b-lg bg-[#1a1a1a]" />
-                </div>
-
-                {/* Reflection / glow under laptop */}
-                <div className="absolute -bottom-10 left-1/2 h-20 w-2/3 -translate-x-1/2 rounded-full bg-primary/8 blur-3xl" />
-              </div>
+            <div className="relative w-full max-w-[620px]">
+              <img
+                src={laptopMockup}
+                alt="seQRets desktop application running on a laptop"
+                className="w-full drop-shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
+              />
+              {/* Glow under laptop */}
+              <div className="absolute -bottom-6 left-1/2 h-16 w-2/3 -translate-x-1/2 rounded-full bg-primary/8 blur-3xl" />
             </div>
           </div>
         </div>
