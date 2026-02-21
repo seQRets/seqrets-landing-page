@@ -58,7 +58,7 @@ const DesktopCTA = () => {
               "Why pay when it's open source?"
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              You're paying for convenience — a signed, auto-updating binary with hardware support and a portable USB reader.
+              You're paying for convenience — a signed, auto-updating binary with smartcard support and a portable USB reader.
               The code is always free under AGPLv3. You can build it yourself from source anytime.
             </p>
           </div>
