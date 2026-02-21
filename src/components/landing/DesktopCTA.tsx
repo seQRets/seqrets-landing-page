@@ -41,8 +41,7 @@ const DesktopCTA = () => {
             The Official Desktop App
           </h2>
           <p className="text-lg text-muted-foreground mb-10">
-            Everything in the web app, plus hardware integration, code signing, and automatic updates.
-            Built with Tauri for native performance.
+            Everything in the web app, plus smartcard integration, an in-app inheritance plan builder, code signing, and automatic updates — built natively with Rust and Tauri.
           </p>
 
           <div className="grid gap-4 sm:grid-cols-2 text-left mb-10">
