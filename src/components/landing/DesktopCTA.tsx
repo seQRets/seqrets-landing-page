@@ -71,7 +71,7 @@ const DesktopCTA = () => {
               </Link>
             </Button>
             <Button variant="outline" size="lg" className="font-display font-semibold px-8 border-border/50" asChild>
-              <a href="https://github.com/seqrets" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/jalapeno4332/seQRets" target="_blank" rel="noopener noreferrer">
                 <Github className="mr-2 h-4 w-4" />
                 Build from Source
               </a>
