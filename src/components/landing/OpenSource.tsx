@@ -34,7 +34,7 @@ const OpenSource = () => {
                 <span className="text-sm text-foreground">Community contributions welcome</span>
               </div>
               <Button variant="outline" className="mt-4 font-display font-semibold border-border/50" asChild>
-                <a href="https://github.com/seqrets" target="_blank" rel="noopener noreferrer">
+                <a target="_blank" rel="noopener noreferrer" href="https://github.com/jalapeno4332/seQRets">
                   <Github className="mr-2 h-4 w-4" />
                   View on GitHub
                 </a>
@@ -43,8 +43,8 @@ const OpenSource = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default OpenSource;
