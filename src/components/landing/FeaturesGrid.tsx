@@ -56,7 +56,7 @@ const FeaturesGrid = () => {
             <div
               key={f.title}
               className={`group rounded-2xl border p-8 transition-all duration-500 hover:scale-[1.04] ${
-                f.title === "Smart Card Support"
+                f.title === "Smart Card Support" || f.title === "Inheritance Planning"
                   ? "border-primary/30 bg-primary/5 hover:border-primary/50 hover:bg-primary/10"
                   : "border-border/30 bg-card/20 hover:border-border/60 hover:bg-card/40"
               }`}
@@ -66,7 +66,7 @@ const FeaturesGrid = () => {
               </div>
               <h3 className="mb-2 font-display text-base font-bold text-foreground">{f.title}</h3>
               <p className="text-sm leading-relaxed text-muted-foreground/80">{f.description}</p>
-              {f.title === "Smart Card Support" && (
+              {(f.title === "Smart Card Support" || f.title === "Inheritance Planning") && (
                 <span className="mt-4 inline-block rounded-full bg-primary/15 px-3 py-0.5 font-display text-[11px] font-semibold text-primary tracking-wide uppercase">
                   Desktop Exclusive
                 </span>
