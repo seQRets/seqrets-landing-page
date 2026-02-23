@@ -15,41 +15,43 @@ const rows = [
 ];
 
 const StatusIcon = ({ value }: { value: boolean | string }) => {
-  if (value === true) return <Check className="h-5 w-5 text-primary" />;
-  if (value === "partial") return <Minus className="h-5 w-5 text-warm-muted" />;
-  return <X className="h-5 w-5 text-muted-foreground/40" />;
+  if (value === true) return <Check className="h-4 w-4 text-primary" />;
+  if (value === "partial") return <Minus className="h-4 w-4 text-warm-muted" />;
+  return <X className="h-4 w-4 text-muted-foreground/30" />;
 };
 
 const ComparisonTable = () => {
   return (
-    <section className="py-24 md:py-32 bg-warm-surface">
+    <section className="relative py-32 md:py-40 bg-section-alt">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
+
       <div className="container mx-auto px-4 md:px-8">
-        <div className="text-center mb-16">
-          <p className="font-display text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground mb-4">
+        <div className="text-center mb-20">
+          <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground/70 mb-5">
             Compare
           </p>
-          <h2 className="font-display text-4xl font-bold md:text-5xl text-foreground">
+          <h2 className="font-display text-4xl font-black md:text-6xl text-foreground tracking-tight">
             Web App vs Desktop
           </h2>
         </div>
 
-        <div className="mx-auto max-w-3xl overflow-hidden rounded-xl border border-border/50">
-          <div className="grid grid-cols-3 border-b border-border/50 bg-card/60 px-6 py-4">
-            <div className="font-display text-sm font-semibold text-muted-foreground">Feature</div>
-            <div className="text-center font-display text-sm font-semibold text-foreground">
+        <div className="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-border/30">
+          <div className="grid grid-cols-3 border-b border-border/30 bg-card/30 px-6 py-4">
+            <div className="font-display text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Feature</div>
+            <div className="text-center font-display text-xs font-bold uppercase tracking-wider text-foreground/80">
               Web App
-              <span className="ml-2 rounded-full bg-primary/20 px-2 py-0.5 text-xs text-primary">Free</span>
+              <span className="ml-2 rounded-full bg-primary/15 px-2 py-0.5 text-[10px] text-primary normal-case tracking-normal">Free</span>
             </div>
-            <div className="text-center font-display text-sm font-semibold text-foreground">
+            <div className="text-center font-display text-xs font-bold uppercase tracking-wider text-foreground/80">
               Desktop App
             </div>
           </div>
           {rows.map((row) => (
             <div
               key={row.feature}
-              className="grid grid-cols-3 items-center border-b border-border/30 px-6 py-3 last:border-0 hover:bg-card/30 transition-colors"
+              className="grid grid-cols-3 items-center border-b border-border/15 px-6 py-3.5 last:border-0 hover:bg-card/20 transition-colors"
             >
-              <span className="text-sm text-foreground">{row.feature}</span>
+              <span className="text-sm text-foreground/80">{row.feature}</span>
               <div className="flex justify-center">
                 <StatusIcon value={row.web} />
               </div>
