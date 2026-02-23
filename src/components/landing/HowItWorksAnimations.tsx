@@ -165,41 +165,101 @@ export const SplitAnimation = () => {
 export const QRCodeAnimation = () => {
   const [hovered, setHovered] = useState(false);
 
-  // Simple 7x7 QR-like grid
+  // 9x9 QR-like pattern with finder squares
   const grid = [
-    [1, 1, 1, 0, 1, 1, 1],
-    [1, 0, 1, 0, 1, 0, 1],
-    [1, 1, 1, 0, 1, 1, 1],
-    [0, 0, 0, 1, 0, 0, 0],
-    [1, 1, 1, 0, 1, 0, 1],
-    [1, 0, 1, 1, 0, 1, 0],
-    [1, 1, 1, 0, 1, 1, 1],
+    [1,1,1,1,0,1,1,1,1],
+    [1,0,0,1,0,1,0,0,1],
+    [1,0,1,1,0,1,1,0,1],
+    [1,1,1,0,1,0,1,1,1],
+    [0,0,0,1,0,1,0,0,0],
+    [1,1,1,0,1,0,1,1,1],
+    [1,0,1,1,0,1,1,0,1],
+    [1,0,0,1,0,1,0,0,1],
+    [1,1,1,1,0,1,1,1,1],
   ];
 
   return (
     <div
-      className="w-full h-44 flex items-center justify-center"
+      className="w-full h-44 flex items-center justify-center overflow-hidden"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div className="grid grid-cols-7 gap-[3px]">
-        {grid.flat().map((cell, i) => (
+      <div className="relative flex items-center justify-center">
+        {/* Scan line */}
+        <motion.div
+          className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent z-10 pointer-events-none"
+          animate={{
+            y: hovered ? [-40, 40] : -50,
+            opacity: hovered ? [0.8, 0.8, 0] : 0,
+          }}
+          transition={{
+            duration: 1.5,
+            repeat: hovered ? Infinity : 0,
+            ease: "linear",
+          }}
+        />
+
+        {/* QR grid */}
+        <div className="grid grid-cols-9 gap-[2px]">
+          {grid.flat().map((cell, i) => {
+            const row = Math.floor(i / 9);
+            const col = i % 9;
+            const distFromCenter = Math.abs(row - 4) + Math.abs(col - 4);
+            return (
+              <motion.div
+                key={i}
+                className="w-3 h-3 rounded-[1px]"
+                style={{
+                  backgroundColor: cell
+                    ? "hsl(var(--primary))"
+                    : "hsl(var(--primary) / 0.06)",
+                }}
+                animate={{
+                  opacity: hovered
+                    ? cell ? [0, 0.9] : 0.08
+                    : cell ? 0.25 : 0.05,
+                  scale: hovered ? 1 : 0.7,
+                }}
+                transition={{
+                  duration: 0.4,
+                  delay: hovered ? distFromCenter * 0.04 : 0,
+                  ease: "easeOut",
+                }}
+              />
+            );
+          })}
+        </div>
+
+        {/* Corner brackets */}
+        {[
+          { top: -6, left: -6, borderTop: "2px solid", borderLeft: "2px solid" },
+          { top: -6, right: -6, borderTop: "2px solid", borderRight: "2px solid" },
+          { bottom: -6, left: -6, borderBottom: "2px solid", borderLeft: "2px solid" },
+          { bottom: -6, right: -6, borderBottom: "2px solid", borderRight: "2px solid" },
+        ].map((style, i) => (
           <motion.div
             key={i}
-            className={`w-3.5 h-3.5 rounded-[2px] ${
-              cell ? "bg-primary/60" : "bg-primary/10"
-            }`}
-            initial={false}
+            className="absolute w-4 h-4 border-primary/40"
+            style={style as any}
             animate={{
-              scale: hovered ? 1 : 0.6,
-              opacity: hovered ? (cell ? 0.8 : 0.15) : 0.3,
+              borderColor: hovered
+                ? "hsl(var(--primary) / 0.6)"
+                : "hsl(var(--primary) / 0.2)",
+              scale: hovered ? 1 : 0.8,
             }}
-            transition={{
-              duration: 0.3,
-              delay: hovered ? (i % 7) * 0.03 + Math.floor(i / 7) * 0.03 : 0,
-            }}
+            transition={{ duration: 0.4, delay: 0.1 }}
           />
         ))}
+
+        {/* Glow ring */}
+        <motion.div
+          className="absolute inset-0 rounded-lg"
+          style={{
+            boxShadow: "0 0 20px hsl(var(--primary) / 0.15)",
+          }}
+          animate={{ opacity: hovered ? 1 : 0 }}
+          transition={{ duration: 0.5 }}
+        />
       </div>
     </div>
   );
