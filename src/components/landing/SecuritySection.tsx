@@ -1,5 +1,6 @@
+import { useEffect, useRef, useState } from "react";
 import { ShieldCheck, Atom, Eye, Lock } from "lucide-react";
-import securityVisual from "@/assets/security-visual.png";
+import argon2Code from "@/assets/argon2-code.png";
 
 const techStack = [
   {
@@ -20,6 +21,24 @@ const techStack = [
 ];
 
 const SecuritySection = () => {
+  const imageRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (imageRef.current) {
+        const rect = imageRef.current.getBoundingClientRect();
+        const windowH = window.innerHeight;
+        // Progress from 0 (entering viewport) to 1 (leaving viewport)
+        const progress = Math.max(0, Math.min(1, 1 - (rect.bottom / (windowH + rect.height))));
+        setScrollProgress(progress);
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <section id="security" className="relative py-32 md:py-40">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
@@ -39,8 +58,17 @@ const SecuritySection = () => {
             attackers still face military-grade encryption.
           </p>
 
-          <div className="mx-auto mt-10 max-w-2xl overflow-hidden rounded-2xl">
-            <img src={securityVisual} alt="Zero-knowledge security architecture" className="w-full object-cover opacity-70" />
+          <div ref={imageRef} className="mx-auto mt-10 max-w-2xl overflow-hidden rounded-2xl h-[300px] md:h-[400px] relative">
+            <img
+              src={argon2Code}
+              alt="seQRets cryptographic source code showing Argon2id, XChaCha20, and Shamir's Secret Sharing"
+              className="w-full object-cover object-top will-change-transform"
+              style={{
+                transform: `translateY(-${scrollProgress * 60}%)`,
+              }}
+            />
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-background to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-background to-transparent" />
           </div>
         </div>
 
