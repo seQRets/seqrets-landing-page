@@ -47,7 +47,7 @@ const HeroSection = () => {
 
       {/* Content */}
       <div className="container relative z-10 mx-auto px-4 pt-24 pb-32 text-center md:px-8">
-        <img src={heroLogo} alt="seQRets logo" className="mx-auto mb-10 h-20 w-auto md:h-28" />
+        <img src={heroLogo} alt="seQRets logo" className="mx-auto mb-10 h-[92px] w-auto md:h-[128px]" />
 
         <h1 className="font-display text-5xl font-black leading-[1.05] tracking-tight md:text-7xl lg:text-8xl">
           <span className="text-foreground">Protect What</span>
