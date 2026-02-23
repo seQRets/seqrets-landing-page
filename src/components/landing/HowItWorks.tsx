@@ -1,28 +1,26 @@
 import { Lock, Split, QrCode } from "lucide-react";
 import { Link } from "react-router-dom";
-import stepSecure from "@/assets/step-secure.png";
-import stepSplit from "@/assets/step-split.png";
-import stepShare from "@/assets/step-share.png";
+import { LockAnimation, SplitAnimation, QRCodeAnimation } from "./HowItWorksAnimations";
 
 const steps = [
   {
     icon: Lock,
     title: "Secure",
-    image: stepSecure,
+    animation: LockAnimation,
     description:
       "Your secret is encrypted locally using military-grade XChaCha20-Poly1305 with a key derived from Argon2id. Nothing leaves your device.",
   },
   {
     icon: Split,
     title: "Split",
-    image: stepSplit,
+    animation: SplitAnimation,
     description:
       "Using Shamir's Secret Sharing, the encrypted secret is mathematically split into multiple shares — each share alone reveals nothing.",
   },
   {
     icon: QrCode,
     title: "Share",
-    image: stepShare,
+    animation: QRCodeAnimation,
     description:
       "Each share becomes a Qard — a QR code you can print, store on smart cards, or give to trusted people. Reconstruct only when needed.",
   },
@@ -52,7 +50,7 @@ const HowItWorks = () => {
               className="group rounded-2xl border border-border/30 bg-card/20 p-6 transition-all duration-500 hover:border-primary/30 hover:bg-card/40"
             >
               <div className="mb-5 overflow-hidden rounded-xl bg-background/50">
-                <img src={step.image} alt={step.title} className="w-full h-44 object-contain" />
+                <step.animation />
               </div>
               <div className="mb-2 font-display text-[11px] font-bold uppercase tracking-[0.2em] text-muted-foreground/50">
                 Step {i + 1}
