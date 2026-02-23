@@ -35,32 +35,39 @@ const features = [
 
 const FeaturesGrid = () => {
   return (
-    <section id="features" className="py-24 md:py-32 bg-warm-surface">
+    <section id="features" className="relative py-32 md:py-40">
+      {/* Subtle top divider */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
+
       <div className="container mx-auto px-4 md:px-8">
-        <div className="text-center mb-16">
-          <p className="font-display text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground mb-4">
+        <div className="text-center mb-20">
+          <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground/70 mb-5">
             Features
           </p>
-          <h2 className="font-display text-4xl font-bold md:text-5xl text-foreground">
-            Powerful Tools, Zero Compromise
+          <h2 className="font-display text-4xl font-black md:text-6xl text-foreground tracking-tight">
+            Powerful Tools,
+            <br />
+            <span className="text-gradient">Zero Compromise</span>
           </h2>
         </div>
 
-        <div className="mx-auto max-w-6xl grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto max-w-5xl grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((f) => (
             <div
               key={f.title}
-              className={`rounded-xl border p-6 transition-all duration-300 ${
+              className={`group rounded-2xl border p-8 transition-all duration-500 ${
                 f.title === "Smart Card Support"
-                  ? "border-primary/40 bg-primary/10 hover:border-primary/60 hover:bg-primary/15"
-                  : "border-border/50 bg-card/30 hover:border-primary/20 hover:bg-card/60"
+                  ? "border-primary/30 bg-primary/5 hover:border-primary/50 hover:bg-primary/10"
+                  : "border-border/30 bg-card/20 hover:border-border/60 hover:bg-card/40"
               }`}
             >
-              <f.icon className="mb-4 h-6 w-6 text-primary" />
-              <h3 className="mb-2 font-display text-lg font-semibold text-foreground">{f.title}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">{f.description}</p>
+              <div className="mb-5 inline-flex rounded-xl bg-primary/10 p-3">
+                <f.icon className="h-5 w-5 text-primary" />
+              </div>
+              <h3 className="mb-2 font-display text-base font-bold text-foreground">{f.title}</h3>
+              <p className="text-sm leading-relaxed text-muted-foreground/80">{f.description}</p>
               {f.title === "Smart Card Support" && (
-                <span className="mt-3 inline-block rounded-full bg-primary/20 px-3 py-0.5 font-display text-xs font-semibold text-primary">
+                <span className="mt-4 inline-block rounded-full bg-primary/15 px-3 py-0.5 font-display text-[11px] font-semibold text-primary tracking-wide uppercase">
                   Desktop Exclusive
                 </span>
               )}
