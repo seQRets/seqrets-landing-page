@@ -31,7 +31,7 @@ const HeroSection = () => {
           className="w-[85%] max-w-[900px] object-contain will-change-transform"
           style={{
             transform: `translateY(calc(15% - ${scrollY * 0.35}px)) scale(${1 + scrollY * 0.0002})`,
-            opacity: Math.min(scrollY * 0.001, 0.65),
+            opacity: Math.min(scrollY * 0.001, 0.85),
           }}
         />
         {/* Gradient overlays for readability */}
