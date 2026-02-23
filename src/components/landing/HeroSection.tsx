@@ -28,9 +28,10 @@ const HeroSection = () => {
         <img
           src={laptopMockup}
           alt="seQRets desktop application running on a laptop"
-          className="w-[85%] max-w-[900px] object-contain opacity-40 will-change-transform"
+          className="w-[85%] max-w-[900px] object-contain will-change-transform"
           style={{
             transform: `translateY(calc(15% - ${scrollY * 0.35}px)) scale(${1 + scrollY * 0.0002})`,
+            opacity: Math.min(0.15 + scrollY * 0.0008, 0.55),
           }}
         />
         {/* Gradient overlays for readability */}
