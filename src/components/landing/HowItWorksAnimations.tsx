@@ -5,55 +5,95 @@ import { useState } from "react";
 export const LockAnimation = () => {
   const [hovered, setHovered] = useState(false);
 
+  // Floating cipher characters
+  const cipherChars = ["0x", "FF", "A3", "9D", "E7", "4B", "C1", "8F"];
+
   return (
     <div
-      className="w-full h-44 flex items-center justify-center"
+      className="w-full h-44 flex items-center justify-center overflow-hidden"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div className="relative">
-        {/* Lock body */}
-        <motion.div
-          className="w-16 h-14 rounded-lg border-2 border-primary/60 bg-primary/10 flex items-center justify-center"
-          animate={{ scale: hovered ? 1.05 : 1 }}
-          transition={{ duration: 0.3 }}
+      <div className="relative flex flex-col items-center">
+        {/* Shield outline */}
+        <motion.svg
+          viewBox="0 0 80 96"
+          className="w-20 h-24"
+          animate={{ scale: hovered ? 1.08 : 1 }}
+          transition={{ type: "spring", stiffness: 200, damping: 15 }}
         >
-          {/* Keyhole */}
-          <motion.div className="flex flex-col items-center">
-            <div className="w-3 h-3 rounded-full bg-primary/70" />
-            <div className="w-1.5 h-2 bg-primary/70 -mt-0.5 rounded-b" />
-          </motion.div>
-        </motion.div>
+          <motion.path
+            d="M40 4 L72 20 V52 C72 72 56 88 40 92 C24 88 8 72 8 52 V20 Z"
+            fill="none"
+            stroke="hsl(var(--primary))"
+            strokeWidth="2"
+            strokeLinejoin="round"
+            animate={{ strokeOpacity: hovered ? 0.8 : 0.4, fillOpacity: hovered ? 0.12 : 0.05 }}
+            style={{ fill: "hsl(var(--primary))" }}
+          />
+          {/* Inner lock icon */}
+          <motion.rect
+            x="30" y="42" width="20" height="16" rx="3"
+            fill="none"
+            stroke="hsl(var(--primary))"
+            strokeWidth="1.5"
+            animate={{ strokeOpacity: hovered ? 0.9 : 0.5 }}
+          />
+          <motion.path
+            d="M34 42 V36 A6 6 0 0 1 46 36 V42"
+            fill="none"
+            stroke="hsl(var(--primary))"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            animate={{
+              strokeOpacity: hovered ? 0.9 : 0.5,
+              d: hovered
+                ? "M34 42 V36 A6 6 0 0 1 46 36 V34"
+                : "M34 42 V36 A6 6 0 0 1 46 36 V42",
+            }}
+            transition={{ type: "spring", stiffness: 250, damping: 20 }}
+          />
+          {/* Keyhole dot */}
+          <circle cx="40" cy="50" r="2" fill="hsl(var(--primary))" opacity={0.7} />
+        </motion.svg>
 
-        {/* Shackle */}
-        <motion.div
-          className="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-8 border-2 border-primary/60 border-b-0 rounded-t-full"
-          animate={{
-            y: hovered ? -4 : 0,
-            rotateZ: hovered ? -8 : 0,
-            originX: "100%",
-            originY: "100%",
-          }}
-          transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        />
-
-        {/* Encryption particles */}
-        {hovered &&
-          [0, 1, 2, 3, 4, 5].map((i) => (
-            <motion.div
+        {/* Floating cipher text */}
+        {cipherChars.map((char, i) => {
+          const angle = (i / cipherChars.length) * Math.PI * 2;
+          const radius = 52;
+          return (
+            <motion.span
               key={i}
-              className="absolute w-1.5 h-1.5 rounded-full bg-primary/50"
-              style={{ top: "50%", left: "50%" }}
-              initial={{ opacity: 0, scale: 0 }}
+              className="absolute font-mono text-[10px] text-primary/40 select-none"
+              style={{ top: "45%", left: "50%" }}
               animate={{
-                opacity: [0, 1, 0],
-                scale: [0, 1, 0],
-                x: Math.cos((i * Math.PI) / 3) * 40,
-                y: Math.sin((i * Math.PI) / 3) * 40,
+                x: hovered ? Math.cos(angle) * radius : 0,
+                y: hovered ? Math.sin(angle) * radius : 0,
+                opacity: hovered ? [0, 0.6, 0.3] : 0,
+                scale: hovered ? 1 : 0,
               }}
-              transition={{ duration: 1.2, delay: i * 0.1, repeat: Infinity }}
-            />
-          ))}
+              transition={{
+                duration: 2,
+                delay: i * 0.08,
+                repeat: hovered ? Infinity : 0,
+                repeatType: "reverse",
+              }}
+            >
+              {char}
+            </motion.span>
+          );
+        })}
+
+        {/* Subtle pulse ring */}
+        <motion.div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/20"
+          animate={{
+            width: hovered ? 100 : 60,
+            height: hovered ? 100 : 60,
+            opacity: hovered ? [0.3, 0] : 0,
+          }}
+          transition={{ duration: 1.5, repeat: hovered ? Infinity : 0 }}
+        />
       </div>
     </div>
   );
