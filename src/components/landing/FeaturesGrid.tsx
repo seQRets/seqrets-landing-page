@@ -55,7 +55,7 @@ const FeaturesGrid = () => {
           {features.map((f) => (
             <div
               key={f.title}
-              className={`group rounded-2xl border p-8 transition-all duration-500 ${
+              className={`group rounded-2xl border p-8 transition-all duration-500 hover:scale-[1.04] ${
                 f.title === "Smart Card Support"
                   ? "border-primary/30 bg-primary/5 hover:border-primary/50 hover:bg-primary/10"
                   : "border-border/30 bg-card/20 hover:border-border/60 hover:bg-card/40"
