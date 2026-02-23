@@ -1,16 +1,37 @@
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Clock } from "lucide-react";
 import heroLogo from "@/assets/hero-logo.png";
 import laptopMockup from "@/assets/laptop2.png";
 
 const HeroSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (sectionRef.current) {
+        const rect = sectionRef.current.getBoundingClientRect();
+        // Only update while the hero is visible
+        if (rect.bottom > 0) {
+          setScrollY(window.scrollY);
+        }
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
-      {/* Full-bleed background with laptop */}
+    <section ref={sectionRef} className="relative flex min-h-screen items-center justify-center overflow-hidden">
+      {/* Full-bleed background with laptop — parallax */}
       <div className="absolute inset-0 flex items-end justify-center">
         <img
           src={laptopMockup}
           alt="seQRets desktop application running on a laptop"
-          className="w-[85%] max-w-[900px] object-contain opacity-40 translate-y-[15%]"
+          className="w-[85%] max-w-[900px] object-contain opacity-40 will-change-transform"
+          style={{
+            transform: `translateY(calc(15% - ${scrollY * 0.35}px)) scale(${1 + scrollY * 0.0002})`,
+          }}
         />
         {/* Gradient overlays for readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background/40" />
