@@ -13,9 +13,9 @@ const OpenSource = () => {
                 Open Source & Trust
               </p>
               <h2 className="font-display text-3xl font-black md:text-4xl text-foreground mb-5 tracking-tight">
-                Verify,
+                Don't Trust,
                 <br />
-                <span className="text-gradient">Don't Trust</span>
+                <span className="text-gradient">Verify</span>
               </h2>
               <p className="text-sm text-muted-foreground/80 leading-relaxed">
                 seQRets is fully open source under the AGPLv3 license. Every line of cryptographic
