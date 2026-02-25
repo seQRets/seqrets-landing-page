@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="flex flex-col items-center gap-8 text-center">
           <div className="flex items-center gap-8">
             <a
-              href="https://github.com/jalapeno4332/seQRets"
+href="https://github.com/seQRets/seQRets"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground/40 transition-colors hover:text-foreground"
@@ -23,7 +23,7 @@ const Footer = () => {
               <Globe className="h-5 w-5" />
             </a>
             <a
-              href="https://github.com/jalapeno4332/seQRets"
+              href="https://github.com/seQRets/seQRets"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground/40 transition-colors hover:text-foreground"
