@@ -43,7 +43,7 @@ const OpenSource = () => {
                 <span className="text-sm text-foreground/80">Community contributions welcome</span>
               </div>
               <a
-                href="https://github.com/seQRets/seQRets"
+                href="https://github.com/seQRets/seQRets-app"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-2 inline-flex items-center rounded-full border border-border/50 bg-card/20 px-6 py-2.5 font-display text-sm font-semibold text-foreground transition-all hover:bg-card/40 hover:border-primary/30"

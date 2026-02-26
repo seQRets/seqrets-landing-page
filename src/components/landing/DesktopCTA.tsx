@@ -75,7 +75,7 @@ const DesktopCTA = () => {
                 Browse the Shop
               </Link>
               <a
-                href="https://github.com/seQRets/seQRets"
+                href="https://github.com/seQRets/seQRets-app"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center rounded-full border border-border/50 bg-card/20 px-8 py-3.5 font-display text-sm font-semibold text-foreground transition-all hover:bg-card/40 hover:border-primary/30"
