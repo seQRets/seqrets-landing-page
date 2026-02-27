@@ -42,7 +42,7 @@ const HeroSection = () => {
             height: "75vh",
             width: "auto",
             maxWidth: "none",
-            transform: `translateX(calc(10% + ${laptopTranslateX}%))`,
+            transform: `translateX(calc(25% + ${laptopTranslateX}%))`,
             transition: "transform 0.1s linear",
           }}
         />
