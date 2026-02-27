@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Clock } from "lucide-react";
 import heroLogo from "@/assets/hero-logo.png";
-import laptopMockup from "@/assets/laptop2.png";
+import laptopMockup from "@/assets/qr-qards.png";
 import heroBg from "@/assets/hero-bg.png";
 
 const HeroSection = () => {
@@ -46,7 +46,7 @@ const HeroSection = () => {
       <div className="hidden md:flex absolute right-0 top-0 bottom-0 w-1/2 items-center justify-end pointer-events-none">
         <img
           src={laptopMockup}
-          alt="seQRets desktop application running on a laptop"
+          alt="seQRets QR Qards - printed secret backup cards"
           className="object-contain will-change-transform"
           style={{
             height: "75vh",
