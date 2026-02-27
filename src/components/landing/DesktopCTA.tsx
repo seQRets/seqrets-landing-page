@@ -17,6 +17,16 @@ const DesktopCTA = () => {
 
       <div className="container mx-auto px-4 md:px-8">
         <div className="mx-auto max-w-4xl">
+          {/* Section label — matches other sections */}
+          <div className="mb-16 text-center">
+            <p className="font-display text-xs font-bold uppercase tracking-[0.2em] text-primary/70 mb-4">Desktop App</p>
+            <h2 className="font-display text-4xl font-black md:text-6xl text-foreground tracking-tight">
+              The Official
+              <br />
+              <span className="text-gradient">Desktop App</span>
+            </h2>
+          </div>
+
           <div className="mb-12 grid gap-4 md:grid-cols-2">
             <div className="overflow-hidden rounded-2xl border border-border/30">
               <img src={appDark} alt="seQRets Dark Theme" className="w-full object-cover" />
@@ -36,11 +46,6 @@ const DesktopCTA = () => {
               <span className="font-display text-xs font-bold uppercase tracking-wider text-primary">Coming Soon</span>
             </div>
 
-            <h2 className="font-display text-4xl font-black md:text-6xl text-foreground mb-6 tracking-tight">
-              The Official
-              <br />
-              <span className="text-gradient">Desktop App</span>
-            </h2>
             <p className="text-base text-muted-foreground/80 mb-12 max-w-2xl mx-auto">
               Everything in the web app, plus smartcard integration, an in-app inheritance plan builder, code signing, and automatic updates — built natively with Rust and Tauri.
             </p>
