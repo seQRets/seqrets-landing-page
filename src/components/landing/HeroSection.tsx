@@ -33,7 +33,7 @@ const HeroSection = () => {
 
       <div className="container relative z-10 mx-auto grid min-h-screen grid-cols-1 items-center gap-8 px-4 md:grid-cols-2 md:px-8">
         {/* Left column — text content */}
-        <div className="flex flex-col items-start justify-center pt-24 pb-16 md:pt-0 md:pb-0">
+        <div className="flex flex-col items-center justify-center pt-24 pb-16 md:pt-0 md:pb-0 text-center">
           <img src={heroLogo} alt="seQRets logo" className="mb-10 h-[80px] w-auto md:h-[108px]" />
 
           <h1 className="font-display text-5xl font-black leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
@@ -57,7 +57,7 @@ const HeroSection = () => {
             </div>
           </div>
 
-          <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row">
+          <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
             <a
               href="https://app.seqrets.app"
               target="_blank"
@@ -82,9 +82,9 @@ const HeroSection = () => {
           <img
             src={laptopMockup}
             alt="seQRets desktop application running on a laptop"
-            className="w-[130%] max-w-none object-contain will-change-transform"
+            className="w-[162%] max-w-none object-contain will-change-transform"
             style={{
-              transform: `translateX(${laptopTranslateX}%)`,
+              transform: `translateX(calc(10% + ${laptopTranslateX}%))`,
               transition: "transform 0.1s linear",
             }}
           />
