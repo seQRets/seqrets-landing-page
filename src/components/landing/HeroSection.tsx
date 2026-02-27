@@ -25,13 +25,14 @@ const HeroSection = () => {
 
   return (
     <section ref={sectionRef} className="relative flex min-h-screen items-center overflow-hidden">
+
       {/* Ambient glows */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/3 top-1/3 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/6 blur-[160px]" />
         <div className="absolute right-1/4 bottom-1/3 h-[300px] w-[300px] rounded-full bg-warm-muted/5 blur-[120px]" />
       </div>
 
-      <div className="container relative z-10 mx-auto grid min-h-screen grid-cols-1 items-center gap-8 px-4 md:grid-cols-2 md:px-8">
+      <div className="container relative z-10 mx-auto grid min-h-screen grid-cols-1 items-center gap-8 px-4 md:grid-cols-2 md:px-8 overflow-visible">
         {/* Left column — text content */}
         <div className="flex flex-col items-center justify-center pt-24 pb-16 md:pt-0 md:pb-0 text-center">
           <img src={heroLogo} alt="seQRets logo" className="mb-10 h-[80px] w-auto md:h-[108px]" />
@@ -77,17 +78,19 @@ const HeroSection = () => {
           </div>
         </div>
 
-        {/* Right column — laptop image, 1/3 off-screen, slides in on scroll */}
-        <div className="hidden md:flex items-center justify-end h-full">
-          <img
-            src={laptopMockup}
-            alt="seQRets desktop application running on a laptop"
-            className="w-[243%] max-w-none object-contain will-change-transform"
-            style={{
-              transform: `translateX(calc(10% + ${laptopTranslateX}%))`,
-              transition: "transform 0.1s linear",
-            }}
-          />
+        {/* Right column — laptop image, taller than text column, 1/3 off-screen */}
+        <div className="hidden md:block absolute right-0 top-0 bottom-0 w-1/2" style={{ height: "150%" , top: "-25%" }}>
+          <div className="sticky top-0 h-screen flex items-center justify-end">
+            <img
+              src={laptopMockup}
+              alt="seQRets desktop application running on a laptop"
+              className="w-[243%] max-w-none object-contain will-change-transform"
+              style={{
+                transform: `translateX(calc(10% + ${laptopTranslateX}%))`,
+                transition: "transform 0.1s linear",
+              }}
+            />
+          </div>
         </div>
       </div>
     </section>
