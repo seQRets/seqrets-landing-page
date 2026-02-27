@@ -21,7 +21,7 @@ const HeroSection = () => {
   }, []);
 
   // On scroll, laptop slides in from the right toward center
-  const laptopTranslateX = Math.max(0, 33 - scrollY * 0.03);
+  const laptopTranslateX = Math.max(0, 33 - scrollY * 0.12);
 
   return (
     <section ref={sectionRef} className="relative min-h-screen overflow-hidden">
