@@ -27,7 +27,7 @@ const HeroSection = () => {
             height: "75vh",
             width: "auto",
             maxWidth: "none",
-            transform: "translateX(0%)",
+            transform: "translateX(-10%)",
           }}
         />
       </div>
