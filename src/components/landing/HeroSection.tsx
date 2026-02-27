@@ -21,8 +21,8 @@ const HeroSection = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // On scroll, laptop slides in from the right toward center
-  const laptopTranslateX = Math.max(0, 33 - scrollY * 0.12);
+  // Subtle scroll-driven lift effect
+  const laptopTranslateY = scrollY * 0.05;
 
   // Parallax: bg scrolls opposite direction (upward as user scrolls down)
   const bgTranslateY = scrollY * 0.4;
@@ -52,7 +52,7 @@ const HeroSection = () => {
             height: "75vh",
             width: "auto",
             maxWidth: "none",
-            transform: `translateX(calc(25% + ${laptopTranslateX}%))`,
+            transform: `translateY(-${laptopTranslateY}px)`,
             transition: "transform 0.1s linear",
           }}
         />
