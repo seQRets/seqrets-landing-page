@@ -21,7 +21,7 @@ const HeroSection = () => {
   }, []);
 
   // On scroll, laptop slides in from the right toward center
-  const laptopTranslateX = Math.max(0, 33 - scrollY * 0.06);
+  const laptopTranslateX = Math.max(0, 33 - scrollY * 0.03);
 
   return (
     <section ref={sectionRef} className="relative flex min-h-screen items-center overflow-hidden">
@@ -82,7 +82,7 @@ const HeroSection = () => {
           <img
             src={laptopMockup}
             alt="seQRets desktop application running on a laptop"
-            className="w-[162%] max-w-none object-contain will-change-transform"
+            className="w-[243%] max-w-none object-contain will-change-transform"
             style={{
               transform: `translateX(calc(10% + ${laptopTranslateX}%))`,
               transition: "transform 0.1s linear",
