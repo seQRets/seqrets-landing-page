@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Clock } from "lucide-react";
 import heroLogo from "@/assets/hero-logo.png";
 import laptopMockup from "@/assets/laptop2.png";
+import heroBg from "@/assets/hero-bg.png";
 
 const HeroSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -23,14 +24,23 @@ const HeroSection = () => {
   // On scroll, laptop slides in from the right toward center
   const laptopTranslateX = Math.max(0, 33 - scrollY * 0.12);
 
+  // Parallax: bg scrolls opposite direction (upward as user scrolls down)
+  const bgTranslateY = scrollY * 0.4;
+
   return (
     <section ref={sectionRef} className="relative min-h-screen overflow-hidden">
 
-      {/* Ambient glows */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/3 top-1/3 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/6 blur-[160px]" />
-        <div className="absolute right-1/4 bottom-1/3 h-[300px] w-[300px] rounded-full bg-warm-muted/5 blur-[120px]" />
-      </div>
+      {/* Parallax background */}
+      <div
+        className="pointer-events-none absolute inset-0 scale-110"
+        style={{
+          backgroundImage: `url(${heroBg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          transform: `translateY(-${bgTranslateY}px)`,
+          willChange: "transform",
+        }}
+      />
 
       {/* Laptop — absolutely fills full section height, right half, partially off-screen */}
       <div className="hidden md:flex absolute right-0 top-0 bottom-0 w-1/2 items-center justify-end pointer-events-none">
