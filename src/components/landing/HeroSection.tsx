@@ -39,7 +39,7 @@ const HeroSection = () => {
           alt="seQRets desktop application running on a laptop"
           className="object-contain will-change-transform"
           style={{
-            height: "100vh",
+            height: "75vh",
             width: "auto",
             maxWidth: "none",
             transform: `translateX(calc(10% + ${laptopTranslateX}%))`,
