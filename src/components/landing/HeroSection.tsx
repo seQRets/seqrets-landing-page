@@ -1,59 +1,33 @@
-import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Clock } from "lucide-react";
 import heroLogo from "@/assets/hero-logo.png";
 import laptopMockup from "@/assets/qr-qards.png";
 import heroBg from "@/assets/hero-bg.png";
 
 const HeroSection = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (sectionRef.current) {
-        const rect = sectionRef.current.getBoundingClientRect();
-        if (rect.bottom > 0) {
-          setScrollY(window.scrollY);
-        }
-      }
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Subtle scroll-driven lift effect
-  const laptopTranslateY = scrollY * 0.05;
-
-  // Parallax: bg scrolls opposite direction (upward as user scrolls down)
-  const bgTranslateY = scrollY * 0.4;
-
   return (
-    <section ref={sectionRef} className="relative min-h-screen overflow-hidden">
+    <section className="relative min-h-screen overflow-hidden">
 
-      {/* Parallax background */}
+      {/* Static background */}
       <div
-        className="pointer-events-none absolute inset-0 scale-110"
+        className="pointer-events-none absolute inset-0"
         style={{
           backgroundImage: `url(${heroBg})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          transform: `translateY(-${bgTranslateY}px)`,
-          willChange: "transform",
         }}
       />
 
-      {/* Laptop — absolutely fills full section height, right half, partially off-screen */}
+      {/* QR Qards image — right side, slightly off-screen */}
       <div className="hidden md:flex absolute right-0 top-0 bottom-0 w-1/2 items-center justify-end pointer-events-none">
         <img
           src={laptopMockup}
           alt="seQRets QR Qards - printed secret backup cards"
-          className="object-contain will-change-transform"
+          className="object-contain"
           style={{
             height: "75vh",
             width: "auto",
             maxWidth: "none",
-            transform: `translateY(-${laptopTranslateY}px)`,
-            transition: "transform 0.1s linear",
+            transform: "translateX(15%)",
           }}
         />
       </div>
