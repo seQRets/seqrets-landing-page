@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Monitor, Shield, Package, CreditCard, BookOpen, Flame, Lock, Mail, Store } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -135,6 +136,8 @@ const ProductCard = ({ product }: { product: Product }) => (
 );
 
 const Shop = () => {
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Navbar */}
