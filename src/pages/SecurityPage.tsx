@@ -1,8 +1,31 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ShieldCheck, Lock, Atom, Eye, Mail } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
+
+const FaqItem = ({ question, answer }: { question: string; answer: string }) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="rounded-2xl border border-border/30 bg-card/20 overflow-hidden">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between gap-4 p-6 text-left hover:bg-card/40 transition-colors"
+      >
+        <span className="font-display text-sm font-bold text-foreground">{question}</span>
+        <ChevronDown
+          className={`h-4 w-4 text-muted-foreground shrink-0 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+      {open && (
+        <div className="px-6 pb-6 text-sm text-muted-foreground/80 border-t border-border/20 pt-4">
+          {answer}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const SecurityPage = () => {
   useEffect(() => { window.scrollTo(0, 0); }, []);
@@ -199,7 +222,7 @@ const SecurityPage = () => {
             <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-8">
               Frequently Asked Questions
             </h2>
-            <div className="space-y-4">
+            <div className="space-y-2">
               {[
                 {
                   q: "Is seQRets open source?",
@@ -238,10 +261,7 @@ const SecurityPage = () => {
                   a: "Not yet by a third-party firm. The code is open source and uses well-audited cryptographic primitives. A formal audit is on the roadmap. In the meantime, we encourage independent review — the codebase is intentionally small and readable.",
                 },
               ].map(({ q, a }) => (
-                <div key={q} className="rounded-2xl border border-border/30 bg-card/20 p-6">
-                  <h3 className="font-display text-sm font-bold text-foreground mb-2">{q}</h3>
-                  <p className="text-sm text-muted-foreground/80">{a}</p>
-                </div>
+                <FaqItem key={q} question={q} answer={a} />
               ))}
             </div>
           </section>
