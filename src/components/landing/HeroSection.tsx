@@ -18,7 +18,7 @@ const HeroSection = () => {
       />
 
       {/* Two-column layout */}
-      <div className="relative z-10 flex w-full items-center pt-20" style={{ minHeight: "90vh" }}>
+      <div className="relative z-10 flex w-full items-center pt-16" style={{ minHeight: "90vh" }}>
 
         {/* Left column — text content */}
         <div className="flex w-full flex-col items-center justify-center px-8 py-16 text-center md:w-1/2 lg:px-16 xl:px-24">
