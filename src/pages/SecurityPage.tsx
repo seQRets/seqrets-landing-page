@@ -217,6 +217,23 @@ const SecurityPage = () => {
             </div>
           </section>
 
+          {/* Go Pro CTA */}
+          <section>
+            <div className="rounded-2xl border border-primary/30 bg-gradient-to-r from-primary/10 to-primary/5 p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+              <div>
+                <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-primary/70 mb-2">Ready to upgrade?</p>
+                <h3 className="font-display text-xl font-black text-foreground">The desktop app eliminates every browser threat vector.</h3>
+                <p className="text-sm text-muted-foreground/80 mt-1">Native Rust crypto, memory zeroization, code-signed binary — no browser required.</p>
+              </div>
+              <a
+                href="/shop"
+                className="shrink-0 inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-bold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_24px_hsl(var(--primary)/0.4)] whitespace-nowrap"
+              >
+                Go Pro! →
+              </a>
+            </div>
+          </section>
+
           {/* FAQ */}
           <section>
             <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-8">
@@ -282,6 +299,24 @@ const SecurityPage = () => {
                   . Do not open a public issue. We take all reports seriously and will respond within 48 hours.
                 </p>
               </div>
+            </div>
+          </section>
+          {/* Bottom Go Pro CTA */}
+          <section>
+            <div className="rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/15 via-primary/8 to-transparent p-10 text-center">
+              <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-primary/70 mb-4">Upgrade your security</p>
+              <h3 className="font-display text-2xl md:text-3xl font-black text-foreground mb-3">
+                You've seen the difference.<br />Make the right choice.
+              </h3>
+              <p className="text-muted-foreground/80 max-w-md mx-auto mb-8">
+                The desktop app gives you native Rust cryptography, memory zeroization, and zero browser attack surface. Your secrets deserve it.
+              </p>
+              <a
+                href="/shop"
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3.5 text-sm font-bold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_32px_hsl(var(--primary)/0.5)]"
+              >
+                Go Pro! →
+              </a>
             </div>
           </section>
         </div>
