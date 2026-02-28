@@ -70,7 +70,7 @@ const HeroSection = () => {
           <img
             src={laptopMockup}
             alt="seQRets QR Qards - printed secret backup cards"
-            className="h-auto w-full max-w-[650px] object-contain xl:max-w-[775px]"
+            className="h-auto w-full max-w-[520px] object-contain xl:max-w-[620px]"
           />
         </div>
 
