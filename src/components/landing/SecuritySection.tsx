@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { ShieldCheck, Atom, Eye, Lock } from "lucide-react";
 import argon2Code from "@/assets/argon2-code.png";
 
@@ -115,12 +116,12 @@ const SecuritySection = () => {
 
         {/* More Info Button */}
         <div className="text-center mt-10">
-          <a
-            href="/security"
+          <Link
+            to="/security"
             className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-6 py-2.5 text-sm font-semibold text-primary transition-all hover:bg-primary/20 hover:border-primary/60"
           >
             More Security Information →
-          </a>
+          </Link>
         </div>
       </div>
     </section>
