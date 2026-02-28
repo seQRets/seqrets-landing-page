@@ -87,16 +87,6 @@ const SecuritySection = () => {
           ))}
         </div>
 
-        {/* More Info Button */}
-        <div className="text-center mb-12">
-          <a
-            href="/security"
-            className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-6 py-2.5 text-sm font-semibold text-primary transition-all hover:bg-primary/20 hover:border-primary/60"
-          >
-            More Security Information →
-          </a>
-        </div>
-
         {/* Callouts */}
         <div className="mx-auto max-w-3xl grid gap-4 md:grid-cols-2">
           <div className="flex items-start gap-4 rounded-2xl border border-primary/15 bg-primary/5 p-6">
@@ -121,6 +111,16 @@ const SecuritySection = () => {
               </p>
             </div>
           </div>
+        </div>
+
+        {/* More Info Button */}
+        <div className="text-center mt-10">
+          <a
+            href="/security"
+            className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-6 py-2.5 text-sm font-semibold text-primary transition-all hover:bg-primary/20 hover:border-primary/60"
+          >
+            More Security Information →
+          </a>
         </div>
       </div>
     </section>
