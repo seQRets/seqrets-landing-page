@@ -17,8 +17,8 @@ const Index = () => {
         <HowItWorks />
         <FeaturesGrid />
         <SecuritySection />
-        <ComparisonTable />
         <DesktopCTA />
+        <ComparisonTable />
         <OpenSource />
       </main>
       <Footer />
