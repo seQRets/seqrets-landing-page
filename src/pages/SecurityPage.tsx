@@ -145,6 +145,23 @@ const SecurityPage = () => {
             </p>
           </section>
 
+          {/* Go Pro CTA */}
+          <section>
+            <div className="rounded-2xl border border-primary/30 bg-gradient-to-r from-primary/10 to-primary/5 p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+              <div>
+                <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-primary/70 mb-2">Ready to upgrade?</p>
+                <h3 className="font-display text-xl font-black text-foreground">The desktop app eliminates every browser threat vector.</h3>
+                <p className="text-sm text-muted-foreground/80 mt-1">Native Rust crypto, memory zeroization, code-signed binary — no browser required.</p>
+              </div>
+              <a
+                href="/shop"
+                className="shrink-0 inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-bold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_24px_hsl(var(--primary)/0.4)] whitespace-nowrap"
+              >
+                Go Pro! →
+              </a>
+            </div>
+          </section>
+
           {/* The Seed Phrase Question */}
           <section>
             <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-6">
@@ -214,23 +231,6 @@ const SecurityPage = () => {
                   An air-gapped machine with a verified OS that never connects to anything is more secure. seQRets doesn't claim otherwise. But for the 99% of crypto holders who don't have that setup, the choice isn't between seQRets and a perfect air-gapped workflow. <strong className="text-foreground">It's between seQRets and a sticky note.</strong>
                 </p>
               </div>
-            </div>
-          </section>
-
-          {/* Go Pro CTA */}
-          <section>
-            <div className="rounded-2xl border border-primary/30 bg-gradient-to-r from-primary/10 to-primary/5 p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-              <div>
-                <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-primary/70 mb-2">Ready to upgrade?</p>
-                <h3 className="font-display text-xl font-black text-foreground">The desktop app eliminates every browser threat vector.</h3>
-                <p className="text-sm text-muted-foreground/80 mt-1">Native Rust crypto, memory zeroization, code-signed binary — no browser required.</p>
-              </div>
-              <a
-                href="/shop"
-                className="shrink-0 inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-bold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_24px_hsl(var(--primary)/0.4)] whitespace-nowrap"
-              >
-                Go Pro! →
-              </a>
             </div>
           </section>
 
