@@ -5,10 +5,10 @@ import navbarIcon from "@/assets/navbar-icon.png";
 
 const navLinks = [
   { label: "Home", href: "/", isRoute: true },
-  { label: "Features", href: "#features" },
   { label: "How It Works", href: "#how-it-works" },
+  { label: "Features", href: "#features" },
   { label: "Security", href: "#security" },
-  { label: "Desktop App", href: "#desktop" },
+  { label: "Go Pro", href: "#desktop" },
   { label: "Shop", href: "/shop", isRoute: true },
 ];
 
