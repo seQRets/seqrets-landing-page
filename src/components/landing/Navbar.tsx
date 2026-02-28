@@ -4,7 +4,7 @@ import { Menu, X } from "lucide-react";
 import navbarIcon from "@/assets/navbar-icon.png";
 
 const navLinks = [
-  { label: "Home", href: "/", isRoute: true },
+  { label: "Home", href: "#top", isScroll: true },
   { label: "How It Works", href: "#how-it-works" },
   { label: "Features", href: "#features" },
   { label: "Security", href: "#security" },
@@ -25,7 +25,16 @@ const Navbar = () => {
         {/* Desktop nav */}
         <div className="hidden items-center gap-10 md:flex">
           {navLinks.map((link) =>
-            link.isRoute ? (
+            link.isScroll ? (
+              <a
+                key={link.href}
+                href="#"
+                onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                className="text-[13px] font-medium text-foreground/60 transition-colors hover:text-foreground"
+              >
+                {link.label}
+              </a>
+            ) : link.isRoute ? (
               <Link
                 key={link.href}
                 to={link.href}
@@ -64,7 +73,16 @@ const Navbar = () => {
       {open && (
         <div className="bg-background/95 backdrop-blur-2xl px-4 pb-6 pt-4 md:hidden">
           {navLinks.map((link) =>
-            link.isRoute ? (
+            link.isScroll ? (
+              <a
+                key={link.href}
+                href="#"
+                onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); setOpen(false); }}
+                className="block py-3 text-sm font-medium text-foreground/60 transition-colors hover:text-foreground"
+              >
+                {link.label}
+              </a>
+            ) : link.isRoute ? (
               <Link
                 key={link.href}
                 to={link.href}
