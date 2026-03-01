@@ -1,15 +1,14 @@
-import { Monitor, RefreshCw, Usb, Github, ShoppingBag } from "lucide-react";
+import { Monitor, RefreshCw, CreditCard, Usb, Github, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
 import appDark from "@/assets/app-dark.png";
 import appLight from "@/assets/app-light.png";
-import smartcardGold from "@/assets/smartcard-gold.png";
 
 const perks = [
   { icon: Monitor, label: "Code-signed binary for macOS, Windows & Linux" },
   { icon: RefreshCw, label: "Automatic updates with delta patching" },
-  { icon: null, label: "NFC smart card reader integration", image: true },
+  { icon: CreditCard, label: "NFC smart card reader integration" },
   { icon: Usb, label: "Portable USB card reader included" },
-] as { icon: React.ElementType | null; label: string; image?: boolean }[];
+];
 
 const DesktopCTA = () => {
   return (
@@ -55,11 +54,7 @@ const DesktopCTA = () => {
               {perks.map((p) => (
                 <div key={p.label} className="flex items-center gap-3 rounded-2xl border border-border/30 bg-card/20 p-5 transition-all duration-300 hover:bg-card/40">
                   <div className="rounded-lg bg-primary/10 p-2 flex items-center justify-center">
-                    {p.image ? (
-                      <img src={smartcardGold} alt="NFC smart card" className="h-4 w-auto" />
-                    ) : p.icon ? (
-                      <p.icon className="h-4 w-4 text-primary" />
-                    ) : null}
+                    <p.icon className="h-4 w-4 text-primary" />
                   </div>
                   <span className="text-sm text-foreground/80">{p.label}</span>
                 </div>
