@@ -77,7 +77,7 @@ const HeroSection = () => {
           <img
             src={smartcard}
             alt="seQRets NFC smart card"
-            className="absolute bottom-10 right-4 xl:right-8 w-44 xl:w-56 drop-shadow-2xl rotate-[-8deg] opacity-95 pointer-events-none"
+            className="absolute bottom-6 left-1/2 -translate-x-1/2 w-64 xl:w-80 drop-shadow-2xl rotate-[-8deg] opacity-95 pointer-events-none"
           />
         </div>
 
