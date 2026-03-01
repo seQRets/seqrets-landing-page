@@ -12,13 +12,13 @@ const perks = [
 
 const DesktopCTA = () => {
   return (
-    <section id="desktop" className="relative py-32 md:py-40">
+    <section id="desktop" className="relative py-20 md:py-28">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
 
       <div className="container mx-auto px-4 md:px-8">
         <div className="mx-auto max-w-4xl">
           {/* Section label — matches other sections */}
-          <div className="mb-16 text-center">
+          <div className="mb-10 text-center">
             <p className="font-display text-xs font-bold uppercase tracking-[0.2em] text-primary/70 mb-4">Desktop App</p>
             <h2 className="font-display text-4xl font-black md:text-6xl text-foreground tracking-tight">
               The Official
