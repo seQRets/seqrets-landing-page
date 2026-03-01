@@ -11,6 +11,7 @@ const FaqItem = ({ question, answer }: {question: string;answer: string;}) => {
     <div className="rounded-2xl border border-border/30 bg-card/20 overflow-hidden">
       <button
         onClick={() => setOpen(!open)}
+        aria-expanded={open}
         className="w-full flex items-center justify-between gap-4 p-6 text-left hover:bg-card/40 transition-colors">
 
         <span className="font-display text-sm font-bold text-foreground">{question}</span>
@@ -144,12 +145,12 @@ const SecurityPage = () => {
                 <h3 className="font-display text-xl font-black text-foreground">The desktop app eliminates every browser threat vector.</h3>
                 <p className="text-sm text-muted-foreground/80 mt-1">Native Rust crypto, memory zeroization, code-signed binary — no browser required.</p>
               </div>
-              <a
-                href="/shop"
+              <Link
+                to="/shop"
                 className="shrink-0 inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-bold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_24px_hsl(var(--primary)/0.4)] whitespace-nowrap">
 
                 Go Pro! →
-              </a>
+              </Link>
             </div>
           </section>
 
@@ -302,12 +303,12 @@ const SecurityPage = () => {
               <p className="text-muted-foreground/80 max-w-md mx-auto mb-8">
                 The desktop app gives you native Rust cryptography, memory zeroization, and zero browser attack surface. Your secrets deserve it.
               </p>
-              <a
-                href="/shop"
+              <Link
+                to="/shop"
                 className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3.5 text-sm font-bold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_32px_hsl(var(--primary)/0.5)]">
 
                 Go Pro! →
-              </a>
+              </Link>
             </div>
           </section>
         </div>

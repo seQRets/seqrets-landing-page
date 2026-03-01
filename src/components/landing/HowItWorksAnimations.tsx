@@ -240,7 +240,7 @@ export const QRCodeAnimation = () => {
           <motion.div
             key={i}
             className="absolute w-4 h-4 border-primary/40"
-            style={style as any}
+            style={style as React.CSSProperties}
             animate={{
               borderColor: hovered
                 ? "hsl(var(--primary) / 0.6)"

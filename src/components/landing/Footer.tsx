@@ -41,9 +41,9 @@ const Footer = () => {
             <h4 className="font-display text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60">Product</h4>
             <ul className="space-y-3">
               <li><a href="https://app.seqrets.app" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground">Web App (Free)</a></li>
-              <li><a href="#desktop" className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground">Desktop App</a></li>
+              <li><Link to="/#desktop" className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground">Desktop App</Link></li>
               <li><Link to="/shop" className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground">Shop</Link></li>
-              <li><a href="#features" className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground">Features</a></li>
+              <li><Link to="/#features" className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground">Features</Link></li>
             </ul>
           </div>
 
@@ -51,7 +51,7 @@ const Footer = () => {
           <div className="space-y-4">
             <h4 className="font-display text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60">Learn</h4>
             <ul className="space-y-3">
-              <li><a href="#how-it-works" className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground">How It Works</a></li>
+              <li><Link to="/#how-it-works" className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground">How It Works</Link></li>
               <li><Link to="/how-it-works" className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground">Deep Dive</Link></li>
               <li><Link to="/security" className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground">Security</Link></li>
               <li>
@@ -104,7 +104,7 @@ const Footer = () => {
         {/* Bottom bar */}
         <div className="border-t border-border/15 pt-8 flex flex-col items-center gap-3 text-center">
           <p className="text-xs text-muted-foreground/50">
-            © 2026 seQRets. All rights reserved. Licensed under AGPLv3.
+            © {new Date().getFullYear()} seQRets. All rights reserved. Licensed under AGPLv3.
           </p>
           <p className="text-[11px] text-muted-foreground/30">
             Your security is your responsibility. Use with caution.

@@ -26,13 +26,20 @@ const SecuritySection = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      if (imageRef.current) {
-        const rect = imageRef.current.getBoundingClientRect();
-        const windowH = window.innerHeight;
-        // Progress from 0 (entering viewport) to 1 (leaving viewport)
-        const progress = Math.max(0, Math.min(1, 1 - (rect.bottom / (windowH + rect.height))));
-        setScrollProgress(progress);
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(() => {
+          if (imageRef.current) {
+            const rect = imageRef.current.getBoundingClientRect();
+            const windowH = window.innerHeight;
+            // Progress from 0 (entering viewport) to 1 (leaving viewport)
+            const progress = Math.max(0, Math.min(1, 1 - (rect.bottom / (windowH + rect.height))));
+            setScrollProgress(progress);
+          }
+          ticking = false;
+        });
       }
     };
     window.addEventListener("scroll", handleScroll, { passive: true });

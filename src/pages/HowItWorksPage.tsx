@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Shield, QrCode, Users, CreditCard, MessageSquare, ArrowLeft, X } from "lucide-react";
+import { Shield, QrCode, Users, CreditCard, MessageSquare, X } from "lucide-react";
 import screenshotRestore from "@/assets/screenshot-restore.png";
 import screenshotBob from "@/assets/screenshot-bob.png";
 import screenshotSecure from "@/assets/screenshot-secure.png";

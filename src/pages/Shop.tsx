@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import navbarIcon from "@/assets/navbar-icon.png";
-import heroLogo from "@/assets/hero-logo.png";
 
 interface Product {
   name: string;

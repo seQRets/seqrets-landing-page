@@ -75,7 +75,12 @@ const Navbar = () => {
         </a>
 
         {/* Mobile/tablet toggle */}
-        <button className="lg:hidden text-foreground" onClick={() => setOpen(!open)}>
+        <button
+          className="lg:hidden text-foreground"
+          onClick={() => setOpen(!open)}
+          aria-label="Toggle navigation menu"
+          aria-expanded={open}
+        >
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
