@@ -34,7 +34,7 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden items-center gap-10 md:flex">
+        <div className="hidden items-center gap-6 lg:flex">
           {navLinks.map((link) =>
             link.isScroll ? (
               <a
@@ -69,13 +69,13 @@ const Navbar = () => {
           href="https://app.seqrets.app"
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden md:inline-flex items-center rounded-full bg-primary px-5 py-2 text-[13px] font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_20px_hsl(var(--primary)/0.3)]"
+          className="hidden lg:inline-flex items-center rounded-full bg-primary px-5 py-2 text-[13px] font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_20px_hsl(var(--primary)/0.3)]"
         >
           Get Started
         </a>
 
-        {/* Mobile toggle */}
-        <button className="md:hidden text-foreground" onClick={() => setOpen(!open)}>
+        {/* Mobile/tablet toggle */}
+        <button className="lg:hidden text-foreground" onClick={() => setOpen(!open)}>
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
