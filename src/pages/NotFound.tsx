@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import brokenQr from "@/assets/404-qr.png";
+import notFoundBg from "@/assets/404-bg.png";
 
 const NotFound = () => {
   const location = useLocation();
@@ -11,29 +11,15 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-background text-foreground px-6 text-center">
-      <img
-        src={brokenQr}
-        alt="Broken QR code looking sad"
-        className="w-48 h-48 mb-8 opacity-90"
-      />
-      <p className="text-sm font-semibold tracking-widest uppercase text-muted-foreground mb-3">
-        Error 404
-      </p>
-      <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-4">
-        This secret doesn't exist.
-      </h1>
-      <p className="text-muted-foreground max-w-md mb-2">
-        Either someone hid it <em>too</em> well, or this page never existed in the first place.
-      </p>
-      <p className="text-muted-foreground/60 text-sm mb-10">
-        Even our QR codes are confused.
-      </p>
+    <div
+      className="relative flex min-h-screen flex-col items-center justify-end bg-cover bg-center pb-16 px-6 text-center"
+      style={{ backgroundImage: `url(${notFoundBg})` }}
+    >
       <Link
         to="/"
-        className="inline-flex items-center gap-2 rounded-full bg-foreground text-background px-6 py-3 text-sm font-semibold hover:opacity-80 transition-opacity"
+        className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-8 py-4 text-base font-bold shadow-lg hover:opacity-90 transition-opacity"
       >
-        Return to Home
+        Ooops! Get Me Outa Here!
       </Link>
     </div>
   );
