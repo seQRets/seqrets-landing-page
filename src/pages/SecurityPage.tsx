@@ -44,14 +44,14 @@ const SecurityPage = () => {
         </Link>
 
         {/* Header */}
-        <div className="mb-16">
+        <div className="mb-16 text-center">
           <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground/70 mb-5">
             Trust & Transparency
           </p>
           <h1 className="font-display text-4xl font-black md:text-6xl text-foreground tracking-tight mb-6">
             Security at <span className="text-gradient">seQRets</span>
           </h1>
-          <p className="text-lg text-muted-foreground/80 max-w-2xl">
+          <p className="text-lg text-muted-foreground/80 max-w-2xl mx-auto">
             Understanding the threat model, the architecture, and why your secrets are safe.
           </p>
         </div>
@@ -60,7 +60,7 @@ const SecurityPage = () => {
 
           {/* How seQRets Protects Your Secrets */}
           <section>
-            <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-8 flex items-center gap-3">
+            <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-8 flex items-center justify-center gap-3">
               <ShieldCheck className="h-7 w-7 text-primary shrink-0" />
               How seQRets Protects Your Secrets
             </h2>
@@ -107,7 +107,7 @@ const SecurityPage = () => {
 
           {/* Threat Comparison Table */}
           <section>
-            <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
+            <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4 text-center">
               Web App vs. Desktop App
             </h2>
             <p className="text-muted-foreground/80 mb-6">
@@ -164,7 +164,7 @@ const SecurityPage = () => {
 
           {/* The Seed Phrase Question */}
           <section>
-            <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-6">
+            <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-6 text-center">
               The Seed Phrase Question
             </h2>
 
@@ -236,7 +236,7 @@ const SecurityPage = () => {
 
           {/* FAQ */}
           <section>
-            <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-8">
+            <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-8 text-center">
               Frequently Asked Questions
             </h2>
             <div className="space-y-2">
