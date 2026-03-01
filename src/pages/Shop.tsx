@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import navbarIcon from "@/assets/navbar-icon.png";
+import smartcardSilver from "@/assets/smartcard-silver.png";
 
 interface Product {
   name: string;
@@ -187,6 +188,13 @@ const Shop = () => {
               <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto leading-relaxed">
                 Hardware, software, and kits to protect your secrets — from everyday backups to generational inheritance.
               </p>
+            </div>
+            <div className="mt-12 flex justify-center">
+              <img
+                src={smartcardSilver}
+                alt="seQRets branded smart card"
+                className="w-72 md:w-96 drop-shadow-2xl rounded-xl"
+              />
             </div>
           </div>
         </section>
