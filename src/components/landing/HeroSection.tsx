@@ -2,6 +2,7 @@ import { ArrowRight, Clock } from "lucide-react";
 import heroLogo from "@/assets/hero-logo.png";
 import laptopMockup from "@/assets/qr-qards.png";
 import heroBg from "@/assets/hero-bg.png";
+import smartcard from "@/assets/smartcard-no-bg.png";
 
 const HeroSection = () => {
   return (
@@ -65,12 +66,18 @@ const HeroSection = () => {
           </div>
         </div>
 
-        {/* Right column — product image */}
-        <div className="hidden lg:flex lg:w-1/2 items-center justify-center py-16 pr-8 lg:pr-12">
+        {/* Right column — product images */}
+        <div className="hidden lg:flex lg:w-1/2 items-center justify-center py-16 pr-8 lg:pr-12 relative">
           <img
             src={laptopMockup}
             alt="seQRets QR Qards - printed secret backup cards"
             className="h-auto w-full max-w-[650px] object-contain xl:max-w-[775px]"
+          />
+          {/* Smart card — floating bottom-right over QR cards */}
+          <img
+            src={smartcard}
+            alt="seQRets NFC smart card"
+            className="absolute bottom-10 right-4 xl:right-8 w-44 xl:w-56 drop-shadow-2xl rotate-[-8deg] opacity-95 pointer-events-none"
           />
         </div>
 
