@@ -18,10 +18,10 @@ const HeroSection = () => {
       />
 
       {/* Two-column layout */}
-      <div className="relative z-10 flex w-full items-center pt-16" style={{ minHeight: "90vh" }}>
+      <div className="relative z-10 flex w-full flex-col items-center pt-16 lg:flex-row" style={{ minHeight: "90vh" }}>
 
         {/* Left column — text content */}
-        <div className="flex w-full flex-col items-center justify-center px-8 py-16 text-center md:w-1/2 lg:px-16 xl:px-24">
+        <div className="flex w-full flex-col items-center justify-center px-8 py-16 text-center lg:w-1/2 lg:px-16 xl:px-24">
           <img src={heroLogo} alt="seQRets logo" className="mb-10 h-[112px] w-auto md:h-[151px]" />
 
           <h1 className="font-display text-5xl font-black leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
@@ -66,7 +66,7 @@ const HeroSection = () => {
         </div>
 
         {/* Right column — product image */}
-        <div className="hidden md:flex md:w-1/2 items-center justify-center py-16 pr-8 lg:pr-12">
+        <div className="hidden lg:flex lg:w-1/2 items-center justify-center py-16 pr-8 lg:pr-12">
           <img
             src={laptopMockup}
             alt="seQRets QR Qards - printed secret backup cards"
