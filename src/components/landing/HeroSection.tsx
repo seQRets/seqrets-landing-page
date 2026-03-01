@@ -22,7 +22,7 @@ const HeroSection = () => {
 
         {/* Left column — text content */}
         <div className="flex w-full flex-col items-center justify-center px-8 py-16 text-center md:w-1/2 lg:px-16 xl:px-24">
-          <img src={heroLogo} alt="seQRets logo" className="mb-10 h-[80px] w-auto md:h-[108px]" />
+          <img src={heroLogo} alt="seQRets logo" className="mb-10 h-[112px] w-auto md:h-[151px]" />
 
           <h1 className="font-display text-5xl font-black leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
             <span className="text-foreground">Protect What</span>
