@@ -2,7 +2,7 @@ import { Github, Scale, Users } from "lucide-react";
 
 const OpenSource = () => {
   return (
-    <section className="relative py-32 md:py-40 bg-section-alt">
+    <section className="relative py-20 md:py-28 bg-section-alt">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
 
       <div className="container mx-auto px-4 md:px-8">
