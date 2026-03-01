@@ -5,30 +5,30 @@ import { ShieldCheck, Lock, Atom, Eye, Mail } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 
-const FaqItem = ({ question, answer }: { question: string; answer: string }) => {
+const FaqItem = ({ question, answer }: {question: string;answer: string;}) => {
   const [open, setOpen] = useState(false);
   return (
     <div className="rounded-2xl border border-border/30 bg-card/20 overflow-hidden">
       <button
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between gap-4 p-6 text-left hover:bg-card/40 transition-colors"
-      >
+        className="w-full flex items-center justify-between gap-4 p-6 text-left hover:bg-card/40 transition-colors">
+
         <span className="font-display text-sm font-bold text-foreground">{question}</span>
         <ChevronDown
-          className={`h-4 w-4 text-muted-foreground shrink-0 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-        />
+          className={`h-4 w-4 text-muted-foreground shrink-0 transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
+
       </button>
-      {open && (
-        <div className="px-6 pb-6 text-sm text-muted-foreground/80 border-t border-border/20 pt-4">
+      {open &&
+      <div className="px-6 pb-6 text-sm text-muted-foreground/80 border-t border-border/20 pt-4">
           {answer}
         </div>
-      )}
-    </div>
-  );
+      }
+    </div>);
+
 };
 
 const SecurityPage = () => {
-  useEffect(() => { window.scrollTo(0, 0); }, []);
+  useEffect(() => {window.scrollTo(0, 0);}, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -115,19 +115,19 @@ const SecurityPage = () => {
                 </thead>
                 <tbody className="divide-y divide-border/20">
                   {[
-                    ["Malicious browser extensions", "Exposed — extensions can read DOM, intercept clipboard, log keystrokes", "Immune — Tauri's WebView loads no extensions"],
-                    ["JavaScript supply-chain attack", "Possible — code served from CDN at load time", "Eliminated — bundled, code-signed binary"],
-                    ["Memory persistence", "JavaScript GC — timing unpredictable, strings immutable", "Rust zeroization — compiler-fence ensures memory is cleared"],
-                    ["Binary tampering", "N/A", "Detected — code-signed, integrity verified at install"],
-                    ["Offline operation", "After initial load only", "Always — no network required"],
-                    ["Key derivation", "JavaScript (noble/hashes)", "Native Rust — argon2, chacha20poly1305 crates"],
-                  ].map(([threat, web, desktop]) => (
-                    <tr key={threat} className="hover:bg-card/20 transition-colors">
+                  ["Malicious browser extensions", "Exposed — extensions can read DOM, intercept clipboard, log keystrokes", "Immune — Tauri's WebView loads no extensions"],
+                  ["JavaScript supply-chain attack", "Possible — code served from CDN at load time", "Eliminated — bundled, code-signed binary"],
+                  ["Memory persistence", "JavaScript GC — timing unpredictable, strings immutable", "Rust zeroization — compiler-fence ensures memory is cleared"],
+                  ["Binary tampering", "N/A", "Detected — code-signed, integrity verified at install"],
+                  ["Offline operation", "After initial load only", "Always — no network required"],
+                  ["Key derivation", "JavaScript (noble/hashes)", "Native Rust — argon2, chacha20poly1305 crates"]].
+                  map(([threat, web, desktop]) =>
+                  <tr key={threat} className="hover:bg-card/20 transition-colors">
                       <td className="p-4 font-medium text-foreground">{threat}</td>
                       <td className="p-4 text-muted-foreground/70">{web}</td>
                       <td className="p-4 text-primary/90 font-medium">{desktop}</td>
                     </tr>
-                  ))}
+                  )}
                 </tbody>
               </table>
             </div>
@@ -146,8 +146,8 @@ const SecurityPage = () => {
               </div>
               <a
                 href="/shop"
-                className="shrink-0 inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-bold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_24px_hsl(var(--primary)/0.4)] whitespace-nowrap"
-              >
+                className="shrink-0 inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-bold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_24px_hsl(var(--primary)/0.4)] whitespace-nowrap">
+
                 Go Pro! →
               </a>
             </div>
@@ -162,8 +162,8 @@ const SecurityPage = () => {
             <div className="space-y-6">
               <div>
                 <h3 className="font-display text-lg font-bold text-foreground mb-2">"Why does my seed phrase touch a connected device?"</h3>
-                <p className="text-muted-foreground/80">
-                  It has to — and the design accounts for it. Your secret enters memory, gets encrypted under a key derived from your password, is split into Shamir shares, rendered as QR codes, and then destroyed. In the desktop app, Rust zeroes the memory with compiler-fence zeroization. The entire operation takes seconds.
+                <p className="text-muted-foreground/80">It has to — and the design accounts for it. Your secret briefly enters memory, gets encrypted under a key derived from your password, is split into Shamir shares, rendered as QR codes, and then destroyed. In the desktop app, Rust zeroes the memory with compiler-fence zeroization. The entire operation takes seconds.
+
                 </p>
                 <p className="text-muted-foreground/80 mt-3">
                   After that, the device holds <strong className="text-foreground">zero shares and zero copies of your secret.</strong> There is nothing left to steal.
@@ -178,16 +178,16 @@ const SecurityPage = () => {
                 <p className="text-muted-foreground/80 mb-3">If that's your situation, no tool protects you — air-gapped or otherwise:</p>
                 <ul className="space-y-2 text-muted-foreground/80 ml-4">
                   {[
-                    "That same malware can keylog your hardware wallet PIN",
-                    "It can screenshot your paper seed when you check it",
-                    "It can modify clipboard contents when you copy an address",
-                    "It can replace firmware on your hardware wallet during updates",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-2">
+                  "That same malware can keylog your hardware wallet PIN",
+                  "It can screenshot your paper seed when you check it",
+                  "It can modify clipboard contents when you copy an address",
+                  "It can replace firmware on your hardware wallet during updates"].
+                  map((item) =>
+                  <li key={item} className="flex items-start gap-2">
                       <span className="text-primary mt-1">•</span>
                       <span>{item}</span>
                     </li>
-                  ))}
+                  )}
                 </ul>
                 <p className="text-muted-foreground/80 mt-3 italic">
                   The threat model isn't "does the secret touch a device?" It's "is the device compromised at that moment?"
@@ -199,17 +199,17 @@ const SecurityPage = () => {
                 <p className="text-muted-foreground/80 mb-3">Most people aren't using air-gapped machines. They're protecting their seed phrases with:</p>
                 <ul className="space-y-2 text-muted-foreground/80 ml-4 mb-4">
                   {[
-                    "A piece of paper in a desk drawer (fire, theft, single point of failure)",
-                    "A screenshot synced to iCloud or Google Photos",
-                    "A password manager (centralized target, corporate breach risk)",
-                    'A plaintext file called "seed.txt"',
-                    "Nothing at all",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-2">
+                  "A piece of paper in a desk drawer (fire, theft, single point of failure)",
+                  "A screenshot synced to iCloud or Google Photos",
+                  "A password manager (centralized target, corporate breach risk)",
+                  'A plaintext file called "seed.txt"',
+                  "Nothing at all"].
+                  map((item) =>
+                  <li key={item} className="flex items-start gap-2">
                       <span className="text-destructive mt-1">•</span>
                       <span>{item}</span>
                     </li>
-                  ))}
+                  )}
                 </ul>
                 <p className="text-muted-foreground/80">
                   seQRets replaces all of that with encrypted, threshold-split backups distributed across multiple locations. Even if one share is physically stolen, it's cryptographically useless without meeting the threshold.
@@ -232,45 +232,45 @@ const SecurityPage = () => {
             </h2>
             <div className="space-y-2">
               {[
-                {
-                  q: "Is seQRets open source?",
-                  a: "Yes. The full source code is publicly available on GitHub. You can audit the encryption, the splitting logic, and every dependency. There is nothing hidden.",
-                },
-                {
-                  q: "Does seQRets phone home or collect telemetry?",
-                  a: "No. There are no analytics, no tracking pixels, no error reporting services. The app makes exactly one optional network call — to fetch the current Bitcoin price for display purposes. That's it. Even that can be disabled by going offline.",
-                },
-                {
-                  q: "Where is my API key for Bob AI stored?",
-                  a: "Locally on your device only. It is never sent anywhere except directly to Google's Gemini API when you ask Bob a question. It is never included in any other request. You can remove it at any time from the settings.",
-                },
-                {
-                  q: "Can seQRets recover my secret if I lose my shares?",
-                  a: "No. seQRets has no server, no account system, and no backup of your data. If you lose enough shares to fall below your chosen threshold, your secret is gone. This is by design — it means nobody else can recover it either.",
-                },
-                {
-                  q: "What happens if the seQRets website or app goes offline?",
-                  a: "The web app works fully offline once loaded. The desktop app has no network dependency at all. Even if the project disappeared entirely, anyone with the source code could reconstruct the recovery tool. The cryptographic standards used are open, well-documented, and implemented in dozens of other libraries.",
-                },
-                {
-                  q: "What's the difference between the web app and desktop app?",
-                  a: "Both use the same encryption and splitting logic. The desktop app adds native Rust cryptography, memory zeroization, browser extension immunity, code signing, and features like the Inheritance Plan builder and JavaCard smart card support.",
-                },
-                {
-                  q: "Is the Inheritance Plan stored somewhere?",
-                  a: "No. The Inheritance Plan is encrypted and exported as a file or written to a JavaCard. seQRets does not store any copy. If you lose all copies of your encrypted plan, it cannot be recovered.",
-                },
-                {
-                  q: "What cryptographic libraries does seQRets use?",
-                  a: "Web: @noble/ciphers and @noble/hashes by Paul Miller — audited, zero-dependency JavaScript implementations. Desktop: Native Rust crates — argon2, chacha20poly1305, and zeroize from the RustCrypto project.",
-                },
-                {
-                  q: "Has seQRets been audited?",
-                  a: "Not yet by a third-party firm. The code is open source and uses well-audited cryptographic primitives. A formal audit is on the roadmap. In the meantime, we encourage independent review — the codebase is intentionally small and readable.",
-                },
-              ].map(({ q, a }) => (
-                <FaqItem key={q} question={q} answer={a} />
-              ))}
+              {
+                q: "Is seQRets open source?",
+                a: "Yes. The full source code is publicly available on GitHub. You can audit the encryption, the splitting logic, and every dependency. There is nothing hidden."
+              },
+              {
+                q: "Does seQRets phone home or collect telemetry?",
+                a: "No. There are no analytics, no tracking pixels, no error reporting services. The app makes exactly one optional network call — to fetch the current Bitcoin price for display purposes. That's it. Even that can be disabled by going offline."
+              },
+              {
+                q: "Where is my API key for Bob AI stored?",
+                a: "Locally on your device only. It is never sent anywhere except directly to Google's Gemini API when you ask Bob a question. It is never included in any other request. You can remove it at any time from the settings."
+              },
+              {
+                q: "Can seQRets recover my secret if I lose my shares?",
+                a: "No. seQRets has no server, no account system, and no backup of your data. If you lose enough shares to fall below your chosen threshold, your secret is gone. This is by design — it means nobody else can recover it either."
+              },
+              {
+                q: "What happens if the seQRets website or app goes offline?",
+                a: "The web app works fully offline once loaded. The desktop app has no network dependency at all. Even if the project disappeared entirely, anyone with the source code could reconstruct the recovery tool. The cryptographic standards used are open, well-documented, and implemented in dozens of other libraries."
+              },
+              {
+                q: "What's the difference between the web app and desktop app?",
+                a: "Both use the same encryption and splitting logic. The desktop app adds native Rust cryptography, memory zeroization, browser extension immunity, code signing, and features like the Inheritance Plan builder and JavaCard smart card support."
+              },
+              {
+                q: "Is the Inheritance Plan stored somewhere?",
+                a: "No. The Inheritance Plan is encrypted and exported as a file or written to a JavaCard. seQRets does not store any copy. If you lose all copies of your encrypted plan, it cannot be recovered."
+              },
+              {
+                q: "What cryptographic libraries does seQRets use?",
+                a: "Web: @noble/ciphers and @noble/hashes by Paul Miller — audited, zero-dependency JavaScript implementations. Desktop: Native Rust crates — argon2, chacha20poly1305, and zeroize from the RustCrypto project."
+              },
+              {
+                q: "Has seQRets been audited?",
+                a: "Not yet by a third-party firm. The code is open source and uses well-audited cryptographic primitives. A formal audit is on the roadmap. In the meantime, we encourage independent review — the codebase is intentionally small and readable."
+              }].
+              map(({ q, a }) =>
+              <FaqItem key={q} question={q} answer={a} />
+              )}
             </div>
           </section>
 
@@ -304,8 +304,8 @@ const SecurityPage = () => {
               </p>
               <a
                 href="/shop"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3.5 text-sm font-bold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_32px_hsl(var(--primary)/0.5)]"
-              >
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3.5 text-sm font-bold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_32px_hsl(var(--primary)/0.5)]">
+
                 Go Pro! →
               </a>
             </div>
@@ -313,8 +313,8 @@ const SecurityPage = () => {
         </div>
       </main>
       <Footer />
-    </div>
-  );
+    </div>);
+
 };
 
 export default SecurityPage;
