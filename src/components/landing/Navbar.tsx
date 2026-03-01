@@ -82,7 +82,7 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {open && (
-        <div className="bg-background/95 backdrop-blur-2xl px-4 pb-6 pt-4 md:hidden">
+        <div className="bg-background/95 backdrop-blur-2xl px-4 pb-6 pt-4 lg:hidden">
           {navLinks.map((link) =>
             link.isScroll ? (
               <a
