@@ -1,4 +1,5 @@
 import { Shield, QrCode, Users, CreditCard, Binary, Bot } from "lucide-react";
+import smartcardGold from "@/assets/smartcard-gold.png";
 
 const features = [
   {
@@ -55,22 +56,33 @@ const FeaturesGrid = () => {
           {features.map((f) => (
             <div
               key={f.title}
-              className={`group rounded-2xl border p-8 transition-all duration-500 hover:scale-[1.04] ${
+              className={`group rounded-2xl border transition-all duration-500 hover:scale-[1.04] overflow-hidden ${
                 f.title === "Smart Card Support" || f.title === "Inheritance Planning"
                   ? "border-primary/30 bg-primary/5 hover:border-primary/50 hover:bg-primary/10"
                   : "border-border/30 bg-card/20 hover:border-border/60 hover:bg-card/40"
               }`}
             >
-              <div className="mb-5 inline-flex rounded-xl bg-primary/10 p-3">
-                <f.icon className="h-5 w-5 text-primary" />
-              </div>
-              <h3 className="mb-2 font-display text-base font-bold text-foreground">{f.title}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground/80">{f.description}</p>
-              {(f.title === "Smart Card Support" || f.title === "Inheritance Planning") && (
-                <span className="mt-4 inline-block rounded-full bg-primary/15 px-3 py-0.5 font-display text-[11px] font-semibold text-primary tracking-wide uppercase">
-                  Desktop Exclusive
-                </span>
+              {f.title === "Smart Card Support" ? (
+                <div className="flex items-center justify-center bg-primary/5 py-6">
+                  <img src={smartcardGold} alt="seQRets NFC smart card" className="w-40 drop-shadow-xl" />
+                </div>
+              ) : (
+                <div className="px-8 pt-8">
+                  <div className="mb-5 inline-flex rounded-xl bg-primary/10 p-3">
+                    <f.icon className="h-5 w-5 text-primary" />
+                  </div>
+                </div>
               )}
+              <div className={f.title === "Smart Card Support" ? "px-8 pb-8" : "px-8 pb-8"}>
+                {f.title !== "Smart Card Support" && null}
+                <h3 className="mb-2 font-display text-base font-bold text-foreground">{f.title}</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground/80">{f.description}</p>
+                {(f.title === "Smart Card Support" || f.title === "Inheritance Planning") && (
+                  <span className="mt-4 inline-block rounded-full bg-primary/15 px-3 py-0.5 font-display text-[11px] font-semibold text-primary tracking-wide uppercase">
+                    Desktop Exclusive
+                  </span>
+                )}
+              </div>
             </div>
           ))}
         </div>
