@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ShieldCheck, Lock, Atom, Eye, Mail } from "lucide-react";
+import { ShieldCheck, Lock, Atom, Eye, Mail } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 
@@ -34,15 +34,6 @@ const SecurityPage = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       <main className="container mx-auto px-4 md:px-8 py-24 max-w-4xl">
-        {/* Back link */}
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to home
-        </Link>
-
         {/* Header */}
         <div className="mb-16 text-center">
           <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground/70 mb-5">
