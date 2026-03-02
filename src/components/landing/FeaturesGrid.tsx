@@ -78,7 +78,7 @@ const FeaturesGrid = () => {
                   </div>
                 </div>
               )}
-              <div className={f.title === "Smart Card Support" ? "px-8 pb-8" : "px-8 pb-8"}>
+              <div className={f.title === "Smart Card Support" || f.title === "Inheritance Planning" ? "px-8 pb-8 pt-5" : "px-8 pb-8"}>
                 {f.title !== "Smart Card Support" && null}
                 <h3 className="mb-2 font-display text-base font-bold text-foreground">{f.title}</h3>
                 <p className="text-sm leading-relaxed text-muted-foreground/80">{f.description}</p>
