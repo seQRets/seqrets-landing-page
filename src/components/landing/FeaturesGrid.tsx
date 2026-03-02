@@ -1,5 +1,6 @@
 import { Shield, QrCode, Users, CreditCard, Binary, Bot } from "lucide-react";
 import smartcardGold from "@/assets/smartcard-gold.png";
+import inheritanceImg from "@/assets/screenshot-inheritance.png";
 
 const features = [
   {
@@ -66,6 +67,10 @@ const FeaturesGrid = () => {
                 <div className="flex items-center justify-center bg-primary/5 py-6">
                   <img src={smartcardGold} alt="seQRets NFC smart card" className="w-40 drop-shadow-xl" />
                 </div>
+              ) : f.title === "Inheritance Planning" ? (
+                <div className="w-full h-36 overflow-hidden">
+                  <img src={inheritanceImg} alt="Inheritance Planning" className="w-full h-full object-cover object-top" />
+                </div>
               ) : (
                 <div className="px-8 pt-8">
                   <div className="mb-5 inline-flex rounded-xl bg-primary/10 p-3">
@@ -73,7 +78,7 @@ const FeaturesGrid = () => {
                   </div>
                 </div>
               )}
-              <div className={f.title === "Smart Card Support" ? "px-8 pb-8" : "px-8 pb-8"}>
+              <div className={f.title === "Smart Card Support" || f.title === "Inheritance Planning" ? "px-8 pb-8 pt-5" : "px-8 pb-8"}>
                 {f.title !== "Smart Card Support" && null}
                 <h3 className="mb-2 font-display text-base font-bold text-foreground">{f.title}</h3>
                 <p className="text-sm leading-relaxed text-muted-foreground/80">{f.description}</p>
