@@ -67,6 +67,10 @@ const FeaturesGrid = () => {
                 <div className="flex items-center justify-center bg-primary/5 py-6">
                   <img src={smartcardGold} alt="seQRets NFC smart card" className="w-40 drop-shadow-xl" />
                 </div>
+              ) : f.title === "Inheritance Planning" ? (
+                <div className="w-full h-36 overflow-hidden">
+                  <img src={inheritanceImg} alt="Inheritance Planning" className="w-full h-full object-cover object-top" />
+                </div>
               ) : (
                 <div className="px-8 pt-8">
                   <div className="mb-5 inline-flex rounded-xl bg-primary/10 p-3">
