@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Monitor, Shield, Package, CreditCard, BookOpen, Flame, Lock, Mail, Store } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import navbarIcon from "@/assets/navbar-icon.png";
 import smartcardSilver from "@/assets/smartcard-silver.png";
@@ -128,9 +127,13 @@ const ProductCard = ({ product }: { product: Product }) => (
     </ul>
     <div className="mt-auto flex items-center justify-between">
       <span className="font-display text-2xl font-bold text-foreground">{product.price}</span>
-      <Button size="sm" className="font-display font-semibold" disabled>
-        Coming Soon
-      </Button>
+      <a
+        href={`mailto:hello@seqrets.app?subject=Waitlist%3A%20${encodeURIComponent(product.name)}&body=Hi%2C%20I'm%20interested%20in%20the%20${encodeURIComponent(product.name)}.%20Please%20notify%20me%20when%20it's%20available.%20Thanks!`}
+        className="inline-flex items-center rounded-full bg-primary/20 px-4 py-2 text-xs font-semibold text-primary transition-all hover:bg-primary/30"
+      >
+        <Mail className="mr-1.5 h-3.5 w-3.5" />
+        Join Waitlist
+      </a>
     </div>
   </div>
 );
@@ -150,10 +153,13 @@ const Shop = () => {
             <Link to="/" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
               Home
             </Link>
-            <Button size="sm" className="font-display font-semibold" disabled>
+            <a
+              href="mailto:hello@seqrets.app?subject=seQRets%20Shop%20Waitlist&body=Hi%2C%20please%20notify%20me%20when%20the%20seQRets%20shop%20opens.%20Thanks!"
+              className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
+            >
               <Mail className="mr-1.5 h-3.5 w-3.5" />
               Join Waitlist
-            </Button>
+            </a>
           </div>
         </div>
       </nav>
@@ -234,10 +240,13 @@ const Shop = () => {
             <p className="text-muted-foreground mb-8 max-w-md mx-auto">
               Join the waitlist and be the first to grab a bundle at launch-day pricing.
             </p>
-            <Button size="lg" className="font-display font-semibold px-8" disabled>
+            <a
+              href="mailto:hello@seqrets.app?subject=seQRets%20Shop%20Waitlist&body=Hi%2C%20please%20notify%20me%20when%20the%20seQRets%20shop%20opens.%20Thanks!"
+              className="inline-flex items-center rounded-full bg-primary px-8 py-3.5 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_hsl(var(--primary)/0.3)]"
+            >
               <Mail className="mr-2 h-4 w-4" />
               Join the Waitlist
-            </Button>
+            </a>
           </div>
         </section>
       </main>

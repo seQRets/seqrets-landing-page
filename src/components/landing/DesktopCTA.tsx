@@ -1,5 +1,4 @@
-import { Monitor, RefreshCw, CreditCard, Usb, Github, ShoppingBag } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Monitor, RefreshCw, CreditCard, Usb, Github, Mail } from "lucide-react";
 import appDark from "@/assets/app-dark.png";
 import appLight from "@/assets/app-light.png";
 
@@ -72,13 +71,13 @@ const DesktopCTA = () => {
             </div>
 
             <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-              <Link
-                to="/shop"
+              <a
+                href="mailto:hello@seqrets.app?subject=Desktop%20App%20Waitlist&body=Hi%2C%20please%20notify%20me%20when%20the%20seQRets%20desktop%20app%20launches.%20Thanks!"
                 className="inline-flex items-center rounded-full bg-primary px-8 py-3.5 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_hsl(var(--primary)/0.3)]"
               >
-                <ShoppingBag className="mr-2 h-4 w-4" />
-                Browse the Shop
-              </Link>
+                <Mail className="mr-2 h-4 w-4" />
+                Notify Me at Launch
+              </a>
               <a
                 href="https://github.com/seQRets/seQRets-app"
                 target="_blank"

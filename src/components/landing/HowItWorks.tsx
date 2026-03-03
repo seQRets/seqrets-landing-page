@@ -8,21 +8,21 @@ const steps = [
     title: "Secure",
     animation: LockAnimation,
     description:
-      "Your secret is encrypted locally using military-grade XChaCha20-Poly1305 with a key derived from Argon2id. Nothing leaves your device.",
+      "Your secret is locked with military-grade encryption before anything else happens. Even if a share is intercepted, the data is unreadable without your passphrase. Powered by XChaCha20-Poly1305 + Argon2id.",
   },
   {
     icon: Split,
     title: "Split",
     animation: SplitAnimation,
     description:
-      "Using Shamir's Secret Sharing, the encrypted secret is mathematically split into multiple shares — each share alone reveals nothing.",
+      "No single share — and no single person — can reconstruct your secret alone. You choose how many shares to create and how many are needed to recover. Based on Shamir's Secret Sharing, a mathematically unbreakable threshold scheme.",
   },
   {
     icon: QrCode,
     title: "Share",
     animation: QRCodeAnimation,
     description:
-      "Each share becomes a Qard — a QR code you can print, store on smart cards, or give to trusted people. Reconstruct only when needed.",
+      "Print each share as a Qard — a scannable QR code — and store them in different locations, safes, or with trusted people. When the time comes, bring enough shares together to reconstruct the original.",
   },
 ];
 
@@ -41,6 +41,9 @@ const HowItWorks = () => {
             <br />
             <span className="text-gradient">Unbreakable Security</span>
           </h2>
+          <p className="mx-auto mt-6 max-w-2xl text-base text-muted-foreground/80">
+            You have secrets that would be devastating to lose — and dangerous in the wrong hands. seQRets ensures no single point of failure can compromise them.
+          </p>
         </div>
 
         <div className="mx-auto max-w-5xl grid gap-6 md:grid-cols-3">
@@ -61,16 +64,21 @@ const HowItWorks = () => {
           ))}
         </div>
 
-        <div className="mt-16 text-center space-y-5">
-          <p className="text-sm text-muted-foreground/60">
-            🔒 Everything runs 100% locally — your secrets never leave your device.
-          </p>
-          <Link
-            to="/how-it-works"
-            className="inline-flex items-center rounded-full border border-border/50 bg-card/20 px-7 py-3 font-display text-sm font-semibold text-foreground transition-all hover:bg-card/40 hover:border-primary/30"
-          >
-            Learn More →
-          </Link>
+        <div className="mt-16 space-y-5">
+          <div className="mx-auto max-w-2xl rounded-2xl border border-border/30 bg-card/20 p-6 text-left">
+            <p className="text-sm font-semibold text-foreground mb-2">Example</p>
+            <p className="text-sm leading-relaxed text-muted-foreground/80">
+              Split your Bitcoin seed phrase into 5 Qards. Give 2 to family, put 1 in a safe deposit box, keep 2 at home. Any 3 can reconstruct the original — but no attacker, lawyer, or single heir can access it alone.
+            </p>
+          </div>
+          <div className="text-center">
+            <Link
+              to="/how-it-works"
+              className="inline-flex items-center rounded-full border border-border/50 bg-card/20 px-7 py-3 font-display text-sm font-semibold text-foreground transition-all hover:bg-card/40 hover:border-primary/30"
+            >
+              Learn More →
+            </Link>
+          </div>
         </div>
       </div>
     </section>

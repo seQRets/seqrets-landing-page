@@ -4,14 +4,14 @@ import inheritanceImg from "@/assets/screenshot-inheritance.png";
 
 const features = [
   {
-    icon: Shield,
-    title: "Secure Any Secret",
-    description: "Passwords, seed phrases, private keys, documents — encrypt and split anything sensitive.",
+    icon: Binary,
+    title: "BIP-39 Optimized",
+    description: "Purpose-built for cryptocurrency seed phrases and private keys. Validates BIP-39 mnemonics and checksums automatically.",
   },
   {
-    icon: QrCode,
-    title: "QR-Coded Shares",
-    description: "Each share becomes a scannable QR code (Qard) for easy physical storage and recovery.",
+    icon: Shield,
+    title: "Secure Any Secret",
+    description: "Not just crypto. Passwords, API keys, legal documents, account credentials — if it's sensitive, seQRets can encrypt and split it.",
   },
   {
     icon: Users,
@@ -24,9 +24,9 @@ const features = [
     description: "Store shares on NFC-enabled smart cards for durable, tamper-evident physical security.",
   },
   {
-    icon: Binary,
-    title: "BIP-39 Optimized",
-    description: "Special handling for cryptocurrency seed phrases with built-in mnemonic validation and checksums.",
+    icon: QrCode,
+    title: "QR-Coded Shares",
+    description: "Each share becomes a scannable QR code (Qard) for easy physical storage and recovery.",
   },
   {
     icon: Bot,
