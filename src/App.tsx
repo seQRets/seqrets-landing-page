@@ -3,6 +3,8 @@ import Index from "./pages/Index";
 import Shop from "./pages/Shop";
 import HowItWorksPage from "./pages/HowItWorksPage";
 import SecurityPage from "./pages/SecurityPage";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 import NotFound from "./pages/NotFound";
 
 const App = () => (
@@ -12,6 +14,8 @@ const App = () => (
       <Route path="/shop" element={<Shop />} />
       <Route path="/how-it-works" element={<HowItWorksPage />} />
       <Route path="/security" element={<SecurityPage />} />
+      <Route path="/privacy" element={<PrivacyPolicy />} />
+      <Route path="/terms" element={<TermsOfService />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   </BrowserRouter>

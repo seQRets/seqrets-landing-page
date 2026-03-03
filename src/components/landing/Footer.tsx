@@ -96,6 +96,8 @@ const Footer = () => {
                   Community
                 </a>
               </li>
+              <li><Link to="/privacy" className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground">Privacy Policy</Link></li>
+              <li><Link to="/terms" className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground">Terms of Service</Link></li>
             </ul>
           </div>
 
@@ -106,6 +108,11 @@ const Footer = () => {
           <p className="text-xs text-muted-foreground/50">
             © {new Date().getFullYear()} seQRets. All rights reserved. Licensed under AGPLv3.
           </p>
+          <div className="flex items-center gap-4 text-xs text-muted-foreground/40">
+            <Link to="/privacy" className="transition-colors hover:text-foreground">Privacy</Link>
+            <span>·</span>
+            <Link to="/terms" className="transition-colors hover:text-foreground">Terms</Link>
+          </div>
           <p className="text-[11px] text-muted-foreground/30">
             Your security is your responsibility. Use with caution.
           </p>
