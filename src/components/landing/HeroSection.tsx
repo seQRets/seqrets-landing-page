@@ -38,6 +38,9 @@ const HeroSection = () => {
           <p className="mt-8 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
             Encrypt your seed phrases, passwords, and sensitive documents — then split them into printable QR code shares that you distribute to trusted people and places. Nothing stored online. Runs 100% on your device.
           </p>
+          <p className="mt-3 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
+            Desktop app coming soon — smart cards, auto-updates, inheritance planner & more.
+          </p>
 
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row md:items-start">
             <a
@@ -51,10 +54,10 @@ const HeroSection = () => {
             </a>
             <a
               href="mailto:hello@seqrets.app?subject=Desktop%20App%20Waitlist&body=Hi%2C%20please%20notify%20me%20when%20the%20seQRets%20desktop%20app%20launches.%20Thanks!"
-              className="inline-flex items-center rounded-full border border-border/50 bg-card/30 px-8 py-3.5 font-display text-sm font-semibold text-foreground transition-all hover:bg-card/60 hover:border-primary/30"
+              className="inline-flex items-center rounded-full border border-primary/40 bg-primary/15 px-8 py-3.5 font-display text-sm font-semibold text-foreground transition-all hover:bg-primary/25 hover:border-primary/60"
             >
-              <Mail className="mr-2 h-4 w-4 text-muted-foreground" />
-              Notify Me at Launch
+              <Mail className="mr-2 h-4 w-4 text-primary" />
+              Join the Desktop Waitlist
             </a>
           </div>
         </div>
