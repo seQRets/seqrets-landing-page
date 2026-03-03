@@ -15,7 +15,7 @@ const Footer = () => {
             <Link to="/" className="flex items-center gap-3">
               <img src={navbarIcon} alt="seQRets" className="h-8 w-auto rounded-md" />
             </Link>
-            <p className="text-sm text-muted-foreground/60 leading-relaxed">
+            <p className="text-sm text-muted-foreground/80 leading-relaxed">
               Protect your most sensitive information today — and ensure the right people can access it tomorrow.
             </p>
             <div className="flex items-center gap-4 pt-1">
@@ -23,13 +23,13 @@ const Footer = () => {
                 href="https://github.com/seQRets/seQRets-app"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground/40 transition-colors hover:text-foreground"
+                className="text-muted-foreground/60 transition-colors hover:text-foreground"
               >
                 <Github className="h-4 w-4" />
               </a>
               <a
                 href="mailto:hello@seqrets.app"
-                className="text-muted-foreground/40 transition-colors hover:text-foreground"
+                className="text-muted-foreground/60 transition-colors hover:text-foreground"
               >
                 <Mail className="h-4 w-4" />
               </a>
@@ -38,28 +38,27 @@ const Footer = () => {
 
           {/* Product */}
           <div className="space-y-4">
-            <h4 className="font-display text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60">Product</h4>
+            <h4 className="font-display text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/80">Product</h4>
             <ul className="space-y-3">
-              <li><a href="https://app.seqrets.app" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground">Web App (Free)</a></li>
-              <li><Link to="/#desktop" className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground">Desktop App</Link></li>
-              <li><Link to="/shop" className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground">Shop</Link></li>
-              <li><Link to="/#features" className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground">Features</Link></li>
+              <li><a href="https://app.seqrets.app" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">Web App (Free)</a></li>
+              <li><Link to="/#desktop" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">Desktop App</Link></li>
+              <li><Link to="/shop" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">Shop</Link></li>
+              <li><Link to="/#features" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">Features</Link></li>
             </ul>
           </div>
 
           {/* Learn */}
           <div className="space-y-4">
-            <h4 className="font-display text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60">Learn</h4>
+            <h4 className="font-display text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/80">Learn</h4>
             <ul className="space-y-3">
-              <li><Link to="/#how-it-works" className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground">How It Works</Link></li>
-              <li><Link to="/how-it-works" className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground">Deep Dive</Link></li>
-              <li><Link to="/security" className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground">Security</Link></li>
+              <li><Link to="/#how-it-works" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">How It Works</Link></li>
+              <li><Link to="/security" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">Security</Link></li>
               <li>
                 <a
                   href="https://github.com/seQRets/seQRets-app"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground"
+                  className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground"
                 >
                   Open Source
                 </a>
@@ -69,10 +68,10 @@ const Footer = () => {
 
           {/* Contact */}
           <div className="space-y-4">
-            <h4 className="font-display text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60">Contact</h4>
+            <h4 className="font-display text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/80">Contact</h4>
             <ul className="space-y-3">
               <li>
-                <a href="mailto:hello@seqrets.app" className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground">
+                <a href="mailto:hello@seqrets.app" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">
                   hello@seqrets.app
                 </a>
               </li>
@@ -81,7 +80,7 @@ const Footer = () => {
                   href="https://github.com/seQRets/seQRets-app/issues"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground"
+                  className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground"
                 >
                   Report an Issue
                 </a>
@@ -91,13 +90,13 @@ const Footer = () => {
                   href="https://github.com/seQRets/seQRets-app/discussions"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground"
+                  className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground"
                 >
                   Community
                 </a>
               </li>
-              <li><Link to="/privacy" className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground">Privacy Policy</Link></li>
-              <li><Link to="/terms" className="text-sm text-muted-foreground/60 transition-colors hover:text-foreground">Terms of Service</Link></li>
+              <li><Link to="/privacy" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">Privacy Policy</Link></li>
+              <li><Link to="/terms" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">Terms of Service</Link></li>
             </ul>
           </div>
 
@@ -105,15 +104,15 @@ const Footer = () => {
 
         {/* Bottom bar */}
         <div className="border-t border-border/15 pt-8 flex flex-col items-center gap-3 text-center">
-          <p className="text-xs text-muted-foreground/50">
+          <p className="text-xs text-muted-foreground/70">
             © {new Date().getFullYear()} seQRets. All rights reserved. Licensed under AGPLv3.
           </p>
-          <div className="flex items-center gap-4 text-xs text-muted-foreground/40">
+          <div className="flex items-center gap-4 text-xs text-muted-foreground/60">
             <Link to="/privacy" className="transition-colors hover:text-foreground">Privacy</Link>
             <span>·</span>
             <Link to="/terms" className="transition-colors hover:text-foreground">Terms</Link>
           </div>
-          <p className="text-[11px] text-muted-foreground/30">
+          <p className="text-[11px] text-muted-foreground/50">
             Your security is your responsibility. Use with caution.
           </p>
         </div>
