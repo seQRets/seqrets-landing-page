@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import navbarIcon from "@/assets/navbar-icon.png";
+import navbarIcon from "@/assets/navbar-icon.webp";
 
 const navLinks = [
   { label: "Home", href: "#top", isScroll: true },

@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import notFoundBg from "@/assets/404-bg.png";
+import notFoundBg from "@/assets/404-bg.webp";
 
 const NotFound = () => {
   const location = useLocation();

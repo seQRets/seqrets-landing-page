@@ -1,6 +1,6 @@
 import { Shield, QrCode, Users, CreditCard, Binary, Bot } from "lucide-react";
-import smartcardGold from "@/assets/smartcard-gold.png";
-import inheritanceImg from "@/assets/screenshot-inheritance.png";
+import smartcardGold from "@/assets/smartcard-gold.webp";
+import inheritanceImg from "@/assets/screenshot-inheritance.webp";
 
 const features = [
   {

@@ -1,7 +1,7 @@
 import { ArrowRight, Mail } from "lucide-react";
-import heroLogo from "@/assets/hero-logo.png";
-import laptopMockup from "@/assets/qr-qards.png";
-import heroBg from "@/assets/hero-bg.png";
+import heroLogo from "@/assets/hero-logo.webp";
+import laptopMockup from "@/assets/qr-qards.webp";
+import heroBg from "@/assets/hero-bg.webp";
 
 
 const HeroSection = () => {

@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Shield, QrCode, Users, CreditCard, MessageSquare, X } from "lucide-react";
-import screenshotRestore from "@/assets/screenshot-restore.png";
-import screenshotBob from "@/assets/screenshot-bob.png";
-import screenshotSecure from "@/assets/screenshot-secure.png";
-import screenshotSmartcard from "@/assets/screenshot-smartcard.png";
-import screenshotInheritance from "@/assets/screenshot-inheritance.png";
+import screenshotRestore from "@/assets/screenshot-restore.webp";
+import screenshotBob from "@/assets/screenshot-bob.webp";
+import screenshotSecure from "@/assets/screenshot-secure.webp";
+import screenshotSmartcard from "@/assets/screenshot-smartcard.webp";
+import screenshotInheritance from "@/assets/screenshot-inheritance.webp";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";

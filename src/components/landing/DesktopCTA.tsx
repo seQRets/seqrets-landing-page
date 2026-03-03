@@ -1,6 +1,6 @@
 import { Monitor, RefreshCw, CreditCard, Usb, Github, Mail } from "lucide-react";
-import appDark from "@/assets/app-dark.png";
-import appLight from "@/assets/app-light.png";
+import appDark from "@/assets/app-dark.webp";
+import appLight from "@/assets/app-light.webp";
 
 const perks = [
   { icon: Monitor, label: "Code-signed binary for macOS, Windows & Linux" },

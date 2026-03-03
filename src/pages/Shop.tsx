@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { Monitor, Shield, Package, CreditCard, BookOpen, Flame, Lock, Mail, Store } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
-import navbarIcon from "@/assets/navbar-icon.png";
-import smartcardSilver from "@/assets/smartcard-silver.png";
+import navbarIcon from "@/assets/navbar-icon.webp";
+import smartcardSilver from "@/assets/smartcard-silver.webp";
 
 interface Product {
   name: string;

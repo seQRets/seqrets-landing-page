@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ShieldCheck, Atom, Eye, Lock } from "lucide-react";
-import argon2Code from "@/assets/argon2-code.png";
+import argon2Code from "@/assets/argon2-code.webp";
 
 const techStack = [
   {
