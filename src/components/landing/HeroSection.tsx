@@ -35,7 +35,7 @@ const HeroSection = () => {
             <span className="text-gradient">Matters Most</span>
           </h1>
 
-          <p className="mt-8 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
+          <p className="mt-8 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg text-left">
             Encrypt your seed phrases, passwords, and sensitive documents — then split them into printable QR code shares that you distribute to trusted people and places. Nothing stored online. Runs 100% on your device.
           </p>
           <p className="mt-3 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg text-left">
