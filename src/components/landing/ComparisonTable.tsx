@@ -45,7 +45,9 @@ const ComparisonTable = () => {
             Compare
           </p>
           <h2 className="font-display text-4xl font-black md:text-6xl text-foreground tracking-tight">
-            Web App vs Desktop
+            Free Forever.
+            <br />
+            <span className="text-gradient">Or Go Pro.</span>
           </h2>
         </div>
 
@@ -58,6 +60,7 @@ const ComparisonTable = () => {
             </div>
             <div className="text-center font-display text-xs font-bold uppercase tracking-wider text-foreground/80">
               Desktop App
+              <span className="ml-2 rounded-full bg-accent/15 px-2 py-0.5 text-[10px] text-accent normal-case tracking-normal">One-Time Purchase</span>
             </div>
           </div>
           {rows.map((row) => (

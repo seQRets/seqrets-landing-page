@@ -57,13 +57,13 @@ const SecuritySection = () => {
             Security Architecture
           </p>
           <h2 className="font-display text-4xl font-black md:text-6xl text-foreground tracking-tight">
-            Encrypt-First,
+            No Single Point
             <br />
-            <span className="text-gradient">Zero-Knowledge</span>
+            <span className="text-gradient">of Failure</span>
           </h2>
           <p className="mx-auto mt-8 max-w-2xl text-base text-muted-foreground/80">
-            Your secret is encrypted <em>before</em> it's split. Even if every share were compromised,
-            attackers still face military-grade encryption.
+            No single lost backup, stolen share, or compromised location can expose your secrets.
+            Everything is encrypted before it's split — and no one person holds enough to unlock anything alone.
           </p>
 
           <div ref={imageRef} className="mx-auto mt-10 max-w-2xl overflow-hidden rounded-2xl h-[300px] md:h-[400px] relative">

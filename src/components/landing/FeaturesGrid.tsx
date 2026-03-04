@@ -47,9 +47,9 @@ const FeaturesGrid = () => {
             Features
           </p>
           <h2 className="font-display text-4xl font-black md:text-6xl text-foreground tracking-tight">
-            Powerful Tools,
+            Built for What You
             <br />
-            <span className="text-gradient">Zero Compromise</span>
+            <span className="text-gradient">Can't Afford to Lose</span>
           </h2>
         </div>
 
@@ -84,7 +84,7 @@ const FeaturesGrid = () => {
                 <p className="text-sm leading-relaxed text-muted-foreground/80">{f.description}</p>
                 {(f.title === "Smart Card Support" || f.title === "Inheritance Planning") && (
                   <span className="mt-4 inline-block rounded-full bg-primary/15 px-3 py-0.5 font-display text-[11px] font-semibold text-primary tracking-wide uppercase">
-                    Desktop Exclusive
+                    Pro · Desktop
                   </span>
                 )}
               </div>

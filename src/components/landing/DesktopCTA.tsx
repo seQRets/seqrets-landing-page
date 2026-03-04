@@ -1,14 +1,14 @@
-import { Monitor, RefreshCw, CreditCard, Usb, Github, Mail } from "lucide-react";
+import { ShieldCheck, Zap, CreditCard, Package, Github, Mail } from "lucide-react";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import appDark from "@/assets/app-dark.webp";
 import appLight from "@/assets/app-light.webp";
 
 const perks = [
-  { icon: Monitor, label: "Code-signed binary for macOS, Windows & Linux" },
-  { icon: RefreshCw, label: "Automatic updates with delta patching" },
-  { icon: CreditCard, label: "NFC smart card reader integration" },
-  { icon: Usb, label: "Portable USB card reader included" },
+  { icon: ShieldCheck, label: "Verified & trusted — installs cleanly on Mac, Windows & Linux" },
+  { icon: Zap, label: "Always up to date — security patches delivered automatically" },
+  { icon: CreditCard, label: "Tap to back up — store secrets on tamper-proof smart cards" },
+  { icon: Package, label: "Everything in the box — smart card & USB reader shipped to you" },
 ];
 
 const DesktopCTA = () => {
@@ -32,9 +32,9 @@ const DesktopCTA = () => {
           <div className="mb-10 text-center">
             <p className="font-display text-xs font-bold uppercase tracking-[0.2em] text-primary/70 mb-4">Desktop App</p>
             <h2 className="font-display text-4xl font-black md:text-6xl text-foreground tracking-tight">
-              The Official
+              Ready to
               <br />
-              <span className="text-gradient">Desktop App</span>
+              <span className="text-gradient">Go Pro?</span>
             </h2>
           </div>
 
@@ -78,13 +78,12 @@ const DesktopCTA = () => {
               ))}
             </div>
 
-            <div className="rounded-2xl border border-border/30 bg-card/20 p-7 text-left mb-10">
+            <div className="rounded-2xl border border-primary/20 bg-primary/5 p-7 text-left mb-10">
               <h3 className="font-display text-base font-bold text-foreground mb-2">
-                "Why pay when it's open source?"
+                One-time purchase. No subscription. Yours forever.
               </h3>
               <p className="text-sm text-muted-foreground/80 leading-relaxed">
-                You're paying for convenience — a signed, auto-updating binary with smartcard support and a portable USB reader.
-                The code is always free under AGPLv3. You can build it yourself from source anytime.
+                A code-signed desktop app with automatic updates, NFC smart card support, and a portable USB reader — all included. The source code is always free under AGPLv3.
               </p>
             </div>
 
@@ -94,7 +93,7 @@ const DesktopCTA = () => {
                 className="inline-flex items-center rounded-full bg-primary px-8 py-3.5 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_hsl(var(--primary)/0.3)]"
               >
                 <Mail className="mr-2 h-4 w-4" />
-                Notify Me at Launch
+                Join the Waitlist
               </a>
               <a
                 href="https://github.com/seQRets/seQRets-app"
