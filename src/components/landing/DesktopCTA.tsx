@@ -1,6 +1,6 @@
 import { Monitor, RefreshCw, CreditCard, Usb, Github, Mail } from "lucide-react";
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import appDark from "@/assets/app-dark.webp";
 import appLight from "@/assets/app-light.webp";
 
@@ -13,7 +13,14 @@ const perks = [
 
 const DesktopCTA = () => {
   const screenshotsRef = useRef(null);
-  const isInView = useInView(screenshotsRef, { once: true, margin: "-100px" });
+  const { scrollYProgress } = useScroll({
+    target: screenshotsRef,
+    offset: ["start end", "center center"],
+  });
+
+  const leftX = useTransform(scrollYProgress, [0, 1], [-120, 0]);
+  const rightX = useTransform(scrollYProgress, [0, 1], [120, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
 
   return (
     <section id="desktop" className="relative py-20 md:py-28">
@@ -34,17 +41,13 @@ const DesktopCTA = () => {
           <div ref={screenshotsRef} className="mb-12 grid gap-4 md:grid-cols-2 overflow-hidden">
             <motion.div
               className="overflow-hidden rounded-2xl border border-border/30"
-              initial={{ opacity: 0, x: -60 }}
-              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -60 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
+              style={{ x: leftX, opacity }}
             >
               <img src={appDark} alt="seQRets Dark Theme" className="w-full object-cover" />
             </motion.div>
             <motion.div
               className="overflow-hidden rounded-2xl border border-border/30"
-              initial={{ opacity: 0, x: 60 }}
-              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 60 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+              style={{ x: rightX, opacity }}
             >
               <img src={appLight} alt="seQRets Light Theme" className="w-full object-cover" />
             </motion.div>
