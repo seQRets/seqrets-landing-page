@@ -1,4 +1,6 @@
-import { Check, X, Minus } from "lucide-react";
+import { Check, X, Minus, Mail, Bell } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const rows = [
   { feature: "Encrypt & split secrets", web: true, desktop: true },
@@ -21,6 +23,18 @@ const StatusIcon = ({ value }: { value: boolean | string }) => {
 };
 
 const ComparisonTable = () => {
+  const [open, setOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const trimmed = email.trim();
+    if (!trimmed || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) return;
+    window.location.href = `mailto:hello@seqrets.app?subject=Desktop%20App%20Waitlist&body=Please%20add%20me%20to%20the%20waitlist%3A%20${encodeURIComponent(trimmed)}`;
+    setSubmitted(true);
+  };
+
   return (
     <section className="relative py-20 md:py-28 bg-section-alt">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
@@ -61,7 +75,92 @@ const ComparisonTable = () => {
             </div>
           ))}
         </div>
+
+        {/* CTA button */}
+        <div className="mt-10 flex justify-center">
+          <button
+            onClick={() => { setOpen(true); setSubmitted(false); setEmail(""); }}
+            className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/15 px-7 py-3 font-display text-sm font-semibold text-foreground transition-all hover:bg-primary/25 hover:border-primary/60 hover:shadow-[0_0_24px_hsl(var(--primary)/0.2)]"
+          >
+            <Bell className="h-4 w-4 text-primary" />
+            Let me know when the Desktop App launches!
+          </button>
+        </div>
       </div>
+
+      {/* Popover / modal */}
+      <AnimatePresence>
+        {open && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              className="fixed inset-0 z-50 bg-background/70 backdrop-blur-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setOpen(false)}
+            />
+            {/* Panel */}
+            <motion.div
+              className="fixed left-1/2 top-1/2 z-50 w-full max-w-sm -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-border/40 bg-card p-8 shadow-2xl"
+              initial={{ opacity: 0, scale: 0.92, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: 20 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+            >
+              {submitted ? (
+                <div className="text-center py-4">
+                  <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/15">
+                    <Check className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="font-display text-lg font-bold text-foreground mb-2">You're on the list!</h3>
+                  <p className="text-sm text-muted-foreground">We'll email you as soon as the Desktop App launches.</p>
+                  <button
+                    onClick={() => setOpen(false)}
+                    className="mt-6 rounded-full bg-primary/15 px-6 py-2 text-sm font-semibold text-primary hover:bg-primary/25 transition-colors"
+                  >
+                    Close
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <div className="mb-6">
+                    <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
+                      <Bell className="h-5 w-5 text-primary" />
+                    </div>
+                    <h3 className="font-display text-xl font-bold text-foreground mb-1">Get Notified at Launch</h3>
+                    <p className="text-sm text-muted-foreground">Drop your email and we'll ping you the moment the Desktop App is available.</p>
+                  </div>
+                  <form onSubmit={handleSubmit} className="space-y-3">
+                    <input
+                      type="email"
+                      required
+                      placeholder="you@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      maxLength={255}
+                      className="w-full rounded-xl border border-border/50 bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:border-primary/50 focus:outline-none focus:ring-1 focus:ring-primary/30 transition-colors"
+                    />
+                    <button
+                      type="submit"
+                      className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_20px_hsl(var(--primary)/0.3)]"
+                    >
+                      <Mail className="h-4 w-4" />
+                      Notify Me
+                    </button>
+                  </form>
+                  <button
+                    onClick={() => setOpen(false)}
+                    className="mt-4 w-full text-center text-xs text-muted-foreground/50 hover:text-muted-foreground transition-colors"
+                  >
+                    No thanks
+                  </button>
+                </>
+              )}
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
