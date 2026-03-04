@@ -38,7 +38,7 @@ const HeroSection = () => {
           <p className="mt-8 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
             Encrypt your seed phrases, passwords, and sensitive documents — then split them into printable QR code shares that you distribute to trusted people and places. Nothing stored online. Runs 100% on your device.
           </p>
-          <p className="mt-3 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
+          <p className="mt-3 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg text-left">
             Desktop app coming soon — smart cards, auto-updates, inheritance planner & more.
             <span className="ml-2 inline-flex items-center gap-1.5 align-middle">
               {/* macOS */}
