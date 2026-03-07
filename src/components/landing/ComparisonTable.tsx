@@ -41,7 +41,7 @@ const ComparisonTable = () => {
 
       <div className="container mx-auto px-4 md:px-8">
         <div className="text-center mb-14">
-          <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground/70 mb-5">
+          <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-gradient-silver mb-5">
             Compare
           </p>
           <h2 className="font-display text-4xl font-black md:text-6xl text-foreground tracking-tight">

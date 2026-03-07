@@ -60,6 +60,10 @@ export default {
         "section-warm": "hsl(var(--section-warm))",
         "warm-surface": "hsl(var(--warm-surface))",
         "warm-border": "hsl(var(--warm-border))",
+        "accent-crypto": "hsl(var(--accent-crypto))",
+        "accent-smart": "hsl(var(--accent-smart))",
+        "accent-inherit": "hsl(var(--accent-inherit))",
+        "accent-ai": "hsl(var(--accent-ai))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -75,10 +79,20 @@ export default {
           "0%, 100%": { opacity: "0.4" },
           "50%": { opacity: "0.8" },
         },
+        "text-cycle-in": {
+          "0%": { opacity: "0", transform: "translateY(12px)", filter: "blur(4px)" },
+          "100%": { opacity: "1", transform: "translateY(0)", filter: "blur(0px)" },
+        },
+        "text-cycle-out": {
+          "0%": { opacity: "1", transform: "translateY(0)", filter: "blur(0px)" },
+          "100%": { opacity: "0", transform: "translateY(-12px)", filter: "blur(4px)" },
+        },
       },
       animation: {
         "fade-up": "fade-up 0.6s ease-out forwards",
         "pulse-glow": "pulse-glow 3s ease-in-out infinite",
+        "text-cycle-in": "text-cycle-in 0.4s ease-out forwards",
+        "text-cycle-out": "text-cycle-out 0.3s ease-in forwards",
       },
     },
   },

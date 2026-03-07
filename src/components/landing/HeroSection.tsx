@@ -1,11 +1,29 @@
+import { useState, useEffect } from "react";
 import { ArrowRight, Mail } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 import heroLogo from "@/assets/hero-logo.webp";
 import laptopMockup from "@/assets/qr-qards.webp";
 import heroBg from "@/assets/hero-bg.webp";
 
+const keywords = [
+  { word: "seed phrases", color: "text-accent-crypto" },
+  { word: "passwords", color: "text-accent-smart" },
+  { word: "crypto keys", color: "text-accent-crypto" },
+  { word: "private notes", color: "text-accent-inherit" },
+  { word: "access codes", color: "text-accent-ai" },
+];
 
 const HeroSection = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % keywords.length);
+    }, 2800);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="relative overflow-hidden" style={{ minHeight: "90vh" }}>
 
@@ -26,7 +44,7 @@ const HeroSection = () => {
         <div className="flex w-full flex-col items-center justify-center px-8 py-16 text-center lg:w-1/2 lg:px-16 xl:px-24">
           <img src={heroLogo} alt="seQRets logo" className="mb-10 h-[112px] w-auto md:h-[151px]" />
 
-          <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground/70 mb-5">
+          <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-gradient-silver mb-5">
             Encrypt. Split. Share. On Paper or Smart Cards.
           </p>
 
@@ -35,6 +53,25 @@ const HeroSection = () => {
             <br />
             <span className="text-gradient">Matters Most</span>
           </h1>
+
+          {/* Animated keyword cycling */}
+          <div className="mt-4 h-10 flex items-center justify-center lg:justify-center overflow-hidden">
+            <span className="font-display text-lg md:text-xl text-muted-foreground/60 mr-2">
+              Protect your
+            </span>
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={keywords[currentIndex].word}
+                className={`font-display text-lg md:text-xl font-bold ${keywords[currentIndex].color}`}
+                initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: -12, filter: "blur(4px)" }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+              >
+                {keywords[currentIndex].word}
+              </motion.span>
+            </AnimatePresence>
+          </div>
 
           <p className="mt-8 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg text-left">
             What happens to your passwords, access codes, account information, and digital assets when you're no longer around? seQRets helps you protect your most sensitive information today — and make sure the right people can access it tomorrow. Nothing stored online. No KYC. No account. Nothing shared with anyone you don't choose.

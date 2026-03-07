@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ShieldCheck, Atom, Eye, Lock } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import argon2Code from "@/assets/argon2-code.webp";
 
 const techStack = [
@@ -53,7 +54,7 @@ const SecuritySection = () => {
 
       <div className="container mx-auto px-4 md:px-8">
         <div className="text-center mb-14">
-          <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground/70 mb-5">
+          <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-gradient-silver mb-5">
             Security Architecture
           </p>
           <h2 className="font-display text-4xl font-black md:text-6xl text-foreground tracking-tight">
@@ -123,12 +124,9 @@ const SecuritySection = () => {
 
         {/* More Info Button */}
         <div className="text-center mt-10">
-          <Link
-            to="/security"
-            className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-6 py-2.5 text-sm font-semibold text-primary transition-all hover:bg-primary/20 hover:border-primary/60"
-          >
-            More Security Information →
-          </Link>
+          <Button variant="tertiary" className="rounded-full font-display font-semibold" asChild>
+            <Link to="/security">More Security Information →</Link>
+          </Button>
         </div>
       </div>
     </section>

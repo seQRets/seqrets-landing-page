@@ -1,5 +1,6 @@
 import { Lock, Split, QrCode } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import { LockAnimation, SplitAnimation, QRCodeAnimation } from "./HowItWorksAnimations";
 
 const steps = [
@@ -33,7 +34,7 @@ const HowItWorks = () => {
 
       <div className="container mx-auto px-4 md:px-8">
         <div className="text-center mb-14">
-          <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground/70 mb-5">
+          <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-gradient-silver mb-5">
             How It Works
           </p>
           <h2 className="font-display text-4xl font-black md:text-6xl text-foreground tracking-tight">
@@ -72,12 +73,9 @@ const HowItWorks = () => {
             </p>
           </div>
           <div className="text-center">
-            <Link
-              to="/how-it-works"
-              className="inline-flex items-center rounded-full border border-border/50 bg-card/20 px-7 py-3 font-display text-sm font-semibold text-foreground transition-all hover:bg-card/40 hover:border-primary/30"
-            >
-              Learn More →
-            </Link>
+            <Button variant="tertiary" size="lg" className="rounded-full font-display font-semibold" asChild>
+              <Link to="/how-it-works">Learn More →</Link>
+            </Button>
           </div>
         </div>
       </div>

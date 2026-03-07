@@ -1,4 +1,5 @@
 import { Github, Scale, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const OpenSource = () => {
   return (
@@ -9,7 +10,7 @@ const OpenSource = () => {
         <div className="mx-auto max-w-4xl rounded-2xl border border-border/30 bg-card/20 p-10 md:p-14">
           <div className="grid gap-10 md:grid-cols-2 md:items-center">
             <div>
-              <p className="font-display text-xs font-bold uppercase tracking-[0.25em] text-muted-foreground/60 mb-5">
+              <p className="font-display text-xs font-bold uppercase tracking-[0.25em] text-gradient-silver mb-5">
                 Open Source & Trust
               </p>
               <h2 className="font-display text-3xl font-black md:text-4xl text-foreground mb-5 tracking-tight">
@@ -42,14 +43,23 @@ const OpenSource = () => {
                 </div>
                 <span className="text-sm text-foreground/80">Community contributions welcome</span>
               </div>
+              <Button variant="tertiary" className="mt-2 rounded-full font-display font-semibold" asChild>
+                <a href="https://github.com/seQRets/seQRets-app" target="_blank" rel="noopener noreferrer">
+                  <Github className="mr-2 h-4 w-4" />
+                  View on GitHub
+                </a>
+              </Button>
               <a
                 href="https://github.com/seQRets/seQRets-app"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-2 inline-flex items-center rounded-full border border-border/50 bg-card/20 px-6 py-2.5 font-display text-sm font-semibold text-foreground transition-all hover:bg-card/40 hover:border-primary/30"
+                className="inline-block mt-3"
               >
-                <Github className="mr-2 h-4 w-4" />
-                View on GitHub
+                <img
+                  src="https://img.shields.io/github/stars/seQRets/seQRets-app?style=flat&logo=github&label=Stars&color=d4b896&labelColor=1a1a1a"
+                  alt="GitHub stars"
+                  className="h-6 opacity-80 hover:opacity-100 transition-opacity"
+                />
               </a>
             </div>
           </div>

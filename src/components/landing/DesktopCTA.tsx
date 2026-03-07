@@ -1,6 +1,7 @@
 import { ShieldCheck, Zap, CreditCard, Package, Github, Mail } from "lucide-react";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { Button } from "@/components/ui/button";
 import appDark from "@/assets/app-dark.webp";
 import appLight from "@/assets/app-light.webp";
 
@@ -30,7 +31,7 @@ const DesktopCTA = () => {
         <div className="mx-auto max-w-4xl">
           {/* Section label — matches other sections */}
           <div className="mb-10 text-center">
-            <p className="font-display text-xs font-bold uppercase tracking-[0.2em] text-primary/70 mb-4">Desktop App</p>
+            <p className="font-display text-xs font-bold uppercase tracking-[0.2em] text-gradient-silver mb-4">Desktop App</p>
             <h2 className="font-display text-4xl font-black md:text-6xl text-foreground tracking-tight">
               Ready to
               <br />
@@ -95,15 +96,12 @@ const DesktopCTA = () => {
                 <Mail className="mr-2 h-4 w-4" />
                 Join the Waitlist
               </a>
-              <a
-                href="https://github.com/seQRets/seQRets-app"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center rounded-full border border-border/50 bg-card/20 px-8 py-3.5 font-display text-sm font-semibold text-foreground transition-all hover:bg-card/40 hover:border-primary/30"
-              >
-                <Github className="mr-2 h-4 w-4" />
-                Build from Source
-              </a>
+              <Button variant="tertiary" size="lg" className="rounded-full font-display font-semibold" asChild>
+                <a href="https://github.com/seQRets/seQRets-app" target="_blank" rel="noopener noreferrer">
+                  <Github className="mr-2 h-4 w-4" />
+                  Build from Source
+                </a>
+              </Button>
             </div>
           </div>
         </div>
