@@ -28,6 +28,7 @@ import { useCart } from "@/contexts/CartContext";
 import CartDrawer from "@/components/cart/CartDrawer";
 import CartIcon from "@/components/cart/CartIcon";
 import WaitlistButton from "@/components/WaitlistButton";
+import Footer from "@/components/landing/Footer";
 import type { LucideIcon } from "lucide-react";
 
 const slugIconMap: Record<ProductSlug, LucideIcon> = {
@@ -291,12 +292,7 @@ const Shop = () => {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-border/50 py-8">
-        <div className="container mx-auto px-4 md:px-8 text-center text-sm text-muted-foreground">
-          &copy; {new Date().getFullYear()} seQRets · Open-source under AGPLv3
-        </div>
-      </footer>
+      <Footer />
 
       {/* Cart UI — only rendered when shop is live */}
       {SHOP_LIVE && (
