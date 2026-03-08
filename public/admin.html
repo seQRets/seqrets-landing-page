@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>seQRets — Waitlist Admin</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0a0a0b;
+      color: #e4e4e7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 800px;
+      padding: 2rem 1.5rem;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .subtitle {
+      color: #71717a;
+      font-size: 0.875rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Login form */
+    .login-card {
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 12px;
+      padding: 2rem;
+      max-width: 400px;
+      margin: 4rem auto 0;
+    }
+
+    .login-card h2 {
+      font-size: 1.125rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .login-card p {
+      color: #71717a;
+      font-size: 0.8125rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .field {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    input[type="password"], input[type="text"] {
+      flex: 1;
+      background: #0a0a0b;
+      border: 1px solid #3f3f46;
+      border-radius: 8px;
+      padding: 0.625rem 0.875rem;
+      color: #e4e4e7;
+      font-size: 0.875rem;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    input:focus { border-color: #f59e0b; }
+
+    button {
+      background: #f59e0b;
+      color: #0a0a0b;
+      border: none;
+      border-radius: 8px;
+      padding: 0.625rem 1.25rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+
+    button:hover { background: #fbbf24; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .error {
+      color: #ef4444;
+      font-size: 0.8125rem;
+      margin-top: 0.75rem;
+    }
+
+    /* Dashboard */
+    .dashboard { display: none; }
+    .dashboard.active { display: block; }
+    .login-card.hidden { display: none; }
+
+    .stats {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-card {
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 10px;
+      padding: 1rem 1.5rem;
+      flex: 1;
+      min-width: 140px;
+    }
+
+    .stat-card .label {
+      color: #71717a;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-card .value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #f59e0b;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .toolbar input {
+      max-width: 260px;
+    }
+
+    .btn-secondary {
+      background: #27272a;
+      color: #e4e4e7;
+    }
+
+    .btn-secondary:hover { background: #3f3f46; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    thead { background: #1f1f23; }
+
+    th {
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #71717a;
+      font-weight: 600;
+    }
+
+    td {
+      padding: 0.75rem 1rem;
+      font-size: 0.875rem;
+      border-top: 1px solid #27272a;
+    }
+
+    tr:hover td { background: #1f1f23; }
+
+    .source-badge {
+      display: inline-block;
+      background: #27272a;
+      color: #a1a1aa;
+      font-size: 0.75rem;
+      padding: 0.125rem 0.5rem;
+      border-radius: 999px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: #71717a;
+    }
+
+    .logout-btn {
+      background: transparent;
+      color: #71717a;
+      font-size: 0.8125rem;
+      font-weight: 400;
+      padding: 0.375rem 0.75rem;
+    }
+
+    .logout-btn:hover { color: #e4e4e7; background: transparent; }
+
+    @media (max-width: 600px) {
+      .container { padding: 1rem; }
+      th, td { padding: 0.5rem 0.625rem; font-size: 0.8125rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Login -->
+  <div class="login-card" id="loginCard">
+    <h2>Waitlist Admin</h2>
+    <p>Enter the admin secret to view signups.</p>
+    <form id="loginForm">
+      <div class="field">
+        <input type="password" id="secretInput" placeholder="Admin secret" autocomplete="off" required />
+        <button type="submit" id="loginBtn">View</button>
+      </div>
+      <div class="error" id="loginError"></div>
+    </form>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="container dashboard" id="dashboard">
+    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.25rem;">
+      <h1>Waitlist Signups</h1>
+      <button class="logout-btn" id="logoutBtn">Log out</button>
+    </div>
+    <p class="subtitle">seQRets email capture dashboard</p>
+
+    <div class="stats">
+      <div class="stat-card">
+        <div class="label">Total signups</div>
+        <div class="value" id="statTotal">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Today</div>
+        <div class="value" id="statToday">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Top source</div>
+        <div class="value" id="statTopSource" style="font-size:1rem;">—</div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <input type="text" id="searchInput" placeholder="Search emails..." />
+      <div style="display:flex; gap:0.5rem;">
+        <button class="btn-secondary" id="refreshBtn">Refresh</button>
+        <button class="btn-secondary" id="exportBtn">Export CSV</button>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Email</th>
+          <th>Source</th>
+          <th>Signed up</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <tr><td colspan="4" class="empty-state">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+<script>
+  // --- Config ---
+  // The Worker URL — update this if your subdomain changes
+  const WORKER_URL = "https://seqrets-waitlist.baton-banker-hazy.workers.dev";
+
+  let adminSecret = "";
+  let entries = [];
+
+  // --- DOM refs ---
+  const loginCard   = document.getElementById("loginCard");
+  const dashboard   = document.getElementById("dashboard");
+  const loginForm   = document.getElementById("loginForm");
+  const loginError  = document.getElementById("loginError");
+  const secretInput = document.getElementById("secretInput");
+  const tableBody   = document.getElementById("tableBody");
+  const searchInput = document.getElementById("searchInput");
+
+  // --- Login ---
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    loginError.textContent = "";
+    const secret = secretInput.value.trim();
+    if (!secret) return;
+
+    document.getElementById("loginBtn").disabled = true;
+
+    try {
+      const res = await fetch(WORKER_URL, {
+        headers: { "X-Admin-Secret": secret },
+      });
+
+      if (res.status === 401) {
+        loginError.textContent = "Wrong secret. Try again.";
+        document.getElementById("loginBtn").disabled = false;
+        return;
+      }
+
+      if (!res.ok) {
+        loginError.textContent = "Something went wrong (" + res.status + ")";
+        document.getElementById("loginBtn").disabled = false;
+        return;
+      }
+
+      const data = await res.json();
+      adminSecret = secret;
+      entries = parseEntries(data.entries || []);
+
+      loginCard.classList.add("hidden");
+      dashboard.classList.add("active");
+      renderTable(entries);
+      renderStats(entries);
+    } catch (err) {
+      loginError.textContent = "Network error — is the Worker deployed?";
+      document.getElementById("loginBtn").disabled = false;
+    }
+  });
+
+  // --- Logout ---
+  document.getElementById("logoutBtn").addEventListener("click", () => {
+    adminSecret = "";
+    entries = [];
+    secretInput.value = "";
+    document.getElementById("loginBtn").disabled = false;
+    dashboard.classList.remove("active");
+    loginCard.classList.remove("hidden");
+  });
+
+  // --- Parse ---
+  function parseEntries(raw) {
+    return raw
+      .map((e) => {
+        try {
+          const val = typeof e.value === "string" ? JSON.parse(e.value) : e.value;
+          return {
+            email: val.email || e.key,
+            source: val.source || "unknown",
+            signedUpAt: val.signedUpAt || null,
+          };
+        } catch {
+          return { email: e.key, source: "unknown", signedUpAt: null };
+        }
+      })
+      .sort((a, b) => {
+        if (!a.signedUpAt) return 1;
+        if (!b.signedUpAt) return -1;
+        return new Date(b.signedUpAt) - new Date(a.signedUpAt);
+      });
+  }
+
+  // --- Render table ---
+  function renderTable(data) {
+    if (data.length === 0) {
+      tableBody.innerHTML = '<tr><td colspan="4" class="empty-state">No signups yet</td></tr>';
+      return;
+    }
+
+    tableBody.innerHTML = data
+      .map((e, i) => {
+        const date = e.signedUpAt
+          ? new Date(e.signedUpAt).toLocaleDateString("en-US", {
+              month: "short", day: "numeric", year: "numeric",
+              hour: "numeric", minute: "2-digit",
+            })
+          : "—";
+        return `<tr>
+          <td style="color:#71717a">${i + 1}</td>
+          <td>${esc(e.email)}</td>
+          <td><span class="source-badge">${esc(e.source)}</span></td>
+          <td style="color:#a1a1aa">${date}</td>
+        </tr>`;
+      })
+      .join("");
+  }
+
+  // --- Stats ---
+  function renderStats(data) {
+    document.getElementById("statTotal").textContent = data.length;
+
+    const today = new Date().toISOString().slice(0, 10);
+    const todayCount = data.filter(
+      (e) => e.signedUpAt && e.signedUpAt.slice(0, 10) === today
+    ).length;
+    document.getElementById("statToday").textContent = todayCount;
+
+    const sources = {};
+    data.forEach((e) => { sources[e.source] = (sources[e.source] || 0) + 1; });
+    const top = Object.entries(sources).sort((a, b) => b[1] - a[1])[0];
+    document.getElementById("statTopSource").textContent = top
+      ? `${top[0]} (${top[1]})`
+      : "—";
+  }
+
+  // --- Search ---
+  searchInput.addEventListener("input", () => {
+    const q = searchInput.value.toLowerCase();
+    const filtered = q
+      ? entries.filter(
+          (e) => e.email.toLowerCase().includes(q) || e.source.toLowerCase().includes(q)
+        )
+      : entries;
+    renderTable(filtered);
+  });
+
+  // --- Refresh ---
+  document.getElementById("refreshBtn").addEventListener("click", async () => {
+    try {
+      const res = await fetch(WORKER_URL, {
+        headers: { "X-Admin-Secret": adminSecret },
+      });
+      if (!res.ok) return;
+      const data = await res.json();
+      entries = parseEntries(data.entries || []);
+      renderTable(entries);
+      renderStats(entries);
+      searchInput.value = "";
+    } catch {}
+  });
+
+  // --- Export CSV ---
+  document.getElementById("exportBtn").addEventListener("click", () => {
+    if (entries.length === 0) return;
+    const rows = [["Email", "Source", "Signed Up"]];
+    entries.forEach((e) => {
+      rows.push([e.email, e.source, e.signedUpAt || ""]);
+    });
+    const csv = rows.map((r) => r.map((c) => '"' + c.replace(/"/g, '""') + '"').join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "seqrets-waitlist-" + new Date().toISOString().slice(0, 10) + ".csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  // --- Escape HTML ---
+  function esc(s) {
+    const d = document.createElement("div");
+    d.textContent = s;
+    return d.innerHTML;
+  }
+</script>
+</body>
+</html>

@@ -1,7 +1,8 @@
-import { ShieldCheck, Zap, CreditCard, Package, Github, Mail } from "lucide-react";
+import { ShieldCheck, Zap, CreditCard, Package, Github } from "lucide-react";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import WaitlistButton from "@/components/WaitlistButton";
 import appDark from "@/assets/app-dark.webp";
 import appLight from "@/assets/app-light.webp";
 
@@ -89,13 +90,11 @@ const DesktopCTA = () => {
             </div>
 
             <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-              <a
-                href="mailto:hello@seqrets.app?subject=Desktop%20App%20Waitlist&body=Hi%2C%20please%20notify%20me%20when%20the%20seQRets%20desktop%20app%20launches.%20Thanks!"
+              <WaitlistButton
+                source="desktop-cta"
+                label="Join the Waitlist"
                 className="inline-flex items-center rounded-full bg-primary px-8 py-3.5 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_hsl(var(--primary)/0.3)]"
-              >
-                <Mail className="mr-2 h-4 w-4" />
-                Join the Waitlist
-              </a>
+              />
               <Button variant="tertiary" size="lg" className="rounded-full font-display font-semibold" asChild>
                 <a href="https://github.com/seQRets/seQRets-app" target="_blank" rel="noopener noreferrer">
                   <Github className="mr-2 h-4 w-4" />

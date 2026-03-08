@@ -28,6 +28,7 @@ import {
 import { useCart } from "@/contexts/CartContext";
 import CartDrawer from "@/components/cart/CartDrawer";
 import CartIcon from "@/components/cart/CartIcon";
+import WaitlistButton from "@/components/WaitlistButton";
 import type { LucideIcon } from "lucide-react";
 
 const slugIconMap: Record<ProductSlug, LucideIcon> = {
@@ -111,13 +112,11 @@ const ProductCard = ({ product }: { product: ProductInfo }) => {
             )}
           </button>
         ) : (
-          <a
-            href={`mailto:hello@seqrets.app?subject=Waitlist%3A%20${encodeURIComponent(product.name)}&body=Hi%2C%20I'm%20interested%20in%20the%20${encodeURIComponent(product.name)}.%20Please%20notify%20me%20when%20it's%20available.%20Thanks!`}
+          <WaitlistButton
+            source={`shop-${product.slug}`}
+            label="Join Waitlist"
             className="inline-flex items-center rounded-full bg-primary/20 px-4 py-2 text-xs font-semibold text-primary transition-all hover:bg-primary/30"
-          >
-            <Mail className="mr-1.5 h-3.5 w-3.5" />
-            Join Waitlist
-          </a>
+          />
         )}
       </div>
     </div>
@@ -166,13 +165,11 @@ const Shop = () => {
                 )}
               </button>
             ) : (
-              <a
-                href="mailto:hello@seqrets.app?subject=seQRets%20Shop%20Waitlist&body=Hi%2C%20please%20notify%20me%20when%20the%20seQRets%20shop%20opens.%20Thanks!"
+              <WaitlistButton
+                source="shop-navbar"
+                label="Join Waitlist"
                 className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
-              >
-                <Mail className="mr-1.5 h-3.5 w-3.5" />
-                Join Waitlist
-              </a>
+              />
             )}
           </div>
         </div>
@@ -288,13 +285,11 @@ const Shop = () => {
                   Join the waitlist and be the first to grab a bundle at
                   launch-day pricing.
                 </p>
-                <a
-                  href="mailto:hello@seqrets.app?subject=seQRets%20Shop%20Waitlist&body=Hi%2C%20please%20notify%20me%20when%20the%20seQRets%20shop%20opens.%20Thanks!"
+                <WaitlistButton
+                  source="shop-bottom-cta"
+                  label="Join the Waitlist"
                   className="inline-flex items-center rounded-full bg-primary px-8 py-3.5 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_hsl(var(--primary)/0.3)]"
-                >
-                  <Mail className="mr-2 h-4 w-4" />
-                  Join the Waitlist
-                </a>
+                />
               </>
             )}
           </div>

@@ -1,0 +1,7 @@
+name = "seqrets-waitlist"
+main = "worker.ts"
+compatibility_date = "2024-01-01"
+
+[[kv_namespaces]]
+binding = "WAITLIST"
+id = "0c103b6b73ef42558d04bf7ea4d1c129"

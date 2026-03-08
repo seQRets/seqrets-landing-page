@@ -1,6 +1,7 @@
-import { Check, X, Minus, Mail, Bell } from "lucide-react";
+import { Check, X, Minus, Mail, Bell, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { joinWaitlist } from "@/lib/waitlist";
 
 const rows = [
   { feature: "Encrypt & split secrets", web: true, desktop: true },
@@ -26,13 +27,24 @@ const ComparisonTable = () => {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const trimmed = email.trim();
     if (!trimmed || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) return;
-    window.location.href = `mailto:hello@seqrets.app?subject=Desktop%20App%20Waitlist&body=Please%20add%20me%20to%20the%20waitlist%3A%20${encodeURIComponent(trimmed)}`;
-    setSubmitted(true);
+
+    setSubmitting(true);
+    setErrorMsg("");
+    const result = await joinWaitlist(trimmed, "desktop-waitlist");
+    setSubmitting(false);
+
+    if (result.ok) {
+      setSubmitted(true);
+    } else {
+      setErrorMsg(result.error || "Something went wrong");
+    }
   };
 
   return (
@@ -142,14 +154,23 @@ const ComparisonTable = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       maxLength={255}
-                      className="w-full rounded-xl border border-border/50 bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:border-primary/50 focus:outline-none focus:ring-1 focus:ring-primary/30 transition-colors"
+                      disabled={submitting}
+                      className="w-full rounded-xl border border-border/50 bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:border-primary/50 focus:outline-none focus:ring-1 focus:ring-primary/30 transition-colors disabled:opacity-50"
                     />
+                    {errorMsg && (
+                      <p className="text-xs text-red-400">{errorMsg}</p>
+                    )}
                     <button
                       type="submit"
-                      className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_20px_hsl(var(--primary)/0.3)]"
+                      disabled={submitting}
+                      className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_20px_hsl(var(--primary)/0.3)] disabled:opacity-50"
                     >
-                      <Mail className="h-4 w-4" />
-                      Notify Me
+                      {submitting ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <Mail className="h-4 w-4" />
+                      )}
+                      {submitting ? "Joining..." : "Notify Me"}
                     </button>
                   </form>
                   <button
