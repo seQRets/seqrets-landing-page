@@ -6,16 +6,24 @@ interface Env {
   STRIPE_SECRET_KEY: string;
 }
 
-const ALLOWED_ORIGIN = "https://seqrets.app";
+const ALLOWED_ORIGINS = [
+  "https://seqrets.app",
+  "http://localhost:8080",
+];
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type",
-};
+function getCorsHeaders(request: Request) {
+  const origin = request.headers.get("Origin") ?? "";
+  return {
+    "Access-Control-Allow-Origin": ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0],
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+  };
+}
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
+    const corsHeaders = getCorsHeaders(request);
+
     // Handle CORS preflight
     if (request.method === "OPTIONS") {
       return new Response(null, { headers: corsHeaders });
@@ -38,10 +46,13 @@ export default {
       }
 
       // Create Checkout Session via Stripe REST API (no SDK needed in Workers)
+      const origin = request.headers.get("Origin") ?? "https://seqrets.app";
+      const baseUrl = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+
       const params = new URLSearchParams();
       params.append("mode", "payment");
-      params.append("success_url", "https://seqrets.app/checkout/success?session_id={CHECKOUT_SESSION_ID}");
-      params.append("cancel_url", "https://seqrets.app/checkout/cancel");
+      params.append("success_url", `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`);
+      params.append("cancel_url", `${baseUrl}/checkout/cancel`);
 
       lineItems.forEach((item, i) => {
         params.append(`line_items[${i}][price]`, item.price);
