@@ -105,7 +105,7 @@ const ProductCard = ({ product }: { product: ProductInfo }) => {
         {SHOP_LIVE ? (
           <button
             onClick={handleAdd}
-            className="inline-flex items-center rounded-full bg-primary/20 px-4 py-2 text-xs font-semibold text-primary transition-all hover:bg-primary/30"
+            className="inline-flex items-center rounded-md bg-primary/20 px-4 py-2 text-xs font-semibold text-primary transition-all hover:bg-primary/30"
           >
             {justAdded ? (
               <>
@@ -123,7 +123,7 @@ const ProductCard = ({ product }: { product: ProductInfo }) => {
           <WaitlistButton
             source={`shop-${product.slug}`}
             label="Join Waitlist"
-            className="inline-flex items-center rounded-full bg-primary/20 px-4 py-2 text-xs font-semibold text-primary transition-all hover:bg-primary/30"
+            className="inline-flex items-center rounded-md bg-primary/20 px-4 py-2 text-xs font-semibold text-primary transition-all hover:bg-primary/30"
           />
         )}
       </div>
@@ -266,7 +266,7 @@ const Shop = () => {
                 </p>
                 <button
                   onClick={cart.toggleDrawer}
-                  className="inline-flex items-center rounded-full bg-primary px-8 py-3.5 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_hsl(var(--primary)/0.3)]"
+                  className="inline-flex items-center rounded-md bg-primary px-8 py-3.5 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
                 >
                   <ShoppingCart className="mr-2 h-4 w-4" />
                   View Cart
@@ -284,7 +284,7 @@ const Shop = () => {
                 <WaitlistButton
                   source="shop-bottom-cta"
                   label="Join the Waitlist"
-                  className="inline-flex items-center rounded-full bg-primary px-8 py-3.5 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_hsl(var(--primary)/0.3)]"
+                  className="inline-flex items-center rounded-md bg-primary px-8 py-3.5 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
                 />
               </>
             )}

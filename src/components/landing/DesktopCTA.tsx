@@ -93,9 +93,9 @@ const DesktopCTA = () => {
               <WaitlistButton
                 source="desktop-cta"
                 label="Join the Waitlist"
-                className="inline-flex items-center rounded-full bg-primary px-8 py-3.5 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_hsl(var(--primary)/0.3)]"
+                className="inline-flex items-center rounded-md bg-primary px-8 py-3.5 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
               />
-              <Button variant="tertiary" size="lg" className="rounded-full font-display font-semibold" asChild>
+              <Button variant="tertiary" size="lg" className="rounded-md font-display font-semibold" asChild>
                 <a href="https://github.com/seQRets/seQRets-app" target="_blank" rel="noopener noreferrer">
                   <Github className="mr-2 h-4 w-4" />
                   Build from Source

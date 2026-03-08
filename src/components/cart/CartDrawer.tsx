@@ -168,7 +168,7 @@ export default function CartDrawer() {
                   <button
                     onClick={handleCheckout}
                     disabled={isCheckingOut}
-                    className="flex w-full items-center justify-center rounded-full bg-primary px-6 py-3 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_hsl(var(--primary)/0.3)] disabled:opacity-50 disabled:pointer-events-none"
+                    className="flex w-full items-center justify-center rounded-md bg-primary px-6 py-3 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 disabled:opacity-50 disabled:pointer-events-none"
                   >
                     {isCheckingOut ? (
                       <>

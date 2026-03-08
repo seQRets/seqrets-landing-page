@@ -97,7 +97,7 @@ const HeroSection = () => {
               href="https://app.seqrets.app"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center rounded-full bg-primary px-8 py-3.5 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_hsl(var(--primary)/0.3)]"
+              className="inline-flex items-center rounded-md bg-primary px-8 py-3.5 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
             >
               Try the Free Web App
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -105,7 +105,7 @@ const HeroSection = () => {
             <WaitlistButton
               source="hero-desktop"
               label="Join the Desktop Waitlist"
-              className="inline-flex items-center rounded-full border border-primary/40 bg-primary/15 px-8 py-3.5 font-display text-sm font-semibold text-foreground transition-all hover:bg-primary/25 hover:border-primary/60"
+              className="inline-flex items-center rounded-md border border-primary/40 bg-primary/15 px-8 py-3.5 font-display text-sm font-semibold text-foreground transition-all hover:bg-primary/25 hover:border-primary/60"
             />
           </div>
         </div>

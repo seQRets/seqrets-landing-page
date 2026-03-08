@@ -147,7 +147,7 @@ const SecurityPage = () => {
               </div>
               <Link
                 to="/shop"
-                className="shrink-0 inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-bold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_24px_hsl(var(--primary)/0.4)] whitespace-nowrap">
+                className="shrink-0 inline-flex items-center gap-2 rounded-md bg-primary px-7 py-3 text-sm font-bold text-primary-foreground transition-all hover:bg-primary/90 whitespace-nowrap">
 
                 Go Pro! →
               </Link>
@@ -305,7 +305,7 @@ const SecurityPage = () => {
               </p>
               <Link
                 to="/shop"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3.5 text-sm font-bold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_32px_hsl(var(--primary)/0.5)]">
+                className="inline-flex items-center gap-2 rounded-md bg-primary px-8 py-3.5 text-sm font-bold text-primary-foreground transition-all hover:bg-primary/90">
 
                 Go Pro! →
               </Link>

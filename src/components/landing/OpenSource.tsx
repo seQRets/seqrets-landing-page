@@ -43,7 +43,7 @@ const OpenSource = () => {
                 </div>
                 <span className="text-sm text-foreground/80">Community contributions welcome</span>
               </div>
-              <Button variant="tertiary" className="mt-2 rounded-full font-display font-semibold" asChild>
+              <Button variant="tertiary" className="mt-2 rounded-md font-display font-semibold" asChild>
                 <a href="https://github.com/seQRets/seQRets-app" target="_blank" rel="noopener noreferrer">
                   <Github className="mr-2 h-4 w-4" />
                   View on GitHub

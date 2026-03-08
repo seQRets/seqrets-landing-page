@@ -27,7 +27,7 @@ export default function CheckoutSuccess() {
         <div className="flex flex-col items-center gap-3">
           <Link
             to="/shop"
-            className="inline-flex items-center rounded-full bg-primary px-6 py-3 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_hsl(var(--primary)/0.3)]"
+            className="inline-flex items-center rounded-md bg-primary px-6 py-3 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
           >
             Back to Shop
           </Link>

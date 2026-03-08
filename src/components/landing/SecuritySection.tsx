@@ -124,7 +124,7 @@ const SecuritySection = () => {
 
         {/* More Info Button */}
         <div className="text-center mt-10">
-          <Button variant="tertiary" className="rounded-full font-display font-semibold" asChild>
+          <Button variant="tertiary" className="rounded-md font-display font-semibold" asChild>
             <Link to="/security">More Security Information →</Link>
           </Button>
         </div>

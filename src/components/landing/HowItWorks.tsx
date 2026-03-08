@@ -73,7 +73,7 @@ const HowItWorks = () => {
             </p>
           </div>
           <div className="text-center">
-            <Button variant="tertiary" size="lg" className="rounded-full font-display font-semibold" asChild>
+            <Button variant="tertiary" size="lg" className="rounded-md font-display font-semibold" asChild>
               <Link to="/how-it-works">Learn More →</Link>
             </Button>
           </div>

@@ -95,7 +95,7 @@ const ComparisonTable = () => {
         <div className="mt-10 flex justify-center">
           <button
             onClick={() => { setOpen(true); setSubmitted(false); setEmail(""); }}
-            className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/15 px-7 py-3 font-display text-sm font-semibold text-foreground transition-all hover:bg-primary/25 hover:border-primary/60 hover:shadow-[0_0_24px_hsl(var(--primary)/0.2)]"
+            className="inline-flex items-center gap-2 rounded-md border border-primary/40 bg-primary/15 px-7 py-3 font-display text-sm font-semibold text-foreground transition-all hover:bg-primary/25 hover:border-primary/60"
           >
             <Bell className="h-4 w-4 text-primary" />
             Let me know when the Desktop App launches!
@@ -132,7 +132,7 @@ const ComparisonTable = () => {
                   <p className="text-sm text-muted-foreground">We'll email you as soon as the Desktop App launches.</p>
                   <button
                     onClick={() => setOpen(false)}
-                    className="mt-6 rounded-full bg-primary/15 px-6 py-2 text-sm font-semibold text-primary hover:bg-primary/25 transition-colors"
+                    className="mt-6 rounded-md bg-primary/15 px-6 py-2 text-sm font-semibold text-primary hover:bg-primary/25 transition-colors"
                   >
                     Close
                   </button>
@@ -155,7 +155,7 @@ const ComparisonTable = () => {
                       onChange={(e) => setEmail(e.target.value)}
                       maxLength={255}
                       disabled={submitting}
-                      className="w-full rounded-xl border border-border/50 bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:border-primary/50 focus:outline-none focus:ring-1 focus:ring-primary/30 transition-colors disabled:opacity-50"
+                      className="w-full rounded-md border border-border/50 bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:border-primary/50 focus:outline-none focus:ring-1 focus:ring-primary/30 transition-colors disabled:opacity-50"
                     />
                     {errorMsg && (
                       <p className="text-xs text-red-400">{errorMsg}</p>
@@ -163,7 +163,7 @@ const ComparisonTable = () => {
                     <button
                       type="submit"
                       disabled={submitting}
-                      className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_20px_hsl(var(--primary)/0.3)] disabled:opacity-50"
+                      className="w-full inline-flex items-center justify-center gap-2 rounded-md bg-primary px-6 py-3 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 disabled:opacity-50"
                     >
                       {submitting ? (
                         <Loader2 className="h-4 w-4 animate-spin" />
