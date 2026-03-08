@@ -67,7 +67,7 @@ const Navbar = () => {
 
         <Link
           to="/shop"
-          className="hidden lg:inline-flex items-center rounded-full bg-primary px-5 py-2 text-[13px] font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_20px_hsl(var(--primary)/0.3)]"
+          className="hidden lg:inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
         >
           Go Pro! 🚀
         </Link>
@@ -119,7 +119,7 @@ const Navbar = () => {
           <Link
             to="/shop"
             onClick={() => setOpen(false)}
-            className="mt-4 block w-full rounded-full bg-primary px-5 py-2.5 text-center text-sm font-semibold text-primary-foreground"
+            className="mt-4 block w-full rounded-md bg-primary px-4 py-2.5 text-center text-sm font-semibold text-primary-foreground"
           >
             Go Pro! 🚀
           </Link>
