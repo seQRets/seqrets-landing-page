@@ -197,6 +197,25 @@
       color: #71717a;
     }
 
+    .btn-delete {
+      background: transparent;
+      color: #71717a;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      transition: all 0.15s;
+    }
+
+    .btn-delete:hover {
+      color: #ef4444;
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    .btn-delete:disabled { opacity: 0.3; cursor: not-allowed; }
+    .btn-delete.confirming { color: #ef4444; border-color: #ef4444; }
+
     .logout-btn {
       background: transparent;
       color: #71717a;
@@ -266,10 +285,11 @@
           <th>Email</th>
           <th>Source</th>
           <th>Signed up</th>
+          <th></th>
         </tr>
       </thead>
       <tbody id="tableBody">
-        <tr><td colspan="4" class="empty-state">Loading...</td></tr>
+        <tr><td colspan="5" class="empty-state">Loading...</td></tr>
       </tbody>
     </table>
   </div>
@@ -366,7 +386,7 @@
   // --- Render table ---
   function renderTable(data) {
     if (data.length === 0) {
-      tableBody.innerHTML = '<tr><td colspan="4" class="empty-state">No signups yet</td></tr>';
+      tableBody.innerHTML = '<tr><td colspan="5" class="empty-state">No signups yet</td></tr>';
       return;
     }
 
@@ -383,9 +403,53 @@
           <td>${esc(e.email)}</td>
           <td><span class="source-badge">${esc(e.source)}</span></td>
           <td style="color:#a1a1aa">${date}</td>
+          <td><button class="btn-delete" data-email="${esc(e.email)}" onclick="handleDelete(this)">Delete</button></td>
         </tr>`;
       })
       .join("");
+  }
+
+  // --- Delete ---
+  async function handleDelete(btn) {
+    const email = btn.dataset.email;
+    // Two-click confirm: first click shows "Sure?", second click deletes
+    if (!btn.classList.contains("confirming")) {
+      btn.classList.add("confirming");
+      btn.textContent = "Sure?";
+      setTimeout(() => {
+        if (btn.classList.contains("confirming")) {
+          btn.classList.remove("confirming");
+          btn.textContent = "Delete";
+        }
+      }, 3000);
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = "...";
+
+    try {
+      const res = await fetch(WORKER_URL, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Admin-Secret": adminSecret,
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (res.ok) {
+        entries = entries.filter((e) => e.email !== email);
+        renderTable(entries);
+        renderStats(entries);
+      } else {
+        btn.textContent = "Failed";
+        btn.disabled = false;
+      }
+    } catch {
+      btn.textContent = "Error";
+      btn.disabled = false;
+    }
   }
 
   // --- Stats ---

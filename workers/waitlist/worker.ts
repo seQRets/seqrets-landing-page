@@ -19,7 +19,7 @@ function getCorsHeaders(request: Request) {
   const allowed = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
   return {
     "Access-Control-Allow-Origin": allowed,
-    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, X-Admin-Secret",
   };
 }
@@ -59,6 +59,40 @@ export default {
       } catch (err) {
         return new Response(
           JSON.stringify({ error: "KV list failed", detail: String(err) }),
+          { status: 500, headers: { ...cors, "Content-Type": "application/json" } },
+        );
+      }
+    }
+
+    // Admin endpoint: DELETE / → remove a waitlist entry (requires ADMIN_SECRET header)
+    if (request.method === "DELETE") {
+      const secret = request.headers.get("X-Admin-Secret");
+      if (!secret || secret !== env.ADMIN_SECRET) {
+        return new Response(
+          JSON.stringify({ error: "Unauthorized" }),
+          { status: 401, headers: { ...cors, "Content-Type": "application/json" } },
+        );
+      }
+
+      try {
+        const { email } = (await request.json()) as { email?: string };
+        const trimmed = email?.trim().toLowerCase();
+
+        if (!trimmed) {
+          return new Response(
+            JSON.stringify({ error: "Email required" }),
+            { status: 400, headers: { ...cors, "Content-Type": "application/json" } },
+          );
+        }
+
+        await env.WAITLIST.delete(trimmed);
+        return new Response(
+          JSON.stringify({ ok: true, deleted: trimmed }),
+          { headers: { ...cors, "Content-Type": "application/json" } },
+        );
+      } catch {
+        return new Response(
+          JSON.stringify({ error: "Delete failed" }),
           { status: 500, headers: { ...cors, "Content-Type": "application/json" } },
         );
       }

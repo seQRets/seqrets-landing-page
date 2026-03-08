@@ -15,11 +15,14 @@ export const getStripe = () => {
 };
 
 // ─── Product Catalog ─────────────────────────────────────────────
+// Prices are ESTIMATED CEILINGS until supplier quotes come in.
+// Set priceFinal to true and update priceInCents when ready to commit.
 export type ProductSlug =
   | "desktop-app"
   | "backup-bundle"
   | "inheritance-bundle"
   | "smart-card"
+  | "smart-card-3pack"
   | "usb-card-reader"
   | "tamper-evident-envelopes"
   | "fireproof-case"
@@ -30,6 +33,7 @@ export interface ProductInfo {
   name: string;
   description: string;
   priceInCents: number;
+  priceFinal: boolean; // false = estimated ceiling, true = real price
   priceId: string; // Stripe Price ID — replace with real IDs after creating products
   features: string[];
   badge?: string;
@@ -42,13 +46,14 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     slug: "desktop-app",
     name: "Desktop App",
     description:
-      "Code-signed, auto-updating binary with NFC smart card support. macOS, Windows & Linux.",
+      "Code-signed, auto-updating binary with smart card support. macOS, Windows & Linux.",
     priceInCents: 4900,
+    priceFinal: false,
     priceId: "price_REPLACE_ME",
     features: [
       "Code-signed binary",
       "Automatic delta updates",
-      "NFC smart card integration",
+      "Smart card integration",
       "All desktop platforms",
     ],
     category: "bundle",
@@ -58,13 +63,14 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     name: "Backup Bundle",
     description:
       "Everything you need to back up your secrets to a physical smart card with a portable reader.",
-    priceInCents: 8900,
+    priceInCents: 12900,
+    priceFinal: false,
     priceId: "price_REPLACE_ME",
     badge: "Popular",
     highlight: true,
     features: [
       "Desktop App license",
-      "1\u00D7 branded smart card",
+      "2\u00D7 branded smart cards",
       "1\u00D7 portable USB card reader",
       "Quick-start guide",
     ],
@@ -75,12 +81,13 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     name: "Inheritance Bundle",
     description:
       "A complete inheritance kit \u2014 distribute secret shares across multiple cards with tamper-proof packaging.",
-    priceInCents: 17900,
+    priceInCents: 24900,
+    priceFinal: false,
     priceId: "price_REPLACE_ME",
     badge: "Best Value",
     features: [
       "Desktop App license",
-      "3\u20135\u00D7 smart cards",
+      "5\u00D7 smart cards",
       "1\u00D7 portable USB card reader",
       "PDF inheritance guide",
       "Tamper-evident envelopes",
@@ -92,10 +99,23 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     slug: "smart-card",
     name: "Smart Card",
     description:
-      "JCOP-based NFC smart card, branded with the seQRets logo.",
-    priceInCents: 1200,
+      "JCOP-based smart card, branded with the seQRets logo.",
+    priceInCents: 2900,
+    priceFinal: false,
     priceId: "price_REPLACE_ME",
-    features: ["NFC & contact interface", "JCOP applet compatible"],
+    features: ["Contact interface", "JCOP applet compatible"],
+    category: "accessory",
+  },
+  "smart-card-3pack": {
+    slug: "smart-card-3pack",
+    name: "Smart Card 3-Pack",
+    description:
+      "Three JCOP smart cards at a discount \u2014 for extra heirs, backups, or replacements.",
+    priceInCents: 6900,
+    priceFinal: false,
+    priceId: "price_REPLACE_ME",
+    badge: "Save",
+    features: ["3\u00D7 branded smart cards", "Volume discount"],
     category: "accessory",
   },
   "usb-card-reader": {
@@ -103,7 +123,8 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     name: "USB Card Reader",
     description:
       "Compact, portable USB smart card reader. Plug-and-play on all platforms.",
-    priceInCents: 1900,
+    priceInCents: 2900,
+    priceFinal: false,
     priceId: "price_REPLACE_ME",
     features: ["USB-A connector", "macOS / Windows / Linux"],
     category: "accessory",
@@ -113,7 +134,8 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     name: "Tamper-Evident Envelopes",
     description:
       "Pack of 5 security envelopes that reveal any opening attempt.",
-    priceInCents: 900,
+    priceInCents: 1499,
+    priceFinal: false,
     priceId: "price_REPLACE_ME",
     features: ["5-pack", "Void pattern on tamper"],
     category: "accessory",
@@ -123,7 +145,8 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     name: "Fireproof Case",
     description:
       "Compact fireproof document & card case rated to 1,200 \u00B0F for 30 minutes.",
-    priceInCents: 3900,
+    priceInCents: 4900,
+    priceFinal: false,
     priceId: "price_REPLACE_ME",
     features: ["Fits cards & documents", "1,200 \u00B0F / 30 min rated"],
     category: "accessory",
@@ -133,7 +156,8 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     name: "Inheritance Guide (PDF)",
     description:
       "Step-by-step guide for setting up a dead man\u2019s switch and distributing shares to heirs.",
-    priceInCents: 1500,
+    priceInCents: 1900,
+    priceFinal: false,
     priceId: "price_REPLACE_ME",
     features: ["Printable PDF", "Legal considerations checklist"],
     category: "accessory",

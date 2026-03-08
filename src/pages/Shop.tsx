@@ -4,11 +4,11 @@ import {
   Shield,
   Package,
   CreditCard,
+  Layers,
   BookOpen,
   Flame,
   Lock,
   Mail,
-  Store,
   ShoppingBag,
   ShoppingCart,
   Check,
@@ -16,7 +16,6 @@ import {
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import navbarIcon from "@/assets/navbar-icon.webp";
-import smartcardSilver from "@/assets/smartcard-silver.webp";
 import {
   SHOP_LIVE,
   BUNDLES,
@@ -36,6 +35,7 @@ const slugIconMap: Record<ProductSlug, LucideIcon> = {
   "backup-bundle": Shield,
   "inheritance-bundle": Package,
   "smart-card": CreditCard,
+  "smart-card-3pack": Layers,
   "usb-card-reader": Monitor,
   "tamper-evident-envelopes": Lock,
   "fireproof-case": Flame,
@@ -90,9 +90,16 @@ const ProductCard = ({ product }: { product: ProductInfo }) => {
         ))}
       </ul>
       <div className="mt-auto flex items-center justify-between">
-        <span className="font-display text-2xl font-bold text-foreground">
-          {formatPrice(product.priceInCents)}
-        </span>
+        <div>
+          <span className="font-display text-2xl font-bold text-foreground">
+            {formatPrice(product.priceInCents)}
+          </span>
+          {!product.priceFinal && (
+            <span className="ml-2 text-xs text-muted-foreground/60">
+              or less
+            </span>
+          )}
+        </div>
 
         {SHOP_LIVE ? (
           <button
@@ -191,34 +198,22 @@ const Shop = () => {
           </div>
         )}
 
-        {/* Hero */}
+        {/* Hero — compact */}
         <section
-          className={`relative py-24 md:py-32 overflow-hidden ${!SHOP_LIVE ? "" : "pt-40 md:pt-48"}`}
+          className={`relative py-12 md:py-16 overflow-hidden ${!SHOP_LIVE ? "" : "pt-28 md:pt-32"}`}
         >
-          {/* Background glow effects */}
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full bg-primary/5 blur-[100px]" />
-            <div className="absolute top-0 right-0 w-[300px] h-[300px] rounded-full bg-warm-muted/5 blur-[80px]" />
           </div>
           <div className="container relative mx-auto px-4 md:px-8">
             <div className="mx-auto max-w-3xl text-center">
-              <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 border border-primary/20">
-                <Store className="h-7 w-7 text-primary" />
-              </div>
-              <h1 className="font-display text-4xl font-black md:text-5xl text-foreground mb-5">
+              <h1 className="font-display text-3xl font-black md:text-4xl text-foreground mb-3">
                 The seQRets Shop
               </h1>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto leading-relaxed">
+              <p className="text-base md:text-lg text-muted-foreground max-w-lg mx-auto leading-relaxed">
                 Hardware, software, and kits to protect your secrets — from
                 everyday backups to generational inheritance.
               </p>
-            </div>
-            <div className="mt-12 flex justify-center">
-              <img
-                src={smartcardSilver}
-                alt="seQRets branded smart card"
-                className="w-72 md:w-96 drop-shadow-2xl rounded-xl"
-              />
             </div>
           </div>
         </section>
