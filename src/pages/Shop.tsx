@@ -29,6 +29,7 @@ import CartDrawer from "@/components/cart/CartDrawer";
 import CartIcon from "@/components/cart/CartIcon";
 import WaitlistButton from "@/components/WaitlistButton";
 import Footer from "@/components/landing/Footer";
+import ProductModal from "@/components/shop/ProductModal";
 import type { LucideIcon } from "lucide-react";
 
 const slugIconMap: Record<ProductSlug, LucideIcon> = {
@@ -44,7 +45,13 @@ const slugIconMap: Record<ProductSlug, LucideIcon> = {
 };
 
 // ─── Product Card ────────────────────────────────────────────────
-const ProductCard = ({ product }: { product: ProductInfo }) => {
+const ProductCard = ({
+  product,
+  onOpenDetail,
+}: {
+  product: ProductInfo;
+  onOpenDetail: (product: ProductInfo) => void;
+}) => {
   const { addItem } = useCart();
   const [justAdded, setJustAdded] = useState(false);
   const Icon = slugIconMap[product.slug];
@@ -57,7 +64,8 @@ const ProductCard = ({ product }: { product: ProductInfo }) => {
 
   return (
     <div
-      className={`relative flex flex-col rounded-xl border p-6 transition-all hover:glow-border ${
+      onClick={() => onOpenDetail(product)}
+      className={`relative flex flex-col rounded-xl border p-6 transition-all hover:glow-border cursor-pointer ${
         product.highlight
           ? "border-primary/40 bg-warm-surface"
           : "border-border/50 bg-card/30"
@@ -104,7 +112,10 @@ const ProductCard = ({ product }: { product: ProductInfo }) => {
 
         {SHOP_LIVE ? (
           <button
-            onClick={handleAdd}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleAdd();
+            }}
             className="inline-flex items-center rounded-md bg-primary/20 px-4 py-2 text-xs font-semibold text-primary transition-all hover:bg-primary/30"
           >
             {justAdded ? (
@@ -120,11 +131,13 @@ const ProductCard = ({ product }: { product: ProductInfo }) => {
             )}
           </button>
         ) : (
-          <WaitlistButton
-            source={`shop-${product.slug}`}
-            label="Join Waitlist"
-            className="inline-flex items-center rounded-md bg-primary/20 px-4 py-2 text-xs font-semibold text-primary transition-all hover:bg-primary/30"
-          />
+          <div onClick={(e) => e.stopPropagation()}>
+            <WaitlistButton
+              source={`shop-${product.slug}`}
+              label="Join Waitlist"
+              className="inline-flex items-center rounded-md bg-primary/20 px-4 py-2 text-xs font-semibold text-primary transition-all hover:bg-primary/30"
+            />
+          </div>
         )}
       </div>
     </div>
@@ -134,6 +147,7 @@ const ProductCard = ({ product }: { product: ProductInfo }) => {
 // ─── Shop Page ───────────────────────────────────────────────────
 const Shop = () => {
   const cart = useCart();
+  const [modalProduct, setModalProduct] = useState<ProductInfo | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -230,7 +244,7 @@ const Shop = () => {
             </p>
             <div className="grid gap-6 md:grid-cols-3">
               {BUNDLES.map((p) => (
-                <ProductCard key={p.slug} product={p} />
+                <ProductCard key={p.slug} product={p} onOpenDetail={setModalProduct} />
               ))}
             </div>
           </div>
@@ -247,7 +261,7 @@ const Shop = () => {
             </p>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {ACCESSORIES.map((p) => (
-                <ProductCard key={p.slug} product={p} />
+                <ProductCard key={p.slug} product={p} onOpenDetail={setModalProduct} />
               ))}
             </div>
           </div>
@@ -293,6 +307,16 @@ const Shop = () => {
       </main>
 
       <Footer />
+
+      {/* Product Detail Modal */}
+      {modalProduct && (
+        <ProductModal
+          product={modalProduct}
+          icon={slugIconMap[modalProduct.slug]}
+          isOpen={modalProduct !== null}
+          onClose={() => setModalProduct(null)}
+        />
+      )}
 
       {/* Cart UI — only rendered when shop is live */}
       {SHOP_LIVE && (

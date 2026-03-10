@@ -22,6 +22,7 @@ interface CartState {
 
 type CartAction =
   | { type: "ADD_ITEM"; slug: ProductSlug }
+  | { type: "ADD_ITEM_BULK"; slug: ProductSlug; quantity: number }
   | { type: "REMOVE_ITEM"; slug: ProductSlug }
   | { type: "UPDATE_QUANTITY"; slug: ProductSlug; quantity: number }
   | { type: "CLEAR_CART" }
@@ -46,6 +47,23 @@ function cartReducer(state: CartState, action: CartAction): CartState {
       return {
         ...state,
         items: [...state.items, { slug: action.slug, quantity: 1 }],
+      };
+    }
+    case "ADD_ITEM_BULK": {
+      const existing = state.items.find((i) => i.slug === action.slug);
+      if (existing) {
+        return {
+          ...state,
+          items: state.items.map((i) =>
+            i.slug === action.slug
+              ? { ...i, quantity: i.quantity + action.quantity }
+              : i,
+          ),
+        };
+      }
+      return {
+        ...state,
+        items: [...state.items, { slug: action.slug, quantity: action.quantity }],
       };
     }
     case "REMOVE_ITEM":
@@ -97,6 +115,7 @@ interface CartContextValue {
   totalItems: number;
   totalPrice: number;
   addItem: (slug: ProductSlug) => void;
+  addItemBulk: (slug: ProductSlug, quantity: number) => void;
   removeItem: (slug: ProductSlug) => void;
   updateQuantity: (slug: ProductSlug, quantity: number) => void;
   clearCart: () => void;
@@ -136,6 +155,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
     (slug: ProductSlug) => dispatch({ type: "ADD_ITEM", slug }),
     [],
   );
+  const addItemBulk = useCallback(
+    (slug: ProductSlug, quantity: number) =>
+      dispatch({ type: "ADD_ITEM_BULK", slug, quantity }),
+    [],
+  );
   const removeItem = useCallback(
     (slug: ProductSlug) => dispatch({ type: "REMOVE_ITEM", slug }),
     [],
@@ -162,6 +186,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       totalItems,
       totalPrice,
       addItem,
+      addItemBulk,
       removeItem,
       updateQuantity,
       clearCart,
@@ -169,7 +194,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       setDrawerOpen,
     }),
     [state.items, state.isDrawerOpen, totalItems, totalPrice,
-     addItem, removeItem, updateQuantity, clearCart, toggleDrawer, setDrawerOpen],
+     addItem, addItemBulk, removeItem, updateQuantity, clearCart, toggleDrawer, setDrawerOpen],
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

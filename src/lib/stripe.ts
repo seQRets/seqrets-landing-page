@@ -171,6 +171,25 @@ export const ACCESSORIES = Object.values(PRODUCTS).filter(
   (p) => p.category === "accessory",
 );
 
+// ─── Bundle Contents ────────────────────────────────────────────
+export const BUNDLE_CONTENTS: Partial<
+  Record<ProductSlug, { slug: ProductSlug; qty: number }[]>
+> = {
+  "backup-bundle": [
+    { slug: "desktop-app", qty: 1 },
+    { slug: "smart-card", qty: 2 },
+    { slug: "usb-card-reader", qty: 1 },
+  ],
+  "inheritance-bundle": [
+    { slug: "desktop-app", qty: 1 },
+    { slug: "smart-card", qty: 5 },
+    { slug: "usb-card-reader", qty: 1 },
+    { slug: "inheritance-guide", qty: 1 },
+    { slug: "tamper-evident-envelopes", qty: 1 },
+    { slug: "fireproof-case", qty: 1 },
+  ],
+};
+
 // ─── Checkout Helper ─────────────────────────────────────────────
 export async function createCheckoutSession(
   lineItems: { price: string; quantity: number }[],
