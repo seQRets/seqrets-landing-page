@@ -25,22 +25,31 @@ function getCorsHeaders(request: Request) {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+const SECURITY_HEADERS = {
+  "X-Content-Type-Options": "nosniff",
+  "X-Frame-Options": "DENY",
+};
+
+function jsonResponse(body: Record<string, unknown>, status: number, extra: Record<string, string>) {
+  return new Response(JSON.stringify(body, null, status === 200 ? 2 : 0), {
+    status,
+    headers: { ...extra, ...SECURITY_HEADERS, "Content-Type": "application/json" },
+  });
+}
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const cors = getCorsHeaders(request);
 
     if (request.method === "OPTIONS") {
-      return new Response(null, { headers: cors });
+      return new Response(null, { headers: { ...cors, ...SECURITY_HEADERS } });
     }
 
     // Admin endpoint: GET / → list waitlist entries (requires ADMIN_SECRET header)
     if (request.method === "GET") {
       const secret = request.headers.get("X-Admin-Secret");
       if (!secret || secret !== env.ADMIN_SECRET) {
-        return new Response(
-          JSON.stringify({ error: "Unauthorized" }),
-          { status: 401, headers: { ...cors, "Content-Type": "application/json" } },
-        );
+        return jsonResponse({ error: "Unauthorized" }, 401, cors);
       }
 
       try {
@@ -51,15 +60,9 @@ export default {
             return { key: k.name, value: val };
           }),
         );
-        return new Response(
-          JSON.stringify({ count: keys.keys.length, entries }, null, 2),
-          { headers: { ...cors, "Content-Type": "application/json" } },
-        );
+        return jsonResponse({ count: keys.keys.length, entries }, 200, cors);
       } catch {
-        return new Response(
-          JSON.stringify({ error: "KV list failed" }),
-          { status: 500, headers: { ...cors, "Content-Type": "application/json" } },
-        );
+        return jsonResponse({ error: "KV list failed" }, 500, cors);
       }
     }
 
@@ -67,10 +70,7 @@ export default {
     if (request.method === "DELETE") {
       const secret = request.headers.get("X-Admin-Secret");
       if (!secret || secret !== env.ADMIN_SECRET) {
-        return new Response(
-          JSON.stringify({ error: "Unauthorized" }),
-          { status: 401, headers: { ...cors, "Content-Type": "application/json" } },
-        );
+        return jsonResponse({ error: "Unauthorized" }, 401, cors);
       }
 
       try {
@@ -78,27 +78,21 @@ export default {
         const trimmed = email?.trim().toLowerCase();
 
         if (!trimmed) {
-          return new Response(
-            JSON.stringify({ error: "Email required" }),
-            { status: 400, headers: { ...cors, "Content-Type": "application/json" } },
-          );
+          return jsonResponse({ error: "Email required" }, 400, cors);
         }
 
         await env.WAITLIST.delete(trimmed);
-        return new Response(
-          JSON.stringify({ ok: true, deleted: trimmed }),
-          { headers: { ...cors, "Content-Type": "application/json" } },
-        );
+        return jsonResponse({ ok: true, deleted: trimmed }, 200, cors);
       } catch {
-        return new Response(
-          JSON.stringify({ error: "Delete failed" }),
-          { status: 500, headers: { ...cors, "Content-Type": "application/json" } },
-        );
+        return jsonResponse({ error: "Delete failed" }, 500, cors);
       }
     }
 
     if (request.method !== "POST") {
-      return new Response("Method not allowed", { status: 405, headers: cors });
+      return new Response("Method not allowed", {
+        status: 405,
+        headers: { ...cors, ...SECURITY_HEADERS },
+      });
     }
 
     try {
@@ -110,10 +104,7 @@ export default {
       const trimmed = email?.trim().toLowerCase();
 
       if (!trimmed || !EMAIL_RE.test(trimmed)) {
-        return new Response(
-          JSON.stringify({ error: "Invalid email address" }),
-          { status: 400, headers: { ...cors, "Content-Type": "application/json" } },
-        );
+        return jsonResponse({ error: "Invalid email address" }, 400, cors);
       }
 
       // Deduplicate: use email as key, store metadata as value
@@ -129,15 +120,9 @@ export default {
         await env.WAITLIST.put(trimmed, payload);
       }
 
-      return new Response(
-        JSON.stringify({ ok: true }),
-        { headers: { ...cors, "Content-Type": "application/json" } },
-      );
+      return jsonResponse({ ok: true }, 200, cors);
     } catch {
-      return new Response(
-        JSON.stringify({ error: "Internal error" }),
-        { status: 500, headers: { ...cors, "Content-Type": "application/json" } },
-      );
+      return jsonResponse({ error: "Internal error" }, 500, cors);
     }
   },
 };

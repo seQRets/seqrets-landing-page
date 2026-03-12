@@ -383,30 +383,61 @@
       });
   }
 
-  // --- Render table ---
+  // --- Render table (safe DOM construction — no innerHTML with user data) ---
   function renderTable(data) {
+    tableBody.textContent = "";
+
     if (data.length === 0) {
-      tableBody.innerHTML = '<tr><td colspan="5" class="empty-state">No signups yet</td></tr>';
+      const tr = document.createElement("tr");
+      const td = document.createElement("td");
+      td.colSpan = 5;
+      td.className = "empty-state";
+      td.textContent = "No signups yet";
+      tr.appendChild(td);
+      tableBody.appendChild(tr);
       return;
     }
 
-    tableBody.innerHTML = data
-      .map((e, i) => {
-        const date = e.signedUpAt
-          ? new Date(e.signedUpAt).toLocaleDateString("en-US", {
-              month: "short", day: "numeric", year: "numeric",
-              hour: "numeric", minute: "2-digit",
-            })
-          : "—";
-        return `<tr>
-          <td style="color:#71717a">${i + 1}</td>
-          <td>${esc(e.email)}</td>
-          <td><span class="source-badge">${esc(e.source)}</span></td>
-          <td style="color:#a1a1aa">${date}</td>
-          <td><button class="btn-delete" data-email="${esc(e.email)}" onclick="handleDelete(this)">Delete</button></td>
-        </tr>`;
-      })
-      .join("");
+    data.forEach((e, i) => {
+      const tr = document.createElement("tr");
+
+      const tdNum = document.createElement("td");
+      tdNum.style.color = "#71717a";
+      tdNum.textContent = String(i + 1);
+      tr.appendChild(tdNum);
+
+      const tdEmail = document.createElement("td");
+      tdEmail.textContent = e.email;
+      tr.appendChild(tdEmail);
+
+      const tdSource = document.createElement("td");
+      const badge = document.createElement("span");
+      badge.className = "source-badge";
+      badge.textContent = e.source;
+      tdSource.appendChild(badge);
+      tr.appendChild(tdSource);
+
+      const tdDate = document.createElement("td");
+      tdDate.style.color = "#a1a1aa";
+      tdDate.textContent = e.signedUpAt
+        ? new Date(e.signedUpAt).toLocaleDateString("en-US", {
+            month: "short", day: "numeric", year: "numeric",
+            hour: "numeric", minute: "2-digit",
+          })
+        : "\u2014";
+      tr.appendChild(tdDate);
+
+      const tdAction = document.createElement("td");
+      const btn = document.createElement("button");
+      btn.className = "btn-delete";
+      btn.dataset.email = e.email;
+      btn.textContent = "Delete";
+      btn.addEventListener("click", () => handleDelete(btn));
+      tdAction.appendChild(btn);
+      tr.appendChild(tdAction);
+
+      tableBody.appendChild(tr);
+    });
   }
 
   // --- Delete ---
@@ -513,12 +544,7 @@
     URL.revokeObjectURL(url);
   });
 
-  // --- Escape HTML ---
-  function esc(s) {
-    const d = document.createElement("div");
-    d.textContent = s;
-    return d.innerHTML;
-  }
+  // esc() removed — no longer needed since renderTable uses safe DOM methods
 </script>
 </body>
 </html>

@@ -11,6 +11,26 @@ const ALLOWED_ORIGINS = new Set([
   "http://localhost:8080",
 ]);
 
+// Whitelist of valid Stripe Price IDs — keep in sync with src/lib/stripe.ts
+const VALID_PRICE_IDS = new Set([
+  "price_1T8b06JrPvZLpOYSoQmbw6Am", // Desktop App
+  "price_1T8b2NJrPvZLpOYSWz4kPGjR", // Backup Bundle
+  "price_1T8b36JrPvZLpOYSF5inqQjK", // Inheritance Bundle
+  "price_1T8b3hJrPvZLpOYSRMKDcSm7", // Smart Card
+  "price_1T8bsDJrPvZLpOYSsO5BORyz", // Smart Card 3-Pack
+  "price_1T8b4CJrPvZLpOYSbfoPtIvm", // USB Card Reader
+  "price_1T8b4kJrPvZLpOYS1d7cNz9e", // Tamper-Evident Envelopes
+  "price_1T8b5rJrPvZLpOYSAEiQqSlR", // Fireproof Case
+  "price_1T8b6PJrPvZLpOYS6MqyLB2M", // Inheritance Guide
+]);
+
+const MAX_QUANTITY = 100;
+
+const SECURITY_HEADERS = {
+  "X-Content-Type-Options": "nosniff",
+  "X-Frame-Options": "DENY",
+};
+
 function getCorsHeaders(request: Request) {
   const origin = request.headers.get("Origin") ?? "";
   return {
@@ -20,17 +40,27 @@ function getCorsHeaders(request: Request) {
   };
 }
 
+function jsonResponse(body: Record<string, unknown>, status: number, extra: Record<string, string>) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { ...extra, ...SECURITY_HEADERS, "Content-Type": "application/json" },
+  });
+}
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const corsHeaders = getCorsHeaders(request);
 
     // Handle CORS preflight
     if (request.method === "OPTIONS") {
-      return new Response(null, { headers: corsHeaders });
+      return new Response(null, { headers: { ...corsHeaders, ...SECURITY_HEADERS } });
     }
 
     if (request.method !== "POST") {
-      return new Response("Method not allowed", { status: 405, headers: corsHeaders });
+      return new Response("Method not allowed", {
+        status: 405,
+        headers: { ...corsHeaders, ...SECURITY_HEADERS },
+      });
     }
 
     try {
@@ -38,11 +68,18 @@ export default {
         lineItems: { price: string; quantity: number }[];
       };
 
-      if (!lineItems?.length) {
-        return new Response(JSON.stringify({ error: "No items provided" }), {
-          status: 400,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
+      if (!Array.isArray(lineItems) || lineItems.length === 0) {
+        return jsonResponse({ error: "No items provided" }, 400, corsHeaders);
+      }
+
+      // Validate every line item against the price whitelist and quantity bounds
+      for (const item of lineItems) {
+        if (!VALID_PRICE_IDS.has(item.price)) {
+          return jsonResponse({ error: "Invalid price ID" }, 400, corsHeaders);
+        }
+        if (!Number.isInteger(item.quantity) || item.quantity < 1 || item.quantity > MAX_QUANTITY) {
+          return jsonResponse({ error: "Invalid quantity" }, 400, corsHeaders);
+        }
       }
 
       // Create Checkout Session via Stripe REST API (no SDK needed in Workers)
@@ -71,20 +108,16 @@ export default {
       const session = (await stripeRes.json()) as { url?: string; error?: { message: string } };
 
       if (!stripeRes.ok || !session.url) {
-        return new Response(
-          JSON.stringify({ error: session.error?.message ?? "Failed to create session" }),
-          { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+        return jsonResponse(
+          { error: session.error?.message ?? "Failed to create session" },
+          500,
+          corsHeaders,
         );
       }
 
-      return new Response(JSON.stringify({ url: session.url }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      return jsonResponse({ url: session.url }, 200, corsHeaders);
     } catch {
-      return new Response(JSON.stringify({ error: "Internal error" }), {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      return jsonResponse({ error: "Internal error" }, 500, corsHeaders);
     }
   },
 };

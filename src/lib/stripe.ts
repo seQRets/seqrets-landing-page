@@ -204,7 +204,13 @@ export async function createCheckoutSession(
     throw new Error("Failed to create checkout session");
   }
 
-  const { url } = await res.json();
+  const { url } = (await res.json()) as { url: string };
+
+  // Validate that Stripe returned a legitimate checkout URL
+  if (typeof url !== "string" || !url.startsWith("https://checkout.stripe.com/")) {
+    throw new Error("Invalid checkout URL");
+  }
+
   return url;
 }
 
