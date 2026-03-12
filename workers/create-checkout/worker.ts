@@ -6,15 +6,15 @@ interface Env {
   STRIPE_SECRET_KEY: string;
 }
 
-const ALLOWED_ORIGINS = [
+const ALLOWED_ORIGINS = new Set([
   "https://seqrets.app",
   "http://localhost:8080",
-];
+]);
 
 function getCorsHeaders(request: Request) {
   const origin = request.headers.get("Origin") ?? "";
   return {
-    "Access-Control-Allow-Origin": ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0],
+    "Access-Control-Allow-Origin": ALLOWED_ORIGINS.has(origin) ? origin : "https://seqrets.app",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
   };
@@ -47,7 +47,7 @@ export default {
 
       // Create Checkout Session via Stripe REST API (no SDK needed in Workers)
       const origin = request.headers.get("Origin") ?? "https://seqrets.app";
-      const baseUrl = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+      const baseUrl = ALLOWED_ORIGINS.has(origin) ? origin : "https://seqrets.app";
 
       const params = new URLSearchParams();
       params.append("mode", "payment");

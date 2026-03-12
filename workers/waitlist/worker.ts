@@ -7,18 +7,17 @@ interface Env {
   ADMIN_SECRET: string; // set via `wrangler secret put ADMIN_SECRET`
 }
 
-const ALLOWED_ORIGINS = [
+const ALLOWED_ORIGINS = new Set([
   "https://seqrets.app",
   "http://localhost:5173",
   "http://localhost:8080",
   "http://localhost:9002",
-];
+]);
 
 function getCorsHeaders(request: Request) {
   const origin = request.headers.get("Origin") || "";
-  const allowed = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
   return {
-    "Access-Control-Allow-Origin": allowed,
+    "Access-Control-Allow-Origin": ALLOWED_ORIGINS.has(origin) ? origin : "https://seqrets.app",
     "Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, X-Admin-Secret",
   };
@@ -56,9 +55,9 @@ export default {
           JSON.stringify({ count: keys.keys.length, entries }, null, 2),
           { headers: { ...cors, "Content-Type": "application/json" } },
         );
-      } catch (err) {
+      } catch {
         return new Response(
-          JSON.stringify({ error: "KV list failed", detail: String(err) }),
+          JSON.stringify({ error: "KV list failed" }),
           { status: 500, headers: { ...cors, "Content-Type": "application/json" } },
         );
       }
