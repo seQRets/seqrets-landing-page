@@ -27,6 +27,13 @@ const Navbar = () => {
     }
   };
 
+  const handleAnchorClick = (e: React.MouseEvent, href: string) => {
+    if (location.pathname !== "/") {
+      e.preventDefault();
+      navigate("/" + href);
+    }
+  };
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/60 backdrop-blur-2xl">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">
@@ -58,6 +65,7 @@ const Navbar = () => {
               <a
                 key={link.href}
                 href={link.href}
+                onClick={(e) => handleAnchorClick(e, link.href)}
                 className="text-[13px] font-medium text-foreground/60 transition-colors hover:text-foreground"
               >
                 {link.label}
@@ -110,7 +118,7 @@ const Navbar = () => {
               <a
                 key={link.href}
                 href={link.href}
-                onClick={() => setOpen(false)}
+                onClick={(e) => { handleAnchorClick(e, link.href); setOpen(false); }}
                 className="block py-3 text-sm font-medium text-foreground/60 transition-colors hover:text-foreground"
               >
                 {link.label}
