@@ -28,9 +28,16 @@ const Navbar = () => {
   };
 
   const handleAnchorClick = (e: React.MouseEvent, href: string) => {
-    if (location.pathname !== "/") {
-      e.preventDefault();
-      navigate("/" + href);
+    e.preventDefault();
+    const id = href.replace("#", "");
+    if (location.pathname === "/") {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      navigate("/");
+      // Wait for home page to render, then scroll to the section
+      setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
     }
   };
 
