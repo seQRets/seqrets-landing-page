@@ -64,6 +64,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li><a href="/#how-it-works" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">How It Works</a></li>
               <li><Link to="/security" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">Security</Link></li>
+              <li><Link to="/docs" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">Documentation</Link></li>
               <li>
                 <a
                   href="https://github.com/seQRets/seQRets-app"

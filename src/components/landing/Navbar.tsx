@@ -8,6 +8,7 @@ const navLinks = [
   { label: "How It Works", href: "#how-it-works" },
   { label: "Features", href: "#features" },
   { label: "Security", href: "#security" },
+  { label: "Docs", href: "/docs", isRoute: true },
   { label: "Go Pro!", href: "#desktop" },
   { label: "Shop", href: "/shop", isRoute: true },
 ];
