@@ -7,11 +7,9 @@ interface Env {
   ADMIN_SECRET: string; // set via `wrangler secret put ADMIN_SECRET`
 }
 
+// Production origins only — add http://localhost:8080 etc. for local dev
 const ALLOWED_ORIGINS = new Set([
   "https://seqrets.app",
-  "http://localhost:5173",
-  "http://localhost:8080",
-  "http://localhost:9002",
 ]);
 
 function getCorsHeaders(request: Request) {
@@ -24,6 +22,32 @@ function getCorsHeaders(request: Request) {
 }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// --- Admin rate limiting (uses WAITLIST KV with "ratelimit:" prefix) ---
+const RATE_LIMIT_MAX = 5;        // max failed attempts before lockout
+const RATE_LIMIT_WINDOW_S = 900; // 15-minute lockout window
+
+function rateLimitKey(request: Request): string {
+  const ip = request.headers.get("CF-Connecting-IP") || "unknown";
+  return `ratelimit:${ip}`;
+}
+
+async function isRateLimited(kv: KVNamespace, key: string): Promise<boolean> {
+  const raw = await kv.get(key);
+  if (!raw) return false;
+  const { count } = JSON.parse(raw) as { count: number };
+  return count >= RATE_LIMIT_MAX;
+}
+
+async function recordFailedAttempt(kv: KVNamespace, key: string): Promise<void> {
+  const raw = await kv.get(key);
+  const count = raw ? (JSON.parse(raw) as { count: number }).count + 1 : 1;
+  await kv.put(key, JSON.stringify({ count }), { expirationTtl: RATE_LIMIT_WINDOW_S });
+}
+
+async function clearRateLimit(kv: KVNamespace, key: string): Promise<void> {
+  await kv.delete(key);
+}
 
 const SECURITY_HEADERS = {
   "X-Content-Type-Options": "nosniff",
@@ -47,10 +71,18 @@ export default {
 
     // Admin endpoint: GET / → list waitlist entries (requires ADMIN_SECRET header)
     if (request.method === "GET") {
+      const rlKey = rateLimitKey(request);
+      if (await isRateLimited(env.WAITLIST, rlKey)) {
+        return jsonResponse({ error: "Too many attempts. Try again later." }, 429, cors);
+      }
+
       const secret = request.headers.get("X-Admin-Secret");
       if (!secret || secret !== env.ADMIN_SECRET) {
+        await recordFailedAttempt(env.WAITLIST, rlKey);
         return jsonResponse({ error: "Unauthorized" }, 401, cors);
       }
+
+      await clearRateLimit(env.WAITLIST, rlKey);
 
       try {
         const keys = await env.WAITLIST.list();
@@ -68,10 +100,18 @@ export default {
 
     // Admin endpoint: DELETE / → remove a waitlist entry (requires ADMIN_SECRET header)
     if (request.method === "DELETE") {
+      const rlKey = rateLimitKey(request);
+      if (await isRateLimited(env.WAITLIST, rlKey)) {
+        return jsonResponse({ error: "Too many attempts. Try again later." }, 429, cors);
+      }
+
       const secret = request.headers.get("X-Admin-Secret");
       if (!secret || secret !== env.ADMIN_SECRET) {
+        await recordFailedAttempt(env.WAITLIST, rlKey);
         return jsonResponse({ error: "Unauthorized" }, 401, cors);
       }
+
+      await clearRateLimit(env.WAITLIST, rlKey);
 
       try {
         const { email } = (await request.json()) as { email?: string };

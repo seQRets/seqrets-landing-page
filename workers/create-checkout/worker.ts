@@ -6,9 +6,9 @@ interface Env {
   STRIPE_SECRET_KEY: string;
 }
 
+// Production origins only — add http://localhost:8080 for local dev
 const ALLOWED_ORIGINS = new Set([
   "https://seqrets.app",
-  "http://localhost:8080",
 ]);
 
 // Whitelist of valid Stripe Price IDs — keep in sync with src/lib/stripe.ts
