@@ -3,12 +3,18 @@ import { useEffect } from "react";
 import { Scale, AlertTriangle, Shield, FileText, Code, ShoppingBag, Mail, Gavel } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
+import PageHead from "@/components/PageHead";
 
 const TermsOfService = () => {
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
   return (
     <div className="min-h-screen bg-background">
+      <PageHead
+        title="Terms of Service"
+        description="Terms and conditions for using seQRets software and services."
+        path="/terms"
+      />
       <Navbar />
       <main className="container mx-auto px-4 md:px-8 py-24 max-w-4xl">
 

@@ -28,6 +28,7 @@ import { useCart } from "@/contexts/CartContext";
 import CartDrawer from "@/components/cart/CartDrawer";
 import CartIcon from "@/components/cart/CartIcon";
 import WaitlistButton from "@/components/WaitlistButton";
+import PageHead from "@/components/PageHead";
 import Footer from "@/components/landing/Footer";
 import ProductModal from "@/components/shop/ProductModal";
 import type { LucideIcon } from "lucide-react";
@@ -155,6 +156,11 @@ const Shop = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <PageHead
+        title="Shop"
+        description="Hardware, software, and kits to protect your crypto secrets. Smart cards, USB readers, bundles, and the seQRets Desktop App."
+        path="/shop"
+      />
       {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
         <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">

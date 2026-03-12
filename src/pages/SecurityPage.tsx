@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ShieldCheck, Lock, Atom, Eye, Mail } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
+import PageHead from "@/components/PageHead";
 import FaqAccordion from "@/components/docs/FaqAccordion";
 
 const SecurityPage = () => {
@@ -10,6 +11,11 @@ const SecurityPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <PageHead
+        title="Security"
+        description="How seQRets protects your secrets: XChaCha20-Poly1305 encryption, Argon2id key derivation, Shamir's Secret Sharing, and zero-knowledge architecture."
+        path="/security"
+      />
       <Navbar />
       <main className="container mx-auto px-4 md:px-8 py-24 max-w-4xl">
         {/* Header */}

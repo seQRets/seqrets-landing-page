@@ -3,12 +3,18 @@ import { useEffect } from "react";
 import { ShieldCheck, Eye, Database, Globe, Cookie, Bot, Mail, Server } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
+import PageHead from "@/components/PageHead";
 
 const PrivacyPolicy = () => {
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
   return (
     <div className="min-h-screen bg-background">
+      <PageHead
+        title="Privacy Policy"
+        description="seQRets does not collect, store, transmit, or sell your data. Zero analytics, zero tracking, zero telemetry."
+        path="/privacy"
+      />
       <Navbar />
       <main className="container mx-auto px-4 md:px-8 py-24 max-w-4xl">
 

@@ -9,6 +9,7 @@ import screenshotInheritance from "@/assets/screenshot-inheritance.webp";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
+import PageHead from "@/components/PageHead";
 
 const sections = [
   {
@@ -88,6 +89,11 @@ const HowItWorksPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <PageHead
+        title="How It Works"
+        description="See how seQRets encrypts your secrets, splits them into QR-coded shares, and distributes them to your heirs using Shamir's Secret Sharing."
+        path="/how-it-works"
+      />
       <Navbar />
       <main className="pt-24 pb-16">
         {/* Hero */}
