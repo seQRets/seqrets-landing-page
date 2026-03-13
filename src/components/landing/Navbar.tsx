@@ -23,6 +23,7 @@ const Navbar = () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       navigate("/");
+      window.scrollTo({ top: 0 });
     }
   };
 
@@ -53,7 +54,7 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/60 backdrop-blur-2xl">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">
-        <Link to="/" className="flex items-center gap-3">
+        <Link to="/" onClick={handleHomeClick} className="flex items-center gap-3">
           <img src={navbarIcon} alt="seQRets" className="h-8 w-auto rounded-md" />
         </Link>
 
