@@ -114,7 +114,8 @@ export default function ProductModal({
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="h-full w-full object-cover object-[75%_center] min-h-[200px] md:min-h-0"
+                      className="h-full w-full object-cover min-h-[200px] md:min-h-0"
+                      style={{ objectPosition: product.imagePosition || "center" }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent md:bg-gradient-to-r md:from-transparent md:to-background/20" />
                   </div>

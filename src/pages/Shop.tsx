@@ -77,13 +77,25 @@ const ProductCard = ({
           {product.badge}
         </Badge>
       )}
+      {product.image && (
+        <div className="-mx-6 -mt-6 mb-4 overflow-hidden rounded-t-xl">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="h-32 w-full object-cover"
+            style={{ objectPosition: product.imagePosition || "center" }}
+          />
+        </div>
+      )}
       <span className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/50">
         {product.tag}
       </span>
       <div className="mb-4 flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-          <Icon className="h-5 w-5 text-primary" />
-        </div>
+        {!product.image && (
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+            <Icon className="h-5 w-5 text-primary" />
+          </div>
+        )}
         <h3 className="font-display text-lg font-bold text-foreground">
           {product.name}
         </h3>

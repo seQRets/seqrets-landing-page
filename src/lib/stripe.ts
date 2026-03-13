@@ -41,6 +41,7 @@ export interface ProductInfo {
   category: "bundle" | "accessory";
   tag: string;
   image?: string; // optional product photo (path relative to public/)
+  imagePosition?: string; // CSS object-position value (default: "center")
 }
 
 export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
@@ -80,6 +81,7 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     category: "bundle",
     tag: "Bundle",
     image: "/Shop_hero.webp",
+    imagePosition: "75% center",
   },
   "inheritance-bundle": {
     slug: "inheritance-bundle",
@@ -173,6 +175,8 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     features: ["Printable PDF", "Legal considerations checklist"],
     category: "accessory",
     tag: "Guide",
+    image: "/screenshot-inheritance.webp",
+    imagePosition: "50% center",
   },
 };
 

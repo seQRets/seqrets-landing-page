@@ -5,7 +5,7 @@ import screenshotRestore from "@/assets/screenshot-restore.webp";
 import screenshotBob from "@/assets/screenshot-bob.webp";
 import screenshotSecure from "@/assets/screenshot-secure.webp";
 import screenshotSmartcard from "@/assets/screenshot-smartcard.webp";
-import screenshotInheritance from "@/assets/screenshot-inheritance.webp";
+const screenshotInheritance = "/inherit.webp";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
