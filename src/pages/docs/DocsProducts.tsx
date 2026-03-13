@@ -114,6 +114,29 @@ const ALL_SLUGS: ProductSlug[] = [
   "inheritance-guide",
 ];
 
+const PRODUCT_CATEGORIES: { label: string; slugs: ProductSlug[] }[] = [
+  {
+    label: "Software",
+    slugs: ["desktop-app"],
+  },
+  {
+    label: "Bundles",
+    slugs: ["backup-bundle", "inheritance-bundle"],
+  },
+  {
+    label: "Hardware",
+    slugs: ["smart-card", "smart-card-3pack", "usb-card-reader"],
+  },
+  {
+    label: "Accessories",
+    slugs: ["tamper-evident-envelopes", "fireproof-case"],
+  },
+  {
+    label: "Guides",
+    slugs: ["inheritance-guide"],
+  },
+];
+
 const DocsProducts = () => {
   const jsonLd = ALL_SLUGS.map((slug) => {
     const p = PRODUCTS[slug];
@@ -157,8 +180,14 @@ const DocsProducts = () => {
         </p>
       </div>
 
-      <div className="space-y-8">
-        {ALL_SLUGS.map((slug) => {
+      <div className="space-y-12">
+        {PRODUCT_CATEGORIES.map((category) => (
+          <div key={category.label}>
+            <h2 className="font-display text-xl font-bold text-foreground mb-4 border-b border-border/20 pb-2">
+              {category.label}
+            </h2>
+            <div className="space-y-6">
+        {category.slugs.map((slug) => {
           const product = PRODUCTS[slug];
           const spec = PRODUCT_SPECS[slug];
           const bundleItems = BUNDLE_CONTENTS[slug];
@@ -171,6 +200,9 @@ const DocsProducts = () => {
             >
               <div className="flex items-start justify-between gap-4 mb-4">
                 <div>
+                  <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/50">
+                    {product.tag}
+                  </span>
                   <h2 className="font-display text-lg font-bold text-foreground">
                     {product.name}
                   </h2>
@@ -255,6 +287,9 @@ const DocsProducts = () => {
             </section>
           );
         })}
+            </div>
+          </div>
+        ))}
       </div>
     </>
   );

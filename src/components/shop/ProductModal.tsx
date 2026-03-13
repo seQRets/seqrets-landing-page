@@ -109,22 +109,38 @@ export default function ProductModal({
 
               <div className="flex flex-col md:flex-row">
                 {/* Left column: product visual */}
-                <div className="flex items-center justify-center bg-background/50 p-8 md:w-2/5 md:p-12">
-                  <div className="flex h-32 w-32 items-center justify-center rounded-2xl bg-primary/10">
-                    <Icon className="h-16 w-16 text-primary" />
+                {product.image ? (
+                  <div className="relative bg-background/50 md:w-2/5 overflow-hidden">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="h-full w-full object-cover object-[75%_center] min-h-[200px] md:min-h-0"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent md:bg-gradient-to-r md:from-transparent md:to-background/20" />
                   </div>
-                </div>
+                ) : (
+                  <div className="flex items-center justify-center bg-background/50 p-8 md:w-2/5 md:p-12">
+                    <div className="flex h-32 w-32 items-center justify-center rounded-2xl bg-primary/10">
+                      <Icon className="h-16 w-16 text-primary" />
+                    </div>
+                  </div>
+                )}
 
                 {/* Right column: details */}
                 <div className="flex flex-1 flex-col max-h-[70vh]">
                   {/* Scrollable content */}
                   <div className="flex-1 overflow-y-auto p-6 md:p-8 md:pb-0">
-                    {/* Badge */}
-                    {product.badge && (
-                      <span className="mb-2 inline-block rounded-full bg-primary/15 px-2.5 py-0.5 text-xs font-semibold text-primary">
-                        {product.badge}
+                    {/* Tag + Badge */}
+                    <div className="mb-2 flex items-center gap-2">
+                      <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/50">
+                        {product.tag}
                       </span>
-                    )}
+                      {product.badge && (
+                        <span className="inline-block rounded-full bg-primary/15 px-2.5 py-0.5 text-xs font-semibold text-primary">
+                          {product.badge}
+                        </span>
+                      )}
+                    </div>
 
                     {/* Name */}
                     <h2 className="font-display text-2xl font-bold text-foreground mb-1.5">

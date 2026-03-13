@@ -115,7 +115,7 @@ const DocsHub = () => {
             <tbody className="divide-y divide-border/20">
               {[
                 ["Encryption", "XChaCha20-Poly1305 (256-bit key, 192-bit nonce)"],
-                ["Key Derivation", "Argon2id (64 MB memory, 3 iterations)"],
+                ["Key Derivation", "Argon2id (64 MB memory, 4 iterations)"],
                 ["Secret Splitting", "Shamir's Secret Sharing (configurable threshold)"],
                 ["Output Format", "QR codes (Qards) — printable, scannable"],
                 ["Architecture", "Zero-knowledge — no servers, no accounts, no telemetry"],

@@ -39,6 +39,8 @@ export interface ProductInfo {
   badge?: string;
   highlight?: boolean;
   category: "bundle" | "accessory";
+  tag: string;
+  image?: string; // optional product photo (path relative to public/)
 }
 
 export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
@@ -57,6 +59,7 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
       "All desktop platforms",
     ],
     category: "bundle",
+    tag: "Software",
   },
   "backup-bundle": {
     slug: "backup-bundle",
@@ -75,6 +78,8 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
       "Quick-start guide",
     ],
     category: "bundle",
+    tag: "Bundle",
+    image: "/Shop_hero.webp",
   },
   "inheritance-bundle": {
     slug: "inheritance-bundle",
@@ -94,6 +99,7 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
       "Fireproof storage case",
     ],
     category: "bundle",
+    tag: "Bundle",
   },
   "smart-card": {
     slug: "smart-card",
@@ -105,6 +111,7 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     priceId: "price_1T8b3hJrPvZLpOYSRMKDcSm7",
     features: ["Contact interface", "JCOP applet compatible"],
     category: "accessory",
+    tag: "Hardware",
   },
   "smart-card-3pack": {
     slug: "smart-card-3pack",
@@ -117,6 +124,7 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     badge: "Save",
     features: ["3\u00D7 branded smart cards", "Volume discount"],
     category: "accessory",
+    tag: "Hardware",
   },
   "usb-card-reader": {
     slug: "usb-card-reader",
@@ -128,6 +136,7 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     priceId: "price_1T8b4CJrPvZLpOYSbfoPtIvm",
     features: ["USB-A connector", "macOS / Windows / Linux"],
     category: "accessory",
+    tag: "Hardware",
   },
   "tamper-evident-envelopes": {
     slug: "tamper-evident-envelopes",
@@ -139,6 +148,7 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     priceId: "price_1T8b4kJrPvZLpOYS1d7cNz9e",
     features: ["5-pack", "Void pattern on tamper"],
     category: "accessory",
+    tag: "Accessory",
   },
   "fireproof-case": {
     slug: "fireproof-case",
@@ -150,6 +160,7 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     priceId: "price_1T8b5rJrPvZLpOYSAEiQqSlR",
     features: ["Fits cards & documents", "1,200 \u00B0F / 30 min rated"],
     category: "accessory",
+    tag: "Accessory",
   },
   "inheritance-guide": {
     slug: "inheritance-guide",
@@ -161,6 +172,7 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     priceId: "price_1T8b6PJrPvZLpOYS6MqyLB2M",
     features: ["Printable PDF", "Legal considerations checklist"],
     category: "accessory",
+    tag: "Guide",
   },
 };
 

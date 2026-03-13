@@ -56,7 +56,7 @@ const SecurityPage = () => {
                 </div>
                 <h3 className="font-display text-base font-bold text-foreground mb-2">Encryption</h3>
                 <p className="text-sm text-muted-foreground/80">
-                  Your secret is encrypted with <strong className="text-foreground">XChaCha20-Poly1305</strong>, the same authenticated encryption used in Signal, WireGuard, and libsodium. The key is derived from your password using <strong className="text-foreground">Argon2id</strong> (64MB memory cost, 3 iterations) — the gold standard for resisting brute-force and GPU-based attacks.
+                  Your secret is encrypted with <strong className="text-foreground">XChaCha20-Poly1305</strong>, the same authenticated encryption used in Signal, WireGuard, and libsodium. The key is derived from your password using <strong className="text-foreground">Argon2id</strong> (64MB memory cost, 4 iterations) — the gold standard for resisting brute-force and GPU-based attacks.
                 </p>
               </div>
               <div className="rounded-2xl border border-border/30 bg-card/20 p-6">

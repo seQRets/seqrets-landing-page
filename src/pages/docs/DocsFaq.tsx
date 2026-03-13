@@ -34,7 +34,7 @@ const FAQ_DATA: FaqCategory[] = [
     items: [
       {
         q: "What encryption does seQRets use?",
-        a: "XChaCha20-Poly1305 for authenticated encryption (256-bit key, 192-bit nonce) and Argon2id for key derivation (64 MB memory cost, 3 iterations). These are the same primitives used in Signal, WireGuard, and libsodium.",
+        a: "XChaCha20-Poly1305 for authenticated encryption (256-bit key, 192-bit nonce) and Argon2id for key derivation (64 MB memory cost, 4 iterations). These are the same primitives used in Signal, WireGuard, and libsodium.",
       },
       {
         q: "What is Shamir's Secret Sharing?",
