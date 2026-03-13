@@ -9,6 +9,7 @@ const navLinks = [
   { label: "Features", href: "/features", isRoute: true },
   { label: "Security", href: "/security", isRoute: true },
   { label: "Docs", href: "/docs", isRoute: true },
+  { label: "Blog", href: "/blog", isRoute: true },
   { label: "Shop", href: "/shop", isRoute: true },
 ];
 
