@@ -6,10 +6,9 @@ import navbarIcon from "@/assets/navbar-icon.webp";
 const navLinks = [
   { label: "Home", href: "#top", isScroll: true },
   { label: "How It Works", href: "/how-it-works", isRoute: true },
-  { label: "Features", href: "#features" },
+  { label: "Features", href: "/features", isRoute: true },
   { label: "Security", href: "/security", isRoute: true },
   { label: "Docs", href: "/docs", isRoute: true },
-  { label: "Go Pro!", href: "#desktop" },
   { label: "Shop", href: "/shop", isRoute: true },
 ];
 

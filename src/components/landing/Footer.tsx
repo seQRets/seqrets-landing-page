@@ -54,7 +54,7 @@ const Footer = () => {
               <li><a href="https://app.seqrets.app" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">Web App (Free)</a></li>
               <li><a href="/#desktop" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">Desktop App</a></li>
               <li><Link to="/shop" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">Shop</Link></li>
-              <li><a href="/#features" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">Features</a></li>
+              <li><Link to="/features" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">Features</Link></li>
             </ul>
           </div>
 
@@ -62,7 +62,7 @@ const Footer = () => {
           <div className="space-y-4">
             <h4 className="font-display text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/80">Learn</h4>
             <ul className="space-y-3">
-              <li><a href="/#how-it-works" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">How It Works</a></li>
+              <li><Link to="/how-it-works" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">How It Works</Link></li>
               <li><Link to="/security" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">Security</Link></li>
               <li><Link to="/docs" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">Documentation</Link></li>
               <li>

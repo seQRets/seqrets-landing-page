@@ -1,4 +1,6 @@
 import { Shield, QrCode, Users, CreditCard, Binary, Bot } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import type { LucideIcon } from "lucide-react";
 import smartcardGold from "@/assets/smartcard-gold.webp";
 import inheritanceImg from "@/assets/screenshot-inheritance.webp";
@@ -74,6 +76,11 @@ const FeaturesGrid = () => {
             <br />
             <span className="text-gradient">Can't Afford to Lose</span>
           </h2>
+          <div className="mt-6">
+            <Button variant="secondary" size="lg" className="rounded-md font-display font-semibold" asChild>
+              <Link to="/features">See All Features →</Link>
+            </Button>
+          </div>
         </div>
 
         <div className="mx-auto max-w-5xl grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

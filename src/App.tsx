@@ -4,6 +4,7 @@ import { CartProvider } from "./contexts/CartContext";
 import Index from "./pages/Index";
 import Shop from "./pages/Shop";
 import HowItWorksPage from "./pages/HowItWorksPage";
+import FeaturesPage from "./pages/FeaturesPage";
 import SecurityPage from "./pages/SecurityPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
@@ -47,6 +48,7 @@ const App = () => (
         <Route path="/" element={<Index />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/how-it-works" element={<HowItWorksPage />} />
+        <Route path="/features" element={<FeaturesPage />} />
         <Route path="/security" element={<SecurityPage />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsOfService />} />
