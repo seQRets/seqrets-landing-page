@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Shield, QrCode, Users, CreditCard, MessageSquare, X } from "lucide-react";
 import screenshotRestore from "@/assets/screenshot-restore.webp";
@@ -86,6 +86,10 @@ const sections = [
 
 const HowItWorksPage = () => {
   const [lightbox, setLightbox] = useState<string | null>(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">

@@ -45,6 +45,11 @@ const HowItWorks = () => {
           <p className="mx-auto mt-6 max-w-2xl text-base text-muted-foreground/80">
             You have secrets that would be devastating to lose — and dangerous in the wrong hands. seQRets ensures no single point of failure can compromise them.
           </p>
+          <div className="mt-6">
+            <Button variant="secondary" size="lg" className="rounded-md font-display font-semibold" asChild>
+              <Link to="/how-it-works">See How It Works →</Link>
+            </Button>
+          </div>
         </div>
 
         <div className="mx-auto max-w-5xl grid gap-6 md:grid-cols-3">
@@ -65,17 +70,12 @@ const HowItWorks = () => {
           ))}
         </div>
 
-        <div className="mt-16 space-y-5">
+        <div className="mt-16">
           <div className="mx-auto max-w-2xl rounded-2xl border border-border/30 bg-card/20 p-6 text-left">
             <p className="text-sm font-semibold text-foreground mb-2">Example</p>
             <p className="text-sm leading-relaxed text-muted-foreground/80">
               Split your Bitcoin seed phrase into 5 Qards. Give 2 to family, put 1 in a safe deposit box, keep 2 at home. Any 3 can reconstruct the original — but no attacker, lawyer, or single heir can access it alone.
             </p>
-          </div>
-          <div className="text-center">
-            <Button variant="tertiary" size="lg" className="rounded-md font-display font-semibold" asChild>
-              <Link to="/how-it-works">Learn More →</Link>
-            </Button>
           </div>
         </div>
       </div>

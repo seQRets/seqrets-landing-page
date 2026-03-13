@@ -66,6 +66,11 @@ const SecuritySection = () => {
             No single lost backup, stolen share, or compromised location can expose your secrets.
             Everything is encrypted before it's split — and no one person holds enough to unlock anything alone.
           </p>
+          <div className="mt-6">
+            <Button variant="secondary" size="lg" className="rounded-md font-display font-semibold" asChild>
+              <Link to="/security">More Security Information →</Link>
+            </Button>
+          </div>
 
           <div ref={imageRef} className="mx-auto mt-10 max-w-2xl overflow-hidden rounded-2xl h-[300px] md:h-[400px] relative">
             <img
@@ -122,12 +127,6 @@ const SecuritySection = () => {
           </div>
         </div>
 
-        {/* More Info Button */}
-        <div className="text-center mt-10">
-          <Button variant="tertiary" className="rounded-md font-display font-semibold" asChild>
-            <Link to="/security">More Security Information →</Link>
-          </Button>
-        </div>
       </div>
     </section>
   );

@@ -5,9 +5,9 @@ import navbarIcon from "@/assets/navbar-icon.webp";
 
 const navLinks = [
   { label: "Home", href: "#top", isScroll: true },
-  { label: "How It Works", href: "#how-it-works" },
+  { label: "How It Works", href: "/how-it-works", isRoute: true },
   { label: "Features", href: "#features" },
-  { label: "Security", href: "#security" },
+  { label: "Security", href: "/security", isRoute: true },
   { label: "Docs", href: "/docs", isRoute: true },
   { label: "Go Pro!", href: "#desktop" },
   { label: "Shop", href: "/shop", isRoute: true },
@@ -41,6 +41,16 @@ const Navbar = () => {
     }
   };
 
+  const isActive = (link: typeof navLinks[number]) => {
+    if (link.isScroll) return location.pathname === "/";
+    if (link.isRoute) return location.pathname.startsWith(link.href);
+    return false;
+  };
+
+  const baseCls = "text-[13px] font-medium rounded-md px-3 py-1.5 transition-all";
+  const activeCls = `${baseCls} bg-foreground/10 text-foreground`;
+  const inactiveCls = `${baseCls} text-foreground/60 hover:bg-foreground/5 hover:text-foreground`;
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/60 backdrop-blur-2xl">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">
@@ -49,14 +59,15 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden items-center gap-6 lg:flex">
-          {navLinks.map((link) =>
-            link.isScroll ? (
+        <div className="hidden items-center gap-1 lg:flex">
+          {navLinks.map((link) => {
+            const cls = isActive(link) ? activeCls : inactiveCls;
+            return link.isScroll ? (
               <a
                 key={link.href}
                 href="#"
                 onClick={handleHomeClick}
-                className="text-[13px] font-medium text-foreground/60 transition-colors hover:text-foreground"
+                className={cls}
               >
                 {link.label}
               </a>
@@ -64,7 +75,7 @@ const Navbar = () => {
               <Link
                 key={link.href}
                 to={link.href}
-                className="text-[13px] font-medium text-foreground/60 transition-colors hover:text-foreground"
+                className={cls}
               >
                 {link.label}
               </Link>
@@ -73,12 +84,12 @@ const Navbar = () => {
                 key={link.href}
                 href={link.href}
                 onClick={(e) => handleAnchorClick(e, link.href)}
-                className="text-[13px] font-medium text-foreground/60 transition-colors hover:text-foreground"
+                className={cls}
               >
                 {link.label}
               </a>
-            )
-          )}
+            );
+          })}
         </div>
 
         <Link

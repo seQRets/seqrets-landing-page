@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
-import navbarIcon from "@/assets/navbar-icon.webp";
+import Navbar from "@/components/landing/Navbar";
 import {
   SHOP_LIVE,
   PRODUCTS,
@@ -331,47 +331,7 @@ const Shop = () => {
         description="Hardware, software, and kits to protect your crypto secrets. Smart cards, USB readers, bundles, and the seQRets Desktop App."
         path="/shop"
       />
-      {/* Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">
-          <Link to="/" className="flex items-center gap-3">
-            <img
-              src={navbarIcon}
-              alt="seQRets"
-              className="h-9 w-auto rounded-md"
-            />
-          </Link>
-          <div className="hidden items-center gap-8 md:flex">
-            <Link
-              to="/"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Home
-            </Link>
-
-            {SHOP_LIVE ? (
-              <button
-                onClick={cart.toggleDrawer}
-                className="relative inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
-              >
-                <ShoppingCart className="mr-1.5 h-3.5 w-3.5" />
-                Cart
-                {cart.totalItems > 0 && (
-                  <span className="ml-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-foreground text-xs font-bold text-background">
-                    {cart.totalItems}
-                  </span>
-                )}
-              </button>
-            ) : (
-              <WaitlistButton
-                source="shop-navbar"
-                label="Join Waitlist"
-                className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
-              />
-            )}
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       <main>
         {/* Coming Soon Banner — only shown when not live */}
