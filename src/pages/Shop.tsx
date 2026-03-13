@@ -8,7 +8,6 @@ import {
   BookOpen,
   Flame,
   Lock,
-  Mail,
   ShoppingBag,
   ShoppingCart,
   Check,
