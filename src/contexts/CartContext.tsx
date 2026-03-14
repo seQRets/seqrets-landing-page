@@ -101,8 +101,9 @@ function loadCart(): CartItem[] {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw) as CartItem[];
-    // Validate slugs still exist in catalog
-    return parsed.filter((i) => i.slug in PRODUCTS && i.quantity > 0);
+    // Validate slugs exist in catalog and enforce quantity bounds (match server-side MAX_QUANTITY)
+    const MAX_QUANTITY = 100;
+    return parsed.filter((i) => i.slug in PRODUCTS && i.quantity > 0 && i.quantity <= MAX_QUANTITY);
   } catch {
     return [];
   }

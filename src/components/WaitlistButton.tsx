@@ -29,7 +29,8 @@ const WaitlistButton = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const trimmed = email.trim();
-    if (!trimmed || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) return;
+    // [M-4] Stricter email validation: requires 2+ char TLD, max 254 chars (RFC 5321)
+    if (!trimmed || trimmed.length > 254 || !/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/.test(trimmed)) return;
 
     setSubmitting(true);
     setErrorMsg("");

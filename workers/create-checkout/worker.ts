@@ -29,16 +29,25 @@ const MAX_QUANTITY = 100;
 const SECURITY_HEADERS = {
   "X-Content-Type-Options": "nosniff",
   "X-Frame-Options": "DENY",
+  "Cache-Control": "no-store, no-cache", // [L-1] Prevent caching of API responses
 };
 
-function getCorsHeaders(request: Request) {
+// [M-1] Reject unauthorized origins instead of falling back
+function getCorsHeaders(request: Request): Record<string, string> | null {
   const origin = request.headers.get("Origin") ?? "";
+  if (!ALLOWED_ORIGINS.has(origin)) return null;
   return {
-    "Access-Control-Allow-Origin": ALLOWED_ORIGINS.has(origin) ? origin : "https://seqrets.app",
+    "Access-Control-Allow-Origin": origin,
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
   };
 }
+
+const DENY_CORS: Record<string, string> = {
+  "Access-Control-Allow-Origin": "https://seqrets.app",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
 
 function jsonResponse(body: Record<string, unknown>, status: number, extra: Record<string, string>) {
   return new Response(JSON.stringify(body), {
@@ -47,38 +56,72 @@ function jsonResponse(body: Record<string, unknown>, status: number, extra: Reco
   });
 }
 
+// [H-3] Max body size
+const MAX_BODY_SIZE = 51200; // 50 KB
+
+// [M-3] + [C-4] Safe JSON parsing with Content-Type validation and error handling
+async function safeParseJson(request: Request): Promise<{ ok: true; data: unknown } | { ok: false; error: string; status: number }> {
+  const contentType = request.headers.get("Content-Type") || "";
+  if (!contentType.includes("application/json")) {
+    return { ok: false, error: "Content-Type must be application/json", status: 415 };
+  }
+
+  const contentLength = parseInt(request.headers.get("Content-Length") || "0", 10);
+  if (contentLength > MAX_BODY_SIZE) {
+    return { ok: false, error: "Payload too large", status: 413 };
+  }
+
+  try {
+    const text = await request.text();
+    if (text.length > MAX_BODY_SIZE) {
+      return { ok: false, error: "Payload too large", status: 413 };
+    }
+    const data = JSON.parse(text);
+    return { ok: true, data };
+  } catch {
+    return { ok: false, error: "Invalid JSON", status: 400 };
+  }
+}
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
-    const corsHeaders = getCorsHeaders(request);
+    const cors = getCorsHeaders(request);
+    const responseCors = cors ?? DENY_CORS;
 
     // Handle CORS preflight
     if (request.method === "OPTIONS") {
-      return new Response(null, { headers: { ...corsHeaders, ...SECURITY_HEADERS } });
+      return new Response(null, { headers: { ...responseCors, ...SECURITY_HEADERS } });
     }
 
     if (request.method !== "POST") {
       return new Response("Method not allowed", {
         status: 405,
-        headers: { ...corsHeaders, ...SECURITY_HEADERS },
+        headers: { ...responseCors, ...SECURITY_HEADERS },
       });
     }
 
+    // Parse and validate request body
+    const parsed = await safeParseJson(request);
+    if (!parsed.ok) {
+      return jsonResponse({ error: parsed.error }, parsed.status, responseCors);
+    }
+
     try {
-      const { lineItems } = (await request.json()) as {
+      const { lineItems } = parsed.data as {
         lineItems: { price: string; quantity: number }[];
       };
 
       if (!Array.isArray(lineItems) || lineItems.length === 0) {
-        return jsonResponse({ error: "No items provided" }, 400, corsHeaders);
+        return jsonResponse({ error: "No items provided" }, 400, responseCors);
       }
 
       // Validate every line item against the price whitelist and quantity bounds
       for (const item of lineItems) {
         if (!VALID_PRICE_IDS.has(item.price)) {
-          return jsonResponse({ error: "Invalid price ID" }, 400, corsHeaders);
+          return jsonResponse({ error: "Invalid price ID" }, 400, responseCors);
         }
         if (!Number.isInteger(item.quantity) || item.quantity < 1 || item.quantity > MAX_QUANTITY) {
-          return jsonResponse({ error: "Invalid quantity" }, 400, corsHeaders);
+          return jsonResponse({ error: "Invalid quantity" }, 400, responseCors);
         }
       }
 
@@ -108,16 +151,20 @@ export default {
       const session = (await stripeRes.json()) as { url?: string; error?: { message: string } };
 
       if (!stripeRes.ok || !session.url) {
+        // [C-5] Never forward raw Stripe error messages to clients — log server-side only
+        console.error("Stripe checkout error:", session.error?.message ?? "No URL returned");
         return jsonResponse(
-          { error: session.error?.message ?? "Failed to create session" },
+          { error: "Checkout session could not be created. Please try again." },
           500,
-          corsHeaders,
+          responseCors,
         );
       }
 
-      return jsonResponse({ url: session.url }, 200, corsHeaders);
-    } catch {
-      return jsonResponse({ error: "Internal error" }, 500, corsHeaders);
+      return jsonResponse({ url: session.url }, 200, responseCors);
+    } catch (err) {
+      // [C-4] Catch any unexpected errors and return generic message
+      console.error("Checkout worker error:", err);
+      return jsonResponse({ error: "Internal error" }, 500, responseCors);
     }
   },
 };

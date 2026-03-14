@@ -222,8 +222,13 @@ export async function createCheckoutSession(
 
   const { url } = (await res.json()) as { url: string };
 
-  // Validate that Stripe returned a legitimate checkout URL
-  if (typeof url !== "string" || !url.startsWith("https://checkout.stripe.com/")) {
+  // [H-8] Validate that Stripe returned a legitimate checkout URL using strict URL parsing
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol !== "https:" || parsed.hostname !== "checkout.stripe.com") {
+      throw new Error("Invalid checkout URL");
+    }
+  } catch {
     throw new Error("Invalid checkout URL");
   }
 

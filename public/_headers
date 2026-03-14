@@ -5,6 +5,8 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   Permissions-Policy: camera=(), microphone=(), geolocation=()
+  X-Permitted-Cross-Domain-Policies: none
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://js.stripe.com; connect-src 'self' https://checkout.stripe.com https://seqrets-checkout.baton-banker-hazy.workers.dev https://seqrets-waitlist.baton-banker-hazy.workers.dev; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; frame-src https://js.stripe.com; object-src 'none'; base-uri 'self'; form-action 'self'
 
 # Allow Stripe checkout iframe embedding on checkout pages
 /checkout/*
