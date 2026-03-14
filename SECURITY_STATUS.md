@@ -8,8 +8,8 @@
 
 | Status | Count |
 |--------|-------|
-| Fixed | 22 |
-| Remaining | 6 |
+| Fixed | 23 |
+| Remaining | 5 |
 
 ---
 
@@ -38,6 +38,7 @@
 | C-2 | CRITICAL | Admin secret stored client-side in JS variable | Replaced with server-side session tokens: `POST /admin/login` exchanges secret for random 32-byte token stored in KV with 15-min TTL; admin.html stores only the token; `POST /admin/logout` invalidates server-side; secret cleared from DOM immediately after login |
 | H-5 | HIGH | No session timeout for admin dashboard | Session tokens have 15-min TTL with sliding window (refreshed on each use); expired sessions return 403 and redirect to login |
 | C-3 | CRITICAL | Rate limiting bypass via IP spoofing | Mitigated: `CF-Connecting-IP` is set by Cloudflare's proxy and cannot be spoofed by end users; KV-based rate limiting is effective behind Cloudflare |
+| H-6 | HIGH | No CSRF protection on admin operations | Mitigated by design: admin requests require custom `X-Admin-Token` header (triggers CORS preflight) + `Content-Type: application/json` (not sendable by HTML forms) + strict CORS origin whitelist — three independent layers prevent cross-origin state-changing requests |
 | — | — | npm audit vulnerabilities (2 high) | Resolved via `npm audit fix` |
 
 ---
@@ -46,7 +47,6 @@
 
 | ID | Severity | Finding | Recommended Action |
 |----|----------|---------|-------------------|
-| H-6 | HIGH | No CSRF protection on admin operations | Add random CSRF token in response body, echo back on subsequent requests |
 | M-2 | MEDIUM | Race condition in waitlist deduplication | Make writes idempotent with unconditional put; accept KV non-atomicity |
 | M-6 | MEDIUM | Weak deletion confirmation (3s two-click) | Replace with modal dialog requiring typed confirmation |
 | M-7 | MEDIUM | No schema validation on parsed waitlist entries | Validate shape before rendering; skip or flag invalid entries |
