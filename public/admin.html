@@ -299,7 +299,7 @@
   // The Worker URL — update this if your subdomain changes
   const WORKER_URL = "https://seqrets-waitlist.baton-banker-hazy.workers.dev";
 
-  let adminSecret = "";
+  let sessionToken = "";  // [C-2] Session token — raw secret is never stored
   let entries = [];
 
   // --- DOM refs ---
@@ -311,7 +311,7 @@
   const tableBody   = document.getElementById("tableBody");
   const searchInput = document.getElementById("searchInput");
 
-  // --- Login ---
+  // --- Login --- [C-2] Exchange secret for session token; secret is never stored
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     loginError.textContent = "";
@@ -321,24 +321,38 @@
     document.getElementById("loginBtn").disabled = true;
 
     try {
-      const res = await fetch(WORKER_URL, {
-        headers: { "X-Admin-Secret": secret },
+      // Step 1: Exchange secret for session token
+      const loginRes = await fetch(WORKER_URL + "/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ secret }),
       });
 
-      if (res.status === 401) {
-        loginError.textContent = "Wrong secret. Try again.";
+      if (!loginRes.ok) {
+        loginError.textContent = loginRes.status === 403
+          ? "Wrong secret. Try again."
+          : "Something went wrong (" + loginRes.status + ")";
         document.getElementById("loginBtn").disabled = false;
         return;
       }
 
+      const loginData = await loginRes.json();
+      sessionToken = loginData.token;
+      secretInput.value = ""; // Clear secret from DOM immediately
+
+      // Step 2: Fetch entries using session token
+      const res = await fetch(WORKER_URL, {
+        headers: { "X-Admin-Token": sessionToken },
+      });
+
       if (!res.ok) {
-        loginError.textContent = "Something went wrong (" + res.status + ")";
+        loginError.textContent = "Authenticated but failed to load data";
         document.getElementById("loginBtn").disabled = false;
+        sessionToken = "";
         return;
       }
 
       const data = await res.json();
-      adminSecret = secret;
       entries = parseEntries(data.entries || []);
 
       loginCard.classList.add("hidden");
@@ -351,9 +365,19 @@
     }
   });
 
-  // --- Logout ---
-  document.getElementById("logoutBtn").addEventListener("click", () => {
-    adminSecret = "";
+  // --- Logout --- [C-2] Invalidate session token server-side
+  document.getElementById("logoutBtn").addEventListener("click", async () => {
+    if (sessionToken) {
+      try {
+        await fetch(WORKER_URL + "/admin/logout", {
+          method: "POST",
+          headers: { "X-Admin-Token": sessionToken },
+        });
+      } catch {
+        // Best-effort — token will expire via TTL anyway
+      }
+    }
+    sessionToken = "";
     entries = [];
     secretInput.value = "";
     document.getElementById("loginBtn").disabled = false;
@@ -464,7 +488,7 @@
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          "X-Admin-Secret": adminSecret,
+          "X-Admin-Token": sessionToken,
         },
         body: JSON.stringify({ email }),
       });
@@ -473,6 +497,13 @@
         entries = entries.filter((e) => e.email !== email);
         renderTable(entries);
         renderStats(entries);
+      } else if (res.status === 403) {
+        // Session expired — return to login
+        sessionToken = "";
+        entries = [];
+        dashboard.classList.remove("active");
+        loginCard.classList.remove("hidden");
+        loginError.textContent = "Session expired. Please log in again.";
       } else {
         btn.textContent = "Failed";
         btn.disabled = false;
@@ -516,9 +547,19 @@
   document.getElementById("refreshBtn").addEventListener("click", async () => {
     try {
       const res = await fetch(WORKER_URL, {
-        headers: { "X-Admin-Secret": adminSecret },
+        headers: { "X-Admin-Token": sessionToken },
       });
-      if (!res.ok) return;
+      if (!res.ok) {
+        // Session expired — return to login
+        if (res.status === 403) {
+          sessionToken = "";
+          entries = [];
+          dashboard.classList.remove("active");
+          loginCard.classList.remove("hidden");
+          loginError.textContent = "Session expired. Please log in again.";
+        }
+        return;
+      }
       const data = await res.json();
       entries = parseEntries(data.entries || []);
       renderTable(entries);

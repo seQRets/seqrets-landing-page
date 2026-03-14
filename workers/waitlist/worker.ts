@@ -19,7 +19,7 @@ function getCorsHeaders(request: Request): Record<string, string> | null {
   return {
     "Access-Control-Allow-Origin": origin,
     "Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type, X-Admin-Secret",
+    "Access-Control-Allow-Headers": "Content-Type, X-Admin-Token",
   };
 }
 
@@ -27,7 +27,7 @@ function getCorsHeaders(request: Request): Record<string, string> | null {
 const DENY_CORS: Record<string, string> = {
   "Access-Control-Allow-Origin": "https://seqrets.app",
   "Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, X-Admin-Secret",
+  "Access-Control-Allow-Headers": "Content-Type, X-Admin-Token",
 };
 
 // [M-4] Stricter email validation: requires 2+ char TLD, no dots-only, max 254 chars
@@ -41,6 +41,9 @@ const ADMIN_RATE_LIMIT_WINDOW_S = 900; // 15-minute lockout window
 // [H-1] Separate rate limit for public POST endpoint
 const SIGNUP_RATE_LIMIT_MAX = 10;     // max signups per IP per window
 const SIGNUP_RATE_LIMIT_WINDOW_S = 3600; // 1-hour window
+
+// [C-2] Session token configuration
+const SESSION_TTL_S = 900; // 15-minute session lifetime (sliding window) — also fixes [H-5]
 
 function rateLimitKey(request: Request, prefix: string): string {
   const ip = request.headers.get("CF-Connecting-IP") || "unknown";
@@ -90,6 +93,24 @@ async function timeSafeEqual(a: string, b: string): Promise<boolean> {
     result |= sigA[i] ^ sigB[i];
   }
   return result === 0;
+}
+
+// [C-2] Generate a cryptographically random session token
+function generateSessionToken(): string {
+  const bytes = new Uint8Array(32);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+// [C-2] Validate session token from KV and refresh TTL (sliding window → fixes [H-5])
+async function validateSessionToken(kv: KVNamespace, token: string): Promise<boolean> {
+  if (!token || token.length !== 64) return false;
+  const key = `session:${token}`;
+  const raw = await kv.get(key);
+  if (!raw) return false;
+  // Refresh TTL on each successful use (sliding window)
+  await kv.put(key, raw, { expirationTtl: SESSION_TTL_S });
+  return true;
 }
 
 const SECURITY_HEADERS = {
@@ -142,26 +163,62 @@ export default {
       return new Response(null, { headers: { ...responseCors, ...SECURITY_HEADERS } });
     }
 
-    // Admin endpoint: GET / → list waitlist entries (requires ADMIN_SECRET header)
-    if (request.method === "GET") {
+    const url = new URL(request.url);
+    const path = url.pathname;
+
+    // --- [C-2] Admin login: POST /admin/login ---
+    // Validates secret, returns a session token (secret is never stored client-side)
+    if (request.method === "POST" && path === "/admin/login") {
       const rlKey = rateLimitKey(request, "admin");
       if (await isRateLimited(env.WAITLIST, rlKey, ADMIN_RATE_LIMIT_MAX)) {
-        // [H-7] Generic error message — don't distinguish rate limit from auth failure
         return jsonResponse({ error: "Access denied" }, 403, responseCors);
       }
 
-      const secret = request.headers.get("X-Admin-Secret") || "";
+      const parsed = await safeParseJson(request);
+      if (!parsed.ok) {
+        return jsonResponse({ error: parsed.error }, 400, responseCors);
+      }
+
+      const { secret } = parsed.data as { secret?: string };
       if (!secret || !(await timeSafeEqual(secret, env.ADMIN_SECRET))) {
         await recordAttempt(env.WAITLIST, rlKey, ADMIN_RATE_LIMIT_WINDOW_S);
-        // [H-7] Same generic error for wrong secret, missing secret, or rate limit
         return jsonResponse({ error: "Access denied" }, 403, responseCors);
       }
 
       await clearRateLimit(env.WAITLIST, rlKey);
 
+      // Generate session token and store in KV with TTL
+      const token = generateSessionToken();
+      const ip = request.headers.get("CF-Connecting-IP") || "unknown";
+      await env.WAITLIST.put(
+        `session:${token}`,
+        JSON.stringify({ createdAt: new Date().toISOString(), ip }),
+        { expirationTtl: SESSION_TTL_S },
+      );
+
+      return jsonResponse({ token }, 200, responseCors);
+    }
+
+    // --- [C-2] Admin logout: POST /admin/logout ---
+    // Invalidates the session token server-side
+    if (request.method === "POST" && path === "/admin/logout") {
+      const token = request.headers.get("X-Admin-Token") || "";
+      if (token && token.length === 64) {
+        await env.WAITLIST.delete(`session:${token}`);
+      }
+      return jsonResponse({ ok: true }, 200, responseCors);
+    }
+
+    // --- Admin endpoint: GET / → list waitlist entries (requires session token) ---
+    if (request.method === "GET") {
+      const token = request.headers.get("X-Admin-Token") || "";
+      if (!(await validateSessionToken(env.WAITLIST, token))) {
+        return jsonResponse({ error: "Access denied" }, 403, responseCors);
+      }
+
       try {
         const keys = await env.WAITLIST.list();
-        // [H-4] Only return email-namespaced keys, skip ratelimit: keys
+        // [H-4] Only return email-namespaced keys, skip ratelimit:/session: keys
         const emailKeys = keys.keys.filter((k) => k.name.startsWith("email:"));
         const entries = await Promise.all(
           emailKeys.map(async (k) => {
@@ -175,20 +232,12 @@ export default {
       }
     }
 
-    // Admin endpoint: DELETE / → remove a waitlist entry (requires ADMIN_SECRET header)
+    // --- Admin endpoint: DELETE / → remove a waitlist entry (requires session token) ---
     if (request.method === "DELETE") {
-      const rlKey = rateLimitKey(request, "admin");
-      if (await isRateLimited(env.WAITLIST, rlKey, ADMIN_RATE_LIMIT_MAX)) {
+      const token = request.headers.get("X-Admin-Token") || "";
+      if (!(await validateSessionToken(env.WAITLIST, token))) {
         return jsonResponse({ error: "Access denied" }, 403, responseCors);
       }
-
-      const secret = request.headers.get("X-Admin-Secret") || "";
-      if (!secret || !(await timeSafeEqual(secret, env.ADMIN_SECRET))) {
-        await recordAttempt(env.WAITLIST, rlKey, ADMIN_RATE_LIMIT_WINDOW_S);
-        return jsonResponse({ error: "Access denied" }, 403, responseCors);
-      }
-
-      await clearRateLimit(env.WAITLIST, rlKey);
 
       const parsed = await safeParseJson(request);
       if (!parsed.ok) {
@@ -207,7 +256,16 @@ export default {
       return jsonResponse({ ok: true, deleted: trimmed }, 200, responseCors);
     }
 
+    // --- Public endpoint: POST / → waitlist signup ---
     if (request.method !== "POST") {
+      return new Response("Method not allowed", {
+        status: 405,
+        headers: { ...responseCors, ...SECURITY_HEADERS },
+      });
+    }
+
+    // Ignore admin paths that somehow arrive as non-POST (already handled above)
+    if (path.startsWith("/admin/")) {
       return new Response("Method not allowed", {
         status: 405,
         headers: { ...responseCors, ...SECURITY_HEADERS },
