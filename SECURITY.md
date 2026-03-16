@@ -1,5 +1,11 @@
 # Security Policy
 
+## Security Audit Status
+
+We completed a 28-finding security audit covering the landing page, web app, Cloudflare Workers, and admin dashboard. **All 28 findings have been addressed.** See the full tracker: [`SECURITY_STATUS.md`](./SECURITY_STATUS.md)
+
+---
+
 ## Reporting a Vulnerability
 
 If you discover a security vulnerability in seQRets, please report it responsibly.
