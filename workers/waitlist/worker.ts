@@ -301,18 +301,13 @@ export default {
     // [H-4] Namespace email keys with "email:" prefix to prevent collision with ratelimit keys
     const kvKey = `email:${trimmed}`;
 
-    // Deduplicate: use email as key, store metadata as value
-    const existing = await env.WAITLIST.get(kvKey);
-
-    const payload = JSON.stringify({
+    // [M-2] Idempotent write: unconditional put eliminates read-then-write race condition.
+    // Duplicate signups overwrite with equivalent data — acceptable for KV eventual consistency.
+    await env.WAITLIST.put(kvKey, JSON.stringify({
       email: trimmed,
       source: source || "unknown",
       signedUpAt: new Date().toISOString(),
-    });
-
-    if (!existing) {
-      await env.WAITLIST.put(kvKey, payload);
-    }
+    }));
 
     return jsonResponse({ ok: true }, 200, responseCors);
   },

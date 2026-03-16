@@ -8,8 +8,8 @@
 
 | Status | Count |
 |--------|-------|
-| Fixed | 23 |
-| Remaining | 5 |
+| Fixed | 25 |
+| Remaining | 3 |
 
 ---
 
@@ -40,6 +40,8 @@
 | C-3 | CRITICAL | Rate limiting bypass via IP spoofing | Mitigated: `CF-Connecting-IP` is set by Cloudflare's proxy and cannot be spoofed by end users; KV-based rate limiting is effective behind Cloudflare |
 | H-6 | HIGH | No CSRF protection on admin operations | Mitigated by design: admin requests require custom `X-Admin-Token` header (triggers CORS preflight) + `Content-Type: application/json` (not sendable by HTML forms) + strict CORS origin whitelist — three independent layers prevent cross-origin state-changing requests |
 | — | — | npm audit vulnerabilities (2 high) | Resolved via `npm audit fix` |
+| M-2 | MEDIUM | Race condition in waitlist deduplication | Replaced conditional read-then-write with unconditional `put` — idempotent; eliminates race window |
+| M-8 | MEDIUM | Unvalidated redirect path via sessionStorage | Added route whitelist regex in `main.tsx`; only known app routes accepted by `replaceState` |
 
 ---
 
@@ -47,10 +49,8 @@
 
 | ID | Severity | Finding | Recommended Action |
 |----|----------|---------|-------------------|
-| M-2 | MEDIUM | Race condition in waitlist deduplication | Make writes idempotent with unconditional put; accept KV non-atomicity |
 | M-6 | MEDIUM | Weak deletion confirmation (3s two-click) | Replace with modal dialog requiring typed confirmation |
 | M-7 | MEDIUM | No schema validation on parsed waitlist entries | Validate shape before rendering; skip or flag invalid entries |
-| M-8 | MEDIUM | Unvalidated redirect path via sessionStorage | Validate against known route whitelist regex |
 | I-1 | INFO | No audit logging on admin actions | Add `console.log` in Worker for admin actions (visible in `wrangler tail`) |
 
 ---
