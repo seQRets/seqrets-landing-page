@@ -8,8 +8,8 @@
 
 | Status | Count |
 |--------|-------|
-| Fixed | 25 |
-| Remaining | 3 |
+| Fixed | 28 |
+| Remaining | 0 |
 
 ---
 
@@ -42,16 +42,15 @@
 | — | — | npm audit vulnerabilities (2 high) | Resolved via `npm audit fix` |
 | M-2 | MEDIUM | Race condition in waitlist deduplication | Replaced conditional read-then-write with unconditional `put` — idempotent; eliminates race window |
 | M-8 | MEDIUM | Unvalidated redirect path via sessionStorage | Added route whitelist regex in `main.tsx`; only known app routes accepted by `replaceState` |
+| M-6 | MEDIUM | Weak deletion confirmation (3s two-click) | Replaced with modal dialog requiring typed email confirmation before delete |
+| M-7 | MEDIUM | No schema validation on parsed waitlist entries | Added `isValidEntry()` validator in `admin.html`; malformed entries skipped during parse |
+| I-1 | INFO | No audit logging on admin actions | Added `[AUDIT]` console.log for login, login.failed, logout, list, delete — visible via `wrangler tail` |
 
 ---
 
 ## Remaining
 
-| ID | Severity | Finding | Recommended Action |
-|----|----------|---------|-------------------|
-| M-6 | MEDIUM | Weak deletion confirmation (3s two-click) | Replace with modal dialog requiring typed confirmation |
-| M-7 | MEDIUM | No schema validation on parsed waitlist entries | Validate shape before rendering; skip or flag invalid entries |
-| I-1 | INFO | No audit logging on admin actions | Add `console.log` in Worker for admin actions (visible in `wrangler tail`) |
+All 28 findings have been addressed.
 
 ---
 

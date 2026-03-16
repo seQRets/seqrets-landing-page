@@ -182,6 +182,8 @@ export default {
       const { secret } = parsed.data as { secret?: string };
       if (!secret || !(await timeSafeEqual(secret, env.ADMIN_SECRET))) {
         await recordAttempt(env.WAITLIST, rlKey, ADMIN_RATE_LIMIT_WINDOW_S);
+        const ip = request.headers.get("CF-Connecting-IP") || "unknown";
+        console.log(`[AUDIT] admin.login.failed ip=${ip}`);
         return jsonResponse({ error: "Access denied" }, 403, responseCors);
       }
 
@@ -196,6 +198,9 @@ export default {
         { expirationTtl: SESSION_TTL_S },
       );
 
+      // [I-1] Audit log — visible via `wrangler tail`
+      console.log(`[AUDIT] admin.login ip=${ip}`);
+
       return jsonResponse({ token }, 200, responseCors);
     }
 
@@ -206,6 +211,8 @@ export default {
       if (token && token.length === 64) {
         await env.WAITLIST.delete(`session:${token}`);
       }
+      const ip = request.headers.get("CF-Connecting-IP") || "unknown";
+      console.log(`[AUDIT] admin.logout ip=${ip}`);
       return jsonResponse({ ok: true }, 200, responseCors);
     }
 
@@ -226,6 +233,8 @@ export default {
             return { key: k.name.replace(/^email:/, ""), value: val };
           }),
         );
+        const ip = request.headers.get("CF-Connecting-IP") || "unknown";
+        console.log(`[AUDIT] admin.list ip=${ip} count=${emailKeys.length}`);
         return jsonResponse({ count: emailKeys.length, entries }, 200, responseCors);
       } catch {
         return jsonResponse({ error: "Internal error" }, 500, responseCors);
@@ -253,6 +262,8 @@ export default {
 
       // [H-4] Use namespaced key for deletion
       await env.WAITLIST.delete(`email:${trimmed}`);
+      const ip = request.headers.get("CF-Connecting-IP") || "unknown";
+      console.log(`[AUDIT] admin.delete ip=${ip} email=${trimmed}`);
       return jsonResponse({ ok: true, deleted: trimmed }, 200, responseCors);
     }
 

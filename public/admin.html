@@ -214,7 +214,61 @@
     }
 
     .btn-delete:disabled { opacity: 0.3; cursor: not-allowed; }
-    .btn-delete.confirming { color: #ef4444; border-color: #ef4444; }
+
+    /* [M-6] Delete confirmation modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal {
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 12px;
+      padding: 1.5rem;
+      max-width: 420px;
+      width: 90%;
+    }
+
+    .modal h3 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal p {
+      color: #a1a1aa;
+      font-size: 0.8125rem;
+      margin-bottom: 1rem;
+    }
+
+    .modal .confirm-email {
+      font-weight: 600;
+      color: #ef4444;
+      word-break: break-all;
+    }
+
+    .modal .field { margin-bottom: 1rem; }
+
+    .btn-danger {
+      background: #ef4444;
+      color: #fff;
+    }
+
+    .btn-danger:hover { background: #dc2626; }
+    .btn-danger:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .modal-actions {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+    }
 
     .logout-btn {
       background: transparent;
@@ -292,6 +346,21 @@
         <tr><td colspan="5" class="empty-state">Loading...</td></tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- [M-6] Delete confirmation modal -->
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal">
+      <h3>Confirm Deletion</h3>
+      <p>Type the email address to confirm: <span class="confirm-email" id="modalEmail"></span></p>
+      <div class="field">
+        <input type="text" id="modalInput" placeholder="Type email to confirm" autocomplete="off" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn-secondary" id="modalCancel">Cancel</button>
+        <button class="btn-danger" id="modalConfirm" disabled>Delete</button>
+      </div>
+    </div>
   </div>
 
 <script>
@@ -385,21 +454,36 @@
     loginCard.classList.remove("hidden");
   });
 
-  // --- Parse ---
+  // --- Parse --- [M-7] Validate entry shape before rendering; skip invalid entries
+  function isValidEntry(val) {
+    return val
+      && typeof val === "object"
+      && typeof val.email === "string" && val.email.length > 0 && val.email.length <= 254
+      && typeof val.source === "string"
+      && (val.signedUpAt === null || val.signedUpAt === undefined || typeof val.signedUpAt === "string");
+  }
+
   function parseEntries(raw) {
     return raw
       .map((e) => {
         try {
           const val = typeof e.value === "string" ? JSON.parse(e.value) : e.value;
-          return {
-            email: val.email || e.key,
-            source: val.source || "unknown",
-            signedUpAt: val.signedUpAt || null,
+          const entry = {
+            email: val?.email || e.key,
+            source: val?.source || "unknown",
+            signedUpAt: val?.signedUpAt || null,
           };
+          if (!isValidEntry(entry)) return null;
+          return entry;
         } catch {
-          return { email: e.key, source: "unknown", signedUpAt: null };
+          // Unparseable value — use key as email if it looks valid
+          if (typeof e.key === "string" && e.key.includes("@")) {
+            return { email: e.key, source: "unknown", signedUpAt: null };
+          }
+          return null;
         }
       })
+      .filter(Boolean)
       .sort((a, b) => {
         if (!a.signedUpAt) return 1;
         if (!b.signedUpAt) return -1;
@@ -454,9 +538,8 @@
       const tdAction = document.createElement("td");
       const btn = document.createElement("button");
       btn.className = "btn-delete";
-      btn.dataset.email = e.email;
       btn.textContent = "Delete";
-      btn.addEventListener("click", () => handleDelete(btn));
+      btn.addEventListener("click", () => showDeleteModal(e.email));
       tdAction.appendChild(btn);
       tr.appendChild(tdAction);
 
@@ -464,24 +547,44 @@
     });
   }
 
-  // --- Delete ---
-  async function handleDelete(btn) {
-    const email = btn.dataset.email;
-    // Two-click confirm: first click shows "Sure?", second click deletes
-    if (!btn.classList.contains("confirming")) {
-      btn.classList.add("confirming");
-      btn.textContent = "Sure?";
-      setTimeout(() => {
-        if (btn.classList.contains("confirming")) {
-          btn.classList.remove("confirming");
-          btn.textContent = "Delete";
-        }
-      }, 3000);
-      return;
-    }
+  // --- Delete --- [M-6] Modal-based confirmation requiring typed email
+  const deleteModal = document.getElementById("deleteModal");
+  const modalEmail = document.getElementById("modalEmail");
+  const modalInput = document.getElementById("modalInput");
+  const modalConfirm = document.getElementById("modalConfirm");
+  const modalCancel = document.getElementById("modalCancel");
+  let pendingDeleteEmail = "";
 
-    btn.disabled = true;
-    btn.textContent = "...";
+  function showDeleteModal(email) {
+    pendingDeleteEmail = email;
+    modalEmail.textContent = email;
+    modalInput.value = "";
+    modalConfirm.disabled = true;
+    deleteModal.classList.add("active");
+    modalInput.focus();
+  }
+
+  function closeDeleteModal() {
+    deleteModal.classList.remove("active");
+    pendingDeleteEmail = "";
+    modalInput.value = "";
+  }
+
+  modalInput.addEventListener("input", () => {
+    modalConfirm.disabled = modalInput.value.trim().toLowerCase() !== pendingDeleteEmail.toLowerCase();
+  });
+
+  modalCancel.addEventListener("click", closeDeleteModal);
+
+  deleteModal.addEventListener("click", (e) => {
+    if (e.target === deleteModal) closeDeleteModal();
+  });
+
+  modalConfirm.addEventListener("click", async () => {
+    if (!pendingDeleteEmail) return;
+    const email = pendingDeleteEmail;
+    modalConfirm.disabled = true;
+    modalConfirm.textContent = "Deleting...";
 
     try {
       const res = await fetch(WORKER_URL, {
@@ -497,22 +600,25 @@
         entries = entries.filter((e) => e.email !== email);
         renderTable(entries);
         renderStats(entries);
+        closeDeleteModal();
       } else if (res.status === 403) {
-        // Session expired — return to login
+        closeDeleteModal();
         sessionToken = "";
         entries = [];
         dashboard.classList.remove("active");
         loginCard.classList.remove("hidden");
         loginError.textContent = "Session expired. Please log in again.";
       } else {
-        btn.textContent = "Failed";
-        btn.disabled = false;
+        modalConfirm.textContent = "Failed — retry";
+        modalConfirm.disabled = false;
       }
     } catch {
-      btn.textContent = "Error";
-      btn.disabled = false;
+      modalConfirm.textContent = "Error — retry";
+      modalConfirm.disabled = false;
     }
-  }
+
+    modalConfirm.textContent = "Delete";
+  });
 
   // --- Stats ---
   function renderStats(data) {
