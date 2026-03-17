@@ -31,7 +31,7 @@ test.describe('Landing Page', () => {
       if (msg.type() === 'error') {
         const text = msg.text();
         // Ignore known benign errors (third-party badges, favicon, SVG parse warnings)
-        if (text.includes('shields.io') || text.includes('favicon') || text.includes('ERR_BLOCKED_BY_CLIENT') || text.includes('Problem parsing d=') || text.includes('attribute d:')) return;
+        if (text.includes('shields.io') || text.includes('favicon') || text.includes('ERR_BLOCKED_BY_CLIENT')) return;
         errors.push(text);
       }
     });

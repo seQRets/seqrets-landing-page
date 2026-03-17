@@ -40,11 +40,11 @@ export const LockAnimation = () => {
             animate={{ strokeOpacity: hovered ? 0.9 : 0.5 }}
           />
           <motion.path
-            d="M34 42 V36 A6 6 0 0 1 46 36 V42"
             fill="none"
             stroke="hsl(var(--primary))"
             strokeWidth="1.5"
             strokeLinecap="round"
+            initial={{ d: "M34 42 V36 A6 6 0 0 1 46 36 V42", strokeOpacity: 0.5 }}
             animate={{
               strokeOpacity: hovered ? 0.9 : 0.5,
               d: hovered
