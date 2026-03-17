@@ -64,3 +64,5 @@ All 28 findings have been addressed.
 | Custom domain `seqrets.app` pointed to Cloudflare Pages | Done |
 | GitHub Pages unpublished | Done |
 | Security headers verified live via DevTools | Done |
+| Synced Cloudflare Transform Rule CSP with `_headers` file (was out of sync — missing Stripe, workers, shields.io) | Done |
+| Tightened `_headers` img-src from broad `https:` to specific `https://img.shields.io` | Done |
