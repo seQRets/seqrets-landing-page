@@ -1,6 +1,6 @@
 # seQRets Security Audit — Status Tracker
 
-> Last updated: March 16, 2026
+> Last updated: March 17, 2026
 
 ---
 
@@ -66,3 +66,5 @@ All 28 findings have been addressed.
 | Security headers verified live via DevTools | Done |
 | Synced Cloudflare Transform Rule CSP with `_headers` file (was out of sync — missing Stripe, workers, shields.io) | Done |
 | Tightened `_headers` img-src from broad `https:` to specific `https://img.shields.io` | Done |
+| Added Playwright e2e test framework (Chromium, Firefox, WebKit) with security header verification | Done |
+| Fixed SVG `d="undefined"` bug in Framer Motion lock animation (`HowItWorksAnimations.tsx`) | Done |
