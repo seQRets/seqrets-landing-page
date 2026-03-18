@@ -29,6 +29,8 @@ dist-ssr
 # Local memory file
 memory.md
 
-# Playwright test output
+# Playwright (local-only)
+playwright.config.ts
+e2e/
 playwright-report/
 test-results/
