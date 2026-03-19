@@ -1,25 +1,27 @@
+import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { CartProvider } from "./contexts/CartContext";
 import Index from "./pages/Index";
-import Shop from "./pages/Shop";
-import HowItWorksPage from "./pages/HowItWorksPage";
-import FeaturesPage from "./pages/FeaturesPage";
-import SecurityPage from "./pages/SecurityPage";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import TermsOfService from "./pages/TermsOfService";
-import CheckoutSuccess from "./pages/CheckoutSuccess";
-import CheckoutCancel from "./pages/CheckoutCancel";
-import BlogPage from "./pages/BlogPage";
-import BlogPostPage from "./pages/BlogPostPage";
 import NotFound from "./pages/NotFound";
-import DocsLayout from "./components/docs/DocsLayout";
-import DocsHub from "./pages/docs/DocsHub";
-import DocsTechnical from "./pages/docs/DocsTechnical";
-import DocsInheritance from "./pages/docs/DocsInheritance";
-import DocsThreatModel from "./pages/docs/DocsThreatModel";
-import DocsProducts from "./pages/docs/DocsProducts";
-import DocsFaq from "./pages/docs/DocsFaq";
+
+const Shop = lazy(() => import("./pages/Shop"));
+const HowItWorksPage = lazy(() => import("./pages/HowItWorksPage"));
+const FeaturesPage = lazy(() => import("./pages/FeaturesPage"));
+const SecurityPage = lazy(() => import("./pages/SecurityPage"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const TermsOfService = lazy(() => import("./pages/TermsOfService"));
+const BlogPage = lazy(() => import("./pages/BlogPage"));
+const BlogPostPage = lazy(() => import("./pages/BlogPostPage"));
+const CheckoutSuccess = lazy(() => import("./pages/CheckoutSuccess"));
+const CheckoutCancel = lazy(() => import("./pages/CheckoutCancel"));
+const DocsLayout = lazy(() => import("./components/docs/DocsLayout"));
+const DocsHub = lazy(() => import("./pages/docs/DocsHub"));
+const DocsTechnical = lazy(() => import("./pages/docs/DocsTechnical"));
+const DocsInheritance = lazy(() => import("./pages/docs/DocsInheritance"));
+const DocsThreatModel = lazy(() => import("./pages/docs/DocsThreatModel"));
+const DocsProducts = lazy(() => import("./pages/docs/DocsProducts"));
+const DocsFaq = lazy(() => import("./pages/docs/DocsFaq"));
 
 const DEFAULT_TITLE = "seQRets — Secure. Split. Share.";
 const DEFAULT_DESC =
@@ -46,28 +48,30 @@ const App = () => (
         <meta name="twitter:image" content="https://seqrets.app/og-image.png" />
         <link rel="canonical" href="https://seqrets.app" />
       </Helmet>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/how-it-works" element={<HowItWorksPage />} />
-        <Route path="/features" element={<FeaturesPage />} />
-        <Route path="/security" element={<SecurityPage />} />
-        <Route path="/privacy" element={<PrivacyPolicy />} />
-        <Route path="/terms" element={<TermsOfService />} />
-        <Route path="/blog" element={<BlogPage />} />
-        <Route path="/blog/:slug" element={<BlogPostPage />} />
-        <Route path="/checkout/success" element={<CheckoutSuccess />} />
-        <Route path="/checkout/cancel" element={<CheckoutCancel />} />
-        <Route path="/docs" element={<DocsLayout />}>
-          <Route index element={<DocsHub />} />
-          <Route path="technical" element={<DocsTechnical />} />
-          <Route path="inheritance" element={<DocsInheritance />} />
-          <Route path="threat-model" element={<DocsThreatModel />} />
-          <Route path="products" element={<DocsProducts />} />
-          <Route path="faq" element={<DocsFaq />} />
-        </Route>
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Suspense fallback={null}>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/how-it-works" element={<HowItWorksPage />} />
+          <Route path="/features" element={<FeaturesPage />} />
+          <Route path="/security" element={<SecurityPage />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsOfService />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:slug" element={<BlogPostPage />} />
+          <Route path="/checkout/success" element={<CheckoutSuccess />} />
+          <Route path="/checkout/cancel" element={<CheckoutCancel />} />
+          <Route path="/docs" element={<DocsLayout />}>
+            <Route index element={<DocsHub />} />
+            <Route path="technical" element={<DocsTechnical />} />
+            <Route path="inheritance" element={<DocsInheritance />} />
+            <Route path="threat-model" element={<DocsThreatModel />} />
+            <Route path="products" element={<DocsProducts />} />
+            <Route path="faq" element={<DocsFaq />} />
+          </Route>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   </CartProvider>
 );
