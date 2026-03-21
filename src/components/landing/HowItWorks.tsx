@@ -29,8 +29,8 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <section id="how-it-works" className="relative py-20 md:py-28 bg-section-alt">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
+    <section id="how-it-works" className="relative py-24 md:py-36 bg-section-alt">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/8 to-transparent" />
 
       <div className="container mx-auto px-4 md:px-8">
         <div className="text-center mb-14">

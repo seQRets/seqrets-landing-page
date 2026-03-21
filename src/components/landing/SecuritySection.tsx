@@ -49,8 +49,16 @@ const SecuritySection = () => {
   }, []);
 
   return (
-    <section id="security" className="relative py-20 md:py-28">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
+    <section id="security" className="relative py-24 md:py-36 overflow-hidden">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/8 to-transparent" />
+
+      {/* Ambient gradient orb */}
+      <div className="pointer-events-none absolute -left-[15%] top-[30%] h-[45vh] w-[45vh] rounded-full" aria-hidden="true"
+        style={{
+          background: "radial-gradient(circle, hsl(175 65% 55% / 0.2), transparent 70%)",
+          filter: "blur(120px)",
+        }}
+      />
 
       <div className="container mx-auto px-4 md:px-8">
         <div className="text-center mb-14">

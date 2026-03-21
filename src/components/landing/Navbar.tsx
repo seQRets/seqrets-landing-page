@@ -95,7 +95,7 @@ const Navbar = () => {
 
         <Link
           to="/shop"
-          className="hidden lg:inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
+          className="hidden lg:inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-md shadow-primary/25 transition-all hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/30"
         >
           Go Pro! 🚀
         </Link>

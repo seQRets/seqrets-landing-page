@@ -62,9 +62,17 @@ const accentMap: Record<Category, { bg: string; text: string; border: string; bo
 
 const FeaturesGrid = () => {
   return (
-    <section id="features" className="relative py-20 md:py-28">
+    <section id="features" className="relative py-24 md:py-36 overflow-hidden">
       {/* Subtle top divider */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/8 to-transparent" />
+
+      {/* Ambient gradient orb */}
+      <div className="pointer-events-none absolute -right-[15%] top-[20%] h-[50vh] w-[50vh] rounded-full" aria-hidden="true"
+        style={{
+          background: "radial-gradient(circle, hsl(270 50% 65% / 0.25), transparent 70%)",
+          filter: "blur(120px)",
+        }}
+      />
 
       <div className="container mx-auto px-4 md:px-8">
         <div className="text-center mb-14">

@@ -38,8 +38,28 @@ const HeroSection = () => {
         }}
       />
 
+      {/* Ambient gradient orbs — layered over bg image, under content */}
+      <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden" aria-hidden="true">
+        {/* Teal orb — top right */}
+        <div
+          className="absolute -right-[5%] -top-[10%] h-[70vh] w-[70vh] rounded-full"
+          style={{
+            background: "radial-gradient(circle, hsl(175 65% 55% / 0.4), transparent 70%)",
+            filter: "blur(120px)",
+          }}
+        />
+        {/* Gold orb — bottom left */}
+        <div
+          className="absolute -left-[5%] bottom-[0%] h-[60vh] w-[60vh] rounded-full"
+          style={{
+            background: "radial-gradient(circle, hsl(38 70% 55% / 0.3), transparent 70%)",
+            filter: "blur(100px)",
+          }}
+        />
+      </div>
+
       {/* Two-column layout */}
-      <div className="relative z-10 flex w-full flex-col items-center pt-16 lg:flex-row" style={{ minHeight: "90vh" }}>
+      <div className="relative z-[2] flex w-full flex-col items-center pt-16 lg:flex-row" style={{ minHeight: "90vh" }}>
 
         {/* Left column — text content */}
         <div className="flex w-full flex-col items-center justify-center px-8 py-16 text-center lg:w-1/2 lg:px-16 xl:px-24">
@@ -50,7 +70,7 @@ const HeroSection = () => {
           </p>
 
           <h1 className="font-display text-5xl font-black leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
-            <span className="text-foreground">Protect What</span>
+            <span className="text-foreground/40">Protect What</span>
             <br />
             <span className="text-gradient">Matters Most</span>
           </h1>
@@ -97,7 +117,7 @@ const HeroSection = () => {
               href="https://app.seqrets.app"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center rounded-md bg-primary px-8 py-3.5 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
+              className="inline-flex items-center rounded-md bg-primary px-8 py-3.5 font-display text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30"
             >
               Try the Free Web App
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -105,7 +125,7 @@ const HeroSection = () => {
             <WaitlistButton
               source="hero-desktop"
               label="Join the Desktop Waitlist"
-              className="inline-flex items-center rounded-md border border-primary/40 bg-primary/15 px-8 py-3.5 font-display text-sm font-semibold text-foreground transition-all hover:bg-primary/25 hover:border-primary/60"
+              className="inline-flex items-center rounded-md border border-primary/40 bg-primary/15 px-8 py-3.5 font-display text-sm font-semibold text-foreground shadow-md shadow-primary/10 transition-all hover:bg-primary/25 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/20"
             />
           </div>
         </div>

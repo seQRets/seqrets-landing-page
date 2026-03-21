@@ -25,8 +25,8 @@ const DesktopCTA = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
 
   return (
-    <section id="desktop" className="relative py-20 md:py-28">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
+    <section id="desktop" className="relative py-24 md:py-36">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/8 to-transparent" />
 
       <div className="container mx-auto px-4 md:px-8">
         <div className="mx-auto max-w-4xl">
