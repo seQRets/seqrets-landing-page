@@ -30,11 +30,13 @@ const steps = [
 const HowItWorks = () => {
   return (
     <section id="how-it-works" className="relative py-24 md:py-36 bg-section-alt">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/8 to-transparent" />
+      {/* Soft edge fades */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent" />
 
       <div className="container mx-auto px-4 md:px-8">
         <div className="text-center mb-14">
-          <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-gradient-silver mb-5">
+          <p className="font-display text-xs font-semibold uppercase tracking-[0.35em] text-gradient-silver mb-5">
             How It Works
           </p>
           <h2 className="font-display text-4xl font-black md:text-6xl text-foreground tracking-tight">

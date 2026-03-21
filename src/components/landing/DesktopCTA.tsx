@@ -32,7 +32,7 @@ const DesktopCTA = () => {
         <div className="mx-auto max-w-4xl">
           {/* Section label — matches other sections */}
           <div className="mb-10 text-center">
-            <p className="font-display text-xs font-bold uppercase tracking-[0.2em] text-gradient-silver mb-4">Desktop App</p>
+            <p className="font-display text-xs font-bold uppercase tracking-[0.35em] text-gradient-silver mb-4">Desktop App</p>
             <h2 className="font-display text-4xl font-black md:text-6xl text-foreground tracking-tight">
               Ready to
               <br />

@@ -4,13 +4,15 @@ import { Button } from "@/components/ui/button";
 const OpenSource = () => {
   return (
     <section className="relative py-24 md:py-36 bg-section-alt">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/8 to-transparent" />
+      {/* Soft edge fades */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent" />
 
       <div className="container mx-auto px-4 md:px-8">
         <div className="mx-auto max-w-4xl rounded-2xl border border-border/30 bg-card/20 p-10 md:p-14">
           <div className="grid gap-10 md:grid-cols-2 md:items-center">
             <div>
-              <p className="font-display text-xs font-bold uppercase tracking-[0.25em] text-gradient-silver mb-5">
+              <p className="font-display text-xs font-bold uppercase tracking-[0.35em] text-gradient-silver mb-5">
                 Open Source & Trust
               </p>
               <h2 className="font-display text-3xl font-black md:text-4xl text-foreground mb-5 tracking-tight">

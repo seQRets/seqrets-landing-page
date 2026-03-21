@@ -65,7 +65,7 @@ const HeroSection = () => {
         <div className="flex w-full flex-col items-center justify-center px-8 py-16 text-center lg:w-1/2 lg:px-16 xl:px-24">
           <img src={heroLogo} alt="seQRets logo" className="mb-10 h-[112px] w-auto md:h-[151px]" />
 
-          <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-gradient-silver mb-5">
+          <p className="font-display text-xs font-semibold uppercase tracking-[0.35em] text-gradient-silver mb-5">
             Encrypt. Split. Share. On Paper or Smart Cards.
           </p>
 
@@ -140,6 +140,9 @@ const HeroSection = () => {
         </div>
 
       </div>
+
+      {/* Bottom fade-out into next section */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-32 bg-gradient-to-t from-background to-transparent" />
     </section>
   );
 };
