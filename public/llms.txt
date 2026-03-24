@@ -1,0 +1,39 @@
+# seQRets
+
+> seQRets is an open-source, zero-knowledge cryptographic tool for securing, splitting, and sharing secrets (crypto seed phrases, private keys, passwords) using Shamir's Secret Sharing and XChaCha20-Poly1305 encryption. Secrets are encoded as printable QR codes called Qards. Runs entirely offline — no servers, accounts, or telemetry. Licensed under AGPLv3.
+
+## Key Facts
+
+- Encryption: XChaCha20-Poly1305 (256-bit key, 192-bit nonce)
+- Key Derivation: Argon2id (64 MB memory, 4 iterations, 16-byte random salt)
+- Secret Splitting: Shamir's Secret Sharing over GF(256), configurable K-of-N threshold
+- Output: QR codes (Qards) — printable, scannable, each containing one encrypted share
+- Architecture: Zero-knowledge — no servers, no accounts, no telemetry, fully offline
+- Quantum Resistance: Shamir's SSS is quantum-resistant; XChaCha20 is not
+- License: AGPLv3
+- Source Code: https://github.com/seQRets/seQRets-app
+
+## Platforms
+
+- Web App (free): https://app.seqrets.app
+- Desktop App (paid): Rust/Tauri — macOS, Windows, Linux. Adds smart card support, memory zeroization, code signing.
+
+## Documentation
+
+- [Full Documentation](https://seqrets.app/llms-full.txt): Complete technical docs, threat model, inheritance guide, product specs, and FAQ in a single file
+- [Technical Docs (browser)](https://seqrets.app/docs): Interactive documentation hub (requires JavaScript)
+- [Security Page](https://seqrets.app/security): Security deep dive, threat model, FAQ
+- [How It Works](https://seqrets.app/how-it-works): Visual walkthrough with screenshots
+
+## Source & Community
+
+- [GitHub Repository](https://github.com/seQRets/seQRets-app): Full source code, issues, contributions
+- [Security Policy](https://github.com/seQRets/seQRets-app/blob/main/SECURITY.md): Vulnerability reporting
+- [License](https://github.com/seQRets/seQRets-app/blob/main/LICENSE): AGPLv3
+
+## Optional
+
+- [Product Catalog](https://seqrets.app/shop): Desktop app, smart cards, bundles, accessories
+- [Blog](https://seqrets.app/blog): Articles on seed phrase security, Shamir's Secret Sharing, crypto inheritance
+- [Privacy Policy](https://seqrets.app/privacy)
+- [Terms of Service](https://seqrets.app/terms)

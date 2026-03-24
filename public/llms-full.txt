@@ -1,0 +1,373 @@
+# seQRets — Complete Documentation
+
+> seQRets is an open-source, zero-knowledge cryptographic tool for securing, splitting, and sharing secrets (crypto seed phrases, private keys, passwords) using Shamir's Secret Sharing and XChaCha20-Poly1305 encryption. Secrets are encoded as printable QR codes called Qards. Runs entirely offline — no servers, accounts, or telemetry. Licensed under AGPLv3.
+
+- Source Code: https://github.com/seQRets/seQRets-app
+- Web App (free): https://app.seqrets.app
+- Desktop App (paid): Rust/Tauri — macOS, Windows, Linux
+- License: AGPLv3
+
+---
+
+## Quick Reference
+
+| Property | Value |
+|----------|-------|
+| Encryption | XChaCha20-Poly1305 (256-bit key, 192-bit nonce) |
+| Key Derivation | Argon2id (64 MB memory, 4 iterations) |
+| Secret Splitting | Shamir's Secret Sharing (configurable threshold) |
+| Output Format | QR codes (Qards) — printable, scannable |
+| Architecture | Zero-knowledge — no servers, no accounts, no telemetry |
+| License | AGPLv3 |
+| Source Code | github.com/seQRets/seQRets-app |
+| Web App | app.seqrets.app (free) |
+| Desktop App | Rust/Tauri — macOS, Windows, Linux |
+| Quantum Resistance | Shamir's SSS is quantum-resistant; XChaCha20 is not |
+
+---
+
+## Technical Overview
+
+### Processing Pipeline
+
+1. **Secret Input** — Secret enters memory (BIP-39 mnemonic detection for seed phrases)
+2. **Argon2id KDF** — Password derives a 256-bit encryption key (64 MB memory, 4 iterations, 16-byte random salt)
+3. **XChaCha20-Poly1305 Encrypt** — Secret is authenticated-encrypted (256-bit key, 192-bit random nonce)
+4. **Shamir Split (K-of-N)** — Ciphertext is split into N shares using Shamir's Secret Sharing over GF(256). Any K shares reconstruct; K-1 or fewer reveal nothing.
+5. **QR Encode (Qards)** — Each share is Base64-encoded and rendered as a printable QR code. Secret is destroyed from memory.
+
+The secret is encrypted BEFORE splitting with Shamir. Each Qard holds an encrypted fragment, not plaintext. The Desktop app uses Rust compiler-fence zeroization to erase the secret from memory.
+
+### Cryptographic Primitives
+
+| Algorithm | Purpose | Key / Output Size | Library (Web) | Library (Desktop) |
+|-----------|---------|-------------------|---------------|-------------------|
+| XChaCha20-Poly1305 | Authenticated encryption | 256-bit key, 192-bit nonce | @noble/ciphers | chacha20poly1305 (RustCrypto) |
+| Argon2id | Key derivation (KDF) | 256-bit output | @noble/hashes | argon2 (RustCrypto) |
+| Shamir's Secret Sharing | Threshold splitting | Variable (matches input) | Custom GF(256) impl | Custom GF(256) impl |
+
+### Argon2id Parameters
+
+| Parameter | Value | Purpose |
+|-----------|-------|---------|
+| Memory cost | 64 MB (65536 KiB) | Resists GPU/ASIC brute-force by requiring large memory |
+| Iterations (time cost) | 3 | Increases computation time per password attempt |
+| Parallelism | 1 | Single-threaded — deterministic output |
+| Output length | 32 bytes (256 bits) | Matches XChaCha20-Poly1305 key size |
+| Salt | 16 bytes (random) | Unique per encryption — prevents rainbow tables |
+
+### Shamir's Secret Sharing
+
+- **Security Type**: Information-theoretic — fewer than K shares provide zero bits of information about the secret, regardless of computing power
+- **Quantum Resistance**: Yes — relies on polynomial interpolation over finite fields, not factoring or discrete logarithms
+- **Threshold Semantics**: K-of-N configurable. Common choices: 2-of-3, 3-of-5, 4-of-7
+- **Field**: GF(256) — byte-level splitting with no data expansion
+
+### QR Code Encoding
+
+| Property | Value |
+|----------|-------|
+| Data format | Base64-encoded ciphertext share |
+| Error correction | Level M (15% recovery) |
+| Maximum capacity | ~2,953 bytes (Version 40, Level L) |
+| Output | Printable QR code (Qard) |
+| Metadata | Share index, threshold, total shares — included in the QR payload |
+
+### Zero-Knowledge Claims
+
+What "zero-knowledge" means for seQRets:
+
+- No server — all processing happens locally on your device
+- No account — no registration, no login, no user database
+- No cloud storage — nothing is uploaded, synced, or backed up
+- No analytics — no tracking pixels, error reporters, or usage telemetry
+- No network dependency — works fully offline after initial load (web) or always (desktop)
+
+Caveats:
+
+- Bob AI assistant (optional) — if you provide a Google Gemini API key and ask Bob a question, your question is sent to Google's Gemini API. No secret data is included.
+- BTC price display (optional) — fetches the current Bitcoin price from a public API. No user data is transmitted. Disabled when offline.
+
+---
+
+## Inheritance Guide
+
+A step-by-step guide for setting up crypto inheritance using Shamir's Secret Sharing.
+
+### Step 1: Gather Prerequisites
+
+- seQRets Desktop App (recommended for smart card support and memory zeroization)
+- Smart cards (1 per share you plan to write to a card)
+- USB smart card reader
+- Tamper-evident envelopes (optional)
+- Fireproof case (optional)
+- A trusted, malware-free device
+
+**Expected Outcome**: All hardware in hand, desktop app installed and verified.
+
+### Step 2: Plan Your Threshold
+
+- **2-of-3**: Simple setup for small families. Lowest redundancy.
+- **3-of-5**: Recommended for most inheritance plans. Tolerates loss of 2 shares.
+- **4-of-7**: High-security for large families or institutions. Tolerates loss of 3 shares.
+
+Rule of thumb: set K high enough that a single compromised party can't reconstruct, but low enough that shares can realistically be gathered after your death.
+
+**Expected Outcome**: A threshold (K-of-N) chosen based on your trust model and family structure.
+
+### Step 3: Create and Encrypt Your Shares
+
+1. Enter your seed phrase or secret into seQRets
+2. Set a strong, unique password (derives the encryption key via Argon2id)
+3. Configure the threshold: select K (minimum shares) and N (total shares)
+4. Generate the shares — seQRets encrypts, splits, and outputs QR codes (Qards)
+5. Optionally write shares to smart cards using the desktop app
+6. The secret is destroyed from memory after generation
+
+**Expected Outcome**: N Qards and/or smart cards, each containing one share. The original secret exists nowhere.
+
+### Step 4: Distribute Shares
+
+- Never store K or more shares in the same location
+- Use tamper-evident envelopes to detect unauthorized access
+- Distribute geographically: different cities, safe deposit boxes, trusted family members
+- Label shares clearly (e.g., "Share 1 of 5") but do NOT include the password or threshold info
+- Store at least one share in a fireproof case
+- Consider giving shares to people who don't know each other to prevent collusion
+
+**Expected Outcome**: Shares physically distributed across multiple locations and/or trusted holders.
+
+### Step 5: Prepare Instructions for Beneficiaries
+
+- Write a letter of instruction: what seQRets is, where to download it, and that K shares are needed
+- Do NOT include the password in the same channel as the shares
+- Consider: password in a sealed envelope with your attorney, shares with family members
+- Include the seQRets website URL and GitHub repo URL so the tool can be found even if the website goes down
+- Store a copy of the instructions with each share holder
+
+**Expected Outcome**: Each beneficiary knows what to do and where to get help, but cannot act alone.
+
+### Step 6: Test Recovery
+
+1. Gather K shares from your distributed locations
+2. Open seQRets and scan/import the shares
+3. Enter your password to decrypt
+4. Verify the reconstructed secret matches the original
+5. Re-distribute the shares to their original locations
+
+Do this test at least once — do not skip this step.
+
+**Expected Outcome**: Confirmed end-to-end recovery works.
+
+### Step 7: Maintain Your Plan
+
+- Check share condition annually — QR codes can fade, envelopes can degrade
+- Update your plan when circumstances change: births, deaths, divorces, moves
+- If a share is compromised, regenerate all shares with a new password and redistribute
+- Consider rotating the password periodically (requires regenerating all shares)
+
+**Expected Outcome**: An up-to-date, tested plan that will work when needed.
+
+### Step 8: Legal Considerations
+
+*This is NOT legal advice — consult an attorney in your jurisdiction.*
+
+- Consider adding a reference to your crypto inheritance plan in your will or trust
+- A letter of instruction (separate from the will) can provide operational details without making them part of the public probate record
+- Some jurisdictions have specific laws around digital asset inheritance
+- Your executor or trustee should know that a crypto inheritance plan exists, even if they don't hold shares
+
+**Expected Outcome**: Your legal documents reference the plan, ensuring your heirs know to look for it.
+
+---
+
+## Threat Model
+
+### What seQRets Protects Against
+
+| Threat | How Protected | Confidence |
+|--------|---------------|------------|
+| Physical theft of a single share | Shamir's SSS — one share reveals zero information | High |
+| Fire, flood, or natural disaster | Shares distributed across multiple locations | High |
+| Password manager breach | Secret never stored in a password manager | High |
+| Cloud provider compromise | Nothing stored in the cloud | High |
+| Brute-force password attack | Argon2id KDF with 64 MB memory cost | High |
+| Malicious browser extensions (Desktop) | Tauri WebView loads no extensions | High |
+| Supply-chain JS attack (Desktop) | Code bundled and signed at build time | High |
+| Single point of failure | Threshold splitting — no single entity holds the full secret | High |
+
+### What seQRets Does NOT Protect Against
+
+| Threat | Why Not | Mitigation |
+|--------|---------|------------|
+| Compromised device at encryption time | Secret must briefly exist in memory during encryption | Use a trusted device. Desktop app zeroes memory with compiler-fence. |
+| Lost threshold of shares | If you lose K or more shares, the secret is irrecoverable | Choose a conservative threshold (e.g., 3-of-5). Distribute securely. |
+| Forgotten password | No password = no decryption. No reset or recovery. | Use a strong, memorable password. Store a hint separately from shares. |
+| Physical coercion | Attacker forces you to reveal password and produce shares | Distribute shares to third parties who cannot be coerced simultaneously. |
+| Quantum attack on XChaCha20 | 256-bit key provides ~128-bit security against Grover's algorithm | 128-bit post-quantum security remains beyond current projections. |
+| Malicious browser extensions (Web app) | Extensions can read DOM, intercept clipboard, log keystrokes | Use the Desktop app for high-value secrets, or a clean browser profile. |
+| JS memory persistence (Web app) | JavaScript GC does not guarantee memory zeroing; strings are immutable | Use the Desktop app (Rust zeroization). Web app minimizes secret lifetime. |
+
+### Security Assumptions
+
+1. The device is not compromised at the moment of encryption/decryption.
+2. The password is strong and not reused from other services.
+3. Shares are stored securely in separate locations.
+4. The cryptographic primitives (XChaCha20-Poly1305, Argon2id) are secure.
+5. The source code matches the running binary (code signing for desktop; hosting trust for web).
+
+### Comparison to Alternatives
+
+| Method | Single Point of Failure | Fire/Flood Risk | Theft Risk | Inheritance Ready |
+|--------|------------------------|-----------------|------------|-------------------|
+| Paper backup | Yes | High | High | No |
+| Metal seed plate | Yes | Low | High | No |
+| Password manager | Yes (vendor) | Low | Medium (breach) | Depends |
+| Hardware wallet seed | Yes | High (paper backup) | High (paper backup) | No |
+| seQRets (Shamir split) | No (threshold) | Low (distributed) | Low (per share) | Yes |
+
+### Known Limitations
+
+- **No third-party audit yet** — Code is open source and uses audited primitives, but seQRets itself has not undergone a formal audit. On the roadmap.
+- **Web app browser risks** — Browser extensions, JS supply-chain attacks, and unpredictable GC are inherent browser risks. Desktop app eliminates these.
+- **JavaScript memory model** — In the web app, JS strings are immutable and cannot be explicitly zeroed. Desktop app uses Rust's zeroize crate with compiler-fence.
+- **QR code durability** — Printed QR codes can fade or get damaged over time. Use high-quality printing, protective sleeves, or smart cards for long-term storage.
+
+---
+
+## Product Specifications
+
+### Desktop App — $49.00 (estimated)
+
+Native desktop application built with Rust and Tauri. Same encryption and splitting as the web app, plus smart card integration, memory zeroization, code signing, and isolated WebView.
+
+| Spec | Value |
+|------|-------|
+| Runtime | Rust (Tauri 2.x) + WebView |
+| Platforms | macOS (ARM64/x64), Windows (x64), Linux (x64/ARM64) |
+| Code Signing | Apple notarization (macOS), Authenticode (Windows) |
+| Updates | Automatic delta updates via Tauri updater |
+| Memory Safety | Rust zeroize crate with compiler-fence |
+| Crypto Libraries | argon2, chacha20poly1305, zeroize (RustCrypto) |
+| License | AGPLv3 |
+
+### Backup Bundle — $129.00 (estimated)
+
+Everything you need to back up your secrets to a physical smart card with a portable reader.
+
+Contents: 1x Desktop App license, 2x Smart Card, 1x USB Card Reader, Quick-start guide.
+
+### Inheritance Bundle — $249.00 (estimated)
+
+A complete inheritance kit — distribute secret shares across multiple cards with tamper-proof packaging.
+
+Contents: 1x Desktop App license, 5x Smart Card, 1x USB Card Reader, 1x Inheritance Guide (PDF), 1x Tamper-Evident Envelopes (5-pack), 1x Fireproof Case.
+
+### Smart Card — $29.00 (estimated)
+
+JCOP-based Java Card with contact interface (ISO 7816). seQRets applet pre-installed. GlobalPlatform 2.3+ compatible.
+
+### Smart Card 3-Pack — $69.00 (estimated)
+
+Three JCOP smart cards at ~20% discount. For multi-share inheritance plans, backups, or replacements.
+
+### USB Card Reader — $29.00 (estimated)
+
+Compact USB-A smart card reader. CCID protocol, ISO 7816 contact interface. Plug-and-play on macOS, Windows, Linux. Linux may require pcsclite package.
+
+### Tamper-Evident Envelopes — $14.99 (estimated)
+
+5-pack of security envelopes. VOID pattern appears when seal is broken. For distributing shares to heirs or safe deposit boxes.
+
+### Fireproof Case — $49.00 (estimated)
+
+Compact fireproof document and card case. Rated to 1,200 °F (649 °C) for 30 minutes. Holds smart cards, printed Qards, and documents.
+
+### Inheritance Guide (PDF) — $19.00 (estimated)
+
+Comprehensive PDF covering crypto inheritance planning with Shamir's Secret Sharing. Includes checklists, templates, and legal considerations.
+
+---
+
+## Frequently Asked Questions
+
+### General
+
+**What is seQRets?**
+seQRets is an open-source tool that encrypts secrets (like crypto seed phrases) with XChaCha20-Poly1305, splits them using Shamir's Secret Sharing into multiple shares, and outputs each share as a printable QR code called a Qard. No single Qard reveals any information about the original secret.
+
+**Is seQRets free?**
+The web app at app.seqrets.app is free and always will be. The Desktop App is a paid product that adds smart card support, inheritance planning, code signing, and native Rust cryptography.
+
+**Is seQRets open source?**
+Yes. Full source code is on GitHub under AGPLv3. You can audit the encryption, splitting logic, and every dependency.
+
+**What secrets can I protect?**
+Any text-based secret: crypto seed phrases (BIP-39), private keys, passwords, recovery codes, API keys, or personal notes. Maximum input is constrained by QR code capacity (~2,953 bytes).
+
+### Security
+
+**What encryption does seQRets use?**
+XChaCha20-Poly1305 for authenticated encryption (256-bit key, 192-bit nonce) and Argon2id for key derivation (64 MB memory, 4 iterations). Same primitives used in Signal, WireGuard, and libsodium.
+
+**What is Shamir's Secret Sharing?**
+A mathematically proven threshold scheme where a secret is split into N shares, and any K can reconstruct it. Fewer than K shares reveal zero information — this is information-theoretic security, not computational. It is also quantum-resistant.
+
+**Does seQRets collect telemetry?**
+No. No analytics, no tracking pixels, no error reporting. The app makes one optional network call — to fetch the current Bitcoin price. That can be disabled by going offline.
+
+**Is seQRets zero-knowledge?**
+Yes, with two caveats: (1) Bob AI assistant optionally sends your question to Google's Gemini API if you provide your own key. (2) The app optionally fetches the BTC price. Neither transmits secret data. All crypto operations happen locally.
+
+**Has seQRets been audited?**
+Not yet by a third-party firm. Uses well-audited primitives (noble/ciphers, noble/hashes by Paul Miller for web; RustCrypto crates for desktop). Formal audit is on the roadmap.
+
+**What cryptographic libraries does seQRets use?**
+Web: @noble/ciphers and @noble/hashes by Paul Miller — audited, zero-dependency JS. Desktop: Native Rust crates — argon2, chacha20poly1305, zeroize from RustCrypto.
+
+### Inheritance
+
+**How does inheritance planning work?**
+Create a Shamir split with a threshold (e.g., 3-of-5), distribute shares to trusted people or locations, and provide instructions for reconstruction. The Desktop App includes a dedicated Inheritance Plan builder.
+
+**Is the Inheritance Plan stored somewhere?**
+No. The plan is encrypted and exported as a file or written to a JavaCard. seQRets stores no copy. If you lose all copies, it cannot be recovered.
+
+**Can seQRets recover my secret if I lose my shares?**
+No. No server, no account system, no backup. If you lose enough shares to fall below the threshold, your secret is gone. This is by design.
+
+### Desktop App
+
+**Web app vs desktop app?**
+Both use the same encryption and splitting logic. Desktop adds native Rust crypto, memory zeroization (compiler-fence), browser extension immunity (Tauri WebView), code signing, Inheritance Plan builder, and JavaCard smart card support.
+
+**What platforms?**
+macOS, Windows, and Linux. Built with Tauri (Rust + web frontend). Ships as a code-signed binary with automatic delta updates.
+
+**What if seQRets goes offline?**
+The web app works offline once loaded. The desktop app has no network dependency. Even if the project disappeared, anyone with the source code could reconstruct the recovery tool. The crypto standards are open and widely implemented.
+
+### Smart Cards
+
+**What kind of smart cards?**
+JCOP-based Java Cards with a contact interface. seQRets applet pre-installed on branded cards. Desktop app communicates via standard USB reader.
+
+**Can I use my own cards?**
+Yes, if they are JCOP-compatible Java Cards supporting GlobalPlatform for applet installation. You would install the seQRets applet yourself.
+
+**Card not detected?**
+Ensure the card is fully inserted (contact interface, not NFC). Check USB reader is recognized as a CCID device. On Linux, install pcsclite. Try a different USB port. Restart the desktop app after connecting.
+
+### Troubleshooting
+
+**QR code won't scan?**
+Ensure adequate lighting and contrast. Print at 300+ DPI on white paper. Don't scale below the recommended minimum size. Try different scanner apps.
+
+**Forgot my password?**
+The password derives the encryption key via Argon2id. Without it, decryption is impossible. No reset, no recovery, no backdoor. By design.
+
+**How to verify the desktop download?**
+Code-signed binary. macOS Gatekeeper and Windows SmartScreen verify automatically. You can also check the SHA-256 hash against the GitHub release page.
+
+**Where is my Bob AI API key stored?**
+Locally on your device only. Sent only to Google's Gemini API when you ask Bob a question. Never included in any other request. Removable from settings.
