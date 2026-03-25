@@ -26,6 +26,11 @@ dist-ssr
 # Wrangler local dev cache
 .wrangler/
 
+# Environment variables
+.env
+.env.local
+.env.production
+
 # Local memory file
 memory.md
 
