@@ -22,6 +22,7 @@ const DocsInheritance = lazy(() => import("./pages/docs/DocsInheritance"));
 const DocsThreatModel = lazy(() => import("./pages/docs/DocsThreatModel"));
 const DocsProducts = lazy(() => import("./pages/docs/DocsProducts"));
 const DocsFaq = lazy(() => import("./pages/docs/DocsFaq"));
+const AdminPage = lazy(() => import("./pages/AdminPage"));
 
 const DEFAULT_TITLE = "seQRets — Secure. Split. Share.";
 const DEFAULT_DESC =
@@ -69,6 +70,7 @@ const App = () => (
             <Route path="products" element={<DocsProducts />} />
             <Route path="faq" element={<DocsFaq />} />
           </Route>
+          <Route path="/admin" element={<AdminPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

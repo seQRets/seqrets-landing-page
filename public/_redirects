@@ -1,2 +1,0 @@
-# Serve admin.html directly (bypass SPA catch-all)
-/admin   /admin.html   200

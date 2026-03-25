@@ -24,6 +24,6 @@ Allow: /
 
 User-agent: *
 Allow: /
-Disallow: /admin.html
+Disallow: /admin
 
 Sitemap: https://seqrets.app/sitemap.xml
