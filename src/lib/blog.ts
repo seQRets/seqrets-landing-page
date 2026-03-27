@@ -19,6 +19,28 @@ export const categoryLabels: Record<BlogCategory, string> = {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "hong-kong-decryption-law-bitcoin-travelers",
+    title: "Hong Kong's New Decryption Law Is a Wake-Up Call for Bitcoin Holders",
+    date: "2026-03-28",
+    category: "crypto",
+    excerpt:
+      "As of March 23, 2026, authorities in Hong Kong can legally compel anyone — including tourists — to unlock devices and hand over passwords. If your seed phrase is on a hardware wallet you're carrying, you may have no legal right to refuse.",
+    readTime: 5,
+    content: `On March 23, 2026, Hong Kong quietly expanded its national security powers to include the right to compel anyone physically present in the territory — residents, tourists, and even airport transit passengers — to unlock electronic devices, hand over passwords, and assist with decryption. Refusal is now a criminal offense, carrying up to one year in prison and a fine of HK$100,000. Providing false information bumps that to three years.
+
+This isn't hypothetical. Crypto hardware wallets are electronic devices. If you're carrying a Coldcard, a Ledger, or any hardware signer through Hong Kong International Airport, you may be required to unlock it on demand. A hardware wallet's entire security model is built around keeping the keys inside — but that model assumes you are never legally compelled to hand them over.
+
+The broader point isn't specific to Hong Kong. Jurisdictions around the world have passed or are considering similar "compelled decryption" provisions. The UK's Regulation of Investigatory Powers Act has had this capability since 2000. Australia, Canada, and the EU all have varying forms of it. The trend is clear: governments are increasingly asserting the right to access encrypted data on devices they physically control.
+
+This creates a fundamental problem for Bitcoin self-custody. If your entire seed phrase — all 12 or 24 words — is accessible from a single device or a single location, then any situation where you're compelled to unlock that device (a border crossing, a security check, a theft) becomes a catastrophic exposure event.
+
+Shamir's Secret Sharing changes this calculus entirely. With a 3-of-5 split, no single share reveals anything about your seed phrase. Even if a border agent forces you to hand over the one QR code in your bag, they have nothing — mathematically, provably nothing. Two shares are consistent with every possible secret. The only way to reconstruct your seed phrase is to have the threshold number of shares together, in the same place, at the same time.
+
+seQRets is built on exactly this principle. Your encrypted seed phrase is split into shares that you store separately — different locations, different jurisdictions, different people. You travel light. You carry nothing that, on its own, can harm you.
+
+The Hong Kong law isn't a reason to panic. It's a reason to rethink how you hold your Bitcoin. A single point of failure — whether it's a hardware wallet in your carry-on or a paper backup in your safe — is a vulnerability. The solution isn't to stop traveling or stop holding Bitcoin. It's to stop holding your entire secret in one place.`,
+  },
+  {
     slug: "why-seed-phrase-security-matters",
     title: "Why Seed Phrase Security Matters More Than Ever",
     date: "2026-03-13",
