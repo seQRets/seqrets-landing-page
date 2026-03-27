@@ -3,9 +3,8 @@ import { Button } from "@/components/ui/button";
 
 const OpenSource = () => {
   return (
-    <section className="relative py-24 md:py-36 bg-section-alt">
-      {/* Soft edge fades */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
+    <section className="relative pt-24 pb-40 md:pt-36 md:pb-52 bg-section-alt">
+      {/* Bottom edge fade only — top blends with previous section */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent" />
 
       <div className="container mx-auto px-4 md:px-8">

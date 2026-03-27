@@ -44,7 +44,7 @@ const HeroSection = () => {
         <div
           className="absolute -right-[5%] -top-[10%] h-[70vh] w-[70vh] rounded-full"
           style={{
-            background: "radial-gradient(circle, hsl(175 65% 55% / 0.4), transparent 70%)",
+            background: "radial-gradient(circle, hsl(175 65% 55% / 0.15), transparent 70%)",
             filter: "blur(120px)",
           }}
         />
@@ -52,7 +52,7 @@ const HeroSection = () => {
         <div
           className="absolute -left-[5%] bottom-[0%] h-[60vh] w-[60vh] rounded-full"
           style={{
-            background: "radial-gradient(circle, hsl(38 70% 55% / 0.3), transparent 70%)",
+            background: "radial-gradient(circle, hsl(38 70% 55% / 0.12), transparent 70%)",
             filter: "blur(100px)",
           }}
         />

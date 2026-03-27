@@ -49,9 +49,8 @@ const ComparisonTable = () => {
 
   return (
     <section className="relative py-24 md:py-36 bg-section-alt">
-      {/* Soft edge fades */}
+      {/* Top edge fade only — bottom blends into next section */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent" />
 
       <div className="container mx-auto px-4 md:px-8">
         <div className="text-center mb-14">
