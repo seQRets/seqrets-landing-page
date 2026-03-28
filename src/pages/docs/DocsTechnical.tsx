@@ -174,7 +174,7 @@ const DocsTechnical = () => {
                   ],
                   [
                     "Iterations (time cost)",
-                    "3",
+                    "4",
                     "Increases computation time per password attempt",
                   ],
                   [
