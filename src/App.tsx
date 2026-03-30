@@ -23,6 +23,7 @@ const DocsThreatModel = lazy(() => import("./pages/docs/DocsThreatModel"));
 const DocsProducts = lazy(() => import("./pages/docs/DocsProducts"));
 const DocsFaq = lazy(() => import("./pages/docs/DocsFaq"));
 const AdminPage = lazy(() => import("./pages/AdminPage"));
+const PgpPage = lazy(() => import("./pages/PgpPage"));
 
 const DEFAULT_TITLE = "seQRets — Secure. Split. Share.";
 const DEFAULT_DESC =
@@ -71,6 +72,7 @@ const App = () => (
             <Route path="faq" element={<DocsFaq />} />
           </Route>
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/pgp" element={<PgpPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
