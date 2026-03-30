@@ -108,6 +108,7 @@ const Footer = () => {
                   Community
                 </a>
               </li>
+              <li><Link to="/pgp" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">PGP Key</Link></li>
               <li><Link to="/privacy" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">Privacy Policy</Link></li>
               <li><Link to="/terms" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">Terms of Service</Link></li>
             </ul>

@@ -23,7 +23,7 @@ npm run test:watch   # Vitest in watch mode
 
 **Stack:** React 18 + TypeScript + Vite + Tailwind CSS 3 + Framer Motion + react-router-dom v6
 
-**SPA with client-side routing.** Entry point is `index.html` → `src/main.tsx` → `src/App.tsx`. All routes defined in App.tsx using react-router-dom `<Routes>`. Non-index pages are lazy-loaded. A `public/404.html` handles SPA fallback for direct URL access.
+**SPA with client-side routing.** Entry point is `index.html` → `src/main.tsx` → `src/App.tsx`. All routes defined in App.tsx using react-router-dom `<Routes>`. Non-index pages are lazy-loaded. Cloudflare Pages handles SPA fallback for direct URL access natively.
 
 **Deployment:** Static build (`dist/`) deployed to Cloudflare Pages (project: `seqrets-landing-page`). Custom domain: seqrets.app. Security headers configured in `public/_headers`.
 
