@@ -68,11 +68,15 @@ const PgpPage = () => {
             <h2 className="font-display text-lg font-bold text-foreground">Key Fingerprint</h2>
           </div>
           <p className="text-xs text-muted-foreground/60 mb-3">
-            Verify this matches before trusting the key.
+            After importing the key, verify the fingerprint matches:
           </p>
-          <code className="block text-sm md:text-base font-mono text-foreground/90 tracking-wider">
+          <code className="block text-sm md:text-base font-mono text-foreground/90 tracking-wider mb-4">
             {FINGERPRINT}
           </code>
+          <pre className="overflow-x-auto rounded-lg bg-background/80 p-3 text-xs font-mono text-muted-foreground/60 leading-relaxed">
+{`gpg --import pgp.txt
+gpg --fingerprint seqrets@proton.me`}
+          </pre>
         </div>
 
         {/* Public Key Block */}
