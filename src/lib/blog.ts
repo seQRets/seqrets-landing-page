@@ -19,6 +19,60 @@ export const categoryLabels: Record<BlogCategory, string> = {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "zero-knowledge-proofs-mainstream-crypto-2026",
+    title: "Zero Knowledge Goes Mainstream: Why 2026 Is ZKP's Breakout Year",
+    date: "2026-04-04",
+    category: "smart",
+    excerpt:
+      "Binance just published a landmark piece on how zero-knowledge proofs solve the privacy-compliance paradox. With privacy coins up over 800% and institutional ZK infrastructure exploding, the cryptographic technique powering seQRets is having its moment.",
+    readTime: 6,
+    content: `For years, zero-knowledge proofs lived in academic papers and niche cryptography forums. That era is over. In April 2026, Binance — the world's largest cryptocurrency exchange — published a deep-dive highlighting how ZKPs are becoming core infrastructure for the institutional crypto market. The framing was remarkable: not privacy versus compliance, but privacy and compliance, simultaneously, by mathematical necessity.
+
+That shift in framing matters more than it might seem. The crypto industry has spent years caught in an apparent contradiction: regulators demand transparency, users demand privacy, and no one could find a way to give both sides what they wanted. Zero-knowledge proofs cut through this knot. A ZKP lets you prove that a statement is true — you're solvent, you're not sanctioned, your transaction is legitimate — without revealing anything else about yourself or your finances. The proof is the disclosure. Nothing more.
+
+The market has noticed. Privacy-oriented cryptocurrencies surged dramatically in late 2025 and early 2026, with some protocols posting triple-digit gains as institutional money started flowing into privacy-preserving infrastructure. The ZK project market cap crossed $11.7 billion. Coinbase, Grayscale, and several sovereign wealth funds are now holding or building on ZK-based protocols. This is no longer a cypherpunk preference — it's becoming a fiduciary consideration.
+
+The timing is significant because ZKPs are maturing in two directions at once. On the scaling side, ZK-rollups are allowing Ethereum and other chains to process thousands of transactions per second while posting compressed proofs to the base layer — inheriting its security without its bottlenecks. On the privacy side, ZK identity systems are letting users verify their credentials (age, accreditation status, tax residency) to counterparties and regulators without handing over their entire financial history. Both are now live in production at scale.
+
+What's easy to miss in all of this is that zero-knowledge isn't just a feature bolted onto existing systems. It's an architectural principle: you should only ever have to reveal what's necessary to prove what you need to prove. Everything else stays private by design, not by policy. Policies get changed. Designs are auditable.
+
+This is exactly the philosophy behind seQRets. When you split your Bitcoin seed phrase using Shamir's Secret Sharing, each share reveals provably nothing about your secret — not a hint, not a statistical signal, nothing. This isn't a trust assumption or an implementation promise. It's information-theoretic security: with fewer shares than the threshold, there are infinitely many valid secrets consistent with what you hold. The math itself is the privacy guarantee. No server, no policy, no terms of service required.
+
+As ZKPs move from niche to mainstream, the underlying principle is becoming more legible to a broader audience: cryptographic guarantees are more trustworthy than institutional promises because they're enforced by mathematics, not intentions. You don't need to trust the custodian if the custodian mathematically cannot access your data. You don't need to trust the threshold signer if the share holder literally cannot reconstruct your secret alone.
+
+We're in the early stages of an architectural shift across the entire financial system toward protocols that replace trust with proof. Zero-knowledge proofs are the leading edge of that shift. seQRets is built on the same foundation — the conviction that privacy isn't a preference to be traded away for convenience, but a property to be enforced by design.
+
+The breakout year for ZKPs is also a good year to ask: does your Bitcoin security model rely on trust, or on proof?`,
+  },
+  {
+    slug: "wrench-attacks-bitcoin-physical-security",
+    title: "The $5 Wrench Problem: Why Physical Attacks on Bitcoin Holders Are Surging",
+    date: "2026-03-29",
+    category: "crypto",
+    excerpt:
+      "Physical 'wrench attacks' on crypto holders jumped 75% in 2025, with 72 confirmed incidents worldwide and losses exceeding $40 million. The uncomfortable truth: if you hold all your keys in one place, you are the vulnerability.",
+    readTime: 6,
+    content: `There's a well-known joke in security circles: no cryptographic algorithm can withstand a $5 wrench. You can have the best hardware wallet, the strongest passphrase, and air-gapped signing ceremonies — but if someone is willing to threaten you with physical harm, your security model has a gaping hole.
+
+That joke stopped being funny in 2025. According to a report by CertiK, wrench attacks — physical assaults aimed at coercing crypto holders into surrendering their private keys — jumped 75% from the prior year, with 72 confirmed incidents worldwide. Losses exceeded $40 million. The attacks ranged from home invasions to kidnappings, and in some cases, murder. In the first two months of 2026 alone, researcher Jameson Lopp's public tracking database had already recorded eleven incidents globally.
+
+Europe has become the epicenter. France leads with 19 documented attacks, with organized crime groups increasingly targeting known holders across France, Spain, and Sweden. The pattern is consistent: attackers identify high-net-worth crypto holders through social media, on-chain activity, or data leaks, then apply physical pressure to extract access.
+
+This is the dark side of Bitcoin's transparency. The blockchain is public. If someone knows your wallet address, they can see exactly how much you hold. And with name-address data leaks from exchanges, centralized services, and tax databases, the gap between "someone knows your balance" and "someone knows where you live" is often smaller than people realize.
+
+The self-custody community's default response has been operational security: don't talk about your holdings, use hardware wallets, avoid sharing addresses. That advice is sound, but it addresses only one part of the threat model. The deeper problem is architectural: most Bitcoin holders store their entire secret in one place, whether it's a hardware wallet in their desk, a seed phrase on a steel plate in their safe, or a passphrase memorized in their head. A determined attacker only needs to find and control one person — you — to access everything.
+
+Shamir's Secret Sharing breaks this model entirely. With a threshold split, no single location, device, or person holds enough information to reconstruct your seed phrase. A 2-of-3 split means your Bitcoin requires cooperation from at least two independent sources. A 3-of-5 split distributes control even further. If you're the only share holder present, you genuinely cannot comply with a demand to produce the full secret. You don't have it. The attacker gains nothing by threatening you — not because you're brave, but because the math is on your side.
+
+This property is sometimes called a "credible inability to comply," and it matters enormously in coercive scenarios. A smart adversary, once they understand the setup, has no incentive to keep applying pressure. There's nothing to extract.
+
+seQRets is built on exactly this principle. You split your encrypted seed phrase into QR-encoded shares and distribute them to separate locations — different cities, different people, different jurisdictions. None of the individual custodians can reconstruct your secret alone. You travel light. You're not carrying your Bitcoin. You're carrying one piece of a puzzle that's only useful combined with pieces held elsewhere by people who aren't with you.
+
+The rise of wrench attacks is a predictable consequence of Bitcoin's price appreciation and the growing visibility of self-custodians. As adoption grows, so does the target surface. The answer isn't to abandon self-custody — it's to redesign your setup so that you are no longer the single point of failure.
+
+If your entire Bitcoin security depends on no one ever finding out where you live, you've already lost the security game before it starts.`,
+  },
+  {
     slug: "hong-kong-decryption-law-bitcoin-travelers",
     title: "Hong Kong's New Decryption Law Is a Wake-Up Call for Bitcoin Holders",
     date: "2026-03-28",
