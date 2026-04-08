@@ -31,6 +31,42 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://seqrets.app/blog/zero-knowledge-proofs-mainstream-crypto-2026</loc>
+    <lastmod>2026-04-04</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://seqrets.app/blog/wrench-attacks-bitcoin-physical-security</loc>
+    <lastmod>2026-03-29</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://seqrets.app/blog/hong-kong-decryption-law-bitcoin-travelers</loc>
+    <lastmod>2026-03-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://seqrets.app/blog/why-seed-phrase-security-matters</loc>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://seqrets.app/blog/shamirs-secret-sharing-explained</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://seqrets.app/blog/crypto-inheritance-planning</loc>
+    <lastmod>2026-03-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://seqrets.app/docs</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -69,6 +105,16 @@
     <loc>https://seqrets.app/llms-full.txt</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://seqrets.app/pgp</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://seqrets.app/pgp.txt</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://seqrets.app/privacy</loc>
