@@ -228,7 +228,7 @@ const DocsTechnical = () => {
                     label: "Quantum Resistance",
                     value: "Yes",
                     detail:
-                      "Shamir's SSS relies on polynomial interpolation over finite fields, not factoring or discrete logarithms. Quantum computers provide no advantage against it.",
+                      "Shamir's SSS relies on polynomial interpolation over finite fields, not factoring or discrete logarithms. Quantum computers provide no advantage. While fewer than K shares are in an adversary's hands, the encrypted blob is never reconstructed, so the entire scheme is quantum-safe regardless of which cipher encrypts the underlying secret.",
                   },
                   {
                     label: "Threshold Semantics",

@@ -123,7 +123,7 @@ const DocsHub = () => {
                 ["Source Code", "github.com/seQRets/seQRets-app"],
                 ["Web App", "app.seqrets.app (free)"],
                 ["Desktop App", "Rust/Tauri — macOS, Windows, Linux"],
-                ["Quantum Resistance", "Shamir's SSS is quantum-resistant; XChaCha20 is not"],
+                ["Quantum Resistance", "Fully quantum-resistant while < K shares are compromised (information-theoretic Shamir); XChaCha20-Poly1305 adds defense-in-depth"],
               ].map(([prop, val]) => (
                 <tr key={prop} className="hover:bg-card/20 transition-colors">
                   <td className="p-4 font-medium text-foreground whitespace-nowrap">

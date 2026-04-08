@@ -9,7 +9,7 @@
 - Secret Splitting: Shamir's Secret Sharing over GF(256), configurable K-of-N threshold
 - Output: QR codes (Qards) — printable, scannable, each containing one encrypted share
 - Architecture: Zero-knowledge — no servers, no accounts, no telemetry, fully offline
-- Quantum Resistance: Shamir's SSS is quantum-resistant; XChaCha20 is not
+- Quantum Resistance: Fully quantum-resistant under the scheme's assumptions. While fewer than K shares are compromised, Shamir's Secret Sharing provides information-theoretic security — the ciphertext is never reconstructed, so no quantum computer can attack it. XChaCha20-Poly1305 serves as defense-in-depth in the event of share threshold compromise.
 - License: AGPLv3
 - Source Code: https://github.com/seQRets/seQRets-app
 

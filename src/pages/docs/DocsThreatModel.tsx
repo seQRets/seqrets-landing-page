@@ -164,9 +164,9 @@ const DocsThreatModel = () => {
                     "Distribute shares to trusted third parties who cannot be coerced simultaneously.",
                   ],
                   [
-                    "Quantum attack on XChaCha20",
-                    "XChaCha20's 256-bit key provides ~128-bit security against Grover's algorithm. Shamir's SSS is fully quantum-resistant.",
-                    "128-bit post-quantum security is still beyond current projections. Migration path available if needed.",
+                    "Quantum attack after share threshold compromise",
+                    "If an adversary already holds K or more shares, the scheme has failed and the ciphertext can be reconstructed — a scenario outside seQRets' primary threat model. At that point, XChaCha20-Poly1305's 256-bit key provides ~128-bit post-quantum security against Grover, serving as defense-in-depth. While < K shares are compromised, Shamir's information-theoretic security makes quantum attack impossible regardless of cipher.",
+                    "Primary mitigation: maintain share distribution so < K are ever compromised (conservative K-of-N, geographically separated storage). Secondary: use a strong password to harden the defense-in-depth layer.",
                   ],
                   [
                     "Malicious browser extensions (Web app)",
