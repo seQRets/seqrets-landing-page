@@ -56,7 +56,7 @@ const SecurityPage = () => {
                 </div>
                 <h3 className="font-display text-base font-bold text-foreground mb-2">Encryption</h3>
                 <p className="text-sm text-muted-foreground/80">
-                  Your secret is encrypted with <strong className="text-foreground">XChaCha20-Poly1305</strong>, the same authenticated encryption used in Signal, WireGuard, and libsodium. The key is derived from your password using <strong className="text-foreground">Argon2id</strong> (64MB memory cost, 4 iterations) — the gold standard for resisting brute-force and GPU-based attacks.
+                  Your secret is encrypted with <strong className="text-foreground">XChaCha20-Poly1305</strong>, the same authenticated encryption used in Signal, WireGuard, and libsodium. The key is derived from your password (and optional <strong className="text-foreground">keyfile</strong>) using <strong className="text-foreground">Argon2id</strong> (64MB memory cost, 4 iterations) — the gold standard for resisting brute-force and GPU-based attacks. A generated keyfile adds 256 bits of entropy, defeating brute-force regardless of password strength.
                 </p>
               </div>
               <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
@@ -146,7 +146,7 @@ const SecurityPage = () => {
             <div className="space-y-6">
               <div>
                 <h3 className="font-display text-lg font-bold text-foreground mb-2">"Why does my seed phrase touch a connected device?"</h3>
-                <p className="text-muted-foreground/80">It has to — and the design accounts for it. Your secret briefly enters memory, gets encrypted under a key derived from your password, is split into Shamir shares, rendered as QR codes, and then destroyed. In the desktop app, Rust zeroes the memory with compiler-fence zeroization. The entire operation takes seconds.
+                <p className="text-muted-foreground/80">It has to — and the design accounts for it. Your secret briefly enters memory, gets encrypted under a key derived from your password and optional keyfile, is split into Shamir shares, rendered as QR codes, and then destroyed. In the desktop app, Rust zeroes the memory with compiler-fence zeroization. The entire operation takes seconds.
 
                 </p>
                 <p className="text-muted-foreground/80 mt-3">
@@ -227,6 +227,14 @@ const SecurityPage = () => {
               {
                 q: "Where is my API key for Bob AI stored?",
                 a: "Locally on your device only. It is never sent anywhere except directly to Google's Gemini API when you ask Bob a question. It is never included in any other request. You can remove it at any time from the settings."
+              },
+              {
+                q: "What is a keyfile and should I use one?",
+                a: "A keyfile is an optional binary file that acts as a second authentication factor alongside your password. When provided, the keyfile bytes are concatenated with your password before key derivation. A generated keyfile adds 256 bits of entropy, making brute-force attacks infeasible regardless of password strength. It also protects against keyloggers and shoulder surfing since the keyfile is never typed or displayed."
+              },
+              {
+                q: "What happens if I lose my keyfile?",
+                a: "If you encrypted with a keyfile and lose it, your secret cannot be decrypted. There is no recovery mechanism. Back up your keyfile separately from your shares and password — treat it with the same care as any other critical credential."
               },
               {
                 q: "Can seQRets recover my secret if I lose my shares?",

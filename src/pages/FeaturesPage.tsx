@@ -67,6 +67,7 @@ const sections: FeatureSection[] = [
     details: [
       "XChaCha20-Poly1305 authenticated encryption",
       "Argon2id key derivation resists GPU/ASIC brute-force",
+      "Optional keyfile adds a second factor — defeats keyloggers and brute-force",
       "Zero-knowledge architecture — nothing leaves your device",
       "Works offline — no server, no cloud, no account required",
     ],

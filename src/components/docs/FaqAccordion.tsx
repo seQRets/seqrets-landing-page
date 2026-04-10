@@ -19,16 +19,22 @@ const FaqAccordion = ({ question, answer }: FaqItemProps) => {
           {question}
         </span>
         <ChevronDown
-          className={`h-4 w-4 text-muted-foreground shrink-0 transition-transform duration-200 ${
+          className={`h-4 w-4 text-muted-foreground shrink-0 transition-transform duration-300 ease-out ${
             open ? "rotate-180" : ""
           }`}
         />
       </button>
-      {open && (
-        <div className="px-6 pb-6 text-sm text-muted-foreground/80 border-t border-border/20 pt-4">
-          {answer}
+      <div
+        className={`grid transition-[grid-template-rows] duration-300 ease-out ${
+          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        }`}
+      >
+        <div className="overflow-hidden">
+          <div className="px-6 pb-6 text-sm text-muted-foreground/80 border-t border-border/20 pt-4">
+            {answer}
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };

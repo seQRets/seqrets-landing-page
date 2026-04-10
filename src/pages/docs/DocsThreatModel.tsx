@@ -82,7 +82,17 @@ const DocsThreatModel = () => {
                   ],
                   [
                     "Brute-force password attack",
-                    "Argon2id KDF with 64 MB memory cost makes GPU/ASIC attacks prohibitively expensive",
+                    "Argon2id KDF with 64 MB memory cost makes GPU/ASIC attacks prohibitively expensive. Optional keyfile adds up to 256 bits of entropy, making brute-force infeasible regardless of password strength.",
+                    "High",
+                  ],
+                  [
+                    "Keylogger / shoulder surfing",
+                    "Optional keyfile is a binary file — never typed, never displayed. Keystroke capture and visual observation cannot obtain it.",
+                    "High",
+                  ],
+                  [
+                    "Physical coercion (with keyfile)",
+                    "When the keyfile is stored in a separate physical location (e.g., a safe deposit box), the user genuinely cannot decrypt on demand — even under duress.",
                     "High",
                   ],
                   [
@@ -154,9 +164,9 @@ const DocsThreatModel = () => {
                     "Choose a conservative threshold (e.g., 3-of-5). Store shares in geographically separate, secure locations.",
                   ],
                   [
-                    "Forgotten password",
-                    "The password derives the encryption key. No password = no decryption. There is no reset or recovery.",
-                    "Use a strong, memorable password. Consider storing a password hint separately from shares.",
+                    "Forgotten password or lost keyfile",
+                    "The password (and optional keyfile) derive the encryption key. Without them, decryption is impossible. There is no reset or recovery.",
+                    "Use a strong, memorable password. Back up your keyfile separately from shares. Consider storing a password hint in a different location.",
                   ],
                   [
                     "Physical coercion (rubber-hose attack)",
@@ -220,7 +230,18 @@ const DocsThreatModel = () => {
                   The password is strong
                 </strong>{" "}
                 and not reused from other services. Argon2id makes brute-force
-                expensive, but a weak password still weakens the system.
+                expensive, but a weak password still weakens the system. Using
+                the optional keyfile mitigates this — a generated 256-bit
+                keyfile makes brute-force infeasible regardless of password
+                strength.
+              </li>
+              <li>
+                <strong className="text-foreground">
+                  The keyfile (if used) is backed up securely
+                </strong>{" "}
+                and stored separately from shares and passwords. Keyfile loss is
+                irrecoverable — there is no reset mechanism. Store copies in
+                multiple secure locations.
               </li>
               <li>
                 <strong className="text-foreground">

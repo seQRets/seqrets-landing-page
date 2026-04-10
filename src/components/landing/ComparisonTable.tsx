@@ -10,6 +10,7 @@ const rows = [
   { feature: "AI assistant (Bob)", web: true, desktop: true },
   { feature: "Open source (AGPLv3)", web: true, desktop: true },
   { feature: "Auto-updates", web: true, desktop: true },
+  { feature: "Keyfile support", web: true, desktop: true },
   { feature: "Inheritance plan builder", web: false, desktop: true },
   { feature: "Code-signed binary", web: false, desktop: true },
   { feature: "Smart card (NFC) support", web: false, desktop: true },

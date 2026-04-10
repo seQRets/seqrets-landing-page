@@ -47,6 +47,7 @@ const DocsTechnical = () => {
             <div className="flex flex-wrap items-center gap-2 text-sm font-mono">
               {[
                 "Secret Input",
+                "Password + Optional Keyfile",
                 "Argon2id KDF",
                 "XChaCha20-Poly1305 Encrypt",
                 "Shamir Split (K-of-N)",
@@ -63,10 +64,10 @@ const DocsTechnical = () => {
               ))}
             </div>
             <p className="text-sm text-muted-foreground/70 mt-4">
-              The secret enters memory, is encrypted under a password-derived
-              key, split into threshold shares, rendered as QR codes, and then
-              destroyed. In the desktop app, Rust zeroes the memory with
-              compiler-fence zeroization.
+              The secret enters memory, is encrypted under a key derived from
+              your password (and optional keyfile), split into threshold shares,
+              rendered as QR codes, and then destroyed. In the desktop app, Rust
+              zeroes the memory with compiler-fence zeroization.
             </p>
           </div>
         </section>
@@ -192,6 +193,11 @@ const DocsTechnical = () => {
                     "16 bytes (random)",
                     "Unique per encryption — prevents rainbow tables",
                   ],
+                  [
+                    "Input",
+                    "password_bytes || keyfile_bytes",
+                    "Password and optional keyfile are concatenated before derivation",
+                  ],
                 ].map(([param, val, purpose]) => (
                   <tr
                     key={param}
@@ -206,6 +212,97 @@ const DocsTechnical = () => {
                 ))}
               </tbody>
             </table>
+          </div>
+        </section>
+
+        {/* Keyfile Support */}
+        <section>
+          <h2 className="font-display text-xl font-bold text-foreground mb-4">
+            Optional Keyfile
+          </h2>
+          <div className="space-y-4">
+            <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
+              <p className="text-sm text-muted-foreground/80 mb-4">
+                seQRets supports an optional keyfile as a second authentication
+                factor. When provided, the keyfile bytes are concatenated with
+                the password bytes before being fed into Argon2id — the keyfile
+                is not hashed separately or used as a pepper.
+              </p>
+              <div className="rounded-lg border border-border/20 bg-background/50 px-4 py-3 font-mono text-xs text-muted-foreground/70 mb-4">
+                key = Argon2id(password_bytes || keyfile_bytes, salt, m=65536, t=4, p=1, dkLen=32)
+              </div>
+              <p className="text-sm text-muted-foreground/80">
+                Both the web app (TypeScript) and the desktop app (Rust) use
+                identical concatenation logic. When no keyfile is provided, only
+                the password is used. A wrong or missing keyfile causes the
+                XChaCha20-Poly1305 authentication tag to fail, preventing
+                decryption.
+              </p>
+            </div>
+
+            <div className="overflow-x-auto rounded-2xl border border-border/30">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border/30 bg-card/30">
+                    <th className="text-left p-4 font-display font-bold text-foreground">
+                      Property
+                    </th>
+                    <th className="text-left p-4 font-display font-bold text-foreground">
+                      Value
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border/20">
+                  {[
+                    ["Generated size", "32 bytes (256 bits) — CSPRNG"],
+                    ["Accepted formats", ".bin, .key"],
+                    ["Maximum upload size", "2 MB"],
+                    ["Integration point", "Concatenated with password before Argon2id"],
+                    ["Availability", "Web app and Desktop app"],
+                  ].map(([prop, val]) => (
+                    <tr
+                      key={prop}
+                      className="hover:bg-card/20 transition-colors"
+                    >
+                      <td className="p-4 font-medium text-foreground whitespace-nowrap">
+                        {prop}
+                      </td>
+                      <td className="p-4 text-muted-foreground/80">{val}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="rounded-2xl border border-primary/15 bg-primary/5 p-6">
+              <h3 className="text-sm font-bold text-foreground mb-3">
+                What keyfiles defend against
+              </h3>
+              <ul className="space-y-2 text-sm text-muted-foreground/80">
+                {[
+                  "Keyloggers — a binary file is never typed, so keystroke capture is useless",
+                  "Shoulder surfing — nothing to observe visually during authentication",
+                  "Weak password brute-force — a generated 256-bit keyfile makes brute-force computationally infeasible regardless of password strength",
+                  "Physical coercion — if the keyfile is stored in a separate physical location, the user genuinely cannot decrypt on demand",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <span className="text-green-500 mt-0.5">&#10003;</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="rounded-2xl border border-yellow-500/20 bg-yellow-500/5 p-6">
+              <h3 className="text-sm font-bold text-foreground mb-3">
+                Important: keyfile loss is irrecoverable
+              </h3>
+              <p className="text-sm text-muted-foreground/80">
+                If you encrypt with a keyfile and lose it, the secret cannot be
+                decrypted. There is no recovery mechanism. Back up your keyfile
+                separately from your shares and password.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -358,8 +455,7 @@ const DocsTechnical = () => {
           </h2>
           <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
             <p className="text-sm text-muted-foreground/80 mb-4">
-              The full source code is available for audit and independent
-              verification.
+              The full source code is available for audit and independent verification.
             </p>
             <div className="space-y-2 text-sm">
               {[

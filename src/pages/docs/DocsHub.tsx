@@ -116,6 +116,7 @@ const DocsHub = () => {
               {[
                 ["Encryption", "XChaCha20-Poly1305 (256-bit key, 192-bit nonce)"],
                 ["Key Derivation", "Argon2id (64 MB memory, 4 iterations)"],
+                ["Optional Keyfile", "Second-factor binary file — concatenated with password before Argon2id. Generated keyfiles are 256-bit CSPRNG."],
                 ["Secret Splitting", "Shamir's Secret Sharing (configurable threshold)"],
                 ["Output Format", "QR codes (Qards) — printable, scannable"],
                 ["Architecture", "Zero-knowledge — no servers, no accounts, no telemetry"],

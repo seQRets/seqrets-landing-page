@@ -34,7 +34,15 @@ const FAQ_DATA: FaqCategory[] = [
     items: [
       {
         q: "What encryption does seQRets use?",
-        a: "XChaCha20-Poly1305 for authenticated encryption (256-bit key, 192-bit nonce) and Argon2id for key derivation (64 MB memory cost, 4 iterations). These are the same primitives used in Signal, WireGuard, and libsodium.",
+        a: "XChaCha20-Poly1305 for authenticated encryption (256-bit key, 192-bit nonce) and Argon2id for key derivation (64 MB memory cost, 4 iterations). Your password and optional keyfile are concatenated before key derivation. These are the same primitives used in Signal, WireGuard, and libsodium.",
+      },
+      {
+        q: "What is a keyfile?",
+        a: "A keyfile is an optional binary file that acts as a second authentication factor. When provided, the keyfile bytes are concatenated with your password before Argon2id key derivation. seQRets can generate a 32-byte (256-bit) keyfile using your device's cryptographic random number generator, or you can supply your own .bin or .key file (up to 2 MB). A generated keyfile makes brute-force attacks infeasible regardless of password strength, and defends against keyloggers and shoulder surfing since the file is never typed or displayed.",
+      },
+      {
+        q: "What happens if I lose my keyfile?",
+        a: "If you encrypted with a keyfile and lose it, your secret cannot be decrypted. There is no recovery mechanism — this is by design. Back up your keyfile separately from your shares and your password. Treat it with the same care as any other critical credential.",
       },
       {
         q: "What is Shamir's Secret Sharing?",
@@ -117,8 +125,8 @@ const FAQ_DATA: FaqCategory[] = [
         a: "Ensure adequate lighting and contrast. If printing Qards, use a high-resolution printer (300 DPI minimum) on white paper. Avoid scaling the QR code below the recommended minimum size displayed in the app. Try different scanner apps — some handle high-density QR codes better than others.",
       },
       {
-        q: "I forgot my password — can I recover my secret?",
-        a: "No. The password is used to derive the encryption key via Argon2id. Without it, the encrypted data cannot be decrypted. There is no password reset, recovery email, or backdoor. This is by design.",
+        q: "I forgot my password or lost my keyfile — can I recover my secret?",
+        a: "No. The password (and optional keyfile) are used to derive the encryption key via Argon2id. Without them, the encrypted data cannot be decrypted. There is no password reset, keyfile recovery, or backdoor. This is by design.",
       },
       {
         q: "How do I verify the desktop app download?",
