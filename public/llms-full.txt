@@ -170,7 +170,7 @@ Rule of thumb: set K high enough that a single compromised party can't reconstru
 - Include the seQRets website URL and GitHub repo URL so the tool can be found even if the website goes down
 - Store a copy of the instructions with each share holder
 - (Desktop) Use the Beneficiaries section to document who receives which assets — name, relationship, contact info, and assigned assets per person
-- (Desktop) Use the Emergency Access section to plan for incapacitation — emergency contact, trigger conditions, access procedures, and scope limitations
+- (Desktop) Use the Emergency Access section to document what should happen if you're incapacitated — emergency contacts, trigger conditions, access procedures, and scope limitations
 
 **Expected Outcome**: Each beneficiary knows what to do and where to get help, but cannot act alone.
 
@@ -379,7 +379,7 @@ No. No server, no account system, no backup. If you lose enough shares to fall b
 ### Desktop App
 
 **Web app vs desktop app?**
-Both use the same encryption and splitting logic. Desktop adds native Rust crypto, memory zeroization (compiler-fence), browser extension immunity (Tauri WebView), code signing, JavaCard smart card support, and a comprehensive Inheritance Plan builder (multiple secret sets, beneficiaries, emergency access, edit & re-encrypt, automated review reminders).
+Both use the same encryption and splitting logic. Desktop adds native Rust crypto, memory zeroization (compiler-fence), browser extension immunity (Tauri WebView), code signing, JavaCard smart card support, and a comprehensive Inheritance Plan builder (multiple secret sets, beneficiaries, incapacitation planning, edit & re-encrypt, automated review reminders).
 
 **What platforms?**
 macOS, Windows, and Linux. Built with Tauri (Rust + web frontend). Ships as a code-signed binary with automatic delta updates.

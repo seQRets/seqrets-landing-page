@@ -31,7 +31,7 @@ const features: Feature[] = [
     icon: Users,
     title: "Inheritance Planning",
     category: "inherit",
-    description: "Distribute shares to trusted family or advisors. Document multiple secrets, assign assets to beneficiaries, plan for emergencies, and get automated review reminders.",
+    description: "Distribute shares to trusted family or advisors. Document multiple secrets, assign assets to beneficiaries, plan for incapacitation, and get automated review reminders.",
   },
   {
     icon: CreditCard,

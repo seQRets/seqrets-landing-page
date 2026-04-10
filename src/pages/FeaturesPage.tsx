@@ -111,11 +111,11 @@ const sections: FeatureSection[] = [
     category: "inherit",
     desktopOnly: true,
     description:
-      "Distribute shares to trusted family members or advisors. Set thresholds so no single person can access your secrets alone — but the right group can reconstruct them when the time comes. Document multiple secrets, assign assets to beneficiaries, and plan for emergencies.",
+      "Distribute shares to trusted family members or advisors. Set thresholds so no single person can access your secrets alone — but the right group can reconstruct them when the time comes. Document multiple secrets, assign assets to beneficiaries, and plan for incapacitation.",
     details: [
       "Visual inheritance plan builder with multiple Secret Sets — document every secret in one encrypted plan",
       "Beneficiaries section: assign specific digital assets to named people with contact info",
-      "Emergency Access: plan for incapacitation — trigger conditions, emergency contacts, and access procedures",
+      "Incapacitation planning: document what should happen if you're alive but unable to act — emergency contacts, trigger conditions, and access procedures",
       "Edit & Re-encrypt: update existing plans without recreating from scratch",
       "Automated review reminders (6/12/24-month cadence) so your plan never goes stale",
     ],

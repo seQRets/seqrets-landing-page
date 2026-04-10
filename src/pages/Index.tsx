@@ -2,6 +2,7 @@ import Navbar from "@/components/landing/Navbar";
 import HeroSection from "@/components/landing/HeroSection";
 import HowItWorks from "@/components/landing/HowItWorks";
 import FeaturesGrid from "@/components/landing/FeaturesGrid";
+import ExploreTiles from "@/components/landing/ExploreTiles";
 import SecuritySection from "@/components/landing/SecuritySection";
 import ComparisonTable from "@/components/landing/ComparisonTable";
 import DesktopCTA from "@/components/landing/DesktopCTA";
@@ -16,6 +17,7 @@ const Index = () => {
         <HeroSection />
         <HowItWorks />
         <FeaturesGrid />
+        <ExploreTiles />
         <SecuritySection />
         <DesktopCTA />
         <ComparisonTable />

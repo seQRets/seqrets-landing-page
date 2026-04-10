@@ -65,7 +65,7 @@ const STEPS = [
   {
     title: "Prepare Instructions for Beneficiaries",
     description:
-      "Your heirs need to know what to do — without knowing the secret itself. The Desktop App's inheritance planner includes dedicated sections for beneficiaries and emergency access.",
+      "Your heirs need to know what to do — without knowing the secret itself. The Desktop App's inheritance planner includes dedicated sections for beneficiaries and incapacitation planning.",
     items: [
       "Write a letter of instruction: what seQRets is, where to download it, and that K shares are needed",
       "Do NOT include the password in the same communication channel as the shares",
@@ -74,7 +74,7 @@ const STEPS = [
       "Use the Inheritance Guide (PDF) from the shop as a template for your letter",
       "Store a copy of the instructions with each share holder",
       "(Desktop App) Use the Beneficiaries section to document who should receive which assets — name, relationship, contact info, and assigned assets per person",
-      "(Desktop App) Use the Emergency Access section to plan for incapacitation — document an emergency contact, trigger conditions, access procedures, and scope limitations so trusted parties can act if you're alive but unable to",
+      "(Desktop App) Use the Emergency Access section to document what should happen if you're incapacitated — emergency contacts, trigger conditions, access procedures, and scope limitations so trusted parties know how to act if you're alive but unable to",
     ],
     outcome:
       "Each beneficiary knows what to do and where to get help, but cannot act alone.",
