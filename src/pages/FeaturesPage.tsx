@@ -111,12 +111,13 @@ const sections: FeatureSection[] = [
     category: "inherit",
     desktopOnly: true,
     description:
-      "Distribute shares to trusted family members or advisors. Set thresholds so no single person can access your secrets alone — but the right group can reconstruct them when the time comes.",
+      "Distribute shares to trusted family members or advisors. Set thresholds so no single person can access your secrets alone — but the right group can reconstruct them when the time comes. Document multiple secrets, assign assets to beneficiaries, and plan for emergencies.",
     details: [
-      "Visual drag-and-drop inheritance plan builder",
-      "Custom thresholds: choose how many shares are needed",
-      "Assign shares to named recipients with instructions",
-      "Generate tamper-evident envelopes for physical distribution",
+      "Visual inheritance plan builder with multiple Secret Sets — document every secret in one encrypted plan",
+      "Beneficiaries section: assign specific digital assets to named people with contact info",
+      "Emergency Access: plan for incapacitation — trigger conditions, emergency contacts, and access procedures",
+      "Edit & Re-encrypt: update existing plans without recreating from scratch",
+      "Automated review reminders (6/12/24-month cadence) so your plan never goes stale",
     ],
     visualLabel: "Threshold Scheme",
     visualItems: ["5 total shares created", "3 required to restore", "2 → Family members", "1 → Safe deposit box", "2 → Trusted advisors"],

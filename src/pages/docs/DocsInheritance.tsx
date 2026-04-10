@@ -37,10 +37,12 @@ const STEPS = [
     items: [
       "Enter your seed phrase or secret into seQRets",
       "Set a strong, unique password (this derives the encryption key via Argon2id)",
+      "Optionally add a keyfile as a second authentication factor — a generated 256-bit keyfile makes brute-force infeasible regardless of password strength",
       "Configure the threshold: select K (minimum shares to reconstruct) and N (total shares)",
       "Generate the shares — seQRets encrypts with XChaCha20-Poly1305, splits with Shamir's SSS, and outputs QR codes (Qards)",
       "Optionally write shares to smart cards using the card writer in the desktop app",
       "The secret is destroyed from memory after generation (Rust zeroization in desktop)",
+      "(Desktop App) If you have multiple secrets to protect (e.g., Bitcoin seed, master password, exchange key), the inheritance planner supports multiple Secret Sets — each with its own password, keyfile, Qard configuration, and distribution table — all in a single encrypted plan",
     ],
     outcome:
       "N Qards (QR codes) and/or smart cards, each containing one share. The original secret exists nowhere.",
@@ -63,7 +65,7 @@ const STEPS = [
   {
     title: "Prepare Instructions for Beneficiaries",
     description:
-      "Your heirs need to know what to do — without knowing the secret itself.",
+      "Your heirs need to know what to do — without knowing the secret itself. The Desktop App's inheritance planner includes dedicated sections for beneficiaries and emergency access.",
     items: [
       "Write a letter of instruction: what seQRets is, where to download it, and that K shares are needed",
       "Do NOT include the password in the same communication channel as the shares",
@@ -71,6 +73,8 @@ const STEPS = [
       "Include the seQRets website URL and GitHub repo URL so the tool can be found even if the website is down",
       "Use the Inheritance Guide (PDF) from the shop as a template for your letter",
       "Store a copy of the instructions with each share holder",
+      "(Desktop App) Use the Beneficiaries section to document who should receive which assets — name, relationship, contact info, and assigned assets per person",
+      "(Desktop App) Use the Emergency Access section to plan for incapacitation — document an emergency contact, trigger conditions, access procedures, and scope limitations so trusted parties can act if you're alive but unable to",
     ],
     outcome:
       "Each beneficiary knows what to do and where to get help, but cannot act alone.",
@@ -93,16 +97,20 @@ const STEPS = [
   {
     title: "Maintain Your Plan",
     description:
-      "An inheritance plan is not set-and-forget. Periodically review and update.",
+      "An inheritance plan is not set-and-forget. Periodically review and update. The Desktop App (v1.8.0+) includes built-in review reminders to help you stay on top of this.",
     items: [
-      "Check share condition annually — QR codes can fade, envelopes can degrade",
+      "Check share condition regularly — QR codes can fade, envelopes can degrade",
       "Update your plan when circumstances change: births, deaths, divorces, moves",
       "If a share is compromised, regenerate all shares with a new password and redistribute",
       "Verify that your letter of instruction is still accurate and findable",
       "Consider rotating the password periodically (requires regenerating all shares)",
+      "(Desktop App) Enable review reminders — choose 6, 12, or 24-month intervals. You'll see a home tab banner, a nav badge, and an optional OS notification when a review is due",
+      "(Desktop App) After decrypting and verifying your plan, mark it as reviewed with one click to reset the timer — no re-encrypt required if nothing changed",
+      "(Desktop App) Reminders are zero-knowledge: a small local sidecar file stores only a future date — no plan contents, no encryption material, no identifiers",
+      "(Desktop App) Use Edit & Re-encrypt to update an existing plan without recreating it from scratch — modify beneficiaries, add new secrets, update Qard locations, then re-encrypt with one click",
     ],
     outcome:
-      "An up-to-date, tested plan that will work when needed.",
+      "An up-to-date, tested plan that will work when needed — with automated reminders so it never goes stale.",
   },
   {
     title: "Legal Considerations",

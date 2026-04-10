@@ -6,6 +6,7 @@
 
 - Encryption: XChaCha20-Poly1305 (256-bit key, 192-bit nonce)
 - Key Derivation: Argon2id (64 MB memory, 4 iterations, 16-byte random salt)
+- Optional Keyfile: Second-factor binary file concatenated with password before Argon2id. Generated keyfiles are 256-bit CSPRNG. Defeats keyloggers, shoulder surfing, and weak-password brute-force.
 - Secret Splitting: Shamir's Secret Sharing over GF(256), configurable K-of-N threshold
 - Output: QR codes (Qards) — printable, scannable, each containing one encrypted share
 - Architecture: Zero-knowledge — no servers, no accounts, no telemetry, fully offline
@@ -16,7 +17,7 @@
 ## Platforms
 
 - Web App (free): https://app.seqrets.app
-- Desktop App (paid): Rust/Tauri — macOS, Windows, Linux. Adds smart card support, memory zeroization, code signing.
+- Desktop App (paid): Rust/Tauri — macOS, Windows, Linux. Adds smart card support, memory zeroization, code signing, comprehensive inheritance planner (multiple secret sets, beneficiaries, emergency access, edit & re-encrypt, automated review reminders).
 
 ## Documentation
 

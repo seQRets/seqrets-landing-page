@@ -15,6 +15,7 @@
 |----------|-------|
 | Encryption | XChaCha20-Poly1305 (256-bit key, 192-bit nonce) |
 | Key Derivation | Argon2id (64 MB memory, 4 iterations) |
+| Optional Keyfile | Second-factor binary file — concatenated with password before Argon2id. Generated keyfiles are 256-bit CSPRNG. |
 | Secret Splitting | Shamir's Secret Sharing (configurable threshold) |
 | Output Format | QR codes (Qards) — printable, scannable |
 | Architecture | Zero-knowledge — no servers, no accounts, no telemetry |
@@ -31,7 +32,8 @@
 ### Processing Pipeline
 
 1. **Secret Input** — Secret enters memory (BIP-39 mnemonic detection for seed phrases)
-2. **Argon2id KDF** — Password derives a 256-bit encryption key (64 MB memory, 4 iterations, 16-byte random salt)
+2. **Password + Optional Keyfile** — Password bytes and optional keyfile bytes are concatenated
+3. **Argon2id KDF** — Combined input derives a 256-bit encryption key (64 MB memory, 4 iterations, 16-byte random salt)
 3. **XChaCha20-Poly1305 Encrypt** — Secret is authenticated-encrypted (256-bit key, 192-bit random nonce)
 4. **Shamir Split (K-of-N)** — Ciphertext is split into N shares using Shamir's Secret Sharing over GF(256). Any K shares reconstruct; K-1 or fewer reveal nothing.
 5. **QR Encode (Qards)** — Each share is Base64-encoded and rendered as a printable QR code. Secret is destroyed from memory.
@@ -55,6 +57,7 @@ The secret is encrypted BEFORE splitting with Shamir. Each Qard holds an encrypt
 | Parallelism | 1 | Single-threaded — deterministic output |
 | Output length | 32 bytes (256 bits) | Matches XChaCha20-Poly1305 key size |
 | Salt | 16 bytes (random) | Unique per encryption — prevents rainbow tables |
+| Input | password_bytes ‖ keyfile_bytes | Password and optional keyfile concatenated before derivation |
 
 ### Shamir's Secret Sharing
 
@@ -72,6 +75,26 @@ The secret is encrypted BEFORE splitting with Shamir. Each Qard holds an encrypt
 | Maximum capacity | ~2,953 bytes (Version 40, Level L) |
 | Output | Printable QR code (Qard) |
 | Metadata | Share index, threshold, total shares — included in the QR payload |
+
+### Optional Keyfile
+
+seQRets supports an optional keyfile as a second authentication factor. When provided, the keyfile bytes are concatenated with the password bytes before Argon2id derivation: `key = Argon2id(password_bytes || keyfile_bytes, salt, m=65536, t=4, p=1, dkLen=32)`.
+
+| Property | Value |
+|----------|-------|
+| Generated size | 32 bytes (256 bits) — CSPRNG |
+| Accepted formats | .bin, .key |
+| Maximum upload size | 2 MB |
+| Integration point | Concatenated with password before Argon2id |
+| Availability | Web app and Desktop app |
+
+**What keyfiles defend against:**
+- Keyloggers — a binary file is never typed
+- Shoulder surfing — nothing to observe visually
+- Weak password brute-force — 256-bit entropy makes brute-force infeasible
+- Physical coercion — if stored separately, the user genuinely cannot decrypt on demand
+
+**Important:** Keyfile loss is irrecoverable. Back up keyfiles separately from shares and passwords.
 
 ### Zero-Knowledge Claims
 
@@ -119,10 +142,12 @@ Rule of thumb: set K high enough that a single compromised party can't reconstru
 
 1. Enter your seed phrase or secret into seQRets
 2. Set a strong, unique password (derives the encryption key via Argon2id)
-3. Configure the threshold: select K (minimum shares) and N (total shares)
-4. Generate the shares — seQRets encrypts, splits, and outputs QR codes (Qards)
-5. Optionally write shares to smart cards using the desktop app
-6. The secret is destroyed from memory after generation
+3. Optionally add a keyfile as a second authentication factor — a generated 256-bit keyfile makes brute-force infeasible
+4. Configure the threshold: select K (minimum shares) and N (total shares)
+5. Generate the shares — seQRets encrypts, splits, and outputs QR codes (Qards)
+6. Optionally write shares to smart cards using the desktop app
+7. The secret is destroyed from memory after generation
+8. (Desktop) If you have multiple secrets, the inheritance planner supports multiple Secret Sets — each with its own password, keyfile, Qard config, and distribution table — all in one encrypted plan
 
 **Expected Outcome**: N Qards and/or smart cards, each containing one share. The original secret exists nowhere.
 
@@ -144,6 +169,8 @@ Rule of thumb: set K high enough that a single compromised party can't reconstru
 - Consider: password in a sealed envelope with your attorney, shares with family members
 - Include the seQRets website URL and GitHub repo URL so the tool can be found even if the website goes down
 - Store a copy of the instructions with each share holder
+- (Desktop) Use the Beneficiaries section to document who receives which assets — name, relationship, contact info, and assigned assets per person
+- (Desktop) Use the Emergency Access section to plan for incapacitation — emergency contact, trigger conditions, access procedures, and scope limitations
 
 **Expected Outcome**: Each beneficiary knows what to do and where to get help, but cannot act alone.
 
@@ -161,12 +188,15 @@ Do this test at least once — do not skip this step.
 
 ### Step 7: Maintain Your Plan
 
-- Check share condition annually — QR codes can fade, envelopes can degrade
+- Check share condition regularly — QR codes can fade, envelopes can degrade
 - Update your plan when circumstances change: births, deaths, divorces, moves
 - If a share is compromised, regenerate all shares with a new password and redistribute
 - Consider rotating the password periodically (requires regenerating all shares)
+- (Desktop) Enable review reminders — choose 6, 12, or 24-month intervals. Home tab banner, nav badge, and optional OS notification when due. Mark as reviewed with one click to reset the timer.
+- (Desktop) Reminders are zero-knowledge: a local sidecar file stores only a future date — no plan contents, no encryption material, no identifiers.
+- (Desktop) Use Edit & Re-encrypt to update an existing plan without recreating from scratch
 
-**Expected Outcome**: An up-to-date, tested plan that will work when needed.
+**Expected Outcome**: An up-to-date, tested plan that will work when needed — with automated reminders so it never goes stale.
 
 ### Step 8: Legal Considerations
 
@@ -191,7 +221,9 @@ Do this test at least once — do not skip this step.
 | Fire, flood, or natural disaster | Shares distributed across multiple locations | High |
 | Password manager breach | Secret never stored in a password manager | High |
 | Cloud provider compromise | Nothing stored in the cloud | High |
-| Brute-force password attack | Argon2id KDF with 64 MB memory cost | High |
+| Brute-force password attack | Argon2id KDF with 64 MB memory cost. Optional keyfile adds up to 256 bits of entropy. | High |
+| Keylogger / shoulder surfing | Optional keyfile is a binary file — never typed, never displayed | High |
+| Physical coercion (with keyfile) | Keyfile stored in a separate location means user cannot decrypt on demand | High |
 | Malicious browser extensions (Desktop) | Tauri WebView loads no extensions | High |
 | Supply-chain JS attack (Desktop) | Code bundled and signed at build time | High |
 | Single point of failure | Threshold splitting — no single entity holds the full secret | High |
@@ -202,7 +234,7 @@ Do this test at least once — do not skip this step.
 |--------|---------|------------|
 | Compromised device at encryption time | Secret must briefly exist in memory during encryption | Use a trusted device. Desktop app zeroes memory with compiler-fence. |
 | Lost threshold of shares | If you lose K or more shares, the secret is irrecoverable | Choose a conservative threshold (e.g., 3-of-5). Distribute securely. |
-| Forgotten password | No password = no decryption. No reset or recovery. | Use a strong, memorable password. Store a hint separately from shares. |
+| Forgotten password or lost keyfile | No password/keyfile = no decryption. No reset or recovery. | Use a strong, memorable password. Back up keyfile separately from shares. |
 | Physical coercion | Attacker forces you to reveal password and produce shares | Distribute shares to third parties who cannot be coerced simultaneously. |
 | Quantum attack (scheme intact, < K shares compromised) | Out of scope — fully mitigated. Shamir's information-theoretic security means the ciphertext is never reconstructed, so no quantum (or classical) attack is possible against a secret whose share threshold has not been breached. | No additional mitigation required. |
 | Quantum attack after share threshold compromise | If an adversary already holds ≥ K shares, the scheme has failed and the ciphertext is reconstructable. XChaCha20-Poly1305's 256-bit key still provides ~128-bit post-quantum security (Grover), serving as defense-in-depth. | Primary mitigation is preventing threshold compromise through conservative K-of-N and secure share distribution. A strong password further hardens the defense-in-depth layer. |
@@ -212,10 +244,11 @@ Do this test at least once — do not skip this step.
 ### Security Assumptions
 
 1. The device is not compromised at the moment of encryption/decryption.
-2. The password is strong and not reused from other services.
-3. Shares are stored securely in separate locations.
-4. The cryptographic primitives (XChaCha20-Poly1305, Argon2id) are secure.
-5. The source code matches the running binary (code signing for desktop; hosting trust for web).
+2. The password is strong and not reused from other services. Using the optional keyfile mitigates weak passwords — a generated 256-bit keyfile makes brute-force infeasible.
+3. The keyfile (if used) is backed up securely and stored separately from shares and passwords. Keyfile loss is irrecoverable.
+4. Shares are stored securely in separate locations.
+5. The cryptographic primitives (XChaCha20-Poly1305, Argon2id) are secure.
+6. The source code matches the running binary (code signing for desktop; hosting trust for web).
 
 ### Comparison to Alternatives
 
@@ -309,7 +342,13 @@ Any text-based secret: crypto seed phrases (BIP-39), private keys, passwords, re
 ### Security
 
 **What encryption does seQRets use?**
-XChaCha20-Poly1305 for authenticated encryption (256-bit key, 192-bit nonce) and Argon2id for key derivation (64 MB memory, 4 iterations). Same primitives used in Signal, WireGuard, and libsodium.
+XChaCha20-Poly1305 for authenticated encryption (256-bit key, 192-bit nonce) and Argon2id for key derivation (64 MB memory, 4 iterations). Your password and optional keyfile are concatenated before key derivation. Same primitives used in Signal, WireGuard, and libsodium.
+
+**What is a keyfile?**
+A keyfile is an optional binary file that acts as a second authentication factor. When provided, the keyfile bytes are concatenated with your password before Argon2id derivation. seQRets can generate a 32-byte (256-bit) keyfile using CSPRNG, or you can supply your own .bin or .key file (up to 2 MB). Defeats keyloggers, shoulder surfing, and weak-password brute-force.
+
+**What happens if I lose my keyfile?**
+If you encrypted with a keyfile and lose it, your secret cannot be decrypted. There is no recovery mechanism. Back up your keyfile separately from your shares and password.
 
 **What is Shamir's Secret Sharing?**
 A mathematically proven threshold scheme where a secret is split into N shares, and any K can reconstruct it. Fewer than K shares reveal zero information — this is information-theoretic security, not computational. It is also quantum-resistant.
@@ -329,7 +368,7 @@ Web: @noble/ciphers and @noble/hashes by Paul Miller — audited, zero-dependenc
 ### Inheritance
 
 **How does inheritance planning work?**
-Create a Shamir split with a threshold (e.g., 3-of-5), distribute shares to trusted people or locations, and provide instructions for reconstruction. The Desktop App includes a dedicated Inheritance Plan builder.
+Create a Shamir split with a threshold (e.g., 3-of-5), distribute shares to trusted people or locations, and provide instructions for reconstruction. The Desktop App includes a comprehensive Inheritance Plan builder with support for multiple Secret Sets (document every secret in one plan), named beneficiaries with asset assignments, emergency access planning for incapacitation scenarios, edit & re-encrypt for updating plans without recreating them, and automated review reminders on a configurable cadence.
 
 **Is the Inheritance Plan stored somewhere?**
 No. The plan is encrypted and exported as a file or written to a JavaCard. seQRets stores no copy. If you lose all copies, it cannot be recovered.
@@ -340,7 +379,7 @@ No. No server, no account system, no backup. If you lose enough shares to fall b
 ### Desktop App
 
 **Web app vs desktop app?**
-Both use the same encryption and splitting logic. Desktop adds native Rust crypto, memory zeroization (compiler-fence), browser extension immunity (Tauri WebView), code signing, Inheritance Plan builder, and JavaCard smart card support.
+Both use the same encryption and splitting logic. Desktop adds native Rust crypto, memory zeroization (compiler-fence), browser extension immunity (Tauri WebView), code signing, JavaCard smart card support, and a comprehensive Inheritance Plan builder (multiple secret sets, beneficiaries, emergency access, edit & re-encrypt, automated review reminders).
 
 **What platforms?**
 macOS, Windows, and Linux. Built with Tauri (Rust + web frontend). Ships as a code-signed binary with automatic delta updates.
@@ -364,8 +403,8 @@ Ensure the card is fully inserted (contact interface, not NFC). Check USB reader
 **QR code won't scan?**
 Ensure adequate lighting and contrast. Print at 300+ DPI on white paper. Don't scale below the recommended minimum size. Try different scanner apps.
 
-**Forgot my password?**
-The password derives the encryption key via Argon2id. Without it, decryption is impossible. No reset, no recovery, no backdoor. By design.
+**Forgot my password or lost my keyfile?**
+The password (and optional keyfile) derive the encryption key via Argon2id. Without them, decryption is impossible. No reset, no recovery, no backdoor. By design.
 
 **How to verify the desktop download?**
 Code-signed binary. macOS Gatekeeper and Windows SmartScreen verify automatically. You can also check the SHA-256 hash against the GitHub release page.
