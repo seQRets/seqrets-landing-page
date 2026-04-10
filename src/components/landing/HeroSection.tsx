@@ -69,7 +69,7 @@ const HeroSection = () => {
           </AnimatePresence>
         </div>
 
-        <div className="mt-8 md:mt-24 lg:mt-32" />
+        <div className="mt-12 md:mt-32 lg:mt-40" />
 
         <p className="mt-8 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
           Encrypt your secrets, split them into QR-coded shares, and distribute them to the people you trust. No servers. No accounts. No KYC. Nothing leaves your device.
