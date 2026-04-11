@@ -450,6 +450,7 @@ echo "Your message" | gpg --encrypt --armor --recipient seqrets@proton.me
 
 ## Blog Posts
 
+- [Inside the $285M Drift Protocol Hack: Why Single-Key Security Is a Liability](https://seqrets.app/blog/drift-protocol-hack-secret-splitting)
 - [Zero Knowledge Goes Mainstream: Why 2026 Is ZKP's Breakout Year](https://seqrets.app/blog/zero-knowledge-proofs-mainstream-crypto-2026)
 - [The $5 Wrench Problem: Physical Attacks on Bitcoin Holders](https://seqrets.app/blog/wrench-attacks-bitcoin-physical-security)
 - [Hong Kong Decryption Law & Bitcoin Travelers](https://seqrets.app/blog/hong-kong-decryption-law-bitcoin-travelers)
