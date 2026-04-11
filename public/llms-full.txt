@@ -411,3 +411,45 @@ Code-signed binary. macOS Gatekeeper and Windows SmartScreen verify automaticall
 
 **Where is my Bob AI API key stored?**
 Locally on your device only. Sent only to Google's Gemini API when you ask Bob a question. Never included in any other request. Removable from settings.
+
+---
+
+## Secure Contact
+
+Send encrypted messages to seQRets using PGP.
+
+- **Email:** seqrets@proton.me (Proton-to-Proton messages are E2E encrypted automatically)
+- **Fingerprint:** `2C4D CD66 1F22 05AC 15C3 AC04 E462 D3A7 3866 C5D9`
+- **Key download:** https://seqrets.app/pgp.txt
+- **Interactive PGP page:** https://seqrets.app/pgp (requires JavaScript)
+
+### Verification
+
+```
+gpg --import pgp.txt
+gpg --fingerprint seqrets@proton.me
+```
+
+### Sending an Encrypted Message
+
+**Option 1 — Browser (easiest):** Go to https://aliceandbob.io/online-pgp-tool, paste the public key, type your message, encrypt, and email the output to seqrets@proton.me. Runs entirely in-browser.
+
+**Option 2 — GPG CLI:**
+```
+curl -sO https://seqrets.app/pgp.txt
+gpg --import pgp.txt
+echo "Your message" | gpg --encrypt --armor --recipient seqrets@proton.me
+```
+
+**Option 3 — Email clients:** Thunderbird (built-in OpenPGP), Apple Mail (GPG Suite), Outlook (Gpg4win/Kleopatra).
+
+---
+
+## Blog Posts
+
+- [Zero Knowledge Goes Mainstream: Why 2026 Is ZKP's Breakout Year](https://seqrets.app/blog/zero-knowledge-proofs-mainstream-crypto-2026)
+- [The $5 Wrench Problem: Physical Attacks on Bitcoin Holders](https://seqrets.app/blog/wrench-attacks-bitcoin-physical-security)
+- [Hong Kong Decryption Law & Bitcoin Travelers](https://seqrets.app/blog/hong-kong-decryption-law-bitcoin-travelers)
+- [Why Seed Phrase Security Matters](https://seqrets.app/blog/why-seed-phrase-security-matters)
+- [Shamir's Secret Sharing Explained](https://seqrets.app/blog/shamirs-secret-sharing-explained)
+- [Crypto Inheritance Planning](https://seqrets.app/blog/crypto-inheritance-planning)

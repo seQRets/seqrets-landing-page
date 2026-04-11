@@ -23,6 +23,12 @@
 
 - [Full Documentation](https://seqrets.app/llms-full.txt): Complete technical docs, threat model, inheritance guide, product specs, and FAQ in a single file
 - [Technical Docs (browser)](https://seqrets.app/docs): Interactive documentation hub (requires JavaScript)
+  - [Technical Overview](https://seqrets.app/docs/technical): Encryption pipeline, crypto primitives, keyfile docs
+  - [Inheritance Guide](https://seqrets.app/docs/inheritance): Step-by-step inheritance planning
+  - [Threat Model](https://seqrets.app/docs/threat-model): What seQRets protects against (and doesn't)
+  - [Product Specs](https://seqrets.app/docs/products): Desktop app, smart cards, bundles, accessories
+  - [FAQ](https://seqrets.app/docs/faq): Frequently asked questions
+- [Features](https://seqrets.app/features): Feature overview with web vs desktop comparison
 - [Security Page](https://seqrets.app/security): Security deep dive, threat model, FAQ
 - [How It Works](https://seqrets.app/how-it-works): Visual walkthrough with screenshots
 
@@ -32,9 +38,25 @@
 - [Security Policy](https://github.com/seQRets/seQRets-app/blob/main/SECURITY.md): Vulnerability reporting
 - [License](https://github.com/seQRets/seQRets-app/blob/main/LICENSE): AGPLv3
 
+## Secure Contact
+
+- PGP Key: [https://seqrets.app/pgp.txt](https://seqrets.app/pgp.txt) (plain text, bot-accessible)
+- PGP Page: [https://seqrets.app/pgp](https://seqrets.app/pgp) (interactive, requires JavaScript)
+- Fingerprint: `2C4D CD66 1F22 05AC 15C3 AC04 E462 D3A7 3866 C5D9`
+- Email: seqrets@proton.me (Proton-to-Proton is E2E encrypted automatically)
+
+## Blog
+
+- [Blog Index](https://seqrets.app/blog)
+- [Zero Knowledge Goes Mainstream: Why 2026 Is ZKP's Breakout Year](https://seqrets.app/blog/zero-knowledge-proofs-mainstream-crypto-2026)
+- [The $5 Wrench Problem: Physical Attacks on Bitcoin Holders](https://seqrets.app/blog/wrench-attacks-bitcoin-physical-security)
+- [Hong Kong Decryption Law & Bitcoin Travelers](https://seqrets.app/blog/hong-kong-decryption-law-bitcoin-travelers)
+- [Why Seed Phrase Security Matters](https://seqrets.app/blog/why-seed-phrase-security-matters)
+- [Shamir's Secret Sharing Explained](https://seqrets.app/blog/shamirs-secret-sharing-explained)
+- [Crypto Inheritance Planning](https://seqrets.app/blog/crypto-inheritance-planning)
+
 ## Optional
 
 - [Product Catalog](https://seqrets.app/shop): Desktop app, smart cards, bundles, accessories
-- [Blog](https://seqrets.app/blog): Articles on seed phrase security, Shamir's Secret Sharing, crypto inheritance
 - [Privacy Policy](https://seqrets.app/privacy)
 - [Terms of Service](https://seqrets.app/terms)
