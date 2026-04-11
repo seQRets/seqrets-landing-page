@@ -80,9 +80,9 @@ const Navbar = () => {
 
             if (link.isScroll) {
               return (
-                <a key={link.href} href="#" onClick={handleHomeClick} className={cls}>
+                <Link key={link.href} to="/" onClick={handleHomeClick} className={cls}>
                   {link.label}
-                </a>
+                </Link>
               );
             }
 
@@ -186,14 +186,14 @@ const Navbar = () => {
           {navLinks.map((link) => {
             if (link.isScroll) {
               return (
-                <a
+                <Link
                   key={link.href}
-                  href="#"
+                  to="/"
                   onClick={(e) => { handleHomeClick(e); setOpen(false); }}
                   className="block py-3 text-sm font-medium text-foreground/60 transition-colors hover:text-foreground"
                 >
                   {link.label}
-                </a>
+                </Link>
               );
             }
 
