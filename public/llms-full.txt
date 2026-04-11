@@ -414,14 +414,17 @@ Locally on your device only. Sent only to Google's Gemini API when you ask Bob a
 
 ---
 
-## Secure Contact
+## Contact
 
-Send encrypted messages to seQRets using PGP.
+- **General inquiries:** hello@seqrets.app
+- **Security disclosures & encrypted communication:** seqrets@proton.me
 
-- **Email:** seqrets@proton.me (Proton-to-Proton messages are E2E encrypted automatically)
+### Encrypted Communication (PGP)
+
 - **Fingerprint:** `2C4D CD66 1F22 05AC 15C3 AC04 E462 D3A7 3866 C5D9`
 - **Key download:** https://seqrets.app/pgp.txt
 - **Interactive PGP page:** https://seqrets.app/pgp (requires JavaScript)
+- Proton-to-Proton messages to seqrets@proton.me are E2E encrypted automatically
 
 ### Verification
 

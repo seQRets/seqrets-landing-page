@@ -38,12 +38,14 @@
 - [Security Policy](https://github.com/seQRets/seQRets-app/blob/main/SECURITY.md): Vulnerability reporting
 - [License](https://github.com/seQRets/seQRets-app/blob/main/LICENSE): AGPLv3
 
-## Secure Contact
+## Contact
 
+- General inquiries: hello@seqrets.app
+- Security disclosures & encrypted communication: seqrets@proton.me
 - PGP Key: [https://seqrets.app/pgp.txt](https://seqrets.app/pgp.txt) (plain text, bot-accessible)
 - PGP Page: [https://seqrets.app/pgp](https://seqrets.app/pgp) (interactive, requires JavaScript)
 - Fingerprint: `2C4D CD66 1F22 05AC 15C3 AC04 E462 D3A7 3866 C5D9`
-- Email: seqrets@proton.me (Proton-to-Proton is E2E encrypted automatically)
+- Proton-to-Proton messages to seqrets@proton.me are E2E encrypted automatically
 
 ## Blog
 
