@@ -19,6 +19,34 @@ export const categoryLabels: Record<BlogCategory, string> = {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "drift-protocol-hack-secret-splitting",
+    title: "Inside the $285M Drift Protocol Hack: Why Single-Key Security Is a Liability",
+    date: "2026-04-11",
+    category: "crypto",
+    excerpt:
+      "On April 1, attackers drained $285 million from Drift Protocol on Solana using compromised admin keys and social engineering. The largest hack of 2026 is a case study in what happens when critical secrets live in one place.",
+    readTime: 6,
+    content: `On April 1, 2026, attackers drained $285 million from Drift Protocol, a Solana-based perpetual futures exchange — making it the largest crypto hack of the year by a wide margin. The timing felt like a cruel joke. For the protocol's users, it was anything but.
+
+The attack vector was depressingly familiar. According to early post-mortems and on-chain analysis, the breach began with social engineering targeting Drift's operations team, ultimately leading to the compromise of admin keys that controlled the protocol's smart contract upgrade authority. Once the attackers had those keys, they executed a zero-timelock migration — pushing a malicious contract update through before anyone could react. Funds were swept in minutes.
+
+Attribution is still being finalized, but multiple blockchain forensics firms have pointed to patterns consistent with North Korean state-sponsored hackers, specifically the Lazarus Group. This tracks with a broader trend: nation-state actors are increasingly targeting DeFi protocols not through cryptographic weaknesses, but through the human and operational layers surrounding key management.
+
+The uncomfortable lesson here is not that Drift had bad developers or weak cryptography. Solana's elliptic curve math didn't fail. The smart contract logic, in isolation, was likely sound. What failed was the security architecture around the keys that controlled the protocol. A small number of individuals held credentials that, if compromised, granted total control over hundreds of millions of dollars. The attackers didn't need to break the math. They just needed to compromise the people holding the keys.
+
+This is the single-key problem at institutional scale. It's the same vulnerability that affects individual Bitcoin holders — just with more zeroes. When your entire security model depends on one secret staying secret, held by one person or one small group, you've created a single point of failure. And single points of failure, given enough time and enough incentive, always fail.
+
+Shamir's Secret Sharing exists precisely to eliminate this class of risk. With a threshold split — say, 3-of-5 — no single person, device, or location holds enough information to reconstruct the critical secret. Compromising one team member, one laptop, or one office gives an attacker exactly nothing. The math guarantees it: with fewer shares than the threshold, every possible secret is equally consistent with what you have. There's no partial information leakage, no statistical signal, no foothold.
+
+If Drift's admin keys had been managed through a threshold scheme — requiring, say, three out of five geographically distributed signers to authorize any contract migration — the social engineering attack that actually occurred would have been insufficient. Compromising one person's credentials would not have been enough. The attacker would have needed to independently compromise a majority of share holders, likely across different organizations, jurisdictions, and security setups. That's an exponentially harder problem.
+
+This principle applies just as directly to individual Bitcoin holders. Your seed phrase is your admin key. If it exists in one place — a hardware wallet, a steel plate, a safe — then whoever controls that one place controls your Bitcoin. A house fire, a border search, a break-in, or a determined attacker with a $5 wrench can turn your entire security model to dust.
+
+seQRets is built on the conviction that secrets should never exist whole in any single location. You split your encrypted seed phrase into shares, encode them as QR codes, and distribute them. No single share reveals anything. No single theft, seizure, or disaster can compromise you. The same mathematical guarantee that could have protected a $285 million protocol can protect your personal Bitcoin holdings — and it's available to anyone willing to spend ten minutes setting it up.
+
+The Drift hack will be studied for years as a case study in operational security failure. But the deeper lesson is architectural: any system where a single compromised credential grants total control is a system waiting to be exploited. The question for every Bitcoin holder is whether your own setup has the same structural weakness — and whether you'll fix it before someone tests it.`,
+  },
+  {
     slug: "zero-knowledge-proofs-mainstream-crypto-2026",
     title: "Zero Knowledge Goes Mainstream: Why 2026 Is ZKP's Breakout Year",
     date: "2026-04-04",
