@@ -46,7 +46,11 @@ function RootLayout() {
   );
 }
 
-/** Wrap lazy import so default export becomes Component */
+/**
+ * vite-react-ssg route records expect `lazy` to return `{ Component }`,
+ * but React.lazy() / dynamic imports return `{ default }`. This adapter
+ * bridges the two so we can use standard `() => import("./Page")` syntax.
+ */
 const lazy = (load: () => Promise<{ default: React.ComponentType }>) =>
   () => load().then((m) => ({ Component: m.default }));
 
