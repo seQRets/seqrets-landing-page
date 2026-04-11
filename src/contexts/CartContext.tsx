@@ -97,6 +97,7 @@ function cartReducer(state: CartState, action: CartAction): CartState {
 }
 
 function loadCart(): CartItem[] {
+  if (typeof window === "undefined") return [];
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return [];

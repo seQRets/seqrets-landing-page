@@ -1,39 +1,28 @@
-import { lazy, Suspense } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { Outlet } from "react-router-dom";
+import { Head } from "vite-react-ssg";
+import type { RouteRecord } from "vite-react-ssg";
 import { CartProvider } from "./contexts/CartContext";
+import ErrorBoundary from "./components/ErrorBoundary";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-
-const Shop = lazy(() => import("./pages/Shop"));
-const HowItWorksPage = lazy(() => import("./pages/HowItWorksPage"));
-const FeaturesPage = lazy(() => import("./pages/FeaturesPage"));
-const SecurityPage = lazy(() => import("./pages/SecurityPage"));
-const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
-const TermsOfService = lazy(() => import("./pages/TermsOfService"));
-const BlogPage = lazy(() => import("./pages/BlogPage"));
-const BlogPostPage = lazy(() => import("./pages/BlogPostPage"));
-const CheckoutSuccess = lazy(() => import("./pages/CheckoutSuccess"));
-const CheckoutCancel = lazy(() => import("./pages/CheckoutCancel"));
-const DocsLayout = lazy(() => import("./components/docs/DocsLayout"));
-const DocsHub = lazy(() => import("./pages/docs/DocsHub"));
-const DocsTechnical = lazy(() => import("./pages/docs/DocsTechnical"));
-const DocsInheritance = lazy(() => import("./pages/docs/DocsInheritance"));
-const DocsThreatModel = lazy(() => import("./pages/docs/DocsThreatModel"));
-const DocsProducts = lazy(() => import("./pages/docs/DocsProducts"));
-const DocsFaq = lazy(() => import("./pages/docs/DocsFaq"));
-const AdminPage = lazy(() => import("./pages/AdminPage"));
-const PgpPage = lazy(() => import("./pages/PgpPage"));
+import { BLOG_POSTS } from "./lib/blog";
 
 const DEFAULT_TITLE = "seQRets — Secure. Split. Share.";
 const DEFAULT_DESC =
   "Encrypt & split your secrets into QR codes using Shamir's Secret Sharing. Zero-knowledge crypto inheritance for Bitcoin seed phrases.";
 
-const App = () => (
-  <CartProvider>
-    <BrowserRouter>
-      {/* Default meta — overridden per-page by PageHead / DocsHead */}
-      <Helmet>
+/**
+ * Cart wrapper — on the server the provider is skipped (localStorage
+ * doesn't exist) but `loadCart()` already returns [] for SSR, so we
+ * can safely render the provider on both sides.  The `typeof window`
+ * guard in CartContext handles the localStorage access.
+ */
+
+/** Root layout — wraps every route with providers and default meta */
+function RootLayout() {
+  return (
+    <ErrorBoundary>
+      <Head>
         <title>{DEFAULT_TITLE}</title>
         <meta name="description" content={DEFAULT_DESC} />
         <meta property="og:title" content={DEFAULT_TITLE} />
@@ -49,35 +38,66 @@ const App = () => (
         <meta name="twitter:description" content={DEFAULT_DESC} />
         <meta name="twitter:image" content="https://seqrets.app/og-image.png" />
         <link rel="canonical" href="https://seqrets.app" />
-      </Helmet>
-      <Suspense fallback={null}>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/how-it-works" element={<HowItWorksPage />} />
-          <Route path="/features" element={<FeaturesPage />} />
-          <Route path="/security" element={<SecurityPage />} />
-          <Route path="/privacy" element={<PrivacyPolicy />} />
-          <Route path="/terms" element={<TermsOfService />} />
-          <Route path="/blog" element={<BlogPage />} />
-          <Route path="/blog/:slug" element={<BlogPostPage />} />
-          <Route path="/checkout/success" element={<CheckoutSuccess />} />
-          <Route path="/checkout/cancel" element={<CheckoutCancel />} />
-          <Route path="/docs" element={<DocsLayout />}>
-            <Route index element={<DocsHub />} />
-            <Route path="technical" element={<DocsTechnical />} />
-            <Route path="inheritance" element={<DocsInheritance />} />
-            <Route path="threat-model" element={<DocsThreatModel />} />
-            <Route path="products" element={<DocsProducts />} />
-            <Route path="faq" element={<DocsFaq />} />
-          </Route>
-          <Route path="/admin" element={<AdminPage />} />
-          <Route path="/pgp" element={<PgpPage />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
-    </BrowserRouter>
-  </CartProvider>
-);
+      </Head>
+      <CartProvider>
+        <Outlet />
+      </CartProvider>
+    </ErrorBoundary>
+  );
+}
 
-export default App;
+/** Wrap lazy import so default export becomes Component */
+const lazy = (load: () => Promise<{ default: React.ComponentType }>) =>
+  () => load().then((m) => ({ Component: m.default }));
+
+const routes: RouteRecord[] = [
+  {
+    path: "/",
+    Component: RootLayout,
+    children: [
+      // ── Landing ────────────────────────────────────────
+      { index: true, Component: Index },
+      { path: "how-it-works", lazy: lazy(() => import("./pages/HowItWorksPage")) },
+      { path: "features", lazy: lazy(() => import("./pages/FeaturesPage")) },
+      { path: "security", lazy: lazy(() => import("./pages/SecurityPage")) },
+      { path: "privacy", lazy: lazy(() => import("./pages/PrivacyPolicy")) },
+      { path: "terms", lazy: lazy(() => import("./pages/TermsOfService")) },
+      { path: "pgp", lazy: lazy(() => import("./pages/PgpPage")) },
+
+      // ── Blog ───────────────────────────────────────────
+      { path: "blog", lazy: lazy(() => import("./pages/BlogPage")) },
+      {
+        path: "blog/:slug",
+        lazy: lazy(() => import("./pages/BlogPostPage")),
+        getStaticPaths: () => BLOG_POSTS.map((p) => `blog/${p.slug}`),
+      },
+
+      // ── Docs ───────────────────────────────────────────
+      {
+        path: "docs",
+        lazy: lazy(() => import("./components/docs/DocsLayout")),
+        children: [
+          { index: true, lazy: lazy(() => import("./pages/docs/DocsHub")) },
+          { path: "technical", lazy: lazy(() => import("./pages/docs/DocsTechnical")) },
+          { path: "inheritance", lazy: lazy(() => import("./pages/docs/DocsInheritance")) },
+          { path: "threat-model", lazy: lazy(() => import("./pages/docs/DocsThreatModel")) },
+          { path: "products", lazy: lazy(() => import("./pages/docs/DocsProducts")) },
+          { path: "faq", lazy: lazy(() => import("./pages/docs/DocsFaq")) },
+        ],
+      },
+
+      // ── Shop / Checkout (client-only, not prerendered) ─
+      { path: "shop", lazy: lazy(() => import("./pages/Shop")) },
+      { path: "checkout/success", lazy: lazy(() => import("./pages/CheckoutSuccess")) },
+      { path: "checkout/cancel", lazy: lazy(() => import("./pages/CheckoutCancel")) },
+
+      // ── Admin (client-only) ────────────────────────────
+      { path: "admin", lazy: lazy(() => import("./pages/AdminPage")) },
+
+      // ── 404 ────────────────────────────────────────────
+      { path: "*", Component: NotFound },
+    ],
+  },
+];
+
+export default routes;

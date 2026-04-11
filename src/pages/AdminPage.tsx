@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from "react";
-import { Helmet } from "react-helmet-async";
+import { Head } from "vite-react-ssg";
 
 const WORKER_URL = "https://seqrets-waitlist.baton-banker-hazy.workers.dev";
 
@@ -204,10 +204,10 @@ const AdminPage = () => {
 
   return (
     <>
-      <Helmet>
+      <Head>
         <title>seQRets — Waitlist Admin</title>
         <meta name="robots" content="noindex, nofollow" />
-      </Helmet>
+      </Head>
 
       <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', background: "#0a0a0b", color: "#e4e4e7", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center" }}>
 

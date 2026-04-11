@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { Head } from "vite-react-ssg";
 
 interface PageHeadProps {
   title: string;
@@ -16,14 +16,14 @@ const PageHead = ({ title, description, path }: PageHeadProps) => {
   const url = `https://seqrets.app${path}`;
 
   return (
-    <Helmet>
+    <Head>
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
       <link rel="canonical" href={url} />
-    </Helmet>
+    </Head>
   );
 };
 

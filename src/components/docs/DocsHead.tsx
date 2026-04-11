@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { Head } from "vite-react-ssg";
 
 interface DocsHeadProps {
   title: string;
@@ -12,7 +12,7 @@ const DocsHead = ({ title, description, path, jsonLd }: DocsHeadProps) => {
   const url = `https://seqrets.app${path}`;
 
   return (
-    <Helmet>
+    <Head>
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
       <meta property="og:title" content={fullTitle} />
@@ -30,7 +30,7 @@ const DocsHead = ({ title, description, path, jsonLd }: DocsHeadProps) => {
           )}
         </script>
       )}
-    </Helmet>
+    </Head>
   );
 };
 
