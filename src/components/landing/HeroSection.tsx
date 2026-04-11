@@ -46,7 +46,7 @@ const HeroSection = () => {
         <img src={heroLogo} alt="seQRets logo" className="mb-4 h-[112px] w-auto md:h-[151px]" />
 
         <h1 className="font-display text-5xl font-black leading-[1.05] tracking-tight md:text-5xl lg:text-6xl lg:whitespace-nowrap">
-          <span className="text-foreground/40">Protect What </span>
+          <span className="text-foreground">Protect What </span>
           <span className="text-gradient">Matters Most</span>
         </h1>
 
