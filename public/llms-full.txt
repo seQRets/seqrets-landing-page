@@ -17,6 +17,7 @@
 | Key Derivation | Argon2id (64 MB memory, 4 iterations) |
 | Optional Keyfile | Second-factor binary file — concatenated with password before Argon2id. Generated keyfiles are 256-bit CSPRNG. |
 | Secret Splitting | Shamir's Secret Sharing (configurable threshold) |
+| Share Integrity | SHA-256 hash embedded in each share — auto-verified at generation and restoration |
 | Output Format | QR codes (Qards) — printable, scannable |
 | Architecture | Zero-knowledge — no servers, no accounts, no telemetry |
 | License | AGPLv3 |
@@ -36,7 +37,8 @@
 3. **Argon2id KDF** — Combined input derives a 256-bit encryption key (64 MB memory, 4 iterations, 16-byte random salt)
 3. **XChaCha20-Poly1305 Encrypt** — Secret is authenticated-encrypted (256-bit key, 192-bit random nonce)
 4. **Shamir Split (K-of-N)** — Ciphertext is split into N shares using Shamir's Secret Sharing over GF(256). Any K shares reconstruct; K-1 or fewer reveal nothing.
-5. **QR Encode (Qards)** — Each share is Base64-encoded and rendered as a printable QR code. Secret is destroyed from memory.
+5. **QR Encode (Qards)** — Each share is Base64-encoded and rendered as a printable QR code.
+6. **SHA-256 Verify** — Each share is round-trip verified with an embedded SHA-256 hash before being presented. Secret is destroyed from memory.
 
 The secret is encrypted BEFORE splitting with Shamir. Each Qard holds an encrypted fragment, not plaintext. The Desktop app uses Rust compiler-fence zeroization to erase the secret from memory.
 
@@ -47,6 +49,7 @@ The secret is encrypted BEFORE splitting with Shamir. Each Qard holds an encrypt
 | XChaCha20-Poly1305 | Authenticated encryption | 256-bit key, 192-bit nonce | @noble/ciphers | chacha20poly1305 (RustCrypto) |
 | Argon2id | Key derivation (KDF) | 256-bit output | @noble/hashes | argon2 (RustCrypto) |
 | Shamir's Secret Sharing | Threshold splitting | Variable (matches input) | Custom GF(256) impl | Custom GF(256) impl |
+| SHA-256 | Share integrity verification | 256-bit hash | @noble/hashes | @noble/hashes |
 
 ### Argon2id Parameters
 
@@ -75,6 +78,28 @@ The secret is encrypted BEFORE splitting with Shamir. Each Qard holds an encrypt
 | Maximum capacity | ~2,953 bytes (Version 40, Level L) |
 | Output | Printable QR code (Qard) |
 | Metadata | Share index, threshold, total shares — included in the QR payload |
+| Integrity hash | Optional SHA-256 hash appended as a 4th pipe-delimited segment |
+
+### Share Format & Integrity Verification
+
+Each share is a pipe-delimited string with an optional SHA-256 integrity hash:
+
+```
+seQRets|<salt>|<data>|sha256:<64-char hex>
+```
+
+| Property | Value |
+|----------|-------|
+| Hash function | SHA-256 via @noble/hashes/sha256 |
+| Hash input | SHA-256("seQRets|salt|data") — covers the 3-part share string |
+| Hash output | 64 hex characters (~71 chars with sha256: prefix) |
+| Verification (generation) | All shares round-trip verified before being presented |
+| Verification (restore) | Desktop: auto-verified on scan/import with shield icon. Web: silent acceptance. |
+| Printed fingerprint | Desktop: truncated hash (xxxxxxxx...xxxxxxxx) displayed on exported Qard cards |
+| Backward compatibility | Legacy 3-part shares without hashes are fully supported |
+| Security | One-way — the hash cannot be reversed to recover share data |
+
+Manual terminal verification: `echo -n "seQRets|salt|data" | shasum -a 256`
 
 ### Optional Keyfile
 
@@ -226,6 +251,7 @@ Do this test at least once — do not skip this step.
 | Physical coercion (with keyfile) | Keyfile stored in a separate location means user cannot decrypt on demand | High |
 | Malicious browser extensions (Desktop) | Tauri WebView loads no extensions | High |
 | Supply-chain JS attack (Desktop) | Code bundled and signed at build time | High |
+| Share corruption or tampering | SHA-256 integrity hash embedded in each share; auto-verified at generation and restoration | High |
 | Single point of failure | Threshold splitting — no single entity holds the full secret | High |
 
 ### What seQRets Does NOT Protect Against
@@ -273,7 +299,7 @@ Do this test at least once — do not skip this step.
 
 ### Desktop App — $49.00 (estimated)
 
-Native desktop application built with Rust and Tauri. Same encryption and splitting as the web app, plus smart card integration, memory zeroization, code signing, and isolated WebView.
+Native desktop application built with Rust and Tauri. Same encryption and splitting as the web app, plus smart card integration, memory zeroization, code signing, SHA-256 share integrity verification with visual indicators, and isolated WebView.
 
 | Spec | Value |
 |------|-------|
@@ -359,6 +385,9 @@ No. No analytics, no tracking pixels, no error reporting. The app makes one opti
 **Is seQRets zero-knowledge?**
 Yes, with two caveats: (1) Bob AI assistant optionally sends your question to Google's Gemini API if you provide your own key. (2) The app optionally fetches the BTC price. Neither transmits secret data. All crypto operations happen locally.
 
+**What is SHA-256 share integrity verification?**
+Every Qard share now embeds a SHA-256 hash that is verified automatically at generation (proves shares were created cleanly) and at restoration (proves shares haven't been corrupted or tampered with). The desktop app shows a green shield icon for verified shares and an amber warning for mismatches. Printed Qard cards display a truncated SHA-256 fingerprint for visual spot-checking. Legacy shares without hashes still work — fully backward compatible. The hash is one-way and reveals nothing about the share contents.
+
 **Has seQRets been audited?**
 Not yet by a third-party firm. Uses well-audited primitives (noble/ciphers, noble/hashes by Paul Miller for web; RustCrypto crates for desktop). Formal audit is on the roadmap.
 
@@ -379,7 +408,7 @@ No. No server, no account system, no backup. If you lose enough shares to fall b
 ### Desktop App
 
 **Web app vs desktop app?**
-Both use the same encryption and splitting logic. Desktop adds native Rust crypto, memory zeroization (compiler-fence), browser extension immunity (Tauri WebView), code signing, JavaCard smart card support, and a comprehensive Inheritance Plan builder (multiple secret sets, beneficiaries, incapacitation planning, edit & re-encrypt, automated review reminders).
+Both use the same encryption and splitting logic. Desktop adds native Rust crypto, memory zeroization (compiler-fence), browser extension immunity (Tauri WebView), code signing, SHA-256 share integrity verification UI (shield icons, printed fingerprints on Qard cards), JavaCard smart card support, and a comprehensive Inheritance Plan builder (multiple secret sets, beneficiaries, incapacitation planning, edit & re-encrypt, automated review reminders).
 
 **What platforms?**
 macOS, Windows, and Linux. Built with Tauri (Rust + web frontend). Ships as a code-signed binary with automatic delta updates.

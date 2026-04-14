@@ -52,12 +52,13 @@ const DocsTechnical = () => {
                 "XChaCha20-Poly1305 Encrypt",
                 "Shamir Split (K-of-N)",
                 "QR Encode (Qards)",
+                "SHA-256 Verify",
               ].map((step, i) => (
                 <span key={step} className="flex items-center gap-2">
                   <span className="rounded-lg bg-primary/10 px-3 py-1.5 text-primary font-medium">
                     {step}
                   </span>
-                  {i < 4 && (
+                  {i < 5 && (
                     <span className="text-muted-foreground/40">&rarr;</span>
                   )}
                 </span>
@@ -66,8 +67,9 @@ const DocsTechnical = () => {
             <p className="text-sm text-muted-foreground/70 mt-4">
               The secret enters memory, is encrypted under a key derived from
               your password (and optional keyfile), split into threshold shares,
-              rendered as QR codes, and then destroyed. In the desktop app, Rust
-              zeroes the memory with compiler-fence zeroization.
+              rendered as QR codes, integrity-verified with SHA-256, and then
+              destroyed. In the desktop app, Rust zeroes the memory with
+              compiler-fence zeroization.
             </p>
           </div>
         </section>
@@ -120,6 +122,13 @@ const DocsTechnical = () => {
                     "Variable (matches input)",
                     "Custom GF(256) impl",
                     "Custom GF(256) impl",
+                  ],
+                  [
+                    "SHA-256",
+                    "Share integrity verification",
+                    "256-bit hash",
+                    "@noble/hashes",
+                    "@noble/hashes",
                   ],
                 ].map(([algo, purpose, size, webLib, desktopLib]) => (
                   <tr
@@ -388,6 +397,10 @@ const DocsTechnical = () => {
                     "Metadata",
                     "Share index, threshold, total shares — included in the QR payload, not stored externally",
                   ],
+                  [
+                    "Integrity hash",
+                    "Optional SHA-256 hash appended as a 4th pipe-delimited segment for tamper detection",
+                  ],
                 ].map(([prop, val]) => (
                   <tr
                     key={prop}
@@ -401,6 +414,79 @@ const DocsTechnical = () => {
                 ))}
               </tbody>
             </table>
+          </div>
+        </section>
+
+        {/* Share Format & Integrity */}
+        <section>
+          <h2 className="font-display text-xl font-bold text-foreground mb-4">
+            Share Format &amp; Integrity Verification
+          </h2>
+          <div className="space-y-4">
+            <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
+              <p className="text-sm text-muted-foreground/80 mb-4">
+                Each share is a pipe-delimited string with an optional SHA-256
+                integrity hash. The hash covers the first three segments and is
+                verified automatically at generation and restoration.
+              </p>
+              <div className="rounded-lg border border-border/20 bg-background/50 px-4 py-3 font-mono text-xs text-muted-foreground/70 mb-4">
+                seQRets|&lt;salt&gt;|&lt;data&gt;|sha256:&lt;64-char hex&gt;
+              </div>
+              <p className="text-sm text-muted-foreground/80">
+                The 4th segment is optional for backward compatibility — legacy
+                3-part shares are still fully supported. The SHA-256 hash is
+                one-way and reveals nothing about the share contents.
+              </p>
+            </div>
+
+            <div className="overflow-x-auto rounded-2xl border border-border/30">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border/30 bg-card/30">
+                    <th className="text-left p-4 font-display font-bold text-foreground">
+                      Property
+                    </th>
+                    <th className="text-left p-4 font-display font-bold text-foreground">
+                      Value
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border/20">
+                  {[
+                    ["Hash function", "SHA-256 via @noble/hashes/sha256"],
+                    ["Hash input", 'SHA-256("seQRets|salt|data") — covers the 3-part share string'],
+                    ["Hash output", "64 hex characters (~71 chars with sha256: prefix)"],
+                    ["Verification (generation)", "All shares are round-trip verified before being presented"],
+                    ["Verification (restore)", "Desktop: auto-verified on scan/import with shield icon. Web: silent acceptance."],
+                    ["Printed fingerprint", "Desktop: truncated hash (xxxxxxxx...xxxxxxxx) displayed on exported Qard cards"],
+                    ["Backward compatibility", "Legacy 3-part shares without hashes are fully supported"],
+                    ["Security", "One-way — the hash cannot be reversed to recover share data"],
+                  ].map(([prop, val]) => (
+                    <tr
+                      key={prop}
+                      className="hover:bg-card/20 transition-colors"
+                    >
+                      <td className="p-4 font-medium text-foreground whitespace-nowrap">
+                        {prop}
+                      </td>
+                      <td className="p-4 text-muted-foreground/80">{val}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="rounded-2xl border border-primary/15 bg-primary/5 p-6">
+              <h3 className="text-sm font-bold text-foreground mb-3">
+                Manual verification
+              </h3>
+              <p className="text-sm text-muted-foreground/80 mb-3">
+                Users can independently verify any share in a terminal:
+              </p>
+              <div className="rounded-lg border border-border/20 bg-background/50 px-4 py-3 font-mono text-xs text-muted-foreground/70">
+                echo -n "seQRets|salt|data" | shasum -a 256
+              </div>
+            </div>
           </div>
         </section>
 

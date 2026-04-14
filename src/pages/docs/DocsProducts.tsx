@@ -15,7 +15,7 @@ interface ProductSpec {
 const PRODUCT_SPECS: Partial<Record<ProductSlug, ProductSpec>> = {
   "desktop-app": {
     extendedDescription:
-      "Native desktop application built with Rust and Tauri. Provides the same encryption and splitting functionality as the web app, plus smart card integration, memory zeroization, code signing, and an isolated WebView with no browser extension attack surface.",
+      "Native desktop application built with Rust and Tauri. Provides the same encryption and splitting functionality as the web app, plus smart card integration, memory zeroization, code signing, SHA-256 share integrity verification with visual indicators, and an isolated WebView with no browser extension attack surface.",
     specs: [
       ["Runtime", "Rust (Tauri 2.x) + WebView"],
       ["Platforms", "macOS (ARM64/x64), Windows (x64), Linux (x64/ARM64)"],

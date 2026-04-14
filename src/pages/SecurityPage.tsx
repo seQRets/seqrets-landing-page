@@ -104,7 +104,8 @@ const SecurityPage = () => {
                   ["Memory persistence", "JavaScript GC — timing unpredictable, strings immutable", "Rust zeroization — compiler-fence ensures memory is cleared"],
                   ["Binary tampering", "N/A", "Detected — code-signed, integrity verified at install"],
                   ["Offline operation", "After initial load only", "Always — no network required"],
-                  ["Key derivation", "JavaScript (noble/hashes)", "Native Rust — argon2, chacha20poly1305 crates"]].
+                  ["Key derivation", "JavaScript (noble/hashes)", "Native Rust — argon2, chacha20poly1305 crates"],
+                  ["Share integrity verification", "SHA-256 hash generated silently — no UI", "Auto-verified on restore with shield icon, SHA-256 fingerprint on printed cards"]].
                   map(([threat, web, desktop]) =>
                   <tr key={threat} className="hover:bg-card/20 transition-colors">
                       <td className="p-4 font-medium text-foreground">{threat}</td>
@@ -246,7 +247,7 @@ const SecurityPage = () => {
               },
               {
                 q: "What's the difference between the web app and desktop app?",
-                a: "Both use the same encryption and splitting logic. The desktop app adds native Rust cryptography, memory zeroization, browser extension immunity, code signing, and features like the Inheritance Plan builder and JavaCard smart card support."
+                a: "Both use the same encryption and splitting logic. The desktop app adds native Rust cryptography, memory zeroization, browser extension immunity, code signing, SHA-256 share integrity verification with visual indicators, and features like the Inheritance Plan builder and JavaCard smart card support."
               },
               {
                 q: "Is the Inheritance Plan stored somewhere?",

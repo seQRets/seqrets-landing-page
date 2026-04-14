@@ -106,6 +106,11 @@ const DocsThreatModel = () => {
                     "High",
                   ],
                   [
+                    "Share corruption or tampering",
+                    "SHA-256 integrity hash embedded in each share; auto-verified at generation and restoration (Desktop shows shield icon, amber warning on mismatch)",
+                    "High",
+                  ],
+                  [
                     "Single point of failure",
                     "Threshold splitting means no single entity, location, or device holds the full secret",
                     "High",
