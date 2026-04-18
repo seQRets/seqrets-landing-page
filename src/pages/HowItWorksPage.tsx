@@ -211,12 +211,14 @@ const HowItWorksPage = () => {
             </p>
 
             <div className="flex flex-wrap gap-3 mb-6">
-              <Link
-                to="/recover"
+              <a
+                href="https://github.com/seQRets/seQRets-Recover/releases/latest/download/recover.html"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
               >
-                Get the Recovery Tool →
-              </Link>
+                Download recover.html →
+              </a>
               <a
                 href="https://github.com/seQRets/seQRets-Recover"
                 target="_blank"
