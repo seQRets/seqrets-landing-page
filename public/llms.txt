@@ -32,12 +32,11 @@
 - [Features](https://seqrets.app/features): Feature overview with web vs desktop comparison
 - [Security Page](https://seqrets.app/security): Security deep dive, threat model, FAQ
 - [How It Works](https://seqrets.app/how-it-works): Visual walkthrough with screenshots
-- [Recovery Tool](https://seqrets.app/recover): Choice page for seQRets Recover — explains the online (GitHub Pages) vs. offline (downloadable) options with SHA-256 verification guidance
 
 ## Source & Community
 
 - [GitHub Repository](https://github.com/seQRets/seQRets-app): Full source code, issues, contributions
-- [seQRets Recover](https://github.com/seQRets/seQRets-Recover): Independent, single-file recovery tool for the seQRets share format (MIT licensed). Available three ways: (1) [seqrets.app/recover](https://seqrets.app/recover) — choice page explaining the options; (2) [seqrets.github.io/seQRets-Recover](https://seqrets.github.io/seQRets-Recover/) — hosted version (quick check, requires GitHub Pages online); (3) [direct download](https://github.com/seQRets/seQRets-Recover/releases/latest/download/recover.html) — recover.html for offline / inheritance / archival use (recommended).
+- [seQRets Recover](https://github.com/seQRets/seQRets-Recover): Independent, single-file, offline recovery tool for the seQRets share format (MIT licensed). One HTML file, no install, no network. Direct download: https://github.com/seQRets/seQRets-Recover/releases/latest/download/recover.html
 - [Security Policy](https://github.com/seQRets/seQRets-app/blob/main/SECURITY.md): Vulnerability reporting
 - [License](https://github.com/seQRets/seQRets-app/blob/main/LICENSE): AGPLv3
 
