@@ -56,14 +56,12 @@ const Footer = () => {
               <li><Link to="/shop" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">Shop</Link></li>
               <li><Link to="/features" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">Features</Link></li>
               <li>
-                <a
-                  href="https://github.com/seQRets/seQRets-Recover"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to="/recover"
                   className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground"
                 >
                   Recovery Tool
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

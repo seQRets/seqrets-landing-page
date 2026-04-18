@@ -67,6 +67,7 @@ const routes: RouteRecord[] = [
       { path: "privacy", lazy: lazy(() => import("./pages/PrivacyPolicy")) },
       { path: "terms", lazy: lazy(() => import("./pages/TermsOfService")) },
       { path: "pgp", lazy: lazy(() => import("./pages/PgpPage")) },
+      { path: "recover", lazy: lazy(() => import("./pages/RecoverPage")) },
 
       // ── Blog ───────────────────────────────────────────
       { path: "blog", lazy: lazy(() => import("./pages/BlogPage")) },
