@@ -15,8 +15,8 @@ export const getStripe = () => {
 };
 
 // ─── Product Catalog ─────────────────────────────────────────────
-// Prices are ESTIMATED CEILINGS until supplier quotes come in.
-// Set priceFinal to true and update priceInCents when ready to commit.
+// Prices are committed. The `priceFinal` flag (kept for future use) hides
+// the "or less" disclaimer in the UI when true.
 export type ProductSlug =
   | "desktop-app"
   | "backup-bundle"
@@ -50,8 +50,8 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     name: "Desktop App",
     description:
       "Code-signed, auto-updating binary with smart card support. macOS, Windows & Linux.",
-    priceInCents: 4900,
-    priceFinal: false,
+    priceInCents: 9900,
+    priceFinal: true,
     priceId: "price_1T8b06JrPvZLpOYSoQmbw6Am",
     features: [
       "Code-signed binary",
@@ -67,8 +67,8 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     name: "Backup Bundle",
     description:
       "Everything you need to back up your secrets to a physical smart card with a portable reader.",
-    priceInCents: 12900,
-    priceFinal: false,
+    priceInCents: 14900,
+    priceFinal: true,
     priceId: "price_1T8b2NJrPvZLpOYSWz4kPGjR",
     badge: "Popular",
     highlight: true,
@@ -88,8 +88,8 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     name: "Inheritance Bundle",
     description:
       "A complete inheritance kit \u2014 distribute secret shares across multiple cards with tamper-proof packaging.",
-    priceInCents: 24900,
-    priceFinal: false,
+    priceInCents: 29900,
+    priceFinal: true,
     priceId: "price_1T8b36JrPvZLpOYSF5inqQjK",
     badge: "Best Value",
     features: [
@@ -108,8 +108,8 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     name: "Smart Card",
     description:
       "JCOP-based smart card, branded with the seQRets logo.",
-    priceInCents: 2900,
-    priceFinal: false,
+    priceInCents: 3900,
+    priceFinal: true,
     priceId: "price_1T8b3hJrPvZLpOYSRMKDcSm7",
     features: ["Contact interface", "JCOP applet compatible"],
     category: "accessory",
@@ -120,8 +120,8 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     name: "Smart Card 3-Pack",
     description:
       "Three JCOP smart cards at a discount \u2014 for extra heirs, backups, or replacements.",
-    priceInCents: 6900,
-    priceFinal: false,
+    priceInCents: 9900,
+    priceFinal: true,
     priceId: "price_1T8bsDJrPvZLpOYSsO5BORyz",
     badge: "Save",
     features: ["3\u00D7 branded smart cards", "Volume discount"],
@@ -134,7 +134,7 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     description:
       "Compact, portable USB smart card reader. Plug-and-play on all platforms.",
     priceInCents: 2900,
-    priceFinal: false,
+    priceFinal: true,
     priceId: "price_1T8b4CJrPvZLpOYSbfoPtIvm",
     features: ["USB-A connector", "macOS / Windows / Linux"],
     category: "accessory",
@@ -146,7 +146,7 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     description:
       "Pack of 5 security envelopes that reveal any opening attempt.",
     priceInCents: 1499,
-    priceFinal: false,
+    priceFinal: true,
     priceId: "price_1T8b4kJrPvZLpOYS1d7cNz9e",
     features: ["5-pack", "Void pattern on tamper"],
     category: "accessory",
@@ -158,7 +158,7 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     description:
       "Compact fireproof document & card case rated to 1,200 \u00B0F for 30 minutes.",
     priceInCents: 4900,
-    priceFinal: false,
+    priceFinal: true,
     priceId: "price_1T8b5rJrPvZLpOYSAEiQqSlR",
     features: ["Fits cards & documents", "1,200 \u00B0F / 30 min rated"],
     category: "accessory",
@@ -169,8 +169,8 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     name: "Inheritance Guide (PDF)",
     description:
       "Step-by-step guide for setting up a dead man\u2019s switch and distributing shares to heirs.",
-    priceInCents: 1900,
-    priceFinal: false,
+    priceInCents: 2400,
+    priceFinal: true,
     priceId: "price_1T8b6PJrPvZLpOYS6MqyLB2M",
     features: ["Printable PDF", "Legal considerations checklist"],
     category: "accessory",

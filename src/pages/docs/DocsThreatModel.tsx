@@ -111,6 +111,11 @@ const DocsThreatModel = () => {
                     "High",
                   ],
                   [
+                    "Vendor disappearance / project abandonment",
+                    "seQRets Recover (github.com/seQRets/seQRets-Recover) is an independent single-file, offline recovery tool that reads the documented share format. Save recover.html alongside your Qards and recovery does not depend on seqrets.app, the company, or the main app continuing to exist. MIT-licensed, mirrorable, built from audited primitives.",
+                    "High",
+                  ],
+                  [
                     "Single point of failure",
                     "Threshold splitting means no single entity, location, or device holds the full secret",
                     "High",

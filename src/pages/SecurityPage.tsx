@@ -242,8 +242,8 @@ const SecurityPage = () => {
                 a: "No. seQRets has no server, no account system, and no backup of your data. If you lose enough shares to fall below your chosen threshold, your secret is gone. This is by design — it means nobody else can recover it either."
               },
               {
-                q: "What happens if the seQRets website or app goes offline?",
-                a: "The web app works fully offline once loaded. The desktop app has no network dependency at all. Even if the project disappeared entirely, anyone with the source code could reconstruct the recovery tool. The cryptographic standards used are open, well-documented, and implemented in dozens of other libraries."
+                q: "What happens if seqrets.app goes offline?",
+                a: "Your secrets remain recoverable. We maintain a separate open-source recovery tool called seQRets Recover — one HTML file, no install, no network, works offline in any modern browser. Save a copy of recover.html alongside your Qards and it will keep working long after this website is gone. The recovery tool lives in its own repository (github.com/seQRets/seQRets-Recover) with its own release chain, independent of the main app. The web app and desktop app also work offline once loaded, and the share format is documented well enough that any developer could reimplement the recovery tool from scratch in an afternoon."
               },
               {
                 q: "What's the difference between the web app and desktop app?",

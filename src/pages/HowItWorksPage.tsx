@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Shield, QrCode, Users, CreditCard, MessageSquare, X } from "lucide-react";
+import { Shield, QrCode, Users, CreditCard, MessageSquare, X, LifeBuoy } from "lucide-react";
 import screenshotRestore from "@/assets/screenshot-restore.webp";
 import screenshotBob from "@/assets/screenshot-bob.webp";
 import screenshotSecure from "@/assets/screenshot-secure.webp";
@@ -95,7 +95,7 @@ const HowItWorksPage = () => {
     <div className="min-h-screen bg-background">
       <PageHead
         title="How It Works"
-        description="See how seQRets encrypts your secrets, splits them into QR-coded shares, and distributes them to your heirs using Shamir's Secret Sharing."
+        description="See how seQRets encrypts your secrets, splits them into QR-coded shares, and distributes them to your heirs using Shamir's Secret Sharing. Includes seQRets Recover — an open-source recovery tool for long-term independence."
         path="/how-it-works"
       />
       <Navbar />
@@ -172,6 +172,89 @@ const HowItWorksPage = () => {
               </section>
             );
           })}
+        </div>
+
+        {/* seQRets Recover — Independent Recovery Tool */}
+        <div className="container mx-auto px-4 md:px-8 mt-24">
+          <div className="mx-auto max-w-4xl rounded-2xl border border-border/50 bg-card/40 p-8 md:p-10">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 border border-primary/20">
+                <LifeBuoy className="h-5 w-5 text-primary" />
+              </div>
+              <span className="font-display text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">
+                Open-Source Recovery Tool
+              </span>
+            </div>
+            <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
+              seQRets Recover
+            </h2>
+            <p className="text-muted-foreground leading-relaxed mb-4">
+              <strong className="text-foreground">seQRets Recover</strong> is a
+              separate, single-file recovery tool for the seQRets share format.
+              One HTML file, ~200 lines of TypeScript, no install, no network.
+              Open it in any modern browser, paste your Qards in, enter your
+              password, and your secret comes back. It uses the same audited
+              cryptographic primitives as the main app (XChaCha20-Poly1305,
+              Argon2id, Shamir's Secret Sharing).
+            </p>
+            <p className="text-muted-foreground leading-relaxed mb-6">
+              Save a copy of{" "}
+              <code className="text-xs bg-background/60 border border-border/40 rounded px-1.5 py-0.5 text-foreground">
+                recover.html
+              </code>{" "}
+              alongside your Qards. Anyone holding the threshold of Qards plus
+              the password can recover the secret with nothing but a web browser
+              — no installation, no account, no dependency on this project still
+              being around. It's a quiet architectural guarantee: the share
+              format is open, and a reference implementation lives in its own
+              repo with its own release chain.
+            </p>
+
+            <div className="flex flex-wrap gap-3 mb-6">
+              <a
+                href="https://github.com/seQRets/seQRets-Recover/releases/latest/download/recover.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
+              >
+                Download recover.html →
+              </a>
+              <a
+                href="https://github.com/seQRets/seQRets-Recover"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-md border border-border/60 bg-background/40 px-5 py-2.5 text-sm font-semibold text-foreground transition-all hover:bg-card/60"
+              >
+                View source on GitHub →
+              </a>
+            </div>
+
+            <div className="rounded-lg border border-border/30 bg-background/40 p-4">
+              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground/70 mb-2">
+                Verify your download
+              </p>
+              <p className="text-sm text-muted-foreground/80 mb-2">
+                Every release publishes a SHA-256 hash so you can verify a copy
+                received through an untrusted channel before using it with real
+                credentials.
+              </p>
+              <code className="block text-xs bg-background/60 border border-border/40 rounded px-3 py-2 text-muted-foreground/90 font-mono overflow-x-auto">
+                shasum -a 256 recover.html
+              </code>
+              <p className="text-xs text-muted-foreground/60 mt-2">
+                Compare against the hash published on the{" "}
+                <a
+                  href="https://github.com/seQRets/seQRets-Recover/releases/latest"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  latest release page
+                </a>
+                .
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Bottom CTA */}

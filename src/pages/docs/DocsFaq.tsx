@@ -95,8 +95,12 @@ const FAQ_DATA: FaqCategory[] = [
         a: "macOS, Windows, and Linux. The app is built with Tauri (Rust backend + web frontend) and ships as a code-signed binary with automatic delta updates.",
       },
       {
-        q: "What happens if the seQRets website or app goes offline?",
-        a: "The web app works fully offline once loaded. The desktop app has no network dependency at all. Even if the project disappeared entirely, anyone with the source code could reconstruct the recovery tool. The cryptographic standards used are open, well-documented, and implemented in dozens of other libraries.",
+        q: "What happens if seqrets.app goes offline?",
+        a: "Your secrets remain recoverable. We maintain a separate open-source recovery tool called seQRets Recover — one HTML file, no install, no network, works offline in any modern browser. Save a copy of recover.html alongside your Qards and it will keep working long after this website is gone. The seQRets share format is documented, and the recovery tool lives in its own repository (github.com/seQRets/seQRets-Recover) with its own release chain, independent of the main app. Any developer could also reimplement it from scratch in an afternoon.",
+      },
+      {
+        q: "Can I verify the recovery tool isn't tampered with?",
+        a: "Yes. Every release of seQRets Recover publishes a SHA-256 hash of recover.html on the GitHub releases page. Before trusting a copy — especially one received through an untrusted channel — run `shasum -a 256 recover.html` (macOS/Linux) or `Get-FileHash recover.html -Algorithm SHA256` (Windows PowerShell) and compare the output to the hash published on the release page. If they don't match exactly, don't use the file. The tool also ships with a strict Content-Security-Policy that blocks network requests at the browser level as defense-in-depth.",
       },
     ],
   },

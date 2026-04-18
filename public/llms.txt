@@ -36,6 +36,7 @@
 ## Source & Community
 
 - [GitHub Repository](https://github.com/seQRets/seQRets-app): Full source code, issues, contributions
+- [seQRets Recover](https://github.com/seQRets/seQRets-Recover): Independent, single-file, offline recovery tool for the seQRets share format (MIT licensed). One HTML file, no install, no network. Direct download: https://github.com/seQRets/seQRets-Recover/releases/latest/download/recover.html
 - [Security Policy](https://github.com/seQRets/seQRets-app/blob/main/SECURITY.md): Vulnerability reporting
 - [License](https://github.com/seQRets/seQRets-app/blob/main/LICENSE): AGPLv3
 
