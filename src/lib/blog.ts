@@ -19,6 +19,40 @@ export const categoryLabels: Record<BlogCategory, string> = {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "fake-ledger-app-store-scam-g-love",
+    title: "A Fake Ledger App on the App Store Just Drained a Musician's $420K Retirement Stash",
+    date: "2026-04-18",
+    category: "crypto",
+    excerpt:
+      "On April 11, musician G. Love lost 5.9 BTC — ten years of cold storage — after downloading an impostor Ledger app from Apple's App Store. He wasn't alone: 50+ victims, $9.5 million in losses. The uncomfortable lesson for every Bitcoin holder is architectural, not operational.",
+    readTime: 6,
+    content: `On April 11, 2026, Philadelphia-based musician Garrett Dutton — better known as G. Love, frontman of G. Love & Special Sauce — set up a new laptop and searched Apple's App Store for Ledger Live, the companion software for his hardware wallet. He downloaded what appeared to be the official app, entered his 24-word seed phrase to restore his wallet, and watched 5.92 BTC drain from his addresses within minutes. That was roughly $420,000 at the time — ten years of holdings, what he publicly called his retirement fund.
+
+The app was a fake. Onchain investigator ZachXBT traced the stolen funds across nine transactions into KuCoin deposit addresses, where the attackers began laundering them almost immediately. Ledger, for its part, confirmed what the company has said for years: its software is distributed only through ledger.com. Ledger has no consumer app store presence. Any app appearing under a different developer name is fraudulent.
+
+G. Love was not an isolated case. Between April 7 and April 13, reporters and researchers documented more than 50 victims of the same fake Ledger Live listing, which had somehow cleared Apple's review process and remained downloadable. Aggregate losses exceeded $9.5 million. Three victims each lost seven-figure sums. The fake app mimicked Ledger's branding closely enough that even experienced crypto users were deceived.
+
+This is a story about the App Store. It is also, more fundamentally, a story about what every serious Bitcoin holder eventually has to confront: the moment a seed phrase is entered into any software — legitimate or not — the hardware wallet protecting it is no longer in the loop. Those 24 words are absolute. They do not care what device typed them or what app received them. They grant complete, irreversible access to every coin in the wallet.
+
+Hardware wallets exist precisely because seed phrases are so dangerous. The device is engineered so the seed never leaves its secure element. Transaction signing happens on-device. Even phishing sites that try to trick you into signing malicious transactions are caught by the physical confirmation screen. All of that security architecture collapses the instant you type the seed into a computer. Seed entry is a total disclosure event — there is no partial reveal.
+
+The conventional self-custody advice — verify the vendor, only download from the official website, check the developer name, never type your seed into anything — is correct but structurally insufficient. It puts the entire security burden on the user's ability to never make a single mistake, in an adversarial environment specifically engineered to provoke mistakes. The App Store, a platform trusted by hundreds of millions of people and curated by one of the most resource-rich companies on earth, failed to catch an impostor Ledger listing. Multiple listings, in fact. For days. If Apple cannot reliably filter fake wallet apps, expecting every individual user to do so is not a security model. It is a hope.
+
+The architectural fix is to stop treating the seed phrase as a single atomic secret that must be protected through perfect behavior. Shamir's Secret Sharing — the cryptographic technique seQRets is built on — splits an encrypted seed phrase into shares such that any threshold of them (say, 3 of 5) can reconstruct the original, while any smaller number reveals provably nothing. Not partially nothing. Not statistically nothing. Information-theoretically nothing: with fewer than the threshold, every possible seed phrase is equally consistent with the shares you hold.
+
+Once you have split and distributed your shares, you never need to possess the whole secret again. You never type it into a laptop. You never carry it through an airport. You never have it on a steel plate to be found. You never have it to lose. When you eventually need to reconstruct — for a migration, for recovery, for inheritance — you do it in a controlled setting, on a known-good device, and then destroy the reconstruction immediately.
+
+In this model, a fake Ledger Live app is no longer catastrophic. Even if one of your share locations is somehow compromised — a cloud backup breached, a family member's envelope stolen, a safe cracked — the attacker gets nothing useful. They would need to independently compromise a threshold of your shares, which, if you have distributed them across different people, jurisdictions, and trust domains, is a dramatically harder problem than engineering a single convincing phishing app.
+
+The G. Love case is especially instructive because it involves a hardware wallet user who did almost everything right. He bought a Ledger. He held cold for a decade — a discipline most retail investors never maintain through multiple cycles. He presumably kept his seed offline, written down, away from any internet-connected device, exactly as the industry has advised for years. And yet a single seed entry event, on a new machine, into an app that passed Apple's review, erased ten years of conviction in minutes.
+
+There is no way to fully eliminate phishing. There is no way to fully eliminate human error. What you can do is build a custody architecture in which a single phishing event or a single lapse cannot destroy you. That is the entire point of threshold schemes. The math is old — Adi Shamir published it in 1979 — but its practical application to individual Bitcoin self-custody is only recently becoming accessible to non-cryptographers. seQRets is part of that wave: open source, no servers, QR-encoded shares you can print and physically distribute.
+
+If you are holding meaningful amounts of Bitcoin, the G. Love incident asks a direct question: is there any single event — one bad app install, one border crossing, one house fire, one groggy Saturday-morning judgment call — that could cost you everything you have accumulated? If the honest answer is yes, the fix is not to resolve to be more careful. The fix is to change the architecture so that "more careful" is no longer the thing standing between you and total loss.
+
+Ten years of holding conviction deserves better protection than one seed entry away from ruin.`,
+  },
+  {
     slug: "drift-protocol-hack-secret-splitting",
     title: "Inside the $285M Drift Protocol Hack: Why Single-Key Security Is a Liability",
     date: "2026-04-11",
