@@ -14,6 +14,7 @@ import {
   Github,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import TechnicalDetails from "@/components/ui/TechnicalDetails";
 import WaitlistButton from "@/components/WaitlistButton";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
@@ -37,8 +38,7 @@ interface FeatureSection {
   category: Category;
   description: string;
   details: string[];
-  visualLabel: string;
-  visualItems: string[];
+  technicalDetails?: string[];
   desktopOnly?: boolean;
 }
 
@@ -50,15 +50,16 @@ const sections: FeatureSection[] = [
     description:
       "Purpose-built for cryptocurrency seed phrases and private keys. seQRets validates BIP-39 mnemonics and checksums automatically — so you know your backup is correct before you split it.",
     details: [
-      "Validates all 2,048 BIP-39 English words in real time",
-      "Automatic checksum verification catches typos instantly",
+      "Real-time BIP-39 validation — catches typos and transcription errors before you split",
       "Supports 12, 15, 18, 21, and 24-word seed phrases",
-      "Detects and warns about common transcription errors",
-      "SeedQR output for direct hardware-wallet import (Jade, Coldcard, Trezor, and others)",
-      "BIP-32 master fingerprint (XFP) shown beneath each SeedQR so you can cross-check against your hardware wallet after import",
+      "SeedQR output for direct hardware-wallet import (Jade, Coldcard, Trezor)",
+      "Master fingerprint shown beside each SeedQR so you can verify the correct seed loaded into your wallet",
     ],
-    visualLabel: "Seed Phrase Validation",
-    visualItems: ["goddess  attend  educate  coffee  bean  ···"],
+    technicalDetails: [
+      "Validation via @scure/bip39; XFP derivation via @scure/bip32 (both audited)",
+      "XFP format: 8 uppercase hex chars (e.g., 73C5DA0A), derived from the master public key — no seed exposure",
+      "Caveat: the on-device XFP will differ if you apply a BIP-39 passphrase at wallet-import time",
+    ],
   },
   {
     icon: Shield,
@@ -67,16 +68,17 @@ const sections: FeatureSection[] = [
     description:
       "Not just crypto. Passwords, API keys, legal documents, account credentials, private notes — if it's sensitive, seQRets can encrypt and split it into shares that no single person can read alone.",
     details: [
-      "XChaCha20-Poly1305 authenticated encryption",
-      "Argon2id key derivation resists GPU/ASIC brute-force",
-      "Optional keyfile adds a second factor — defeats keyloggers and brute-force",
-      "Zero-knowledge architecture — nothing leaves your device",
-      "Installable as a Progressive Web App (PWA) — service worker caches assets for true offline use after first load",
-      "Clipboard auto-clear — copied secrets are wiped 60 seconds after copy",
-      "Works offline — no server, no cloud, no account required",
+      "The same encryption used in Signal and WireGuard (XChaCha20-Poly1305 + Argon2id)",
+      "Optional keyfile adds a second factor — defeats keyloggers and weak passwords",
+      "Fully offline. No server, no account, no telemetry",
+      "Clipboard auto-clears 60 seconds after copy",
     ],
-    visualLabel: "Encryption Pipeline",
-    visualItems: ["Plaintext → Argon2id", "→ XChaCha20-Poly1305", "→ Encrypted Blob", "→ Shamir Split", "→ QR Shares"],
+    technicalDetails: [
+      "XChaCha20-Poly1305 AEAD: 256-bit key, 192-bit random nonce",
+      "Argon2id KDF: 64 MB memory, 4 iterations, 16-byte random salt (password ‖ keyfile input)",
+      "Optional keyfile adds up to 256 bits of entropy — concatenated with password before key derivation",
+      "Installable as a Progressive Web App — service worker caches all assets for true offline use after first load",
+    ],
   },
   {
     icon: QrCode,
@@ -90,8 +92,12 @@ const sections: FeatureSection[] = [
       "Each Qard is useless alone — mathematically guaranteed",
       "Durable paper backups outlast digital storage",
     ],
-    visualLabel: "Share Distribution",
-    visualItems: ["Qard 1 → Safe deposit box", "Qard 2 → Family member", "Qard 3 → Home safe", "Qard 4 → Trusted advisor", "Qard 5 → Secure location"],
+    technicalDetails: [
+      "Share format: seQRets|salt|data|sha256:<hex> — 4-part with embedded SHA-256 integrity hash",
+      "Shamir's Secret Sharing over GF(256) via the shamir-secret-sharing library (Cure53 + Zellic audits)",
+      "Legacy 3-part shares (no hash) are still fully supported for backward compatibility",
+      "Manually verifiable in any terminal: echo -n \"seQRets|salt|data\" | shasum -a 256",
+    ],
   },
   {
     icon: CreditCard,
@@ -106,8 +112,12 @@ const sections: FeatureSection[] = [
       "Survives water, dust, and everyday wear",
       "Portable USB card reader included with bundles",
     ],
-    visualLabel: "NFC Workflow",
-    visualItems: ["1. Tap card to reader", "2. Authenticate with PIN", "3. Write share to card", "4. Verify written data", "5. Store card securely"],
+    technicalDetails: [
+      "JCOP-based Java Cards, dual-interface (ISO 7816 contact + ISO 14443 NFC)",
+      "GlobalPlatform 2.3+ compatible — seQRets applet pre-installed on branded cards",
+      "Desktop app communicates via standard USB CCID readers (contact mode)",
+      "PIN-protected with wipe-after-5-attempts; optional wipe protection flag prevents factory reset on lockout",
+    ],
   },
   {
     icon: Users,
@@ -115,17 +125,19 @@ const sections: FeatureSection[] = [
     category: "inherit",
     desktopOnly: true,
     description:
-      "Distribute shares to trusted family members or advisors. Set thresholds so no single person can access your secrets alone — but the right group can reconstruct them when the time comes. Document multiple secrets, assign assets to beneficiaries, and plan for incapacitation.",
+      "Document every secret, assign assets to beneficiaries, and plan for incapacitation — all in one encrypted plan.",
     details: [
-      "Visual inheritance plan builder with multiple Secret Sets — document every secret in one encrypted plan",
-      "Beneficiaries section: assign specific digital assets to named people with contact info",
-      "Incapacitation planning: document what should happen if you're alive but unable to act — emergency contacts, trigger conditions, and access procedures",
-      "Edit & Re-encrypt: update existing plans without recreating from scratch",
-      "PDF and/or encrypted export of inheritance plans — print a human-readable version for heirs, or export the encrypted file for secure distribution",
-      "Automated review reminders (6/12/24-month cadence) so your plan never goes stale — home-tab banner, nav badge, and optional OS notification",
+      "Multiple Secret Sets — capture every secret in one plan",
+      "Beneficiaries and emergency contacts — who gets what, and what happens if you're incapacitated",
+      "Edit, re-encrypt, or export a printable PDF for heirs",
+      "Automatic review reminders so your plan never goes stale",
     ],
-    visualLabel: "Threshold Scheme",
-    visualItems: ["5 total shares created", "3 required to restore", "2 → Family members", "1 → Safe deposit box", "2 → Trusted advisors"],
+    technicalDetails: [
+      "Plan schema v5 with backward-compatible migration — older plans auto-upgrade on decryption",
+      "Review reminders use a local sidecar file storing only a future date — zero plan contents, zero identifiers",
+      "Reminder cadence: 6, 12, or 24 months; home-tab banner + nav badge + optional OS notification",
+      "PDF export uses dynamic section numbering — empty sections are skipped, no gaps",
+    ],
   },
   {
     icon: Bot,
@@ -135,12 +147,16 @@ const sections: FeatureSection[] = [
       "Meet Bob, your built-in security guide. Bob helps you understand encryption concepts, plan your secret management strategy, and make informed decisions — without ever seeing your secrets.",
     details: [
       "Explains security concepts in plain language",
-      "Suggests optimal share distribution strategies",
+      "Suggests share distribution and threshold strategies",
       "Helps plan inheritance and recovery scenarios",
-      "Optional, user-provided Google Gemini API key — stored locally (OS keychain on desktop; localStorage on web). Your questions go to Google's Gemini API; no secret data is ever included. Disconnect any time by removing the key.",
+      "Optional — bring your own Google Gemini key, disconnect anytime",
     ],
-    visualLabel: "Ask Bob",
-    visualItems: ["\"How many shares do I need?\"", "\"What's a good threshold?\"", "\"Explain Shamir's scheme\"", "\"Help me plan inheritance\"", "\"Is my setup secure?\""],
+    technicalDetails: [
+      "Your questions are sent directly to Google's Gemini API — no middleman, no seQRets server",
+      "Desktop: API key stored in the OS keychain (macOS Keychain / Windows Credential Store)",
+      "Web: key stored in localStorage with an optional \"Remember this key\" toggle — unchecked = session-only",
+      "No secret data, share data, or plan contents are ever included in any request",
+    ],
   },
 ];
 
@@ -207,86 +223,74 @@ const FeaturesPage = () => {
         </div>
       </section>
 
-      {/* Feature Sections */}
-      <main className="space-y-0">
-        {sections.map((section, i) => {
-          const accent = accentClasses[section.category];
-          const isEven = i % 2 === 0;
-
-          return (
-            <section
-              key={section.title}
-              id={section.title.toLowerCase().replace(/\s+/g, "-")}
-              className={`py-16 md:py-24 scroll-mt-24 ${i % 2 === 0 ? "bg-section-alt" : ""}`}
-            >
-              <div className="container mx-auto px-4 md:px-8">
-                <div className={`mx-auto max-w-6xl grid gap-10 md:gap-16 items-center md:grid-cols-2 ${!isEven ? "md:[direction:rtl]" : ""}`}>
-                  {/* Visual placeholder */}
-                  <div className={`overflow-hidden rounded-xl border ${accent.border} bg-card/30 p-6 md:p-8 md:[direction:ltr]`}>
-                    <div className="flex items-center gap-3 mb-5">
-                      <div className={`inline-flex rounded-lg p-2 ${accent.bg}`}>
-                        <section.icon className={`h-4 w-4 ${accent.text}`} />
-                      </div>
-                      <span className={`font-display text-xs font-bold uppercase tracking-[0.15em] ${accent.text}`}>
-                        {section.visualLabel}
-                      </span>
-                    </div>
-                    <div className="space-y-2">
-                      {section.visualItems.map((item, j) => (
-                        <div
-                          key={j}
-                          className="rounded-lg border border-border/20 bg-background/50 px-4 py-2.5 font-mono text-xs text-muted-foreground/70"
-                        >
-                          {item}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="md:[direction:ltr]">
+      {/* Feature Grid */}
+      <main>
+        <section className="py-16 md:py-24">
+          <div className="container mx-auto px-4 md:px-8">
+            <div className="mx-auto max-w-6xl grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {sections.map((section) => {
+                const accent = accentClasses[section.category];
+                return (
+                  <div
+                    key={section.title}
+                    id={section.title.toLowerCase().replace(/\s+/g, "-")}
+                    className={`scroll-mt-24 rounded-2xl border ${accent.border} bg-card/20 p-6 md:p-7 flex flex-col transition-all duration-300 hover:bg-card/40`}
+                  >
                     <div className="flex items-center gap-3 mb-4">
-                      <div className={`inline-flex rounded-xl p-3 ${accent.bg}`}>
+                      <div className={`inline-flex rounded-xl p-2.5 ${accent.bg}`}>
                         <section.icon className={`h-5 w-5 ${accent.text}`} />
                       </div>
                       {section.desktopOnly && (
-                        <span className={`rounded-full px-3 py-0.5 font-display text-[11px] font-semibold tracking-wide uppercase ${accent.badge} ${accent.badgeText}`}>
+                        <span className={`rounded-full px-2.5 py-0.5 font-display text-[10px] font-semibold tracking-wide uppercase ${accent.badge} ${accent.badgeText}`}>
                           Pro · Desktop
                         </span>
                       )}
                     </div>
 
-                    <h2 className="font-display text-2xl font-black md:text-3xl text-foreground tracking-tight mb-4">
+                    <h2 className="font-display text-xl font-black text-foreground tracking-tight mb-3">
                       {section.title}
                     </h2>
 
-                    <p className="text-base text-muted-foreground/80 leading-relaxed mb-6">
+                    <p className="text-sm text-muted-foreground/80 leading-relaxed mb-5">
                       {section.description}
                     </p>
 
-                    <ul className="space-y-3">
+                    <ul className="space-y-2.5 mb-4 flex-1">
                       {section.details.map((detail, j) => (
-                        <li key={j} className="flex items-start gap-3">
-                          <div className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${accent.bg}`}>
-                            <Check className={`h-3 w-3 ${accent.text}`} />
+                        <li key={j} className="flex items-start gap-2.5">
+                          <div className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full ${accent.bg}`}>
+                            <Check className={`h-2.5 w-2.5 ${accent.text}`} />
                           </div>
                           <span className="text-sm text-muted-foreground/80">{detail}</span>
                         </li>
                       ))}
                     </ul>
 
+                    {section.technicalDetails && section.technicalDetails.length > 0 && (
+                      <TechnicalDetails className="mt-auto">
+                        <ul className="space-y-2">
+                          {section.technicalDetails.map((td, k) => (
+                            <li key={k} className="flex items-start gap-2">
+                              <span className={`mt-1.5 h-1 w-1 shrink-0 rounded-full ${accent.bg}`} />
+                              <span>{td}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </TechnicalDetails>
+                    )}
+
                     {section.desktopOnly && (
-                      <p className="mt-6 text-sm text-muted-foreground/60 italic">
-                        Requires the seQRets Desktop App — available in the{" "}
-                        <Link to="/shop" className="text-primary hover:underline">Shop</Link>.
+                      <p className="mt-3 pt-3 border-t border-border/20 text-xs text-muted-foreground/60 italic">
+                        Requires Desktop — see the{" "}
+                        <Link to="/shop" className="text-primary hover:underline not-italic">Shop</Link>.
                       </p>
                     )}
                   </div>
-                </div>
-              </div>
-            </section>
-          );
-        })}
+                );
+              })}
+            </div>
+          </div>
+        </section>
 
         {/* Desktop CTA Section */}
         <section className="py-20 md:py-28 bg-section-alt">

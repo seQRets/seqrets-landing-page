@@ -1,4 +1,5 @@
-import { Github, Scale, Users } from "lucide-react";
+import { Github, Scale, Users, LifeBuoy, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const OpenSource = () => {
@@ -19,11 +20,19 @@ const OpenSource = () => {
                 <br />
                 <span className="text-gradient">Verify</span>
               </h2>
-              <p className="text-sm text-muted-foreground/80 leading-relaxed">
+              <p className="text-sm text-muted-foreground/80 leading-relaxed mb-5">
                 seQRets is fully open source under the AGPLv3 license. Every line of cryptographic
                 code is auditable. We believe security software must be transparent — anything less
                 demands blind trust.
               </p>
+              <Link
+                to="/recover"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-primary/90 transition-colors hover:text-primary group"
+              >
+                <LifeBuoy className="h-3.5 w-3.5" />
+                Long-term recovery
+                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+              </Link>
             </div>
             <div className="space-y-5">
               <div className="flex items-center gap-4">

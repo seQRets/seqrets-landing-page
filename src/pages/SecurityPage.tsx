@@ -136,7 +136,7 @@ const SecurityPage = () => {
                 to="/shop"
                 className="shrink-0 inline-flex items-center gap-2 rounded-md bg-primary px-7 py-3 text-sm font-bold text-primary-foreground transition-all hover:bg-primary/90 whitespace-nowrap">
 
-                Go Pro! →
+                Get the App →
               </Link>
             </div>
           </section>
@@ -314,7 +314,7 @@ const SecurityPage = () => {
                 to="/shop"
                 className="inline-flex items-center gap-2 rounded-md bg-primary px-8 py-3.5 text-sm font-bold text-primary-foreground transition-all hover:bg-primary/90">
 
-                Go Pro! →
+                Get the App →
               </Link>
             </div>
           </section>

@@ -49,7 +49,7 @@ const BlogPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <PageHead
-        title="Blog"
+        title="Learn"
         description="Insights on Bitcoin security, seed phrase protection, crypto inheritance, and open-source cryptography from the seQRets team."
         path="/blog"
       />
@@ -73,11 +73,11 @@ const BlogPage = () => {
 
           <div className="relative container mx-auto px-4 md:px-8 text-center pt-16">
             <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-gradient-silver mb-5">
-              Blog
+              Learn
             </p>
             <h1 className="font-display text-4xl font-black md:text-6xl text-foreground tracking-tight">
-              Thoughts on{" "}
-              <span className="text-gradient">Security & Sovereignty</span>
+              Security &{" "}
+              <span className="text-gradient">Sovereignty</span>
             </h1>
             <p className="mt-5 text-base md:text-lg text-muted-foreground/80 max-w-2xl mx-auto leading-relaxed">
               Bitcoin security, crypto inheritance, open-source cryptography, and
