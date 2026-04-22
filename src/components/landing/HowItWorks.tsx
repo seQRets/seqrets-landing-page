@@ -9,21 +9,21 @@ const steps = [
     title: "Secure",
     animation: LockAnimation,
     description:
-      "Your secret is locked with military-grade encryption before anything else happens. Even if a share is intercepted, the data is unreadable without your passphrase. Powered by XChaCha20-Poly1305 + Argon2id.",
+      "Your secret is locked with military-grade, XChaCha20-Poly1305, encryption before anything else happens.",
   },
   {
     icon: Split,
     title: "Split",
     animation: SplitAnimation,
     description:
-      "No single share — and no single person — can reconstruct your secret alone. You choose how many shares to create and how many are needed to recover. Based on Shamir's Secret Sharing, a mathematically unbreakable threshold scheme.",
+      "The encrypted data is then split into pieces called shares using Shamir's Secret Sharing. You choose the number and the threshold to recover.",
   },
   {
     icon: QrCode,
     title: "Share",
     animation: QRCodeAnimation,
     description:
-      "Print each share as a Qard — a scannable QR code — and store them in different locations, safes, or with trusted people. When the time comes, bring enough shares together to reconstruct the original.",
+      "Print each share as a Qard — a scannable QR code — and store them in different locations or with trusted people.",
   },
 ];
 
