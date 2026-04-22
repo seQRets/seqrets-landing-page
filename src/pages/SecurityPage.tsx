@@ -105,7 +105,10 @@ const SecurityPage = () => {
                   ["Binary tampering", "N/A", "Detected — code-signed, integrity verified at install"],
                   ["Offline operation", "After initial load only", "Always — no network required"],
                   ["Key derivation", "JavaScript (noble/hashes)", "Native Rust — argon2, chacha20poly1305 crates"],
-                  ["Share integrity verification", "SHA-256 hash generated silently — no UI", "Auto-verified on restore with shield icon, SHA-256 fingerprint on printed cards"]].
+                  ["Share integrity verification", "SHA-256 hash embedded and verified silently — no visible UI", "Auto-verified on restore with shield icon, SHA-256 fingerprint on printed cards"],
+                  ["Clipboard auto-clear", "60 seconds after copy", "60 seconds after copy"],
+                  ["Bob AI API key storage", "localStorage (optional \"remember\")", "OS keychain (macOS Keychain / Windows Credential Store)"],
+                  ["Network exposure indicator", "Pulsing header dot: red = online, green = offline", "Pulsing header dot: red = online, green = offline"]].
                   map(([threat, web, desktop]) =>
                   <tr key={threat} className="hover:bg-card/20 transition-colors">
                       <td className="p-4 font-medium text-foreground">{threat}</td>
@@ -227,7 +230,7 @@ const SecurityPage = () => {
               },
               {
                 q: "Where is my API key for Bob AI stored?",
-                a: "Locally on your device only. It is never sent anywhere except directly to Google's Gemini API when you ask Bob a question. It is never included in any other request. You can remove it at any time from the settings."
+                a: "Locally on your device only. On the desktop app, the key is stored in the OS keychain (macOS Keychain / Windows Credential Store) rather than localStorage. On the web app, it is kept in localStorage, with an optional \"Remember this key\" toggle — unchecked, the key is session-only. It is never sent anywhere except directly to Google's Gemini API when you ask Bob a question, and is never included in any other request. You can remove it at any time from the settings."
               },
               {
                 q: "What is a keyfile and should I use one?",
@@ -255,11 +258,23 @@ const SecurityPage = () => {
               },
               {
                 q: "What cryptographic libraries does seQRets use?",
-                a: "Web: @noble/ciphers and @noble/hashes by Paul Miller — audited, zero-dependency JavaScript implementations. Desktop: Native Rust crates — argon2, chacha20poly1305, and zeroize from the RustCrypto project."
+                a: "Web: @noble/ciphers, @noble/hashes, @scure/bip32, and @scure/bip39 by Paul Miller — audited, zero-dependency JavaScript implementations. Shamir splitting uses the shamir-secret-sharing library (independently audited by Cure53 and Zellic). Desktop: native Rust crates — argon2, chacha20poly1305, and zeroize from the RustCrypto project."
               },
               {
                 q: "Has seQRets been audited?",
-                a: "Not yet by a third-party firm. The code is open source and uses well-audited cryptographic primitives. A formal audit is on the roadmap. In the meantime, we encourage independent review — the codebase is intentionally small and readable."
+                a: "Not yet as a whole product by a third-party firm, but the app is built on well-audited primitives: the shamir-secret-sharing library has been independently audited by both Cure53 and Zellic; @noble/* and @scure/* libraries by Paul Miller have undergone extensive public review; and the RustCrypto crates used on the desktop are widely vetted. An internal code review in v1.4.0 identified 11 findings — all resolved. A formal whole-product audit is on the roadmap."
+              },
+              {
+                q: "Why is the connection indicator red when I'm online?",
+                a: "Intentional inversion. For a security app, being online means being exposed to the network — which is the riskier state. Green = offline (safer). The dot pulses red while online and stays solid green while offline. Behind the scenes it pings a tiny (1-byte) file every 5 seconds, because browser navigator.onLine is unreliable."
+              },
+              {
+                q: "Does seQRets auto-clear the clipboard?",
+                a: "Yes. Any secret copied from seQRets (password, recovered plaintext, share text) is automatically cleared from the system clipboard 60 seconds after the copy."
+              },
+              {
+                q: "Can I install seQRets as an app?",
+                a: "Yes. The web app at app.seqrets.app is a Progressive Web App — use your browser's install prompt (or \"Add to Home Screen\" on mobile) to install it to your device. Once installed, it runs fully offline after first load. For higher-assurance use, install the Desktop app instead: native Rust crypto, explicit memory zeroization, code signing, and an isolated WebView."
               }].
               map(({ q, a }) =>
               <FaqAccordion key={q} question={q} answer={a} />

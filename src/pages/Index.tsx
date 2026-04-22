@@ -17,10 +17,10 @@ const Index = () => {
         <HeroSection />
         <HowItWorks />
         <FeaturesGrid />
-        <ExploreTiles />
         <SecuritySection />
         <DesktopCTA />
         <ComparisonTable />
+        <ExploreTiles />
         <OpenSource />
       </main>
       <Footer />

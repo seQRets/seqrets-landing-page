@@ -120,8 +120,15 @@ const DocsTechnical = () => {
                     "Shamir's Secret Sharing",
                     "Threshold splitting",
                     "Variable (matches input)",
-                    "Custom GF(256) impl",
-                    "Custom GF(256) impl",
+                    "shamir-secret-sharing (Cure53 + Zellic audits)",
+                    "shamir-secret-sharing (Cure53 + Zellic audits)",
+                  ],
+                  [
+                    "BIP-32 (XFP only)",
+                    "Hardware-wallet verification",
+                    "32-bit master fingerprint",
+                    "@scure/bip32",
+                    "@scure/bip32",
                   ],
                   [
                     "SHA-256",
@@ -457,7 +464,7 @@ const DocsTechnical = () => {
                     ["Hash input", 'SHA-256("seQRets|salt|data") — covers the 3-part share string'],
                     ["Hash output", "64 hex characters (~71 chars with sha256: prefix)"],
                     ["Verification (generation)", "All shares are round-trip verified before being presented"],
-                    ["Verification (restore)", "Desktop: auto-verified on scan/import with shield icon. Web: silent acceptance."],
+                    ["Verification (restore)", "Desktop: auto-verified on scan/import with visible shield icon. Web: verified silently in the background (no UI) — the hash is still checked round-trip, there's just no indicator shown to the user."],
                     ["Printed fingerprint", "Desktop: truncated hash (xxxxxxxx...xxxxxxxx) displayed on exported Qard cards"],
                     ["Backward compatibility", "Legacy 3-part shares without hashes are fully supported"],
                     ["Security", "One-way — the hash cannot be reversed to recover share data"],
@@ -486,6 +493,71 @@ const DocsTechnical = () => {
               <div className="rounded-lg border border-border/20 bg-background/50 px-4 py-3 font-mono text-xs text-muted-foreground/70">
                 echo -n "seQRets|salt|data" | shasum -a 256
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* BIP-32 Master Fingerprint (XFP) */}
+        <section>
+          <h2 className="font-display text-xl font-bold text-foreground mb-4">
+            Hardware-Wallet Verification (BIP-32 XFP)
+          </h2>
+          <div className="space-y-4">
+            <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
+              <p className="text-sm text-muted-foreground/80 mb-4">
+                When restoring a BIP-39 mnemonic, the reveal dialog's SeedQR tab
+                displays the <strong className="text-foreground">BIP-32 master fingerprint</strong> (XFP) beneath the QR —
+                an 8-character hex string derived from the master public key.
+                Many hardware wallets (Jade, Coldcard, Trezor, and others)
+                initialize without ever displaying the mnemonic, but almost all
+                of them show the XFP on the home screen after import. Matching
+                the two proves the correct seed was loaded.
+              </p>
+              <div className="rounded-lg border border-border/20 bg-background/50 px-4 py-3 font-mono text-xs text-muted-foreground/70 mb-4">
+                XFP = HDKey.fromMasterSeed(mnemonicToSeedSync(phrase, "")).fingerprint (hex, uppercase)
+              </div>
+              <p className="text-sm text-muted-foreground/80">
+                The seed buffer is zeroized immediately after fingerprint
+                computation. The XFP is derived from the master <em>public</em> key
+                and reveals nothing about the seed — it is safe to display
+                outside the QR's blur halo so users can verify without exposing
+                the QR to bystanders.
+              </p>
+            </div>
+
+            <div className="overflow-x-auto rounded-2xl border border-border/30">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border/30 bg-card/30">
+                    <th className="text-left p-4 font-display font-bold text-foreground">
+                      Property
+                    </th>
+                    <th className="text-left p-4 font-display font-bold text-foreground">
+                      Value
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border/20">
+                  {[
+                    ["Format", "8 uppercase hex characters (e.g. 73C5DA0A)"],
+                    ["Library", "@scure/bip32 (audited, same author as @scure/bip39)"],
+                    ["Applies to", "BIP-39 mnemonic secrets only (single or multi-mnemonic/multisig)"],
+                    ["Privacy", "Derived from the master public key — reveals nothing about the seed"],
+                    ["Memory", "Seed buffer is zeroized after computation"],
+                    ["Passphrase caveat", "If a BIP-39 passphrase is applied at wallet-import time, the on-device XFP will differ — the value shown here assumes no passphrase"],
+                  ].map(([prop, val]) => (
+                    <tr
+                      key={prop}
+                      className="hover:bg-card/20 transition-colors"
+                    >
+                      <td className="p-4 font-medium text-foreground whitespace-nowrap">
+                        {prop}
+                      </td>
+                      <td className="p-4 text-muted-foreground/80">{val}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </section>

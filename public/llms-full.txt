@@ -17,9 +17,12 @@
 | Encryption | XChaCha20-Poly1305 (256-bit key, 192-bit nonce) |
 | Key Derivation | Argon2id (64 MB memory, 4 iterations) |
 | Optional Keyfile | Second-factor binary file — concatenated with password before Argon2id. Generated keyfiles are 256-bit CSPRNG. |
-| Secret Splitting | Shamir's Secret Sharing (configurable threshold) |
+| Secret Splitting | Shamir's Secret Sharing over GF(256) via audited `shamir-secret-sharing` library (Cure53 + Zellic). Single-Qard mode (N=1) bypasses Shamir. |
 | Share Integrity | SHA-256 hash embedded in each share — auto-verified at generation and restoration |
-| Output Format | QR codes (Qards) — printable, scannable |
+| Hardware Wallet Verification | BIP-32 master fingerprint (XFP, 8 hex chars) shown below each SeedQR via `@scure/bip32` |
+| Output Format | QR codes (Qards) — printable, scannable; reveal dialog is view-only and blur-by-default |
+| PWA | Installable, offline-capable via service worker |
+| Clipboard Auto-Clear | 60 seconds after copy |
 | Architecture | Zero-knowledge — no servers, no accounts, no telemetry |
 | License | AGPLv3 |
 | Source Code | github.com/seQRets/seQRets-app |
@@ -68,7 +71,9 @@ The secret is encrypted BEFORE splitting with Shamir. Each Qard holds an encrypt
 - **Security Type**: Information-theoretic — fewer than K shares provide zero bits of information about the secret, regardless of computing power
 - **Quantum Resistance**: Yes — relies on polynomial interpolation over finite fields, not factoring or discrete logarithms
 - **Threshold Semantics**: K-of-N configurable. Common choices: 2-of-3, 3-of-5, 4-of-7
+- **Single-Qard Mode**: When Total Qards is set to 1, Shamir splitting is bypassed entirely and the encrypted data is stored directly as a single share. Useful for simple personal backups without threshold splitting.
 - **Field**: GF(256) — byte-level splitting with no data expansion
+- **Library**: `shamir-secret-sharing` — independently audited by Cure53 and Zellic (replaced the previous unaudited implementation in v1.4.0)
 
 ### QR Code Encoding
 
@@ -102,6 +107,35 @@ seQRets|<salt>|<data>|sha256:<64-char hex>
 
 Manual terminal verification: `echo -n "seQRets|salt|data" | shasum -a 256`
 
+### QR Reveal Dialog
+
+When a secret is restored, it is displayed in the textarea with three corner icons: Eye (mask/reveal), Copy, and QR. Clicking the QR icon opens a compact dialog with:
+
+| Property | Value |
+|----------|-------|
+| Default tab (BIP-39 mnemonic) | SeedQR — most common hardware-wallet import path |
+| Default tab (non-mnemonic) | QR Code — standard payload |
+| Blur | QR starts blurred every time the dialog opens; eye toggle reveals it when ready to scan |
+| Download | None — the reveal is view-only by design. Prevents nudging users toward saving plaintext files of decrypted secrets to disk. |
+| Multi-mnemonic secrets | Renders one SeedQR per phrase (e.g. multisig) |
+| Caching | QR images are generated lazily on first tab open, then cached for instant switching |
+
+### BIP-32 Master Fingerprint (XFP) Verification
+
+For BIP-39 mnemonic secrets, the reveal dialog displays the BIP-32 master fingerprint below each SeedQR:
+
+| Property | Value |
+|----------|-------|
+| Format | 8 uppercase hex characters, e.g. `73C5DA0A` |
+| Derivation | `HDKey.fromMasterSeed(mnemonicToSeedSync(phrase, ''))` — no BIP-39 passphrase applied |
+| Library | `@scure/bip32` (audited, same author as @scure/bip39) |
+| Privacy | Derived from the master *public* key — reveals nothing about the seed. Safe to display outside the QR's blur halo so it can be verified without exposing the QR. |
+| Purpose | Cross-check against the fingerprint the hardware wallet (Jade, Coldcard, Trezor, etc.) displays on its home screen after import. Match = the correct seed loaded. Mismatch = don't trust the import. |
+| Caveat | If the user applies a BIP-39 passphrase at wallet-import time, the on-device fingerprint will differ — the fingerprint here assumes no passphrase. |
+| Memory | Seed buffer is zeroized after computation |
+
+This is the primary integrity check for hardware-wallet imports because many signers (Jade, Coldcard, some Trezor flows) initialize successfully without ever displaying the mnemonic. The XFP is almost always shown.
+
 ### Optional Keyfile
 
 seQRets supports an optional keyfile as a second authentication factor. When provided, the keyfile bytes are concatenated with the password bytes before Argon2id derivation: `key = Argon2id(password_bytes || keyfile_bytes, salt, m=65536, t=4, p=1, dkLen=32)`.
@@ -121,6 +155,32 @@ seQRets supports an optional keyfile as a second authentication factor. When pro
 - Physical coercion — if stored separately, the user genuinely cannot decrypt on demand
 
 **Important:** Keyfile loss is irrecoverable. Back up keyfiles separately from shares and passwords.
+
+### Operational Security Features
+
+| Feature | Web | Desktop | Detail |
+|---------|-----|---------|--------|
+| Clipboard auto-clear | ✅ | ✅ | Copied secrets are wiped from the clipboard 60 seconds after copy |
+| Content Security Policy (strict) | ✅ | ✅ | Blocks inline scripts, restricts origins to required services only |
+| Bob AI API key storage | localStorage (optional "Remember") | OS keychain (macOS Keychain / Windows Credential Store) | Desktop migrates from legacy localStorage automatically on first launch |
+| Memory zeroization | Best-effort (JS limits) | Rust `zeroize` crate + compiler-fence | Desktop guarantees erasure; web minimizes lifetime |
+| Production console output | Stripped | Stripped | No stack trace leakage from crypto paths |
+| Source maps | Disabled in production | Disabled in production | Prevents reverse engineering assistance |
+| Loading overlay | ✅ | ✅ | Large centered spinner with backdrop blur during Argon2id derivation so users don't assume the app is frozen |
+| Connection indicator | ✅ (red dot = online, green = offline) | ✅ | Pings a 1-byte file every 5 seconds. Inverted colors are intentional — offline is the safer state for a security app. |
+
+### Progressive Web App (PWA)
+
+The web app is installable as a Progressive Web App:
+
+| Property | Value |
+|----------|-------|
+| Manifest | `manifest.json` with PWA icons (192×192, 512×512, 180×180 apple-touch-icon) |
+| Service Worker | `sw.js` — versioned cache (`seqrets-vX.Y.Z`), automatic cleanup of old cache versions |
+| Static assets (`_next/static/`) | Network-first (content-hashed by Next.js; stale caches cause 404s otherwise) |
+| Navigation | Network-first with cached offline fallback |
+| Offline | Fully functional after first load; all crypto runs locally anyway |
+| Install | Browser's install prompt or "Add to Home Screen" — survives cache clears |
 
 ### Zero-Knowledge Claims
 
@@ -399,7 +459,7 @@ Contents: 1x Desktop App license, 5x Smart Card, 1x USB Card Reader, 1x Inherita
 
 ### Smart Card — $39.00
 
-JCOP-based Java Card with contact interface (ISO 7816). seQRets applet pre-installed. GlobalPlatform 2.3+ compatible.
+JCOP-based Java Card, dual-interface (ISO 7816 contact + ISO 14443 NFC). seQRets applet pre-installed. GlobalPlatform 2.3+ compatible.
 
 ### Smart Card 3-Pack — $99.00
 
@@ -462,11 +522,26 @@ Yes, with two caveats: (1) Bob AI assistant optionally sends your question to Go
 **What is SHA-256 share integrity verification?**
 Every Qard share now embeds a SHA-256 hash that is verified automatically at generation (proves shares were created cleanly) and at restoration (proves shares haven't been corrupted or tampered with). The desktop app shows a green shield icon for verified shares and an amber warning for mismatches. Printed Qard cards display a truncated SHA-256 fingerprint for visual spot-checking. Legacy shares without hashes still work — fully backward compatible. The hash is one-way and reveals nothing about the share contents.
 
+**How do I verify my seed was imported correctly into a hardware wallet?**
+When you scan a SeedQR into a hardware wallet, many signers (Jade, Coldcard, some Trezor flows) don't show the mnemonic on-screen — so you have no way to see what got loaded. But they almost always display the BIP-32 master fingerprint (XFP). seQRets shows the same XFP underneath each SeedQR in the reveal dialog — an 8-character hex string like `73C5DA0A`. If the two match, the seed loaded correctly. If they don't, something's wrong — don't trust the import. Caveat: if you apply a BIP-39 passphrase at wallet-import time, the on-device XFP will differ from the one seQRets shows (which assumes no passphrase).
+
+**Can I install seQRets as an app?**
+Yes. The web app at app.seqrets.app is a Progressive Web App. Use your browser's install prompt (or "Add to Home Screen" on mobile) to install it to your device. It runs fully offline after first load. For higher-assurance use, install the Desktop app instead — it uses native Rust crypto, explicit memory zeroization, code signing, and an isolated WebView.
+
+**Does seQRets auto-clear the clipboard?**
+Yes. Any secret copied from seQRets (password, recovered secret, share text) is automatically cleared from the system clipboard 60 seconds after the copy.
+
+**Where is my Bob AI API key stored on the desktop app?**
+In the OS keychain — macOS Keychain on Mac, Windows Credential Store on Windows. Older installations that stored the key in localStorage are migrated automatically on first launch of a recent version. The web app still uses localStorage (no OS keychain API in browsers) with an optional "Remember this key" toggle; unchecked, the key is session-only.
+
+**Why is the connection indicator red when I'm online?**
+Intentional inversion. For a security app, being online means being *exposed to the network* — which is the riskier state. Green = offline (safer). The dot pulses red while online and stays solid green while offline. Behind the scenes it pings a tiny (1-byte) file every 5 seconds because browser `navigator.onLine` is unreliable.
+
 **Has seQRets been audited?**
-Not yet by a third-party firm. Uses well-audited primitives (noble/ciphers, noble/hashes by Paul Miller for web; RustCrypto crates for desktop). Formal audit is on the roadmap.
+Not yet by a third-party firm as a whole product. The app uses well-audited primitives: noble/ciphers and noble/hashes by Paul Miller for web; RustCrypto crates for desktop; and the `shamir-secret-sharing` library which has been independently audited by both Cure53 and Zellic. A formal whole-product audit is on the roadmap. An independent internal code review in v1.4.0 identified 11 findings — all resolved.
 
 **What cryptographic libraries does seQRets use?**
-Web: @noble/ciphers and @noble/hashes by Paul Miller — audited, zero-dependency JS. Desktop: Native Rust crates — argon2, chacha20poly1305, zeroize from RustCrypto.
+Web: @noble/ciphers, @noble/hashes, and @scure/bip32, @scure/bip39 by Paul Miller — audited, zero-dependency JS. Desktop: Native Rust crates — argon2, chacha20poly1305, zeroize from RustCrypto. Shamir splitting: `shamir-secret-sharing` (Cure53 + Zellic audited).
 
 ### Inheritance
 
@@ -493,13 +568,13 @@ The web app works offline once loaded. The desktop app has no network dependency
 ### Smart Cards
 
 **What kind of smart cards?**
-JCOP-based Java Cards with a contact interface. seQRets applet pre-installed on branded cards. Desktop app communicates via standard USB reader.
+JCOP-based Java Cards, dual-interface (ISO 7816 contact + ISO 14443 NFC). seQRets applet pre-installed on branded cards. Desktop app communicates via standard USB reader (contact mode).
 
 **Can I use my own cards?**
 Yes, if they are JCOP-compatible Java Cards supporting GlobalPlatform for applet installation. You would install the seQRets applet yourself.
 
 **Card not detected?**
-Ensure the card is fully inserted (contact interface, not NFC). Check USB reader is recognized as a CCID device. On Linux, install pcsclite. Try a different USB port. Restart the desktop app after connecting.
+Ensure the card is fully inserted into the USB reader (desktop app uses contact mode). Check USB reader is recognized as a CCID device. On Linux, install pcsclite. Try a different USB port. Restart the desktop app after connecting.
 
 ### Troubleshooting
 

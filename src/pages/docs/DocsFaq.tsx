@@ -109,7 +109,7 @@ const FAQ_DATA: FaqCategory[] = [
     items: [
       {
         q: "What kind of smart cards does seQRets use?",
-        a: "JCOP-based Java Cards with a contact interface. The seQRets applet is pre-installed on branded cards sold in the shop. The desktop app communicates via a standard USB smart card reader.",
+        a: "JCOP-based Java Cards, dual-interface (ISO 7816 contact + ISO 14443 NFC). The seQRets applet is pre-installed on branded cards sold in the shop. The desktop app communicates via a standard USB smart card reader in contact mode.",
       },
       {
         q: "Can I use my own smart cards?",
@@ -117,7 +117,7 @@ const FAQ_DATA: FaqCategory[] = [
       },
       {
         q: "Smart card not detected — what should I do?",
-        a: "Ensure the card is fully inserted in the reader (contact interface, not NFC). Check that the USB reader is recognized by your OS (it should appear as a CCID device). On Linux, you may need to install pcsclite. Try a different USB port. Restart the desktop app after connecting the reader.",
+        a: "Ensure the card is fully inserted in the USB reader (the desktop app uses contact mode). Check that the USB reader is recognized by your OS (it should appear as a CCID device). On Linux, you may need to install pcsclite. Try a different USB port. Restart the desktop app after connecting the reader.",
       },
     ],
   },
@@ -138,7 +138,19 @@ const FAQ_DATA: FaqCategory[] = [
       },
       {
         q: "Where is my API key for Bob AI stored?",
-        a: "Locally on your device only. It is never sent anywhere except directly to Google's Gemini API when you ask Bob a question. It is never included in any other request. You can remove it at any time from the settings.",
+        a: "Locally on your device only. On the desktop app, the key is stored in the OS keychain (macOS Keychain / Windows Credential Store). On the web app, it is kept in localStorage with an optional \"Remember this key\" toggle — unchecked, the key is session-only. It is sent only to Google's Gemini API when you ask Bob a question, and is never included in any other request.",
+      },
+      {
+        q: "Does seQRets auto-clear the clipboard?",
+        a: "Yes. Any secret copied from seQRets (password, recovered plaintext, share text) is automatically cleared from the system clipboard 60 seconds after copy.",
+      },
+      {
+        q: "Why is the connection indicator red when I'm online?",
+        a: "Intentional inversion. For a security app, being online means being exposed to the network — the riskier state. Green = offline (safer). The dot pulses red while online and stays solid green while offline. Behind the scenes it pings a tiny 1-byte file every 5 seconds because browser navigator.onLine is unreliable.",
+      },
+      {
+        q: "Can I install seQRets as an app?",
+        a: "Yes. The web app is a Progressive Web App (PWA). Use your browser's install prompt or \"Add to Home Screen\" on mobile to install it. Once installed, it runs fully offline after first load. For higher-assurance use, install the Desktop app instead (native Rust crypto, memory zeroization, code signing, isolated WebView).",
       },
     ],
   },

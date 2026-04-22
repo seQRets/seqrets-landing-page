@@ -37,7 +37,8 @@ const sections = [
       "Open the restore flow and scan your Qards one by one",
       "Once the threshold is met, decryption begins automatically",
       "Enter your passphrase to unlock the secret",
-      "Your restored secret is displayed — copy it and clear when done",
+      "Your restored secret is displayed — copy it and clear when done (clipboard auto-clears after 60 seconds)",
+      "For BIP-39 seed phrases, a QR reveal dialog offers a SeedQR tab (default) for direct hardware-wallet import — blur-by-default, view-only, with a BIP-32 master fingerprint shown beneath so you can verify the scan against your hardware wallet",
     ],
   },
   {
