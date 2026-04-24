@@ -323,7 +323,7 @@ const Shop = () => {
   const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
   const [waitlistError, setWaitlistError] = useState("");
 
-  async function handleWaitlistSubmit(e: React.FormEvent) {
+  async function handleWaitlistSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const trimmed = waitlistEmail.trim();
     if (
@@ -332,9 +332,11 @@ const Shop = () => {
       !/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/.test(trimmed)
     )
       return;
+    const honeypot =
+      (e.currentTarget.elements.namedItem("website") as HTMLInputElement | null)?.value ?? "";
     setWaitlistSubmitting(true);
     setWaitlistError("");
-    const result = await joinWaitlist(trimmed, `shop-interest-${waitlistInterest}`);
+    const result = await joinWaitlist(trimmed, `shop-interest-${waitlistInterest}`, honeypot);
     setWaitlistSubmitting(false);
     if (result.ok) setWaitlistSubmitted(true);
     else setWaitlistError(result.error || "Something went wrong");
@@ -383,6 +385,28 @@ const Shop = () => {
       onSubmit={handleWaitlistSubmit}
       className="mx-auto flex max-w-md flex-col gap-3 text-left"
     >
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          left: "-9999px",
+          top: "auto",
+          width: "1px",
+          height: "1px",
+          overflow: "hidden",
+        }}
+      >
+        <label>
+          Website
+          <input
+            type="text"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            defaultValue=""
+          />
+        </label>
+      </div>
       <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground/70">
         Most interested in?
         <select

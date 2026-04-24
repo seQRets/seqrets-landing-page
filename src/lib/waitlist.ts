@@ -6,6 +6,7 @@ const WAITLIST_URL = import.meta.env.VITE_WAITLIST_API_URL;
 export async function joinWaitlist(
   email: string,
   source: string,
+  honeypot = "",
 ): Promise<{ ok: boolean; error?: string }> {
   if (!WAITLIST_URL) {
     // Fallback: open mailto if Worker URL isn't configured yet
@@ -19,7 +20,7 @@ export async function joinWaitlist(
     const res = await fetch(WAITLIST_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, source }),
+      body: JSON.stringify({ email, source, website: honeypot }),
     });
 
     if (!res.ok) {

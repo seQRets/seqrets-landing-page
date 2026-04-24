@@ -294,10 +294,20 @@ export default {
       return jsonResponse({ error: parsed.error }, 400, responseCors);
     }
 
-    const { email, source } = parsed.data as {
+    const { email, source, website } = parsed.data as {
       email?: string;
       source?: string;
+      website?: string;
     };
+
+    // Honeypot: real users never touch the hidden `website` field.
+    // Return a 200 so bots can't distinguish a rejection from a real signup,
+    // but skip the KV write and the rate-limit counter.
+    if (typeof website === "string" && website.trim().length > 0) {
+      const ip = request.headers.get("CF-Connecting-IP") || "unknown";
+      console.log(`[AUDIT] signup.honeypot ip=${ip}`);
+      return jsonResponse({ ok: true }, 200, responseCors);
+    }
 
     const trimmed = email?.trim().toLowerCase();
 
