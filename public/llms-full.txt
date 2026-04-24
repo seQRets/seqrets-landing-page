@@ -163,7 +163,7 @@ seQRets supports an optional keyfile as a second authentication factor. When pro
 | Feature | Web | Desktop | Detail |
 |---------|-----|---------|--------|
 | Clipboard auto-clear | ✅ | ✅ | Copied secrets are wiped from the clipboard 60 seconds after copy |
-| Content Security Policy (strict) | ✅ | ✅ | Blocks inline scripts, restricts origins to required services only |
+| Content Security Policy (strict) | ✅ | ✅ | Restricts origins to required services only. Desktop blocks inline scripts; web allows them (tightly scoped via a narrow connect-src allowlist). |
 | Bob AI API key storage | localStorage (optional "Remember") | OS keychain (macOS Keychain / Windows Credential Store) | Desktop migrates from legacy localStorage automatically on first launch |
 | Memory zeroization | Best-effort (JS limits) | Rust `zeroize` crate + compiler-fence | Desktop guarantees erasure; web minimizes lifetime |
 | Production console output | Stripped | Stripped | No stack trace leakage from crypto paths |
