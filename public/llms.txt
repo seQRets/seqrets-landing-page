@@ -2,6 +2,8 @@
 
 > seQRets is an open-source, zero-knowledge cryptographic tool for securing, splitting, and sharing secrets (crypto seed phrases, private keys, passwords) using Shamir's Secret Sharing and XChaCha20-Poly1305 encryption. Secrets are encoded as printable QR codes called Qards. Runs entirely offline — no servers, accounts, or telemetry. Licensed under AGPLv3.
 
+**Last updated:** April 24, 2026
+
 ## Key Facts
 
 - Encryption: XChaCha20-Poly1305 (256-bit key, 192-bit nonce)

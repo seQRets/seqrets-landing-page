@@ -30,7 +30,7 @@ const PrivacyPolicy = () => {
             seQRets does not collect, store, transmit, or sell your data. Period.
           </p>
           <p className="text-sm text-muted-foreground/50 mt-4">
-            Last updated: March 3, 2026
+            Last updated: April 24, 2026
           </p>
         </div>
 
@@ -81,7 +81,7 @@ const PrivacyPolicy = () => {
                 </div>
                 <h3 className="font-display text-base font-bold text-foreground mb-2">Marketing Website (seqrets.app)</h3>
                 <p className="text-sm text-muted-foreground/80">
-                  This website is a static site hosted on GitHub Pages. It does not set cookies, use local storage, or make any requests to seQRets-controlled servers. GitHub may collect standard server logs (IP address, browser type) as part of hosting — see <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">GitHub's Privacy Statement</a> for details.
+                  This website is a static site hosted on Cloudflare Pages. It does not set cookies, use local storage, or make any requests to seQRets-controlled servers. Cloudflare may collect standard access logs (IP address, user agent) as part of edge delivery — see <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Cloudflare's Privacy Policy</a> for details.
                 </p>
               </div>
               <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
@@ -90,7 +90,7 @@ const PrivacyPolicy = () => {
                 </div>
                 <h3 className="font-display text-base font-bold text-foreground mb-2">Web App (app.seqrets.app)</h3>
                 <p className="text-sm text-muted-foreground/80">
-                  All cryptographic operations run entirely in your browser. The web app stores only three items in local browser storage: your theme preference (light/dark), the AI disclaimer acknowledgment, and your Gemini API key (if you choose to provide one). None of this data leaves your device or is transmitted to any server.
+                  All cryptographic operations run entirely in your browser. The web app stores only three items in local browser storage: your theme preference (light/dark), the AI disclaimer acknowledgment, and your Gemini API key (if you choose to provide one). None of this data leaves your device or is transmitted to any server. App traffic is served via Cloudflare's edge network fronting GitHub Pages as origin; Cloudflare may collect standard access logs, and GitHub Pages may collect its own server logs as the origin host.
                 </p>
               </div>
               <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
@@ -160,8 +160,13 @@ const PrivacyPolicy = () => {
                 </thead>
                 <tbody className="divide-y divide-border/20">
                   <tr className="hover:bg-card/20 transition-colors">
+                    <td className="p-4 font-medium text-foreground">Cloudflare</td>
+                    <td className="p-4 text-muted-foreground/70">Edge delivery for seqrets.app and app.seqrets.app</td>
+                    <td className="p-4 text-muted-foreground/70">Standard access logs (IP, user agent)</td>
+                  </tr>
+                  <tr className="hover:bg-card/20 transition-colors">
                     <td className="p-4 font-medium text-foreground">GitHub Pages</td>
-                    <td className="p-4 text-muted-foreground/70">Hosting</td>
+                    <td className="p-4 text-muted-foreground/70">Web app origin, Recover tool</td>
                     <td className="p-4 text-muted-foreground/70">Standard server logs (IP, user agent)</td>
                   </tr>
                   <tr className="hover:bg-card/20 transition-colors">
