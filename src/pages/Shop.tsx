@@ -11,8 +11,9 @@ import {
   ShoppingBag,
   ShoppingCart,
   Check,
+  Mail,
+  Loader2,
 } from "lucide-react";
-import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import Navbar from "@/components/landing/Navbar";
 import {
@@ -27,7 +28,7 @@ import {
 import { useCart } from "@/contexts/CartContext";
 import CartDrawer from "@/components/cart/CartDrawer";
 import CartIcon from "@/components/cart/CartIcon";
-import WaitlistButton from "@/components/WaitlistButton";
+import { joinWaitlist } from "@/lib/waitlist";
 import PageHead from "@/components/PageHead";
 import Footer from "@/components/landing/Footer";
 import ProductModal from "@/components/shop/ProductModal";
@@ -116,12 +117,20 @@ const ProductCard = ({
       </ul>
       <div className="mt-auto flex items-center justify-between">
         <div>
-          <span className="font-display text-2xl font-bold text-foreground">
-            {formatPrice(product.priceInCents)}
-          </span>
-          {!product.priceFinal && (
-            <span className="ml-2 text-xs text-muted-foreground/60">
-              or less
+          {SHOP_LIVE ? (
+            <>
+              <span className="font-display text-2xl font-bold text-foreground">
+                {formatPrice(product.priceInCents)}
+              </span>
+              {!product.priceFinal && (
+                <span className="ml-2 text-xs text-muted-foreground/60">
+                  or less
+                </span>
+              )}
+            </>
+          ) : (
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Launch pricing TBA
             </span>
           )}
         </div>
@@ -147,13 +156,9 @@ const ProductCard = ({
             )}
           </button>
         ) : (
-          <div onClick={(e) => e.stopPropagation()}>
-            <WaitlistButton
-              source={`shop-${product.slug}`}
-              label="Join Waitlist"
-              className="inline-flex items-center rounded-md bg-primary/20 px-4 py-2 text-xs font-semibold text-primary transition-all hover:bg-primary/30"
-            />
-          </div>
+          <span className="inline-flex items-center rounded-md border border-primary/30 bg-primary/10 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-primary">
+            Coming soon
+          </span>
         )}
       </div>
     </div>
@@ -246,12 +251,20 @@ const BundleCard = ({
         </ul>
         <div className="mt-auto flex items-center justify-between">
           <div>
-            <span className="font-display text-3xl font-bold text-foreground">
-              {formatPrice(product.priceInCents)}
-            </span>
-            {!product.priceFinal && (
-              <span className="ml-2 text-xs text-muted-foreground/60">
-                or less
+            {SHOP_LIVE ? (
+              <>
+                <span className="font-display text-3xl font-bold text-foreground">
+                  {formatPrice(product.priceInCents)}
+                </span>
+                {!product.priceFinal && (
+                  <span className="ml-2 text-xs text-muted-foreground/60">
+                    or less
+                  </span>
+                )}
+              </>
+            ) : (
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                Launch pricing TBA
               </span>
             )}
           </div>
@@ -277,19 +290,24 @@ const BundleCard = ({
               )}
             </button>
           ) : (
-            <div onClick={(e) => e.stopPropagation()}>
-              <WaitlistButton
-                source={`shop-${product.slug}`}
-                label="Join Waitlist"
-                className="inline-flex items-center rounded-md bg-primary/20 px-5 py-2.5 text-sm font-semibold text-primary transition-all hover:bg-primary/30"
-              />
-            </div>
+            <span className="inline-flex items-center rounded-md border border-primary/30 bg-primary/10 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-primary">
+              Coming soon
+            </span>
           )}
         </div>
       </div>
     </div>
   );
 };
+
+// ─── Interest options for the consolidated waitlist form ─────────
+const INTEREST_OPTIONS: { value: string; label: string }[] = [
+  { value: "any", label: "Just let me know when anything ships" },
+  { value: "desktop-app", label: "Desktop App + Inheritance Planner" },
+  { value: "smartcards", label: "Smartcards & readers" },
+  { value: "backup-bundle", label: "Starter / Backup Bundle" },
+  { value: "inheritance-bundle", label: "Full Inheritance Kit" },
+];
 
 // ─── Shop Page ───────────────────────────────────────────────────
 const Shop = () => {
@@ -298,6 +316,29 @@ const Shop = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
   const ticking = useRef(false);
+
+  const [waitlistEmail, setWaitlistEmail] = useState("");
+  const [waitlistInterest, setWaitlistInterest] = useState("any");
+  const [waitlistSubmitting, setWaitlistSubmitting] = useState(false);
+  const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
+  const [waitlistError, setWaitlistError] = useState("");
+
+  async function handleWaitlistSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const trimmed = waitlistEmail.trim();
+    if (
+      !trimmed ||
+      trimmed.length > 254 ||
+      !/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/.test(trimmed)
+    )
+      return;
+    setWaitlistSubmitting(true);
+    setWaitlistError("");
+    const result = await joinWaitlist(trimmed, `shop-interest-${waitlistInterest}`);
+    setWaitlistSubmitting(false);
+    if (result.ok) setWaitlistSubmitted(true);
+    else setWaitlistError(result.error || "Something went wrong");
+  }
 
   const handleScroll = useCallback(() => {
     if (ticking.current) return;
@@ -323,6 +364,73 @@ const Shop = () => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
+
+  // ─── Shared waitlist form (used in hero + bottom CTA) ─────────
+  const waitlistForm = waitlistSubmitted ? (
+    <div className="mx-auto max-w-md rounded-xl border border-primary/30 bg-primary/5 p-8 text-center">
+      <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/15">
+        <Check className="h-6 w-6 text-primary" />
+      </div>
+      <h3 className="font-display text-lg font-bold text-foreground mb-2">
+        You're on the list!
+      </h3>
+      <p className="text-sm text-muted-foreground">
+        We'll email you as soon as it's available.
+      </p>
+    </div>
+  ) : (
+    <form
+      onSubmit={handleWaitlistSubmit}
+      className="mx-auto flex max-w-md flex-col gap-3 text-left"
+    >
+      <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground/70">
+        Most interested in?
+        <select
+          value={waitlistInterest}
+          onChange={(e) => setWaitlistInterest(e.target.value)}
+          disabled={waitlistSubmitting}
+          className="mt-1.5 w-full appearance-none rounded-md border border-border/50 bg-background bg-no-repeat py-3 pl-4 pr-12 text-sm font-normal normal-case tracking-normal text-foreground focus:border-primary/50 focus:outline-none focus:ring-1 focus:ring-primary/30 transition-colors disabled:opacity-50"
+          style={{
+            backgroundImage:
+              "url(\"data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23a1a1aa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e\")",
+            backgroundPosition: "right 1rem center",
+            backgroundSize: "14px",
+          }}
+        >
+          {INTEREST_OPTIONS.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
+          ))}
+        </select>
+      </label>
+      <input
+        type="email"
+        required
+        placeholder="you@example.com"
+        value={waitlistEmail}
+        onChange={(e) => setWaitlistEmail(e.target.value)}
+        maxLength={255}
+        disabled={waitlistSubmitting}
+        className="w-full rounded-md border border-border/50 bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:border-primary/50 focus:outline-none focus:ring-1 focus:ring-primary/30 transition-colors disabled:opacity-50"
+      />
+      {waitlistError && (
+        <p className="text-xs text-red-400">{waitlistError}</p>
+      )}
+      <button
+        type="submit"
+        disabled={waitlistSubmitting}
+        className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-primary px-8 py-3.5 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 disabled:opacity-50"
+      >
+        {waitlistSubmitting ? (
+          <Loader2 className="h-4 w-4 animate-spin" />
+        ) : (
+          <Mail className="h-4 w-4" />
+        )}
+        {waitlistSubmitting ? "Joining…" : "Join the Waitlist"}
+      </button>
+    </form>
+  );
 
   return (
     <div className="min-h-screen bg-background">
@@ -359,9 +467,9 @@ const Shop = () => {
             <img
               src="/Shop_hero.webp"
               alt=""
-              className="h-full w-full object-cover object-center"
+              className="h-full w-full scale-110 object-cover object-center blur-md"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/70 to-background" />
+            <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/85 to-background" />
           </div>
           <div className="container relative mx-auto px-4 md:px-8">
             <div className="mx-auto max-w-3xl text-center">
@@ -372,9 +480,18 @@ const Shop = () => {
                 Hardware, software, and kits to protect your secrets — from
                 everyday backups to generational inheritance.
               </p>
-              <p className="mt-3 text-xs font-medium text-muted-foreground/40 tracking-wide">
-                {Object.keys(PRODUCTS).length} products
-              </p>
+              {SHOP_LIVE ? (
+                <p className="mt-3 text-xs font-medium text-muted-foreground/40 tracking-wide">
+                  {Object.keys(PRODUCTS).length} products
+                </p>
+              ) : (
+                <div className="mt-10">
+                  <p className="mb-5 text-xs font-semibold uppercase tracking-widest text-primary">
+                    Be the first to know when it ships
+                  </p>
+                  {waitlistForm}
+                </div>
+              )}
             </div>
           </div>
         </section>
@@ -435,17 +552,13 @@ const Shop = () => {
             ) : (
               <>
                 <h2 className="font-display text-3xl font-bold text-foreground mb-4">
-                  Want to know when the shop opens?
+                  Still here? Get on the list.
                 </h2>
                 <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-                  Join the waitlist and be the first to grab a bundle at
-                  launch-day pricing.
+                  We'll email you the moment the shop ships — no spam, just a
+                  single heads-up.
                 </p>
-                <WaitlistButton
-                  source="shop-bottom-cta"
-                  label="Join the Waitlist"
-                  className="inline-flex items-center rounded-md bg-primary px-8 py-3.5 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
-                />
+                {waitlistForm}
               </>
             )}
           </div>
