@@ -19,6 +19,36 @@ export const categoryLabels: Record<BlogCategory, string> = {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "kelp-dao-bridge-hack-single-verifier",
+    title: "$292M in a 12-Minute Bridge Hack: The Kelp DAO Exploit Was a 1-of-1 Trust Failure",
+    date: "2026-04-25",
+    category: "crypto",
+    excerpt:
+      "On April 18, attackers drained $292 million from Kelp DAO's cross-chain bridge — not by cracking the math, but by compromising the two infrastructure nodes that, by configuration, were the entire trust layer. The biggest DeFi exploit of 2026 is a case study in what happens when 'decentralized' systems quietly run on a single point of failure.",
+    readTime: 6,
+    content: `On April 18, 2026, attackers drained roughly $292 million from Kelp DAO's cross-chain bridge in about twelve minutes — 116,500 rsETH, around 18 percent of the token's circulating supply. It surpassed the $285 million Drift Protocol exploit from April 1 to become the largest DeFi hack of the year, and it pushed two-week DeFi losses past $600 million across more than a dozen protocols. By the time the core contracts were paused, rsETH was de-pegging on every L2 it had been bridged to, and lending markets at Aave, SparkLend, and Fluid were freezing the asset to contain the damage.
+
+What's striking about the post-mortems is how little of this was about cryptography or smart-contract bugs. Kelp's contracts didn't fail. Solidity didn't betray anyone. The exploit lived one layer below the contracts, in the off-chain machinery that tells a bridge whether a cross-chain message is real. According to early analysis from Chainalysis and the LayerZero team, attackers compromised two of LayerZero's internal RPC nodes, swapped out the software running them, and used the access to forge a message that Kelp's bridge believed had been validated by an honest counterparty. The bridge then dutifully released 116,500 rsETH to an address controlled by the attackers.
+
+The architectural detail that turned a node compromise into a nine-figure loss is the part that should make every Bitcoin holder pay attention. rsETH was configured with a single Decentralized Verifier Network — the LayerZero Labs DVN — as its sole validator. No second DVN had to agree. No independent quorum had to confirm. LayerZero has since said it had recommended a multi-DVN setup; Kelp has acknowledged that the 1-of-1 configuration was the default that shipped with its L2 expansion. In practice, "decentralized" turned out to mean "centralized through one party with a familiar name." Compromising that one party — through two RPC nodes, run on separate clusters but managed by the same operator — was sufficient to break the entire trust assumption.
+
+Forensics firms have attributed the attack to North Korea's Lazarus Group, the same cluster of actors implicated in the Drift hack two and a half weeks earlier. The pattern is consistent: don't break the math, find a place in the operational stack where one organization, one team, or one set of credentials sits between the attacker and the money, and break that. This is now the dominant DeFi exploit pattern of 2026. Cryptography is winning. Operational security is losing. And the gap between the two is where billions of dollars now live.
+
+It's tempting to read this as a story about bridges, or about LayerZero, or about DeFi protocols that ship insecure defaults. All of that is true. But the deeper structural lesson is older and broader: any system where a single compromise grants total control is a system whose security depends on that compromise never happening. That works fine until it doesn't, at which point it fails completely. There is no graceful degradation when there is only one trust pinch point.
+
+This is the same architectural problem individual Bitcoin holders face at a smaller scale. A hardware wallet looks like a fortress. Its secure element, its physical confirmation screen, its air-gapped signing — all of it is impressive engineering. But the seed phrase that controls every address in the wallet exists somewhere as plaintext, written down, memorized, or eventually typed into a device for migration or recovery. If that single representation of the seed is compromised — by a phishing app, a border search, a house fire, a disgruntled family member, a quiet keylogger — every defense in the wallet's hardware becomes irrelevant. The seed is a 1-of-1 trust assumption wearing a more sophisticated costume.
+
+The structural answer is the same at both scales. At the bridge layer, you require multiple independent verifiers — multi-DVN setups, independent operators, geographic and organizational diversity — so that compromising one party gets the attacker nothing. At the seed phrase layer, you do the same thing with Shamir's Secret Sharing: split the encrypted seed into shares such that any threshold (say, 3 of 5) can reconstruct it, but any smaller number is information-theoretically useless. With fewer than the threshold number of shares, every possible seed phrase is equally consistent with what the attacker holds. The math doesn't leak partial information. There's no weakening, no statistical signal, no foothold.
+
+Once your secret is split, the attack surface changes shape entirely. There is no single place to break. Compromising one share location — a cloud backup, a safety deposit box, a relative's envelope, a steel plate in a home safe — yields nothing. Compromising even two of three required shares yields nothing. The attacker has to independently breach a threshold of physically separated, organizationally distinct custodians, often across jurisdictions. That is not impossible, but it is exponentially harder than tricking one person, one app, one configuration default.
+
+The Kelp DAO hack and the Drift hack are, in the end, the same hack with different surface details. Both involved a single compromised trust point — admin keys in one case, verifier nodes in the other — that, by architectural design, granted total control. Both will be presented in post-mortems as failures of operational security. They were also, more fundamentally, failures of design: situations where the worst-case outcome of a single compromise was total loss, when it could have been engineered to be almost zero.
+
+The same question applies to your own setup. Walk through your Bitcoin custody architecture and look for the 1-of-1. Where does total control live? One hardware wallet? One seed phrase backup? One memorized passphrase that, if lost or coerced or copied, ends the game? If the answer is yes, the fix is not to be more careful with that one thing. The fix is to remove the architectural condition that makes "more careful" the only thing standing between you and total loss.
+
+Threshold cryptography is the same principle Kelp DAO needed and didn't have, applied to the secret you actually own. seQRets is built on it: encrypted seed phrases split into QR-encoded shares, no servers, no accounts, no proprietary formats. The math is from 1979. The lesson keeps repeating in 2026 because the architectural mistake is so easy to make. Don't make it with your Bitcoin.`,
+  },
+  {
     slug: "fake-ledger-app-store-scam-g-love",
     title: "A Fake Ledger App on the App Store Just Drained a Musician's $420K Retirement Stash",
     date: "2026-04-18",
