@@ -1,4 +1,5 @@
 import { loadStripe } from "@stripe/stripe-js";
+import inheritanceImg from "@/assets/screenshot-inheritance.webp";
 
 // ─── Launch Toggle ───────────────────────────────────────────────
 // Flip to `true` when the shop is ready to accept orders.
@@ -175,7 +176,7 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     features: ["Printable PDF", "Legal considerations checklist"],
     category: "accessory",
     tag: "Guide",
-    image: "/screenshot-inheritance.webp",
+    image: inheritanceImg,
     imagePosition: "50% center",
   },
 };
