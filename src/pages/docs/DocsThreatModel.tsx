@@ -82,7 +82,7 @@ const DocsThreatModel = () => {
                   ],
                   [
                     "Brute-force password attack",
-                    "Argon2id KDF with 64 MB memory cost makes GPU/ASIC attacks prohibitively expensive. Optional keyfile adds up to 256 bits of entropy, making brute-force infeasible regardless of password strength.",
+                    "Argon2id KDF with 64 MB memory cost makes GPU/ASIC attacks prohibitively expensive. seQRets also enforces a 24-character minimum with required mixed character classes (upper, lower, digit, symbol) and ships a built-in generator that produces passwords with ≈200 bits of entropy by default — exceeding the entropy floor needed to make brute-force infeasible even before Argon2id is applied. Optional keyfile adds up to 256 bits of entropy, making brute-force infeasible regardless of password strength.",
                     "High",
                   ],
                   [
@@ -240,10 +240,15 @@ const DocsThreatModel = () => {
                   The password is strong
                 </strong>{" "}
                 and not reused from other services. Argon2id makes brute-force
-                expensive, but a weak password still weakens the system. Using
-                the optional keyfile mitigates this — a generated 256-bit
-                keyfile makes brute-force infeasible regardless of password
-                strength.
+                expensive, but a weak password still weakens the system.
+                seQRets minimizes this risk at input: a 24-character minimum,
+                multiple character classes required, and a built-in generator
+                producing ≈200-bit-entropy passwords by default. KDF iteration
+                counts are a constant-factor multiplier on attacker work;
+                password entropy is exponential. The right place to spend
+                defensive budget is at the entropy floor. Using the optional
+                keyfile further mitigates this — a generated 256-bit keyfile
+                makes brute-force infeasible regardless of password strength.
               </li>
               <li>
                 <strong className="text-foreground">

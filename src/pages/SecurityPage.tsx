@@ -233,6 +233,10 @@ const SecurityPage = () => {
                 a: "Locally on your device only. On the desktop app, the key is stored in the OS keychain (macOS Keychain / Windows Credential Store) rather than localStorage. On the web app, it is kept in localStorage, with an optional \"Remember this key\" toggle — unchecked, the key is session-only. It is never sent anywhere except directly to Google's Gemini API when you ask Bob a question, and is never included in any other request. You can remove it at any time from the settings."
               },
               {
+                q: "Why does seQRets enforce a 24-character password minimum?",
+                a: "Password entropy compounds exponentially per character; KDF iteration counts (Argon2id rounds) only multiply attacker work by a constant factor. A 24-character random password drawn from mixed character classes carries roughly 150–200 bits of entropy — enough to make brute-force infeasible on its own, before Argon2id slows it down further. Tools that allow short passwords or short human-memorable passphrases push the entire defense onto the KDF. seQRets refuses to let weak passwords exist in the first place: 24-character minimum, multiple character classes required, and a built-in generator that produces ≈200-bit-entropy passwords by default."
+              },
+              {
                 q: "What is a keyfile and should I use one?",
                 a: "A keyfile is an optional binary file that acts as a second authentication factor alongside your password. When provided, the keyfile bytes are concatenated with your password before key derivation. A generated keyfile adds 256 bits of entropy, making brute-force attacks infeasible regardless of password strength. It also protects against keyloggers and shoulder surfing since the keyfile is never typed or displayed."
               },
