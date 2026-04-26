@@ -57,12 +57,12 @@ const DesktopCTA = () => {
 
           <div className="text-center">
             {/* Coming soon badge */}
-            <div className="mx-auto mb-10 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-5 py-2">
+            <div className="mx-auto mb-10 inline-flex items-center gap-2 rounded-full border border-red-500/40 bg-red-500/10 px-5 py-2">
               <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
               </span>
-              <span className="font-display text-xs font-bold uppercase tracking-wider text-primary">Coming Soon</span>
+              <span className="font-display text-xs font-bold uppercase tracking-wider text-red-500">Coming Soon</span>
             </div>
 
             <p className="text-base text-muted-foreground/80 mb-12 max-w-2xl mx-auto">
