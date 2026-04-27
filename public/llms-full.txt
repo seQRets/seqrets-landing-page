@@ -2,7 +2,7 @@
 
 > seQRets is an open-source, zero-knowledge cryptographic tool for securing, splitting, and sharing secrets (crypto seed phrases, private keys, passwords) using Shamir's Secret Sharing and XChaCha20-Poly1305 encryption. Secrets are encoded as printable QR codes called Qards. Runs entirely offline — no servers, accounts, or telemetry. Licensed under AGPLv3.
 
-**Last updated:** April 24, 2026
+**Last updated:** April 26, 2026
 
 - Source Code: https://github.com/seQRets/seQRets-app
 - Web App (free): https://app.seqrets.app
@@ -103,7 +103,7 @@ seQRets|<salt>|<data>|sha256:<64-char hex>
 | Hash output | 64 hex characters (~71 chars with sha256: prefix) |
 | Verification (generation) | All shares round-trip verified before being presented |
 | Verification (restore) | Desktop: auto-verified on scan/import with shield icon. Web: silent acceptance. |
-| Printed fingerprint | Desktop: truncated hash (xxxxxxxx...xxxxxxxx) displayed on exported Qard cards |
+| Printed fingerprint | Desktop: truncated hash (xxxxxxxx...xxxxxxxx) printed on the face of exported Qards. Enables out-of-band tamper detection when paired with an external record (e.g., inheritance ledger entry, notary log) — heirs can compare printed hash to recorded hash decades later without scanning or trusting any device. Also detects print/scan corruption (mismatch = use a different Qard from the set), provides trust-UX during recovery, and visually disambiguates stacked cards. The hash-only defense is weak without an external reference: a forger could compute and print a self-consistent hash on a substituted card. Hash + recorded reference is the strong configuration. |
 | Backward compatibility | Legacy 3-part shares without hashes are fully supported |
 | Security | One-way — the hash cannot be reversed to recover share data |
 

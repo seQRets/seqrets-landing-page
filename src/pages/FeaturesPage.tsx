@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   Zap,
   Package,
+  Fingerprint,
   Github,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -164,6 +165,7 @@ const desktopPerks = [
   { icon: ShieldCheck, label: "Code-signed binary — installs cleanly on Mac, Windows & Linux" },
   { icon: Zap, label: "Automatic delta updates — security patches delivered instantly" },
   { icon: CreditCard, label: "NFC smart card support — tap to back up or restore" },
+  { icon: Fingerprint, label: "Printed SHA fingerprint on every Qard — verifiable against your records without scanning" },
   { icon: Package, label: "Everything included — smart card & USB reader shipped to you" },
 ];
 

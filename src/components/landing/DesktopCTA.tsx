@@ -1,4 +1,4 @@
-import { ShieldCheck, Zap, CreditCard, Package, Github } from "lucide-react";
+import { ShieldCheck, Zap, CreditCard, Package, Fingerprint, Github } from "lucide-react";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ const perks = [
   { icon: ShieldCheck, label: "Verified & trusted — installs cleanly on Mac, Windows & Linux" },
   { icon: Zap, label: "Always up to date — security patches delivered automatically" },
   { icon: CreditCard, label: "Tap to back up — store secrets on tamper-proof smart cards" },
+  { icon: Fingerprint, label: "Printed SHA fingerprint on every Qard — verifiable against your records without scanning" },
   { icon: Package, label: "Everything in the box — smart card & USB reader shipped to you" },
 ];
 

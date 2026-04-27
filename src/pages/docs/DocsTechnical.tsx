@@ -465,7 +465,7 @@ const DocsTechnical = () => {
                     ["Hash output", "64 hex characters (~71 chars with sha256: prefix)"],
                     ["Verification (generation)", "All shares are round-trip verified before being presented"],
                     ["Verification (restore)", "Desktop: auto-verified on scan/import with visible shield icon. Web: verified silently in the background (no UI) — the hash is still checked round-trip, there's just no indicator shown to the user."],
-                    ["Printed fingerprint", "Desktop: truncated hash (xxxxxxxx...xxxxxxxx) displayed on exported Qard cards"],
+                    ["Printed fingerprint", "Desktop: truncated hash (xxxxxxxx...xxxxxxxx) printed on the face of exported Qards. Enables out-of-band tamper detection when paired with an external record (e.g., inheritance ledger), plus print/scan corruption detection and visual disambiguation across stacked cards."],
                     ["Backward compatibility", "Legacy 3-part shares without hashes are fully supported"],
                     ["Security", "One-way — the hash cannot be reversed to recover share data"],
                   ].map(([prop, val]) => (
