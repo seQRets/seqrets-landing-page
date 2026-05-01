@@ -85,29 +85,32 @@ The secret is encrypted BEFORE splitting with Shamir. Each Qard holds an encrypt
 | Error correction | Level M (15% recovery) |
 | Maximum capacity | ~2,953 bytes (Version 40, Level L) |
 | Output | Printable QR code (Qard) |
-| Metadata | Share index, threshold, total shares — included in the QR payload |
+| Recovery metadata (optional, v1.11+) | Threshold (K), total shares (N), and 1-based card index (I) appended as pipe-delimited segments (`t=K|n=N|i=I`). Hash-covered. Opt-out toggle (default ON) — drives the per-set live countdown during restore. Trade-off when enabled: anyone scanning a Qard learns K and N (without the password, that's not enough to recover anything). |
 | Integrity hash | Optional SHA-256 hash appended as a 4th pipe-delimited segment |
 
 ### Share Format & Integrity Verification
 
-Each share is a pipe-delimited string with an optional SHA-256 integrity hash:
+Each share is a pipe-delimited string. v1.11+ adds optional recovery-metadata segments:
 
 ```
-seQRets|<salt>|<data>|sha256:<64-char hex>
+Legacy / toggle off:  seQRets|<salt>|<data>|sha256:<64-char hex>
+v1.11+ / toggle on:   seQRets|<salt>|<data>|sha256:<64-char hex>|t=<K>|n=<N>|i=<I>
 ```
 
 | Property | Value |
 |----------|-------|
 | Hash function | SHA-256 via @noble/hashes/sha256 |
-| Hash input | SHA-256("seQRets|salt|data") — covers the 3-part share string |
+| Hash input | Legacy/4-part shares: SHA-256("seQRets|salt|data"). v1.11+ shares with recovery-metadata enabled: SHA-256("seQRets|salt|data|t=K|n=N|i=I") — metadata is included in the hash so it cannot be tampered with. |
 | Hash output | 64 hex characters (~71 chars with sha256: prefix) |
 | Verification (generation) | All shares round-trip verified before being presented |
 | Verification (restore) | Desktop: auto-verified on scan/import with shield icon. Web: silent acceptance. |
 | Printed fingerprint | Desktop: truncated hash (xxxxxxxx...xxxxxxxx) printed on the face of exported Qards. Enables out-of-band tamper detection when paired with an external record (e.g., inheritance ledger entry, notary log) — heirs can compare printed hash to recorded hash decades later without scanning or trusting any device. Also detects print/scan corruption (mismatch = use a different Qard from the set), provides trust-UX during recovery, and visually disambiguates stacked cards. The hash-only defense is weak without an external reference: a forger could compute and print a self-consistent hash on a substituted card. Hash + recorded reference is the strong configuration. |
-| Backward compatibility | Legacy 3-part shares without hashes are fully supported |
+| Recovery metadata (v1.11+) | Threshold (K), total shares (N), and 1-based card index (I) appended as pipe-delimited segments. Drives the per-set live countdown during restore (heirs see "Set [ID] — 2 of 3 added · 1 more Qard required"). Opt-out (default ON). Trade-off: anyone scanning a metadata-enabled Qard learns K and N — not enough to recover without the password, but it narrows the attacker's search space. Users wanting maximum opacity can disable the toggle. |
+| Backward compatibility | Legacy 3-part shares without hashes are fully supported. 4-part shares (sha256 only) decode in v1.11+. v1.11+ 7-part metadata shares require v1.11+ apps or a v1.11+ recover.html copy to decode. |
 | Security | One-way — the hash cannot be reversed to recover share data |
 
-Manual terminal verification: `echo -n "seQRets|salt|data" | shasum -a 256`
+Manual terminal verification (legacy/4-part): `echo -n "seQRets|salt|data" | shasum -a 256`
+Manual terminal verification (v1.11+ with metadata): `echo -n "seQRets|salt|data|t=K|n=N|i=I" | shasum -a 256`
 
 ### QR Reveal Dialog
 
@@ -235,7 +238,7 @@ Rule of thumb: set K high enough that a single compromised party can't reconstru
 5. Generate the shares — seQRets encrypts, splits, and outputs QR codes (Qards)
 6. Optionally write shares to smart cards using the desktop app
 7. The secret is destroyed from memory after generation
-8. (Desktop) If you have multiple secrets, the inheritance planner supports multiple Secret Sets — each with its own password, keyfile, Qard config, and distribution table — all in one encrypted plan
+8. (Desktop) If you have multiple secrets, the inheritance planner supports multiple seQRet Sets — each with its own password, keyfile, Qard config, and distribution table — all in one encrypted plan
 
 **Expected Outcome**: N Qards and/or smart cards, each containing one share. The original secret exists nowhere.
 
@@ -266,9 +269,10 @@ Rule of thumb: set K high enough that a single compromised party can't reconstru
 
 1. Gather K shares from your distributed locations
 2. Open seQRets and scan/import the shares
-3. Enter your password to decrypt
-4. Verify the reconstructed secret matches the original
-5. Re-distribute the shares to their original locations
+3. (v1.11+ Qards with recovery metadata enabled) Watch the per-set live countdown as Qards are scanned — "Set [ID] — 2 of 3 added · 1 more Qard required". Confirms heirs will see the same guidance and won't need to remember the threshold.
+4. Enter your password to decrypt
+5. Verify the reconstructed secret matches the original
+6. Re-distribute the shares to their original locations
 
 Do this test at least once — do not skip this step.
 
@@ -548,7 +552,7 @@ Web: @noble/ciphers, @noble/hashes, and @scure/bip32, @scure/bip39 by Paul Mille
 ### Inheritance
 
 **How does inheritance planning work?**
-Create a Shamir split with a threshold (e.g., 3-of-5), distribute shares to trusted people or locations, and provide instructions for reconstruction. The Desktop App includes a comprehensive Inheritance Plan builder with support for multiple Secret Sets (document every secret in one plan), named beneficiaries with asset assignments, emergency access planning for incapacitation scenarios, edit & re-encrypt for updating plans without recreating them, and automated review reminders on a configurable cadence.
+Create a Shamir split with a threshold (e.g., 3-of-5), distribute shares to trusted people or locations, and provide instructions for reconstruction. The Desktop App includes a comprehensive Inheritance Plan builder with support for multiple seQRet Sets (document every secret in one plan), named beneficiaries with asset assignments, emergency access planning for incapacitation scenarios, edit & re-encrypt for updating plans without recreating them, and automated review reminders on a configurable cadence.
 
 **Is the Inheritance Plan stored somewhere?**
 No. The plan is encrypted and exported as a file or written to a JavaCard. seQRets stores no copy. If you lose all copies, it cannot be recovered.
@@ -559,7 +563,7 @@ No. No server, no account system, no backup. If you lose enough shares to fall b
 ### Desktop App
 
 **Web app vs desktop app?**
-Both use the same encryption and splitting logic. Desktop adds native Rust crypto, memory zeroization (compiler-fence), browser extension immunity (Tauri WebView), code signing, SHA-256 share integrity verification UI (shield icons, printed fingerprints on Qard cards), JavaCard smart card support, and a comprehensive Inheritance Plan builder (multiple secret sets, beneficiaries, incapacitation planning, edit & re-encrypt, automated review reminders).
+Both use the same encryption and splitting logic. Desktop adds native Rust crypto, memory zeroization (compiler-fence), browser extension immunity (Tauri WebView), code signing, SHA-256 share integrity verification UI (shield icons, printed fingerprints on Qard cards), JavaCard smart card support, and a comprehensive Inheritance Plan builder (multiple seQRet Sets, beneficiaries, incapacitation planning, edit & re-encrypt, automated review reminders).
 
 **What platforms?**
 macOS, Windows, and Linux. Built with Tauri (Rust + web frontend). Ships as a code-signed binary with automatic delta updates.

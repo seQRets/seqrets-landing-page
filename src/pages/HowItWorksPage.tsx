@@ -35,6 +35,7 @@ const sections = [
       "When you need your secret back, scan the required number of Qards using your device's camera. The app reconstructs and decrypts your secret locally.",
     details: [
       "Open the restore flow and scan your Qards one by one",
+      "(v1.11+ Qards) The app shows a per-set live countdown — \"Set [ID] — 2 of 3 added · 1 more Qard required\" — so heirs always know how many remain, even decades later when they may not remember the threshold",
       "Once the threshold is met, decryption begins automatically",
       "Enter your passphrase to unlock the secret",
       "Your restored secret is displayed — copy it and clear when done (clipboard auto-clears after 60 seconds)",

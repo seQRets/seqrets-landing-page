@@ -95,9 +95,10 @@ const sections: FeatureSection[] = [
     ],
     technicalDetails: [
       "Share format: seQRets|salt|data|sha256:<hex> — 4-part with embedded SHA-256 integrity hash",
+      "v1.11+ optional recovery metadata: seQRets|salt|data|sha256:<hex>|t=K|n=N|i=I — adds threshold, total, and 1-based index for restore-time countdown UX. Hash-covered (untamperable). Opt-out toggle.",
       "Shamir's Secret Sharing over GF(256) via the shamir-secret-sharing library (Cure53 + Zellic audits)",
       "Legacy 3-part shares (no hash) are still fully supported for backward compatibility",
-      "Manually verifiable in any terminal: echo -n \"seQRets|salt|data\" | shasum -a 256",
+      "Manually verifiable in any terminal: echo -n \"seQRets|salt|data\" | shasum -a 256 (append |t=K|n=N|i=I if metadata enabled)",
     ],
   },
   {
@@ -128,7 +129,8 @@ const sections: FeatureSection[] = [
     description:
       "Document every secret, assign assets to beneficiaries, and plan for incapacitation — all in one encrypted plan.",
     details: [
-      "Multiple Secret Sets — capture every secret in one plan",
+      "Multiple seQRet Sets — capture every secret in one plan",
+      "Live restore countdown — heirs see '2 of 3 added' as they scan, no need to remember the threshold",
       "Beneficiaries and emergency contacts — who gets what, and what happens if you're incapacitated",
       "Edit, re-encrypt, or export a printable PDF for heirs",
       "Automatic review reminders so your plan never goes stale",

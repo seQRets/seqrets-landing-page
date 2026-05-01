@@ -432,17 +432,35 @@ const DocsTechnical = () => {
           <div className="space-y-4">
             <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
               <p className="text-sm text-muted-foreground/80 mb-4">
-                Each share is a pipe-delimited string with an optional SHA-256
-                integrity hash. The hash covers the first three segments and is
-                verified automatically at generation and restoration.
+                Each share is a pipe-delimited string. v1.11+ adds optional
+                recovery-metadata segments at the end. The SHA-256 hash covers
+                whatever segments are present (legacy 3-part inputs for
+                pre-v1.11 shares; first three plus the metadata segments for
+                v1.11+ shares with the toggle enabled) and is verified
+                automatically at generation and restoration.
               </p>
-              <div className="rounded-lg border border-border/20 bg-background/50 px-4 py-3 font-mono text-xs text-muted-foreground/70 mb-4">
-                seQRets|&lt;salt&gt;|&lt;data&gt;|sha256:&lt;64-char hex&gt;
+              <div className="rounded-lg border border-border/20 bg-background/50 px-4 py-3 font-mono text-xs text-muted-foreground/70 mb-4 space-y-1.5">
+                <div>
+                  <span className="text-muted-foreground/40">Legacy / toggle off:</span>{" "}
+                  seQRets|&lt;salt&gt;|&lt;data&gt;|sha256:&lt;64-char hex&gt;
+                </div>
+                <div>
+                  <span className="text-muted-foreground/40">v1.11+ / toggle on:</span>{" "}
+                  seQRets|&lt;salt&gt;|&lt;data&gt;|sha256:&lt;64-char hex&gt;|t=&lt;K&gt;|n=&lt;N&gt;|i=&lt;I&gt;
+                </div>
               </div>
               <p className="text-sm text-muted-foreground/80">
-                The 4th segment is optional for backward compatibility — legacy
-                3-part shares are still fully supported. The SHA-256 hash is
-                one-way and reveals nothing about the share contents.
+                Backward compatible: legacy 3-part shares without hashes still
+                decode, 4-part shares (sha256 only) still decode, and v1.11+
+                7-part shares add threshold (K), total (N), and 1-based card
+                index (I) — these drive a per-set live countdown during
+                restore. The metadata is hash-covered so it cannot be tampered
+                with. The toggle is opt-out (default on); anyone scanning a
+                metadata-enabled Qard learns K and N. Without the password
+                that's not enough to recover anything, but it does narrow what
+                an attacker is searching for, so users wanting maximum opacity
+                can disable the toggle when generating shares. The SHA-256
+                hash is one-way and reveals nothing about share contents.
               </p>
             </div>
 
@@ -461,7 +479,7 @@ const DocsTechnical = () => {
                 <tbody className="divide-y divide-border/20">
                   {[
                     ["Hash function", "SHA-256 via @noble/hashes/sha256"],
-                    ["Hash input", 'SHA-256("seQRets|salt|data") — covers the 3-part share string'],
+                    ["Hash input", 'SHA-256 over the share string. Legacy/4-part shares: SHA-256("seQRets|salt|data"). v1.11+ shares with recovery-metadata enabled: SHA-256("seQRets|salt|data|t=K|n=N|i=I") — metadata is included in the hash so it cannot be tampered with.'],
                     ["Hash output", "64 hex characters (~71 chars with sha256: prefix)"],
                     ["Verification (generation)", "All shares are round-trip verified before being presented"],
                     ["Verification (restore)", "Desktop: auto-verified on scan/import with visible shield icon. Web: verified silently in the background (no UI) — the hash is still checked round-trip, there's just no indicator shown to the user."],
@@ -488,10 +506,18 @@ const DocsTechnical = () => {
                 Manual verification
               </h3>
               <p className="text-sm text-muted-foreground/80 mb-3">
-                Users can independently verify any share in a terminal:
+                Users can independently verify any share in a terminal. For
+                legacy or 4-part shares (no recovery metadata):
+              </p>
+              <div className="rounded-lg border border-border/20 bg-background/50 px-4 py-3 font-mono text-xs text-muted-foreground/70 mb-3">
+                echo -n "seQRets|salt|data" | shasum -a 256
+              </div>
+              <p className="text-sm text-muted-foreground/80 mb-3">
+                For v1.11+ shares with the recovery-metadata toggle enabled,
+                include the metadata segments in the hash input:
               </p>
               <div className="rounded-lg border border-border/20 bg-background/50 px-4 py-3 font-mono text-xs text-muted-foreground/70">
-                echo -n "seQRets|salt|data" | shasum -a 256
+                echo -n "seQRets|salt|data|t=K|n=N|i=I" | shasum -a 256
               </div>
             </div>
           </div>

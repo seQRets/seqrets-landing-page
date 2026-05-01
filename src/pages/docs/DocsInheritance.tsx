@@ -42,7 +42,7 @@ const STEPS = [
       "Generate the shares — seQRets encrypts with XChaCha20-Poly1305, splits with Shamir's SSS, and outputs QR codes (Qards)",
       "Optionally write shares to smart cards using the card writer in the desktop app",
       "The secret is destroyed from memory after generation (Rust zeroization in desktop)",
-      "(Desktop App) If you have multiple secrets to protect (e.g., Bitcoin seed, master password, exchange key), the inheritance planner supports multiple Secret Sets — each with its own password, keyfile, Qard configuration, and distribution table — all in a single encrypted plan",
+      "(Desktop App) If you have multiple secrets to protect (e.g., Bitcoin seed, master password, exchange key), the inheritance planner supports multiple seQRet Sets — each with its own password, keyfile, Qard configuration, and distribution table — all in a single encrypted plan",
     ],
     outcome:
       "N Qards (QR codes) and/or smart cards, each containing one share. The original secret exists nowhere.",
@@ -90,6 +90,7 @@ const STEPS = [
     items: [
       "Gather K shares from your distributed locations",
       "Open seQRets and scan/import the shares",
+      "(v1.11+ Qards with recovery metadata enabled) Watch the per-set live countdown as you scan — \"Set [ID] — 2 of 3 added · 1 more Qard required\". Confirms heirs will see this same guidance, and that they'll know exactly how many Qards remain without needing to remember the threshold.",
       "Enter your password to decrypt",
       "Verify the reconstructed secret matches the original",
       "Also test recovery with seQRets Recover (recover.html) — the same independent tool your heirs will use. Open recover.html in any browser offline, paste in your shares, enter your password. If it reconstructs the secret correctly, you've confirmed your plan works even without the main app.",
