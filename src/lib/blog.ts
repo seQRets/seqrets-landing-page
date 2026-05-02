@@ -19,6 +19,38 @@ export const categoryLabels: Record<BlogCategory, string> = {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "strategic-bitcoin-reserve-custody-problem",
+    title: "The Government Has $25 Billion in Bitcoin. Who Holds the Keys?",
+    date: "2026-05-02",
+    category: "crypto",
+    excerpt:
+      "At Bitcoin 2026 in Las Vegas, a White House advisor just teased a 'big announcement' on the U.S. Strategic Bitcoin Reserve — 328,000 BTC worth roughly $25 billion. Before the fanfare, there's a question nobody is asking loudly enough: how does a government secure a Bitcoin reserve without creating a catastrophic single point of failure?",
+    readTime: 6,
+    content: `At Bitcoin 2026 in Las Vegas last week, Patrick Witt — executive director of the President's Council of Advisors for Digital Assets — told 40,000 attendees that the White House has reached a "breakthrough" on the legal framework for the U.S. Strategic Bitcoin Reserve and plans to make a major announcement within weeks. The crowd was enthusiastic. The moment was framed as a milestone in sovereign Bitcoin adoption.
+
+It is a milestone. The United States federal government currently holds approximately 328,372 BTC — worth roughly $25 billion at current prices — making it the largest known sovereign Bitcoin holder in the world. Trump's March 2025 executive order formalized the reserve, directing agencies to transfer their seized and forfeited Bitcoin under a shared custody and reporting framework rather than liquidating it. The reserve has been growing for more than a year. A legislative framework to make it permanent is working its way through Congress.
+
+Here is the question that gets less applause: who holds the keys?
+
+This is not a rhetorical question. Bitcoin has no customer service number. There is no Federal Reserve backstop, no FDIC insurance, no diplomatic remedy if the wrong people get access to the signing keys for 328,000 coins. The government's Bitcoin is only as secure as the custody architecture protecting it — and nothing in the executive order, the fact sheets, or Patrick Witt's Las Vegas remarks has addressed that architecture publicly with any specificity. What we do know is that 328,000 BTC currently exists in addresses spread across multiple agencies, accumulated through criminal forfeitures over more than a decade, and is being consolidated into a reserve structure whose operational details are still being finalized.
+
+The custody question matters because this is exactly the class of problem that the history of Bitcoin has repeatedly and expensively demonstrated. The Kelp DAO bridge hack in April drained $292 million because a single verifier network — one trust assumption, one operational entity — was all that stood between the attacker and the money. The Drift Protocol exploit before that took $285 million because admin keys controlling a $285 million protocol lived in the hands of a small group that could be social-engineered. At every scale, the pattern is the same: when a single compromise grants total control, total control eventually gets compromised.
+
+A $25 billion Bitcoin reserve held by the U.S. government is not exempt from this logic. It is, if anything, a more attractive target. Nation-state adversaries — the same actors Chainalysis and multiple forensics firms have attributed to recent DeFi mega-hacks — have both the motivation and the demonstrated capability to pursue key material through operational channels when the cryptographic mathematics is unbreakable. They don't crack elliptic curves. They compromise the humans and infrastructure managing the keys.
+
+The correct architectural response is the same at any scale: eliminate the single point of failure. A sovereign Bitcoin reserve should require threshold signing — a k-of-n structure where no single individual, agency, or system holds enough key material to authorize a transaction alone. Every signing event should require cooperation from geographically distributed, institutionally independent signers across multiple branches or departments. No single compromise — a hacked terminal, a coerced official, a supply-chain attack on a signing device — should be sufficient to move a dollar.
+
+This is Shamir's Secret Sharing applied at national scale. The mathematics are the same whether you are protecting twelve words on a kitchen table or twelve billion dollars in a government vault. You generate a secret. You split it into shares using a polynomial over a finite field. You distribute those shares so that any k of n can cooperate to reconstruct, but k-1 reveals provably nothing — not statistically nothing, not computationally nothing, but information-theoretically nothing. There is no threshold below k where any amount of analysis gives the attacker any signal about the underlying key.
+
+The individual Bitcoin holder reading this faces the same structural question in miniature. Your seed phrase is your reserve. If it exists in one place — written on paper, stored in a hardware wallet, engraved on steel — then the security of everything you own reduces to the security of that one location. One house fire, one border crossing, one coercion event, one bad phishing email on a new laptop. The math of your personal reserve is no different from the math of a sovereign one: a single point of failure is a single point of failure regardless of the number of zeroes attached to it.
+
+The Witt announcement is worth watching. If the forthcoming framework specifies multi-party computation, threshold signing, and geographically distributed key custodians, it would represent a meaningful architectural commitment. If it doesn't address key management at that level of specificity, the reserve's security will remain undefined in the most operationally important sense.
+
+Either way, the principle is not new. Adi Shamir published it in 1979. The U.S. government is spending considerable energy deciding what Bitcoin to hold. The question of how to hold it — architecturally, not institutionally — is older and simpler than anything being debated in Las Vegas or on Capitol Hill.
+
+seQRets exists to make that architecture accessible to individuals. Encrypted seed phrase, split into QR-encoded shares, no servers, no accounts, no proprietary formats. The same threshold mathematics that a $25 billion sovereign reserve needs is available to anyone willing to spend ten minutes setting it up. The government's Bitcoin problem and your Bitcoin problem have the same solution. The only difference is the scale of what's at stake if you ignore it.`,
+  },
+  {
     slug: "kelp-dao-bridge-hack-single-verifier",
     title: "$292M in a 12-Minute Bridge Hack: The Kelp DAO Exploit Was a 1-of-1 Trust Failure",
     date: "2026-04-25",
