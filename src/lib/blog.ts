@@ -19,6 +19,42 @@ export const categoryLabels: Record<BlogCategory, string> = {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "bitcoin-etf-coinbase-custody-chokepoint",
+    title: "84% of Bitcoin ETF Assets Flow Through One Custodian. This Is the 1-of-1 Problem at National Scale.",
+    date: "2026-05-09",
+    category: "crypto",
+    excerpt:
+      "Bitcoin ETFs pulled $18.7 billion in inflows in Q1 2026. BlackRock's IBIT alone holds 806,700 BTC — nearly 4% of all Bitcoin in existence. Roughly 84% of those ETF assets are custodied through a single company: Coinbase Prime. The industry that was built to eliminate single points of failure just created the largest one in its history.",
+    readTime: 6,
+    content: `The Bitcoin ETF era has been an unambiguous institutional success story. In the first quarter of 2026, U.S. spot Bitcoin ETFs pulled in a record $18.7 billion in net inflows. BlackRock's iShares Bitcoin Trust (IBIT) now holds more than 806,700 BTC — roughly 3.8% of all Bitcoin that will ever exist — representing approximately $54 billion in assets under management. Nine consecutive days of ETF inflows in late April added another $2.7 billion. The numbers are staggering, and they continue to grow.
+
+Buried in the prospectuses and custody disclosures of those same ETFs is a fact that receives considerably less attention: approximately 84% of all U.S. spot Bitcoin ETF assets — roughly $74 billion of Bitcoin — are custodied through a single company. Eight of the eleven approved Bitcoin ETF vaults name Coinbase Prime as their primary custodian.
+
+This is not a complaint about Coinbase. It is one of the most sophisticated and well-capitalized digital asset custodians in the world, with hundreds of billions in institutional assets under custody and a security infrastructure that is audited, insured, and taken seriously. The problem is not Coinbase's competence. The problem is architectural.
+
+Any system where a single entity's operational failure, regulatory action, or security breach can simultaneously affect 84% of a $90 billion market is a system that has quietly rebuilt the exact single point of failure that Bitcoin was designed to make impossible. The irony is almost geometric: an asset created specifically to eliminate trusted intermediaries has, at institutional scale, routed the majority of its supply through a single trusted intermediary.
+
+Experts have begun using the word "choke point." It's accurate. A meaningful technology outage at Coinbase Prime — the kind that any large financial institution can and does experience — would freeze settlement for ETF issuers covering the majority of the market simultaneously. A regulatory shock, the kind of sudden and poorly-scoped enforcement action that U.S. regulators have demonstrated they are willing to take with little notice, could lock up custodied assets while litigation proceeds over months or years. A security breach — and Coinbase, like every company, faces sophisticated adversaries targeting exactly this class of asset — would not be a contained incident. It would be a market-wide event.
+
+A handful of ETF issuers have noticed. Fidelity's FBTC uses Fidelity Digital Assets, its own custody infrastructure, rather than Coinbase. VanEck's HODL has added backup custodians. BlackRock recently disclosed Anchorage Digital Bank as a secondary custodian alongside Coinbase for IBIT. These are meaningful steps — and they are still the exception rather than the rule. The actual Bitcoin holdings, as opposed to the disclosed backup arrangements, remain concentrated at Coinbase at levels that dwarf any precedent in traditional finance for single-custodian concentration.
+
+There is a name for the cryptographic solution to this class of problem. It is the same name that has appeared in the post-mortems of every major institutional security failure in crypto over the past two years: threshold signing. A k-of-n custody arrangement — where moving Bitcoin requires coordinated authorization from k of n independent, geographically dispersed, organizationally distinct signers — eliminates the single-custodian failure mode entirely. With proper threshold custody, no individual custodian failure can unilaterally freeze or expose the assets. You would need to simultaneously compromise a majority of independent signers to gain control.
+
+The mathematics are not complicated. The implementation is not novel. Multi-party computation and threshold signing infrastructure exists and is used by sophisticated institutions that have thought hard about custody architecture. The question is not whether the technology is available. The question is whether the incentive to use it — historically weaker than the incentive to sign a large custody contract with a reputable single counterparty — will catch up to the risk it is accumulating.
+
+For individual Bitcoin holders watching this unfold, the ETF custody concentration story carries a direct lesson. The structural error being made at institutional scale — concentrating control in one party for reasons of operational convenience — is the same structural error that most individual self-custodians make with their seed phrases. A single piece of steel with 24 words engraved on it, sitting in a home safe or a safety deposit box, is a 1-of-1 custody arrangement for your Bitcoin. The threat model is different from Coinbase's — no regulatory action is coming for your safe — but the architectural failure mode is identical. One event. One location. One compromise. Total loss.
+
+The ETF industry has, largely inadvertently, run a very large and expensive experiment in demonstrating what single-custodian concentration looks like at scale. It looks like $74 billion in Bitcoin all flowing through the same operational chokepoint. It looks like eight separate product issuers, with separately branded funds and marketing materials, all dependent on the same company's uptime for settlement and the same company's continued regulatory standing for access.
+
+Individual Bitcoin holders have a tool that the ETF market is only beginning to adopt: threshold custody of the underlying secret itself. Shamir's Secret Sharing — the same mathematical primitive that would allow Coinbase to distribute ETF custody keys across independent signers — allows an individual to split an encrypted seed phrase into shares that require a threshold to reconstruct. No single share reveals anything about the underlying secret. No single location, no single confiscation event, no single disaster can compromise you. You would need to independently breach a threshold of geographically distributed share locations — a categorically harder problem than cracking one safe or phishing one laptop.
+
+The ETF custody concentration will eventually force a reckoning. Regulators who scrutinize concentration risk in traditional custody arrangements will eventually apply the same lens to digital asset custodians. Issuers who have listed backup custodians on paper will eventually be asked when actual redistribution will follow. The mathematics of threshold signing will, in time, become standard institutional practice rather than a differentiating disclosure.
+
+For individual Bitcoin holders, the reckoning can happen on your own timeline, with your own assets, before an incident forces the question. The architecture that the ETF market is slowly, expensively discovering it needs has been available since 1979.
+
+seQRets is built on it. Encrypted seed phrase. Threshold-split shares. QR-encoded for physical distribution. No servers, no accounts, no counterparty. The same mathematics that 84% of Bitcoin ETF assets need and don't have — applied to the Bitcoin you actually own and control.`,
+  },
+  {
     slug: "strategic-bitcoin-reserve-custody-problem",
     title: "The Government Has $25 Billion in Bitcoin. Who Holds the Keys?",
     date: "2026-05-02",
