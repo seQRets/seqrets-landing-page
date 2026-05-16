@@ -19,6 +19,42 @@ export const categoryLabels: Record<BlogCategory, string> = {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "clarity-act-self-custody-right-cryptography",
+    title: "Congress Is About to Protect Your Right to Self-Custody. Cryptography Has to Do the Rest.",
+    date: "2026-05-16",
+    category: "crypto",
+    excerpt:
+      "The Clarity Act cleared the Senate Banking Committee 15-9 on May 14, becoming the most significant piece of crypto market structure legislation in U.S. history. Buried in its 309 pages is Section 605 — the Keep Your Coins Act — which would make federal self-custody protection the law of the land. A federal law can guarantee your right to hold your own keys. It cannot protect the keys themselves.",
+    readTime: 6,
+    content: `On May 14, 2026, the Senate Banking Committee passed the Digital Asset Market Clarity Act — the Clarity Act — by a 15-9 vote. Two Democrats crossed the aisle to join all Republicans on the panel, sending the most consequential piece of crypto market structure legislation in American history toward a full Senate floor vote. Bitcoin briefly crossed $82,000 on the news. The moment landed as a milestone.
+
+Most of the coverage focused on the regulatory architecture: the bill draws a hard line between the SEC and the CFTC, permanently classifying Bitcoin as a commodity under CFTC jurisdiction, and establishing a statutory framework that replaces years of "regulation by enforcement" with actual rules. That clarity is real and meaningful. But buried 305 pages into the bill is a section that received considerably less attention and matters more directly to every individual Bitcoin holder: Section 605.
+
+Section 605 is called the Keep Your Coins Act. It prohibits any federal agency from prohibiting, restricting, or impairing the ability of any person to self-custody digital assets for any lawful purpose. More specifically: agencies cannot restrict the use of self-hosted wallets. They cannot require that Bitcoin pass through licensed custodians before it can move. The right to hold your own keys — the foundational premise of Bitcoin self-sovereignty — would become a statutory protection, not merely a tolerance.
+
+This is a significant development. The regulatory history of the last five years includes repeated attempts, at the agency level, to impose custodial intermediaries on digital asset holdings. The Financial Crimes Enforcement Network's 2020 proposed rule would have required banks to collect identifying information on anyone transacting with a self-hosted wallet above a threshold. The IRS has repeatedly pushed for broader reporting requirements that would effectively treat self-custody as a compliance risk. Section 605 draws a line against all of that. If the bill becomes law — it still requires a full Senate vote, House reconciliation, and a presidential signature — the federal government's ability to erode self-custody rights through rulemaking would be legally constrained.
+
+What Section 605 cannot do is protect the keys themselves.
+
+This is the distinction that matters most for people who actually hold Bitcoin in self-custody. A federal law can guarantee your legal right to use a self-hosted wallet. It cannot guarantee that your seed phrase survives a house fire. It cannot prevent a border agent in a jurisdiction that compels decryption from demanding you unlock your hardware wallet. It cannot reconstruct your access if you die without a plan your family can execute. It cannot stop a phishing app from draining your wallet if you type your seed into it. Legal protection and cryptographic security operate on completely different layers, and the Clarity Act addresses only one of them.
+
+The same Congress that is codifying your right to self-custody cannot answer the question that your seed phrase's physical existence raises: what happens to a single point of failure when the failure actually occurs? That question has the same answer whether you're a sovereign government holding 328,000 BTC in a reserve or an individual holding two coins in a hardware wallet. A single representation of a secret, held in a single location, controlled by a single key holder, is a single point of failure. The Clarity Act does not change the threat model. It changes the legal environment that surrounds it.
+
+The cryptographic answer to the threat model is older than Bitcoin by three decades. Shamir's Secret Sharing, published in 1979, addresses exactly the problem that no legislation can solve: how to hold a secret such that its loss, theft, or coercion at any single location cannot compromise the whole. The mechanism is elegant — a polynomial over a finite field, evaluated at independent points that become shares, such that any threshold of shares can reconstruct the secret but any smaller number reveals provably nothing. Not probably nothing. Not computationally infeasible to extract. Information-theoretically nothing: with fewer shares than the threshold, every possible secret is equally consistent with what you hold. There is no foothold for an attacker, no partial signal, no statistical advantage.
+
+Once your encrypted seed phrase is split into shares and those shares are distributed — to a spouse, a sibling, an attorney's office, a safety deposit box in another city, a sealed envelope in a home safe — the threat model changes shape entirely. One location burning down yields one share, which yields nothing. One border crossing yields one share in your bag, which yields nothing. One social engineering attack that extracts one share yields nothing. The attacker needs to independently compromise a threshold of physically separated, organizationally distinct locations simultaneously. That is a categorically harder problem than any of the individual failures that currently threaten single-point self-custody setups.
+
+The Clarity Act's permanent Bitcoin commodity classification also carries an implication that connects to this architecture. Under the bill, Bitcoin is grandfathered as a non-security because spot Bitcoin ETPs were listed on national securities exchanges before January 1, 2026 — a grandfather clause that cannot be reversed through SEC rulemaking. This means Bitcoin's legal status, unlike many other digital assets, is now stable. For long-term self-custodians who have been uncertain whether the regulatory environment would eventually force their holdings into custodial accounts, that stability matters. It extends the planning horizon. It makes inheritance planning — setting up a threshold custody arrangement that can survive decades — a more rational investment of effort.
+
+The bill's path forward is not guaranteed. A full Senate vote will require 60 votes to overcome a filibuster, which means more Democratic support than the Banking Committee's 15-9 margin reflects. The bill also has to be reconciled with a House version that diverges on several provisions. Senator Elizabeth Warren's opposition — she declared the bill would "blow up the economy" during the committee debate — signals that the fights ahead will not be quiet.
+
+But the direction is clear. For the first time, the United States Congress has passed, at the committee level, a bill that would make self-custody protection federal law. The legal environment for Bitcoin holders in the United States is improving.
+
+The cryptographic environment is unchanged. Your seed phrase still exists in however many places you have put it, controlled by however many people can access those locations. The Clarity Act adds a legal protection layer. It does not add a threshold layer. That part is still yours to build.
+
+seQRets is built on the mathematics that the Keep Your Coins Act cannot provide: encrypted seed phrase, split into QR-encoded shares, distributed across independent locations, reconstructable only by a threshold that no single event can breach. The legal right to self-custody and the cryptographic architecture to exercise it safely are both necessary. Congress is working on one of them. The other has been available since 1979.`,
+  },
+  {
     slug: "bitcoin-inheritance-time-bomb-2026",
     title: "The Bitcoin Inheritance Time Bomb Is Starting to Detonate",
     date: "2026-05-15",
