@@ -552,7 +552,7 @@ Web: @noble/ciphers, @noble/hashes, and @scure/bip32, @scure/bip39 by Paul Mille
 ### Inheritance
 
 **How does inheritance planning work?**
-Create a Shamir split with a threshold (e.g., 3-of-5), distribute shares to trusted people or locations, and provide instructions for reconstruction. The Desktop App includes a comprehensive Inheritance Plan builder with support for multiple seQRet Sets (document every secret in one plan), named beneficiaries with asset assignments, emergency access planning for incapacitation scenarios, edit & re-encrypt for updating plans without recreating them, and automated review reminders on a configurable cadence.
+Create a Shamir split with a threshold (e.g., 3-of-5), distribute shares to trusted people or locations, and provide instructions for reconstruction. The Desktop App includes a comprehensive Inheritance Plan builder with support for multiple seQRet Sets (document every secret in one plan), named beneficiaries with asset assignments, emergency access planning for incapacitation scenarios, edit & re-encrypt for updating plans without recreating them, and automated review reminders on a configurable cadence. You can also attach supporting documents (.pdf, .docx, .odt, .ods, .odp, .json, .txt — up to 50 MB each) which are encrypted inside the plan file alongside the structured data — useful for letters of instruction, asset inventories, copies of wills or trust documents, or any reference material heirs may need.
 
 **Is the Inheritance Plan stored somewhere?**
 No. The plan is encrypted and exported as a file or written to a JavaCard. seQRets stores no copy. If you lose all copies, it cannot be recovered.
@@ -563,7 +563,7 @@ No. No server, no account system, no backup. If you lose enough shares to fall b
 ### Desktop App
 
 **Web app vs desktop app?**
-Both use the same encryption and splitting logic. Desktop adds native Rust crypto, memory zeroization (compiler-fence), browser extension immunity (Tauri WebView), code signing, SHA-256 share integrity verification UI (shield icons, printed fingerprints on Qard cards), JavaCard smart card support, and a comprehensive Inheritance Plan builder (multiple seQRet Sets, beneficiaries, incapacitation planning, edit & re-encrypt, automated review reminders).
+Both use the same encryption and splitting logic. Desktop adds native Rust crypto, memory zeroization (compiler-fence), browser extension immunity (Tauri WebView), code signing, SHA-256 share integrity verification UI (shield icons, printed fingerprints on Qard cards), JavaCard smart card support, and a comprehensive Inheritance Plan builder (multiple seQRet Sets, beneficiaries, incapacitation planning, edit & re-encrypt, automated review reminders, attachable supporting documents — .pdf, .docx, .odt, .ods, .odp, .json, .txt up to 50 MB — encrypted inside the plan).
 
 **What platforms?**
 macOS, Windows, and Linux. Built with Tauri (Rust + web frontend). Ships as a code-signed binary with automatic delta updates.

@@ -27,7 +27,7 @@
 ## Platforms
 
 - Web App (free): https://app.seqrets.app
-- Desktop App (paid): Rust/Tauri — macOS, Windows, Linux. Adds JCOP smart card support, memory zeroization (Rust `zeroize` + compiler-fence), code signing, OS keychain API key storage, SHA-256 share integrity verification UI, PDF export of inheritance plans, time-triggered plan review reminders, comprehensive inheritance planner (multiple seQRet Sets, beneficiaries, incapacitation planning, edit & re-encrypt, automated review reminders).
+- Desktop App (paid): Rust/Tauri — macOS, Windows, Linux. Adds JCOP smart card support, memory zeroization (Rust `zeroize` + compiler-fence), code signing, OS keychain API key storage, SHA-256 share integrity verification UI, PDF export of inheritance plans, time-triggered plan review reminders, comprehensive inheritance planner (multiple seQRet Sets, beneficiaries, incapacitation planning, edit & re-encrypt, automated review reminders, attach supporting documents — .pdf, .docx, .odt, .ods, .odp, .json, .txt up to 50 MB — encrypted inside the plan).
 
 ## Documentation
 
