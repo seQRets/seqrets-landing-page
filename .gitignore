@@ -39,3 +39,6 @@ playwright.config.ts
 e2e/
 playwright-report/
 test-results/
+
+# Internal attorney-prep doc — not site content, never deploy/commit
+seQRets-Legal-Review-Open-Items.docx

@@ -116,6 +116,7 @@ const Footer = () => {
                   Community
                 </a>
               </li>
+              <li><Link to="/contact" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">Contact</Link></li>
               <li><Link to="/pgp" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">PGP Key</Link></li>
               <li><Link to="/privacy" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">Privacy Policy</Link></li>
               <li><Link to="/terms" className="text-sm text-muted-foreground/80 transition-colors hover:text-foreground">Terms of Service</Link></li>
@@ -127,7 +128,7 @@ const Footer = () => {
         {/* Bottom bar */}
         <div className="border-t border-border/15 pt-8 flex flex-col items-center gap-3 text-center">
           <p className="text-xs text-muted-foreground/70">
-            © {new Date().getFullYear()} seQRets. All rights reserved. Licensed under AGPLv3.
+            © {new Date().getFullYear()} seQRets — a product of Toothjockey LLC. All rights reserved. Licensed under AGPLv3.
           </p>
           <div className="flex items-center gap-4 text-xs text-muted-foreground/60">
             <Link to="/privacy" className="transition-colors hover:text-foreground">Privacy</Link>
