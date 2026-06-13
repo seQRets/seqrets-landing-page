@@ -1,8 +1,8 @@
 # seQRets
 
-> seQRets is an open-source, zero-knowledge cryptographic tool for securing, splitting, and sharing secrets (crypto seed phrases, private keys, passwords) using Shamir's Secret Sharing and XChaCha20-Poly1305 encryption. Secrets are encoded as printable QR codes called Qards. Runs entirely offline — no servers, accounts, or telemetry. Licensed under AGPLv3.
+> seQRets is an open-source, zero-knowledge cryptographic tool for securing, splitting, and sharing secrets (crypto seed phrases, private keys, passwords) using Shamir's Secret Sharing and XChaCha20-Poly1305 encryption. Secrets are encoded as printable QR codes called Qards. Runs entirely offline — no servers, accounts, or telemetry. Licensed under AGPLv3. A product of Toothjockey LLC (North Dakota, USA).
 
-**Last updated:** April 26, 2026
+**Last updated:** June 12, 2026
 
 ## Key Facts
 
@@ -52,24 +52,35 @@
 
 ## Contact
 
+- Contact page (all channels in one place): [https://seqrets.app/contact](https://seqrets.app/contact)
 - General inquiries: hello@seqrets.app
 - Security disclosures & encrypted communication: seqrets@proton.me
+- Commercial licensing: licensing@seqrets.app
 - PGP Key: [https://seqrets.app/pgp.txt](https://seqrets.app/pgp.txt) (plain text, bot-accessible)
 - PGP Page: [https://seqrets.app/pgp](https://seqrets.app/pgp) (interactive, requires JavaScript)
 - Fingerprint: `2C4D CD66 1F22 05AC 15C3 AC04 E462 D3A7 3866 C5D9`
 - Proton-to-Proton messages to seqrets@proton.me are E2E encrypted automatically
+- Operated by: Toothjockey LLC (North Dakota, USA)
 
 ## Blog
 
 - [Blog Index](https://seqrets.app/blog)
+- [Strategy Sold Bitcoin. ETFs Bled $4 Billion. The Drawdown Is a Custody Stress Test — and Most Setups Are Failing It Quietly.](https://seqrets.app/blog/strategy-sells-etf-outflows-drawdown-custody-stress-test)
+- [Bitcoin's Quantum Migration Is Coming. It Will Be the Largest Coordinated Seed-Handling Event in Bitcoin's History.](https://seqrets.app/blog/bitcoin-quantum-migration-bip361-key-handling-2026)
+- [A Tennessee Crew Just Got Indicted for $6.5M in Home Invasions. The U.S. Wrench Attack Wave Has a Federal Docket Now.](https://seqrets.app/blog/tennessee-indictment-us-wrench-attacks-2026)
+- [Congress Is About to Protect Your Right to Self-Custody. Cryptography Has to Do the Rest.](https://seqrets.app/blog/clarity-act-self-custody-right-cryptography)
+- [The Bitcoin Inheritance Time Bomb Is Starting to Detonate](https://seqrets.app/blog/bitcoin-inheritance-time-bomb-2026)
+- [84% of Bitcoin ETF Assets Flow Through One Custodian. This Is the 1-of-1 Problem at National Scale.](https://seqrets.app/blog/bitcoin-etf-coinbase-custody-chokepoint)
+- [The Government Has $25 Billion in Bitcoin. Who Holds the Keys?](https://seqrets.app/blog/strategic-bitcoin-reserve-custody-problem)
+- [$292M in a 12-Minute Bridge Hack: The Kelp DAO Exploit Was a 1-of-1 Trust Failure](https://seqrets.app/blog/kelp-dao-bridge-hack-single-verifier)
 - [A Fake Ledger App on the App Store Just Drained a Musician's $420K Retirement Stash](https://seqrets.app/blog/fake-ledger-app-store-scam-g-love)
 - [Inside the $285M Drift Protocol Hack: Why Single-Key Security Is a Liability](https://seqrets.app/blog/drift-protocol-hack-secret-splitting)
 - [Zero Knowledge Goes Mainstream: Why 2026 Is ZKP's Breakout Year](https://seqrets.app/blog/zero-knowledge-proofs-mainstream-crypto-2026)
-- [The $5 Wrench Problem: Physical Attacks on Bitcoin Holders](https://seqrets.app/blog/wrench-attacks-bitcoin-physical-security)
-- [Hong Kong Decryption Law & Bitcoin Travelers](https://seqrets.app/blog/hong-kong-decryption-law-bitcoin-travelers)
-- [Why Seed Phrase Security Matters](https://seqrets.app/blog/why-seed-phrase-security-matters)
-- [Shamir's Secret Sharing Explained](https://seqrets.app/blog/shamirs-secret-sharing-explained)
-- [Crypto Inheritance Planning](https://seqrets.app/blog/crypto-inheritance-planning)
+- [The $5 Wrench Problem: Why Physical Attacks on Bitcoin Holders Are Surging](https://seqrets.app/blog/wrench-attacks-bitcoin-physical-security)
+- [Hong Kong's New Decryption Law Is a Wake-Up Call for Bitcoin Holders](https://seqrets.app/blog/hong-kong-decryption-law-bitcoin-travelers)
+- [Why Seed Phrase Security Matters More Than Ever](https://seqrets.app/blog/why-seed-phrase-security-matters)
+- [Shamir's Secret Sharing: The Math Behind seQRets](https://seqrets.app/blog/shamirs-secret-sharing-explained)
+- [Don't Let Your Bitcoin Die With You](https://seqrets.app/blog/crypto-inheritance-planning)
 
 ## Optional
 
