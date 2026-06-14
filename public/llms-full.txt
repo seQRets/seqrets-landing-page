@@ -2,7 +2,7 @@
 
 > seQRets is an open-source, zero-knowledge cryptographic tool for securing, splitting, and sharing secrets (crypto seed phrases, private keys, passwords) using Shamir's Secret Sharing and XChaCha20-Poly1305 encryption. Secrets are encoded as printable QR codes called Qards. Runs entirely offline — no servers, accounts, or telemetry. Licensed under AGPLv3. A product of Toothjockey LLC (North Dakota, USA).
 
-**Last updated:** June 12, 2026
+**Last updated:** June 14, 2026
 
 - Source Code: https://github.com/seQRets/seQRets-app
 - Web App (free): https://app.seqrets.app
@@ -637,6 +637,7 @@ echo "Your message" | gpg --encrypt --armor --recipient seqrets@proton.me
 
 ## Blog Posts
 
+- [Ledger Users Just Got a Letter About Quantum Computers. It Was a Phishing Scam — and a QR Code Was the Hook.](https://seqrets.app/blog/ledger-post-quantum-mail-phishing-qr-seed-2026)
 - [Strategy Sold Bitcoin. ETFs Bled $4 Billion. The Drawdown Is a Custody Stress Test — and Most Setups Are Failing It Quietly.](https://seqrets.app/blog/strategy-sells-etf-outflows-drawdown-custody-stress-test)
 - [Bitcoin's Quantum Migration Is Coming. It Will Be the Largest Coordinated Seed-Handling Event in Bitcoin's History.](https://seqrets.app/blog/bitcoin-quantum-migration-bip361-key-handling-2026)
 - [A Tennessee Crew Just Got Indicted for $6.5M in Home Invasions. The U.S. Wrench Attack Wave Has a Federal Docket Now.](https://seqrets.app/blog/tennessee-indictment-us-wrench-attacks-2026)
