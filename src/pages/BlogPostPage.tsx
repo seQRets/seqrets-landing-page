@@ -115,7 +115,7 @@ const BlogPostPage = () => {
               {paragraphs.map((p, i) => (
                 <p
                   key={i}
-                  className="text-base md:text-lg text-muted-foreground/80 leading-relaxed"
+                  className="text-base md:text-lg text-foreground/90 leading-relaxed"
                 >
                   {p}
                 </p>
