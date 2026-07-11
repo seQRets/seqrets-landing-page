@@ -67,6 +67,7 @@
 ## Blog
 
 - [Blog Index](https://seqrets.app/blog)
+- [2,114 Wallets Were Born Broken. The 'Ill Bloom' Flaw Means Some Seed Phrases Were Never Secrets at All — and the Fix Is a Migration Most People Will Botch.](https://seqrets.app/blog/ill-bloom-weak-rng-seed-vulnerability-migration-2026)
 - [France Just Reported 77 Crypto Kidnappings in Six Months. The Attackers Aren't Breaking Wallets — They're Breaking People, and Betting Your Whole Secret Is in One Head.](https://seqrets.app/blog/france-crypto-kidnapping-77-cases-wrench-attack-coercion-2026)
 - [A Hidden Camera Filmed Him Typing 12 Words. That Was the Whole Hack — and $176 Million in Bitcoin Walked Out the Door.](https://seqrets.app/blog/cctv-seed-phrase-theft-176m-trezor-observation-attack-2026)
 - [Crypto Twitter Decided Your Seed Phrase Is a Liability. It's Right — and the Fix Most Wallets Are Selling Just Moves the Risk Somewhere Else.](https://seqrets.app/blog/seed-phrase-liability-seedless-wallets-threshold-2026)
