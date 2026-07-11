@@ -31,6 +31,13 @@ const SecurityPage = () => {
           </p>
         </div>
 
+        {/* Audit status */}
+        <div className="mb-16 mx-auto max-w-2xl rounded-2xl border border-border/30 bg-card/20 px-6 py-4 text-center">
+          <p className="text-sm text-muted-foreground/80">
+            <strong className="text-foreground">Audit status:</strong> seQRets has not yet undergone a formal third-party security audit. It is built on independently audited cryptographic libraries, and a whole-product audit is on the roadmap. Until then, keep an independent backup of anything you protect with seQRets.
+          </p>
+        </div>
+
         <div className="prose prose-invert prose-lg max-w-none space-y-16">
 
           {/* How seQRets Protects Your Secrets */}

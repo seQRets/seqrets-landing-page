@@ -49,7 +49,7 @@ const features: Feature[] = [
     icon: Bot,
     title: "Bob — AI Assistant",
     category: "ai",
-    description: "Built-in AI guide that helps you understand security concepts and plan your secret management strategy.",
+    description: "Optional AI guide that helps you understand security concepts and plan your strategy. Opt-in — bring your own Google Gemini key.",
   },
 ];
 
