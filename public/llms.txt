@@ -2,7 +2,7 @@
 
 > seQRets is an open-source, zero-knowledge cryptographic tool for securing, splitting, and sharing secrets (crypto seed phrases, private keys, passwords) using Shamir's Secret Sharing and XChaCha20-Poly1305 encryption. Secrets are encoded as printable QR codes called Qards. Runs entirely offline — no servers, accounts, or telemetry. Licensed under AGPLv3. A product of Toothjockey LLC (North Dakota, USA).
 
-**Last updated:** July 4, 2026
+**Last updated:** July 11, 2026
 
 ## Key Facts
 
@@ -17,9 +17,11 @@
 - UX Safety: QR reveal dialog is view-only (no download), blur-by-default, with an eye toggle to reveal when ready to scan.
 - PWA: Installable as a Progressive Web App. Service worker caches assets for true offline use after first load.
 - Clipboard Safety: Copied secrets auto-clear from the clipboard after 60 seconds.
+- Bob AI Assistant: Optional and opt-in — requires a user-provided Google Gemini API key. Questions go directly to Google's Gemini API with no middleman server; no secret, share, or plan data is ever included. Besides the optional BTC price ticker, this is the app's only network call.
 - API Key Storage (Desktop): Bob AI Gemini API keys are stored in the OS keychain (macOS Keychain / Windows Credential Store) instead of localStorage.
 - Connection Indicator: Pulsing dot in the header shows red while online (exposed to network) and solid green when offline (safer state for a security app).
 - Architecture: Zero-knowledge — no servers, no accounts, no telemetry, fully offline
+- Audit Status: No formal third-party audit of seQRets as a whole product yet (on the roadmap). Built on independently audited primitives: `shamir-secret-sharing` (Cure53 + Zellic), noble/scure libraries (public review), RustCrypto crates on desktop. Users are advised to keep independent backups until a whole-product audit completes.
 - Quantum Resistance: Fully quantum-resistant under the scheme's assumptions. While fewer than K shares are compromised, Shamir's Secret Sharing provides information-theoretic security — the ciphertext is never reconstructed, so no quantum computer can attack it. XChaCha20-Poly1305 serves as defense-in-depth in the event of share threshold compromise.
 - License: AGPLv3
 - Source Code: https://github.com/seQRets/seQRets-app
@@ -27,7 +29,7 @@
 ## Platforms
 
 - Web App (free): https://app.seqrets.app
-- Desktop App (paid): Rust/Tauri — macOS, Windows, Linux. Adds JCOP smart card support, memory zeroization (Rust `zeroize` + compiler-fence), code signing, OS keychain API key storage, SHA-256 share integrity verification UI, PDF export of inheritance plans, time-triggered plan review reminders, comprehensive inheritance planner (multiple seQRet Sets, beneficiaries, incapacitation planning, edit & re-encrypt, automated review reminders, attach supporting documents — .pdf, .docx, .odt, .ods, .odp, .json, .txt up to 50 MB — encrypted inside the plan).
+- Desktop App (paid — one-time purchase, price TBA; coming soon, waitlist open at https://seqrets.app): Rust/Tauri — macOS, Windows, Linux. Adds JCOP smart card support, memory zeroization (Rust `zeroize` + compiler-fence), code signing, OS keychain API key storage, SHA-256 share integrity verification UI, PDF export of inheritance plans, time-triggered plan review reminders, comprehensive inheritance planner (multiple seQRet Sets, beneficiaries, incapacitation planning, edit & re-encrypt, automated review reminders, attach supporting documents — .pdf, .docx, .odt, .ods, .odp, .json, .txt up to 50 MB — encrypted inside the plan).
 
 ## Documentation
 

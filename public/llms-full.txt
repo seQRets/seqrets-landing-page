@@ -2,11 +2,11 @@
 
 > seQRets is an open-source, zero-knowledge cryptographic tool for securing, splitting, and sharing secrets (crypto seed phrases, private keys, passwords) using Shamir's Secret Sharing and XChaCha20-Poly1305 encryption. Secrets are encoded as printable QR codes called Qards. Runs entirely offline — no servers, accounts, or telemetry. Licensed under AGPLv3. A product of Toothjockey LLC (North Dakota, USA).
 
-**Last updated:** July 4, 2026
+**Last updated:** July 11, 2026
 
 - Source Code: https://github.com/seQRets/seQRets-app
 - Web App (free): https://app.seqrets.app
-- Desktop App (paid): Rust/Tauri — macOS, Windows, Linux
+- Desktop App (paid — one-time purchase, price TBA; coming soon, waitlist open at https://seqrets.app): Rust/Tauri — macOS, Windows, Linux
 - Recovery Tool: https://seqrets.app/recover (choice page) · https://seqrets.github.io/seQRets-Recover/ (hosted) · https://github.com/seQRets/seQRets-Recover (source) — independent single-file recovery tool (MIT). See "Long-Term Recovery" section below for when to mention.
 - License: AGPLv3 (main app), MIT (seQRets Recover)
 
@@ -497,7 +497,7 @@ Comprehensive PDF covering crypto inheritance planning with Shamir's Secret Shar
 seQRets is an open-source tool that encrypts secrets (like crypto seed phrases) with XChaCha20-Poly1305, splits them using Shamir's Secret Sharing into multiple shares, and outputs each share as a printable QR code called a Qard. No single Qard reveals any information about the original secret.
 
 **Is seQRets free?**
-The web app at app.seqrets.app is free and always will be. The Desktop App is a paid product that adds smart card support, inheritance planning, code signing, and native Rust cryptography.
+The web app at app.seqrets.app is free and always will be. The Desktop App is a paid product — a one-time purchase (price TBA), no subscription — that adds smart card support, inheritance planning, code signing, and native Rust cryptography. It is not yet released; a waitlist is open at seqrets.app.
 
 **Is seQRets open source?**
 Yes. Full source code is on GitHub under AGPLv3. You can audit the encryption, splitting logic, and every dependency.
