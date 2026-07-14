@@ -13,7 +13,7 @@ const rows = [
   { feature: "Keyfile support", web: true, desktop: true },
   { feature: "Inheritance plan builder", web: false, desktop: true },
   { feature: "Code-signed binary", web: false, desktop: true },
-  { feature: "Smart card (NFC) support", web: false, desktop: true },
+  { feature: "Smart card support", web: false, desktop: true },
   { feature: "Portable USB card reader", web: false, desktop: true },
   { feature: "Offline-first by design", web: "partial", desktop: true },
 ];

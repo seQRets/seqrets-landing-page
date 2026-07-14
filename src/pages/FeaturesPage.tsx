@@ -107,15 +107,15 @@ const sections: FeatureSection[] = [
     category: "smart",
     desktopOnly: true,
     description:
-      "Store shares on NFC-enabled smart cards for durable, tamper-evident physical security. Tap your card to back up or restore — no cables, no adapters, no friction.",
+      "Store shares on JCOP smart cards for durable, tamper-evident physical security. Insert your card into the USB reader to back up or restore.",
     details: [
-      "NFC tap-to-read and tap-to-write — instant transfers",
+      "Read and write shares over a USB card reader",
       "Tamper-evident design reveals physical compromise",
       "Survives water, dust, and everyday wear",
       "Portable USB card reader included with bundles",
     ],
     technicalDetails: [
-      "JCOP-based Java Cards, dual-interface (ISO 7816 contact + ISO 14443 NFC)",
+      "JCOP-based dual-interface Java Cards; the desktop app uses the contact interface (ISO 7816) via a USB reader (NFC not yet supported)",
       "GlobalPlatform 2.3+ compatible — seQRets applet pre-installed on branded cards",
       "Desktop app communicates via standard USB CCID readers (contact mode)",
       "PIN-protected with wipe-after-5-attempts; optional wipe protection flag prevents factory reset on lockout",
@@ -166,7 +166,7 @@ const sections: FeatureSection[] = [
 const desktopPerks = [
   { icon: ShieldCheck, label: "Code-signed binary — installs cleanly on Mac, Windows & Linux" },
   { icon: Zap, label: "Automatic delta updates — security patches delivered instantly" },
-  { icon: CreditCard, label: "NFC smart card support — tap to back up or restore" },
+  { icon: CreditCard, label: "Smart card support — store shares on a JCOP card via USB reader" },
   { icon: Fingerprint, label: "Printed SHA fingerprint on every Qard — verifiable against your records without scanning" },
   { icon: Package, label: "Everything included — smart card & USB reader shipped to you" },
 ];
@@ -195,7 +195,7 @@ const FeaturesPage = () => {
     <div className="min-h-screen bg-background">
       <PageHead
         title="Features"
-        description="Explore seQRets features: BIP-39 validation, Shamir's Secret Sharing, QR-coded backups, NFC smart cards, inheritance planning, and Bob the AI assistant."
+        description="Explore seQRets features: BIP-39 validation, Shamir's Secret Sharing, QR-coded backups, smart card storage, inheritance planning, and Bob the AI assistant."
         path="/features"
       />
       <Navbar />
@@ -337,7 +337,7 @@ const FeaturesPage = () => {
                   One-time purchase. No subscription. Yours forever.
                 </h3>
                 <p className="text-sm text-muted-foreground/80 leading-relaxed">
-                  A code-signed desktop app with automatic updates, NFC smart card support, and a portable USB reader — all included. The source code is always free under AGPLv3.
+                  A code-signed desktop app with automatic updates, smart card support, and a portable USB reader — all included. The source code is always free under AGPLv3.
                 </p>
               </div>
 

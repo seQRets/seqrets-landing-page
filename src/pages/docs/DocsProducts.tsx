@@ -4,6 +4,7 @@ import {
   PRODUCTS,
   BUNDLE_CONTENTS,
   formatPrice,
+  SHOP_LIVE,
   type ProductSlug,
 } from "@/lib/stripe";
 
@@ -30,8 +31,8 @@ const PRODUCT_SPECS: Partial<Record<ProductSlug, ProductSpec>> = {
     extendedDescription:
       "JCOP-based Java Card with the seQRets applet pre-installed. Used to store encrypted shares as a physical backup that can be read by the desktop app via a USB card reader.",
     specs: [
-      ["Card Type", "Java Card (JCOP)"],
-      ["Interface", "Contact (ISO 7816)"],
+      ["Card Type", "Java Card (JCOP), dual-interface"],
+      ["Interface", "Contact (ISO 7816) via USB reader — NFC not yet supported in-app"],
       ["Applet", "seQRets applet pre-installed"],
       ["Standard", "GlobalPlatform 2.3+"],
       ["Branding", "seQRets logo printed on card"],
@@ -42,7 +43,7 @@ const PRODUCT_SPECS: Partial<Record<ProductSlug, ProductSpec>> = {
       "Three JCOP smart cards at a volume discount. Ideal for inheritance plans requiring multiple share holders, or as backup cards for replacements.",
     specs: [
       ["Contents", "3\u00D7 JCOP smart cards with seQRets applet"],
-      ["Savings", "~20% vs buying individually"],
+      ["Savings", "Discounted vs buying cards individually"],
       ["Use Case", "Multi-share inheritance plans, backup cards"],
     ],
   },
@@ -147,7 +148,8 @@ const DocsProducts = () => {
       brand: { "@type": "Brand", name: "seQRets" },
       offers: {
         "@type": "Offer",
-        price: (p.priceInCents / 100).toFixed(2),
+        // Pricing is not finalized; only advertise a concrete price once the shop is live.
+        ...(SHOP_LIVE ? { price: (p.priceInCents / 100).toFixed(2) } : {}),
         priceCurrency: "USD",
         availability: "https://schema.org/PreOrder",
         url: "https://seqrets.app/shop",
@@ -213,11 +215,19 @@ const DocsProducts = () => {
                   )}
                 </div>
                 <div className="text-right shrink-0">
-                  <p className="font-display text-lg font-bold text-foreground">
-                    {formatPrice(product.priceInCents)}
-                  </p>
-                  {!product.priceFinal && (
-                    <p className="text-xs text-muted-foreground/60">or less</p>
+                  {SHOP_LIVE ? (
+                    <>
+                      <p className="font-display text-lg font-bold text-foreground">
+                        {formatPrice(product.priceInCents)}
+                      </p>
+                      {!product.priceFinal && (
+                        <p className="text-xs text-muted-foreground/60">or less</p>
+                      )}
+                    </>
+                  ) : (
+                    <p className="font-display text-sm font-semibold text-muted-foreground/70">
+                      Pricing TBA
+                    </p>
                   )}
                 </div>
               </div>
@@ -237,9 +247,11 @@ const DocsProducts = () => {
                       <li key={itemSlug} className="flex items-center gap-2">
                         <span className="text-primary">&#8226;</span>
                         {qty}&times; {PRODUCTS[itemSlug].name}
-                        <span className="text-muted-foreground/50">
-                          ({formatPrice(PRODUCTS[itemSlug].priceInCents)} each)
-                        </span>
+                        {SHOP_LIVE && (
+                          <span className="text-muted-foreground/50">
+                            ({formatPrice(PRODUCTS[itemSlug].priceInCents)} each)
+                          </span>
+                        )}
                       </li>
                     ))}
                   </ul>

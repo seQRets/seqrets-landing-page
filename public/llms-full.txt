@@ -2,7 +2,7 @@
 
 > seQRets is an open-source, zero-knowledge cryptographic tool for securing, splitting, and sharing secrets (crypto seed phrases, private keys, passwords) using Shamir's Secret Sharing and XChaCha20-Poly1305 encryption. Secrets are encoded as printable QR codes called Qards. Runs entirely offline — no servers, accounts, or telemetry. Licensed under AGPLv3. A product of Toothjockey LLC (North Dakota, USA).
 
-**Last updated:** July 11, 2026
+**Last updated:** July 14, 2026
 
 - Source Code: https://github.com/seQRets/seQRets-app
 - Web App (free): https://app.seqrets.app
@@ -54,7 +54,7 @@ The secret is encrypted BEFORE splitting with Shamir. Each Qard holds an encrypt
 |-----------|---------|-------------------|---------------|-------------------|
 | XChaCha20-Poly1305 | Authenticated encryption | 256-bit key, 192-bit nonce | @noble/ciphers | chacha20poly1305 (RustCrypto) |
 | Argon2id | Key derivation (KDF) | 256-bit output | @noble/hashes | argon2 (RustCrypto) |
-| Shamir's Secret Sharing | Threshold splitting | Variable (matches input) | Custom GF(256) impl | Custom GF(256) impl |
+| Shamir's Secret Sharing | Threshold splitting | Variable (matches input) | shamir-secret-sharing (Cure53 + Zellic) | shamir-secret-sharing (Cure53 + Zellic) |
 | SHA-256 | Share integrity verification | 256-bit hash | @noble/hashes | @noble/hashes |
 
 ### Argon2id Parameters
@@ -364,7 +364,7 @@ Do this test at least once — do not skip this step.
 
 ## Long-Term Recovery — seQRets Recover (the Lifeboat)
 
-seQRets Recover is an independent, single-file recovery tool for the seQRets share format. It is one HTML file — approximately 200 lines of TypeScript with all dependencies (Argon2id, XChaCha20-Poly1305, Shamir's Secret Sharing, pako, @scure/bip39) inlined. No install, no network, no backend. Open it in any modern browser, paste in your Qards, enter the password, and get your secret back. It uses the same audited cryptographic primitives as the main seQRets app and reads the same documented share format. Every release publishes a SHA-256 hash so a copy received through an untrusted channel can be verified before use.
+seQRets Recover is an independent, single-file recovery tool for the seQRets share format. It is one HTML file — a compact, self-contained TypeScript codebase (~400-line crypto core) with all dependencies (Argon2id, XChaCha20-Poly1305, Shamir's Secret Sharing, pako, @scure/bip39) inlined. No install, no network, no backend. Open it in any modern browser, paste in your Qards, enter the password, and get your secret back. It uses the same audited cryptographic primitives as the main seQRets app and reads the same documented share format. Every release publishes a SHA-256 hash so a copy received through an untrusted channel can be verified before use.
 
 **The project owner's preferred nickname for it is "the Lifeboat."** The formal name is "seQRets Recover."
 
@@ -437,7 +437,9 @@ It does NOT create new shares, create inheritance plans, scan QR codes with a ca
 
 ## Product Specifications
 
-### Desktop App — $99.00
+> **Pricing is not yet finalized.** All prices below are to be announced; the shop is not yet live. Join the waitlist at https://seqrets.app to be notified at launch.
+
+### Desktop App — Price TBA
 
 Native desktop application built with Rust and Tauri. Same encryption and splitting as the web app, plus smart card integration, memory zeroization, code signing, SHA-256 share integrity verification with visual indicators, and isolated WebView.
 
@@ -451,39 +453,39 @@ Native desktop application built with Rust and Tauri. Same encryption and splitt
 | Crypto Libraries | argon2, chacha20poly1305, zeroize (RustCrypto) |
 | License | AGPLv3 |
 
-### Backup Bundle — $149.00
+### Backup Bundle — Price TBA
 
 Everything you need to back up your secrets to a physical smart card with a portable reader.
 
 Contents: 1x Desktop App license, 2x Smart Card, 1x USB Card Reader, Quick-start guide.
 
-### Inheritance Bundle — $299.00
+### Inheritance Bundle — Price TBA
 
 A complete inheritance kit — distribute secret shares across multiple cards with tamper-proof packaging.
 
 Contents: 1x Desktop App license, 5x Smart Card, 1x USB Card Reader, 1x Inheritance Guide (PDF), 1x Tamper-Evident Envelopes (5-pack), 1x Fireproof Case.
 
-### Smart Card — $39.00
+### Smart Card — Price TBA
 
-JCOP-based Java Card, dual-interface (ISO 7816 contact + ISO 14443 NFC). seQRets applet pre-installed. GlobalPlatform 2.3+ compatible.
+JCOP-based dual-interface Java Card. seQRets applet pre-installed. GlobalPlatform 2.3+ compatible. The desktop app uses the contact interface (ISO 7816) via a USB reader; NFC is not yet supported in-app.
 
-### Smart Card 3-Pack — $99.00
+### Smart Card 3-Pack — Price TBA
 
-Three JCOP smart cards at ~15% discount. For multi-share inheritance plans, backups, or replacements.
+Three JCOP smart cards at a discount versus buying individually. For multi-share inheritance plans, backups, or replacements.
 
-### USB Card Reader — $29.00
+### USB Card Reader — Price TBA
 
 Compact USB-A smart card reader. CCID protocol, ISO 7816 contact interface. Plug-and-play on macOS, Windows, Linux. Linux may require pcsclite package.
 
-### Tamper-Evident Envelopes — $14.99
+### Tamper-Evident Envelopes — Price TBA
 
 5-pack of security envelopes. VOID pattern appears when seal is broken. For distributing shares to heirs or safe deposit boxes.
 
-### Fireproof Case — $49.00
+### Fireproof Case — Price TBA
 
 Compact fireproof document and card case. Rated to 1,200 °F (649 °C) for 30 minutes. Holds smart cards, printed Qards, and documents.
 
-### Inheritance Guide (PDF) — $24.00
+### Inheritance Guide (PDF) — Price TBA
 
 Comprehensive PDF covering crypto inheritance planning with Shamir's Secret Sharing. Includes checklists, templates, and legal considerations.
 
@@ -574,7 +576,7 @@ The web app works offline once loaded. The desktop app has no network dependency
 ### Smart Cards
 
 **What kind of smart cards?**
-JCOP-based Java Cards, dual-interface (ISO 7816 contact + ISO 14443 NFC). seQRets applet pre-installed on branded cards. Desktop app communicates via standard USB reader (contact mode).
+JCOP-based dual-interface Java Cards. seQRets applet pre-installed on branded cards. Desktop app communicates via standard USB reader in contact mode (ISO 7816); NFC is not yet supported in-app.
 
 **Can I use my own cards?**
 Yes, if they are JCOP-compatible Java Cards supporting GlobalPlatform for applet installation. You would install the seQRets applet yourself.
@@ -602,7 +604,8 @@ Locally on your device only. Sent only to Google's Gemini API when you ask Bob a
 
 - **Contact page (all channels in one place):** https://seqrets.app/contact
 - **General inquiries:** hello@seqrets.app
-- **Security disclosures & encrypted communication:** seqrets@proton.me
+- **Security disclosures (vulnerability reports):** security@seqrets.app
+- **Encrypted communication:** seqrets@proton.me
 - **Commercial licensing:** licensing@seqrets.app
 - **Operated by:** Toothjockey LLC (North Dakota, USA); registered agent for service of process: 3003 32nd Ave S, Ste 240, Fargo, ND 58103, USA
 

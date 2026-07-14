@@ -9,7 +9,7 @@ import appLight from "@/assets/app-light.webp";
 const perks = [
   { icon: ShieldCheck, label: "Verified & trusted — installs cleanly on Mac, Windows & Linux" },
   { icon: Zap, label: "Always up to date — security patches delivered automatically" },
-  { icon: CreditCard, label: "Tap to back up — store secrets on tamper-proof smart cards" },
+  { icon: CreditCard, label: "Smart card backup — store secrets on tamper-proof cards via USB reader" },
   { icon: Fingerprint, label: "Printed SHA fingerprint on every Qard — verifiable against your records without scanning" },
   { icon: Package, label: "Everything in the box — smart card & USB reader shipped to you" },
 ];
@@ -86,7 +86,7 @@ const DesktopCTA = () => {
                 One-time purchase. No subscription. Yours forever.
               </h3>
               <p className="text-sm text-muted-foreground/80 leading-relaxed">
-                A code-signed desktop app with automatic updates, NFC smart card support, and a portable USB reader — all included. The source code is always free under AGPLv3.
+                A code-signed desktop app with automatic updates, smart card support, and a portable USB reader — all included. The source code is always free under AGPLv3.
               </p>
             </div>
 

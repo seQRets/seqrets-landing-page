@@ -62,10 +62,10 @@ const sections = [
     icon: CreditCard,
     title: "Smart Card Function",
     description:
-      "The Desktop app supports writing Qards directly to NFC smart cards — physical, tamper-evident storage that fits in your wallet. Available exclusively in the Desktop edition.",
+      "The Desktop app supports writing Qards directly to JCOP smart cards — physical, tamper-evident storage that fits in your wallet. Available exclusively in the Desktop edition.",
     details: [
       "Connect a USB smart card reader to your computer",
-      "Write individual Qards to NFC cards with one tap",
+      "Write individual Qards to a card over the reader (contact mode)",
       "Cards are portable, durable, and offline by nature",
       "Read cards back anytime to restore your secrets",
     ],
@@ -193,7 +193,7 @@ const HowItWorksPage = () => {
             <p className="text-muted-foreground leading-relaxed mb-4">
               <strong className="text-foreground">seQRets Recover</strong> is a
               separate, single-file recovery tool for the seQRets share format.
-              One HTML file, ~200 lines of TypeScript, no install, no network.
+              One HTML file with a ~400-line crypto core, no install, no network.
               Open it in any modern browser, paste your Qards in, enter your
               password, and your secret comes back. It uses the same audited
               cryptographic primitives as the main app (XChaCha20-Poly1305,

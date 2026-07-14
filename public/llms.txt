@@ -2,7 +2,7 @@
 
 > seQRets is an open-source, zero-knowledge cryptographic tool for securing, splitting, and sharing secrets (crypto seed phrases, private keys, passwords) using Shamir's Secret Sharing and XChaCha20-Poly1305 encryption. Secrets are encoded as printable QR codes called Qards. Runs entirely offline — no servers, accounts, or telemetry. Licensed under AGPLv3. A product of Toothjockey LLC (North Dakota, USA).
 
-**Last updated:** July 11, 2026
+**Last updated:** July 14, 2026
 
 ## Key Facts
 
@@ -56,7 +56,8 @@
 
 - Contact page (all channels in one place): [https://seqrets.app/contact](https://seqrets.app/contact)
 - General inquiries: hello@seqrets.app
-- Security disclosures & encrypted communication: seqrets@proton.me
+- Security disclosures (vulnerability reports): security@seqrets.app
+- Encrypted communication: seqrets@proton.me
 - Commercial licensing: licensing@seqrets.app
 - PGP Key: [https://seqrets.app/pgp.txt](https://seqrets.app/pgp.txt) (plain text, bot-accessible)
 - PGP Page: [https://seqrets.app/pgp](https://seqrets.app/pgp) (interactive, requires JavaScript)

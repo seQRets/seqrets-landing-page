@@ -109,7 +109,7 @@ const FAQ_DATA: FaqCategory[] = [
     items: [
       {
         q: "What kind of smart cards does seQRets use?",
-        a: "JCOP-based Java Cards, dual-interface (ISO 7816 contact + ISO 14443 NFC). The seQRets applet is pre-installed on branded cards sold in the shop. The desktop app communicates via a standard USB smart card reader in contact mode.",
+        a: "JCOP-based dual-interface Java Cards. The seQRets applet is pre-installed on branded cards sold in the shop. The desktop app communicates via a standard USB smart card reader in contact mode (ISO 7816); NFC is not yet supported in-app.",
       },
       {
         q: "Can I use my own smart cards?",

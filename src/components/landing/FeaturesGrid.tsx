@@ -37,7 +37,7 @@ const features: Feature[] = [
     icon: CreditCard,
     title: "Smart Card Support",
     category: "smart",
-    description: "Store shares on NFC-enabled smart cards for durable, tamper-evident physical security.",
+    description: "Store shares on JCOP smart cards for durable, tamper-evident physical security, read over a USB card reader.",
   },
   {
     icon: QrCode,
@@ -107,7 +107,7 @@ const FeaturesGrid = () => {
               >
                 {f.title === "Smart Card Support" ? (
                   <div className="w-full h-36 overflow-hidden">
-                    <img src={smartcardGold} alt="seQRets NFC smart card" className="w-full h-full object-cover object-center" />
+                    <img src={smartcardGold} alt="seQRets smart card" className="w-full h-full object-cover object-center" />
                   </div>
                 ) : f.title === "Inheritance Planning" ? (
                   <div className="w-full h-36 overflow-hidden">
