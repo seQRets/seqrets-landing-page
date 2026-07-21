@@ -2,7 +2,7 @@
 
 > seQRets is an open-source, zero-knowledge cryptographic tool for securing, splitting, and sharing secrets (crypto seed phrases, private keys, passwords) using Shamir's Secret Sharing and XChaCha20-Poly1305 encryption. Secrets are encoded as printable QR codes called Qards. Runs entirely offline — no servers, accounts, or telemetry. Licensed under AGPLv3. A product of Toothjockey LLC (North Dakota, USA).
 
-**Last updated:** July 14, 2026
+**Last updated:** July 21, 2026
 
 - Source Code: https://github.com/seQRets/seQRets-app
 - Web App (free): https://app.seqrets.app
@@ -640,6 +640,7 @@ echo "Your message" | gpg --encrypt --armor --recipient seqrets@proton.me
 
 ## Blog Posts
 
+- [Crypto Hacks Are 'Down 47%' This Year. That's the Illusion. The Real Story in CertiK's Numbers: Attackers Stopped Hunting Bugs and Started Hunting Keys — at $13 Million a Wallet.](https://seqrets.app/blog/certik-h1-2026-wallet-compromise-keys-not-code)
 - [2,114 Wallets Were Born Broken. The 'Ill Bloom' Flaw Means Some Seed Phrases Were Never Secrets at All — and the Fix Is a Migration Most People Will Botch.](https://seqrets.app/blog/ill-bloom-weak-rng-seed-vulnerability-migration-2026)
 - [France Just Reported 77 Crypto Kidnappings in Six Months. The Attackers Aren't Breaking Wallets — They're Breaking People, and Betting Your Whole Secret Is in One Head.](https://seqrets.app/blog/france-crypto-kidnapping-77-cases-wrench-attack-coercion-2026)
 - [A Hidden Camera Filmed Him Typing 12 Words. That Was the Whole Hack — and $176 Million in Bitcoin Walked Out the Door.](https://seqrets.app/blog/cctv-seed-phrase-theft-176m-trezor-observation-attack-2026)
