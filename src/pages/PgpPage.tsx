@@ -136,8 +136,19 @@ gpg --fingerprint seqrets@proton.me`}
                   aliceandbob.io/online-pgp-tool
                 </a>
               </li>
-              <li>Paste the public key above into the "Recipient's Public Key" field</li>
-              <li>Type your message and click Encrypt</li>
+              <li>
+                The tool opens on <span className="text-foreground/90">"Generate a PGP key pair"</span> — in the
+                left sidebar, click the <span className="text-foreground/90">Encrypt</span> icon (the padlock) to
+                switch to <span className="text-foreground/90">"Encrypt a message"</span>
+              </li>
+              <li>
+                Paste the public key above into the{" "}
+                <span className="text-foreground/90">"Public PGP key of the receiver"</span> field
+              </li>
+              <li>
+                Type your message in the <span className="text-foreground/90">"Text to encrypt"</span> field and
+                click <span className="text-foreground/90">Encrypt</span>
+              </li>
               <li>
                 Copy the encrypted output and email it to{" "}
                 <a href="mailto:seqrets@proton.me" className="text-primary hover:underline">

@@ -2,7 +2,7 @@
 
 > seQRets is an open-source, zero-knowledge cryptographic tool for securing, splitting, and sharing secrets (crypto seed phrases, private keys, passwords) using Shamir's Secret Sharing and XChaCha20-Poly1305 encryption. Secrets are encoded as printable QR codes called Qards. Runs entirely offline — no servers, accounts, or telemetry. Licensed under AGPLv3. A product of Toothjockey LLC (North Dakota, USA).
 
-**Last updated:** July 21, 2026
+**Last updated:** July 24, 2026
 
 - Source Code: https://github.com/seQRets/seQRets-app
 - Web App (free): https://app.seqrets.app
@@ -38,7 +38,7 @@
 
 ### Processing Pipeline
 
-1. **Secret Input** — Secret enters memory (BIP-39 mnemonic detection for seed phrases)
+1. **Secret Input** — Secret enters memory (BIP-39 mnemonic detection for seed phrases; Trezor-style SLIP-39 recovery shares are also detected and RS1024-checksum validated on entry)
 2. **Password + Optional Keyfile** — Password bytes and optional keyfile bytes are concatenated
 3. **Argon2id KDF** — Combined input derives a 256-bit encryption key (64 MB memory, 4 iterations, 16-byte random salt)
 3. **XChaCha20-Poly1305 Encrypt** — Secret is authenticated-encrypted (256-bit key, 192-bit random nonce)
@@ -140,6 +140,24 @@ For BIP-39 mnemonic secrets, the reveal dialog displays the BIP-32 master finger
 | Memory | Seed buffer is zeroized after computation |
 
 This is the primary integrity check for hardware-wallet imports because many signers (Jade, Coldcard, some Trezor flows) initialize successfully without ever displaying the mnemonic. The XFP is almost always shown.
+
+### SLIP-39 Detection (Trezor Recovery Shares)
+
+Trezor-style SLIP-39 recovery shares are recognized on entry and after restore, and validated against their built-in RS1024 checksum so a mistyped word is caught before encryption (and re-verified after restore).
+
+| Property | Value |
+|----------|-------|
+| Detected shares | 20- or 33-word SLIP-39 shares, including multi-share sets (entered one per line) |
+| Validation | RS1024 checksum — a mistyped word is caught before encryption and re-verified after restore |
+| Module | `slip39.ts` — validation-only, zero dependencies, embeds the official 1024-word SLIP-39 wordlist |
+| Test vectors | Verified against all 45 official SatoshiLabs SLIP-39 test vectors |
+| Storage | Stored as plain text (not converted to entropy) to preserve per-share metadata (identifier, group parameters, iteration exponent) |
+| Restore output | Numbered word grid for re-entry into a hardware wallet — no SeedQR (SeedQR is BIP-39-only) |
+| Key material | Never splits, combines, or reconstructs shares — reads and verifies word sequences only |
+| Availability | Web and desktop |
+| Introduced | v1.13.0 |
+
+Because SLIP-39 secrets are stored as plain text inside the existing (audited) encrypted payload envelope, the encryption pipeline is unchanged and the seQRets Recover lifeboat required no change to read them.
 
 ### Optional Keyfile
 
@@ -507,6 +525,9 @@ Yes. Full source code is on GitHub under AGPLv3. You can audit the encryption, s
 **What secrets can I protect?**
 Any text-based secret: crypto seed phrases (BIP-39), private keys, passwords, recovery codes, API keys, or personal notes. Maximum input is constrained by QR code capacity (~2,953 bytes).
 
+**Does seQRets support SLIP-39 (Trezor) recovery shares?**
+Yes. seQRets detects Trezor-style SLIP-39 recovery shares (20 or 33 words, including multi-share sets entered one per line) and validates them against their built-in RS1024 checksum on entry and after restore, so a mistyped word is caught before encryption. Detection is validation-only (`slip39.ts`): zero dependencies, embeds the official 1024-word list, verified against all 45 official SatoshiLabs test vectors; it never splits, combines, or reconstructs shares. Unlike BIP-39, SLIP-39 phrases are stored as plain text (not converted to entropy) to preserve per-share metadata; on restore they display as a numbered word grid for hardware-wallet re-entry (SeedQR is offered for BIP-39 mnemonics only). Available on web and desktop; introduced in v1.13.0.
+
 ### Security
 
 **What encryption does seQRets use?**
@@ -625,7 +646,7 @@ gpg --fingerprint seqrets@proton.me
 
 ### Sending an Encrypted Message
 
-**Option 1 — Browser (easiest):** Go to https://aliceandbob.io/online-pgp-tool, paste the public key, type your message, encrypt, and email the output to seqrets@proton.me. Runs entirely in-browser.
+**Option 1 — Browser (easiest):** Go to https://aliceandbob.io/online-pgp-tool. The page opens on "Generate a PGP key pair" — click the Encrypt (padlock) icon in the left sidebar to switch to "Encrypt a message". Paste the public key into the "Public PGP key of the receiver" field, type your message in "Text to encrypt", click Encrypt, and email the output to seqrets@proton.me. Runs entirely in-browser.
 
 **Option 2 — GPG CLI:**
 ```

@@ -27,6 +27,10 @@ const FAQ_DATA: FaqCategory[] = [
         q: "What secrets can I protect with seQRets?",
         a: "Any text-based secret: crypto seed phrases (BIP-39), private keys, passwords, recovery codes, API keys, or personal notes. The maximum input size is constrained by QR code capacity (approximately 2,953 bytes at the highest error correction level).",
       },
+      {
+        q: "Does seQRets support SLIP-39 (Trezor) recovery shares?",
+        a: "Yes. seQRets detects Trezor-style SLIP-39 recovery shares (20 or 33 words, including multi-share sets entered one per line) and validates them against their built-in RS1024 checksum — so a mistyped word is caught before you encrypt, and verified again after restore. SLIP-39 detection is validation-only: a zero-dependency module that embeds the official 1024-word list and is verified against all 45 official SatoshiLabs test vectors; it never splits, combines, or reconstructs shares. Unlike BIP-39, SLIP-39 phrases are stored as plain text (not converted to entropy) so each share's metadata is preserved. On restore, SLIP-39 shares display as a numbered word grid for re-entry into a hardware wallet (SeedQR is offered for BIP-39 mnemonics only).",
+      },
     ],
   },
   {

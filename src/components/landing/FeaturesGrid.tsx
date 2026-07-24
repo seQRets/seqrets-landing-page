@@ -17,9 +17,9 @@ type Feature = {
 const features: Feature[] = [
   {
     icon: Binary,
-    title: "BIP-39 Optimized",
+    title: "BIP-39 & SLIP-39",
     category: "crypto",
-    description: "Purpose-built for cryptocurrency seed phrases and private keys. Validates BIP-39 mnemonics and checksums automatically.",
+    description: "Purpose-built for cryptocurrency seed phrases and recovery shares. Validates BIP-39 mnemonics and Trezor-style SLIP-39 shares automatically.",
   },
   {
     icon: Shield,

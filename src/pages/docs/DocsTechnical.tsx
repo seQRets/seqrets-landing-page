@@ -588,6 +588,67 @@ const DocsTechnical = () => {
           </div>
         </section>
 
+        {/* SLIP-39 Detection */}
+        <section>
+          <h2 className="font-display text-xl font-bold text-foreground mb-4">
+            SLIP-39 Detection (Trezor Recovery Shares)
+          </h2>
+          <div className="space-y-4">
+            <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
+              <p className="text-sm text-muted-foreground/80 mb-4">
+                Trezor-style <strong className="text-foreground">SLIP-39</strong> recovery shares (20 or 33 words,
+                including multi-share sets entered one per line) are recognized on entry and validated against their
+                built-in <strong className="text-foreground">RS1024 checksum</strong> — any single mistyped word is
+                caught before encryption, and the checksum is verified again after restore.
+              </p>
+              <p className="text-sm text-muted-foreground/80">
+                Unlike BIP-39, SLIP-39 phrases are stored as <strong className="text-foreground">plain text</strong>
+                {" "}rather than converted to entropy: each share carries metadata (identifier, group parameters,
+                iteration exponent) that must be reproduced exactly. The detection module is validation-only — it
+                never splits, combines, or otherwise handles key material. No SeedQR is offered (SeedQR is a
+                BIP-39-only format); restored shares display as a numbered word grid for typing into a hardware wallet.
+              </p>
+            </div>
+
+            <div className="overflow-x-auto rounded-2xl border border-border/30">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border/30 bg-card/30">
+                    <th className="text-left p-4 font-display font-bold text-foreground">
+                      Property
+                    </th>
+                    <th className="text-left p-4 font-display font-bold text-foreground">
+                      Value
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border/20">
+                  {[
+                    ["Detected shares", "20- or 33-word SLIP-39 shares, including multi-share sets (one per line)"],
+                    ["Validation", "RS1024 checksum — a mistyped word is caught before encryption and re-verified after restore"],
+                    ["Module", "slip39.ts — validation-only, zero dependencies, embeds the official 1024-word SLIP-39 list"],
+                    ["Test vectors", "Verified against all 45 official SatoshiLabs SLIP-39 test vectors"],
+                    ["Storage", "Stored as plain text (not converted to entropy) to preserve each share's metadata"],
+                    ["Restore output", "Numbered word grid for re-entry into a hardware wallet — no SeedQR (BIP-39-only)"],
+                    ["Key material", "Never splits, combines, or reconstructs shares — reads and verifies word sequences only"],
+                    ["Availability", "Web and desktop"],
+                  ].map(([prop, val]) => (
+                    <tr
+                      key={prop}
+                      className="hover:bg-card/20 transition-colors"
+                    >
+                      <td className="p-4 font-medium text-foreground whitespace-nowrap">
+                        {prop}
+                      </td>
+                      <td className="p-4 text-muted-foreground/80">{val}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
         {/* Zero-Knowledge Claims */}
         <section>
           <h2 className="font-display text-xl font-bold text-foreground mb-4">

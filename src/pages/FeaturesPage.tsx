@@ -46,20 +46,23 @@ interface FeatureSection {
 const sections: FeatureSection[] = [
   {
     icon: Binary,
-    title: "BIP-39 Optimized",
+    title: "BIP-39 & SLIP-39",
     category: "crypto",
     description:
-      "Purpose-built for cryptocurrency seed phrases and private keys. seQRets validates BIP-39 mnemonics and checksums automatically — so you know your backup is correct before you split it.",
+      "Purpose-built for cryptocurrency seed phrases and recovery shares. seQRets validates BIP-39 mnemonics and Trezor-style SLIP-39 shares automatically — so you know your backup is correct before you split it.",
     details: [
       "Real-time BIP-39 validation — catches typos and transcription errors before you split",
-      "Supports 12, 15, 18, 21, and 24-word seed phrases",
-      "SeedQR output for direct hardware-wallet import (Jade, Coldcard, Trezor)",
+      "Supports 12, 15, 18, 21, and 24-word BIP-39 seed phrases",
+      "SLIP-39 detection — Trezor-style recovery shares (20 or 33 words, including multi-share sets) are recognized and checksum-validated on entry and on restore",
+      "SeedQR output for direct hardware-wallet import (Jade, Coldcard, Trezor); SLIP-39 shares restore as a numbered word grid for easy re-entry",
       "Master fingerprint shown beside each SeedQR so you can verify the correct seed loaded into your wallet",
     ],
     technicalDetails: [
-      "Validation via @scure/bip39; XFP derivation via @scure/bip32 (both audited)",
+      "BIP-39 validation via @scure/bip39; XFP derivation via @scure/bip32 (both audited)",
       "XFP format: 8 uppercase hex chars (e.g., 73C5DA0A), derived from the master public key — no seed exposure",
       "Caveat: the on-device XFP will differ if you apply a BIP-39 passphrase at wallet-import time",
+      "SLIP-39 detection is validation-only (RS1024 checksum) — a zero-dependency module embedding the official 1024-word list, verified against all 45 SatoshiLabs test vectors; it never splits or reconstructs shares",
+      "SLIP-39 phrases are stored as plain text rather than converted to entropy (preserving each share's metadata); no SeedQR is offered, as SeedQR is a BIP-39-only format",
     ],
   },
   {
