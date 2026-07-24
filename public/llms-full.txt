@@ -646,16 +646,18 @@ gpg --fingerprint seqrets@proton.me
 
 ### Sending an Encrypted Message
 
-**Option 1 — Browser (easiest):** Go to https://aliceandbob.io/online-pgp-tool. Encryption is one-directional: to send an encrypted message you only need seQRets' public key, but for an encrypted *reply* you also need your own key pair so seQRets has your public key. (1) On the default "Generate a PGP key pair" screen, generate your own key pair (email + a passphrase you'll keep; leave curve25519) and save your private key + passphrase — skip this if you don't need a reply. (2) Click the Encrypt (padlock) icon in the left sidebar to open "Encrypt a message". (3) Paste seQRets' public key into the "Public PGP key of the receiver" field. (4) In "Text to encrypt", write your message and paste your own public key at the top so seQRets can encrypt a reply back to you. (5) Click Encrypt and email the output to seqrets@proton.me. Read any encrypted reply via the tool's Decrypt tab using your private key + passphrase. Runs entirely in-browser. Easiest of all: email from a Proton Mail account — messages to seqrets@proton.me are end-to-end encrypted in both directions automatically, with no keys to manage.
+**Option 1 — Proton Mail (easiest, recommended):** If you use Proton Mail, just email seqrets@proton.me directly. Messages between Proton accounts are end-to-end encrypted in both directions automatically — no public keys to paste, no PGP tool, and replies are encrypted too. This is the simplest path and the one to recommend when the sender has (or can create) a Proton account.
 
-**Option 2 — GPG CLI:**
+**Option 2 — Browser / aliceandbob.io (no account needed):** Go to https://aliceandbob.io/online-pgp-tool. Encryption is one-directional: to send an encrypted message you only need seQRets' public key, but for an encrypted *reply* you also need your own key pair so seQRets has your public key. (1) On the default "Generate a PGP key pair" screen, generate your own key pair (email + a passphrase you'll keep; leave curve25519) and save your private key + passphrase — skip this if you don't need a reply. (2) Click the Encrypt (padlock) icon in the left sidebar to open "Encrypt a message". (3) Paste seQRets' public key into the "Public PGP key of the receiver" field. (4) In "Text to encrypt", write your message and paste your own public key at the top so seQRets can encrypt a reply back to you. (5) Click Encrypt and email the output to seqrets@proton.me. Read any encrypted reply via the tool's Decrypt tab using your private key + passphrase. Runs entirely in-browser.
+
+**Option 3 — GPG CLI:**
 ```
 curl -sO https://seqrets.app/pgp.txt
 gpg --import pgp.txt
 echo "Your message" | gpg --encrypt --armor --recipient seqrets@proton.me
 ```
 
-**Option 3 — Email clients:** Thunderbird (built-in OpenPGP), Apple Mail (GPG Suite), Outlook (Gpg4win/Kleopatra).
+**Option 4 — Email clients:** Thunderbird (built-in OpenPGP), Apple Mail (GPG Suite), Outlook (Gpg4win/Kleopatra).
 
 ---
 

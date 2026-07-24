@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Shield, Copy, Download, Check, Terminal, Mail, Globe } from "lucide-react";
+import { Shield, ShieldCheck, Copy, Download, Check, Terminal, Mail, Globe } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import PageHead from "@/components/PageHead";
@@ -122,23 +122,46 @@ gpg --fingerprint seqrets@proton.me`}
             key-generation step.)
           </p>
           <p>
-            <span className="font-semibold text-foreground/90">Easiest of all:</span> email us from a{" "}
-            <span className="text-foreground/90">Proton Mail</span> account — messages to seqrets@proton.me are
-            end-to-end encrypted in both directions automatically, with no keys to manage by either side.
+            <span className="font-semibold text-foreground/90">Skip all of this if you use Proton Mail:</span>{" "}
+            emailing seqrets@proton.me from a Proton account is end-to-end encrypted in both directions
+            automatically, with no keys to manage by either side — see Option 1 below.
           </p>
         </div>
 
         <div className="space-y-8 mb-16">
 
-          {/* Option 1: Alice & Bob */}
+          {/* Option 1: Proton Mail */}
+          <div className="rounded-xl border border-primary/30 bg-primary/5 p-6 md:p-8">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="rounded-lg bg-primary/10 p-2">
+                <ShieldCheck className="h-4 w-4 text-primary" />
+              </div>
+              <h3 className="font-display text-lg font-bold text-foreground">
+                Option 1: Proton Mail
+                <span className="ml-2 text-xs font-normal text-primary">(easiest — no keys, no tools)</span>
+              </h3>
+            </div>
+            <p className="text-sm text-muted-foreground/80">
+              If you use <span className="text-foreground/90">Proton Mail</span>, just email{" "}
+              <a href="mailto:seqrets@proton.me" className="text-primary hover:underline">
+                seqrets@proton.me
+              </a>{" "}
+              directly. Messages between Proton accounts are end-to-end encrypted{" "}
+              <span className="text-foreground/90">in both directions</span> automatically — no public keys to
+              paste, no PGP tool, no copy-and-paste, and replies are encrypted too. This is the simplest option and
+              the one we recommend if you have (or can create) a Proton account.
+            </p>
+          </div>
+
+          {/* Option 2: Alice & Bob */}
           <div className="rounded-xl border border-border/30 bg-card/20 p-6 md:p-8">
             <div className="flex items-center gap-3 mb-4">
               <div className="rounded-lg bg-primary/10 p-2">
                 <Globe className="h-4 w-4 text-primary" />
               </div>
               <h3 className="font-display text-lg font-bold text-foreground">
-                Option 1: Use aliceandbob.io
-                <span className="ml-2 text-xs font-normal text-primary">(easiest)</span>
+                Option 2: Use aliceandbob.io
+                <span className="ml-2 text-xs font-normal text-muted-foreground/60">(no account needed)</span>
               </h3>
             </div>
             <ol className="space-y-3 text-sm text-muted-foreground/80 list-decimal list-inside">
@@ -196,7 +219,7 @@ gpg --fingerprint seqrets@proton.me`}
                 <Terminal className="h-4 w-4 text-primary" />
               </div>
               <h3 className="font-display text-lg font-bold text-foreground">
-                Option 2: GPG Command Line
+                Option 3: GPG Command Line
               </h3>
             </div>
             <div className="space-y-3">
@@ -230,7 +253,7 @@ gpg --encrypt --armor \\
                 <Mail className="h-4 w-4 text-primary" />
               </div>
               <h3 className="font-display text-lg font-bold text-foreground">
-                Option 3: Email Clients
+                Option 4: Email Clients
               </h3>
             </div>
             <div className="space-y-4 text-sm text-muted-foreground/80">
@@ -265,8 +288,8 @@ gpg --encrypt --armor \\
         {/* Note */}
         <div className="text-center text-sm text-muted-foreground/50 mb-8">
           <p>
-            Proton Mail users: messages sent to seqrets@proton.me from another Proton account
-            are end-to-end encrypted automatically — no extra steps needed.
+            Always verify the key fingerprint above before trusting it. And a reminder: seQRets never needs your
+            seed phrase, private keys, or Qards — never send those to anyone, including us.
           </p>
         </div>
 
