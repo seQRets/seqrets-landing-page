@@ -111,6 +111,23 @@ gpg --fingerprint seqrets@proton.me`}
           How to Send an <span className="text-gradient">Encrypted Message</span>
         </h2>
 
+        {/* Two-way encryption note */}
+        <div className="mb-8 rounded-xl border border-primary/20 bg-primary/5 p-5 md:p-6 text-sm text-muted-foreground/80 space-y-2">
+          <p>
+            <span className="font-semibold text-foreground/90">Planning an encrypted conversation?</span> Encryption
+            is one-directional. To send <em>us</em> an encrypted message you only need <span className="text-foreground/90">our</span> public
+            key (below). For us to reply encrypted, we need <span className="text-foreground/90">your</span> public
+            key — so you'll want your own PGP key pair. The steps below walk you through generating one and sharing
+            your public key with us. (Only need to send something one-way, with no reply? You can skip the
+            key-generation step.)
+          </p>
+          <p>
+            <span className="font-semibold text-foreground/90">Easiest of all:</span> email us from a{" "}
+            <span className="text-foreground/90">Proton Mail</span> account — messages to seqrets@proton.me are
+            end-to-end encrypted in both directions automatically, with no keys to manage by either side.
+          </p>
+        </div>
+
         <div className="space-y-8 mb-16">
 
           {/* Option 1: Alice & Bob */}
@@ -137,17 +154,26 @@ gpg --fingerprint seqrets@proton.me`}
                 </a>
               </li>
               <li>
-                The tool opens on <span className="text-foreground/90">"Generate a PGP key pair"</span> — in the
-                left sidebar, click the <span className="text-foreground/90">Encrypt</span> icon (the padlock) to
-                switch to <span className="text-foreground/90">"Encrypt a message"</span>
+                <span className="text-foreground/90">Generate your own key pair (for an encrypted reply):</span>{" "}
+                on the default <span className="text-foreground/90">"Generate a PGP key pair"</span> screen, enter
+                an email and a passphrase you'll remember, leave the curve as{" "}
+                <span className="text-foreground/90">curve25519</span>, and click{" "}
+                <span className="text-foreground/90">Generate</span>. Save your private key and passphrase somewhere
+                safe — you'll need them to read our reply. <span className="text-muted-foreground/50">(Skip this
+                step if you don't need an encrypted reply.)</span>
               </li>
               <li>
-                Paste the public key above into the{" "}
+                In the left sidebar, click the <span className="text-foreground/90">Encrypt</span> icon (the
+                padlock) to open <span className="text-foreground/90">"Encrypt a message"</span>
+              </li>
+              <li>
+                Paste <span className="text-foreground/90">our</span> public key (above) into the{" "}
                 <span className="text-foreground/90">"Public PGP key of the receiver"</span> field
               </li>
               <li>
-                Type your message in the <span className="text-foreground/90">"Text to encrypt"</span> field and
-                click <span className="text-foreground/90">Encrypt</span>
+                In <span className="text-foreground/90">"Text to encrypt"</span>, write your message — and paste{" "}
+                <span className="text-foreground/90">your own public key</span> at the top so we can encrypt our
+                reply to you — then click <span className="text-foreground/90">Encrypt</span>
               </li>
               <li>
                 Copy the encrypted output and email it to{" "}
@@ -157,7 +183,9 @@ gpg --fingerprint seqrets@proton.me`}
               </li>
             </ol>
             <p className="mt-4 text-xs text-muted-foreground/50">
-              aliceandbob.io runs entirely in your browser — nothing is sent to any server.
+              When we reply, open the tool's <span className="text-muted-foreground/70">Decrypt</span> tab and use
+              your private key and passphrase to read it. aliceandbob.io runs entirely in your browser — nothing is
+              sent to any server.
             </p>
           </div>
 
@@ -188,7 +216,9 @@ gpg --encrypt --armor \\
   document.pdf`}
               </pre>
               <p className="text-xs text-muted-foreground/50">
-                Send the encrypted output (.asc) as an email or attachment to seqrets@proton.me.
+                Send the encrypted output (.asc) as an email or attachment to seqrets@proton.me. For an encrypted
+                reply, also send us your own public key — export it with{" "}
+                <code className="font-mono text-muted-foreground/70">gpg --export --armor you@example.com</code>.
               </p>
             </div>
           </div>
