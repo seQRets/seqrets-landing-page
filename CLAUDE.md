@@ -58,7 +58,24 @@ Stripe publishable key: `VITE_STRIPE_PUBLISHABLE_KEY`. The shop is behind a laun
 
 ### Product Catalog
 
-All products/pricing are defined inline in `src/lib/stripe.ts` as the `PRODUCTS` record. Blog posts are similarly defined inline in `src/lib/blog.ts` (no CMS, no markdown files). Adding a new blog post means appending to `BLOG_POSTS`; the route is generated automatically.
+All products/pricing are defined inline in `src/lib/stripe.ts` as the `PRODUCTS` record. Blog posts are similarly defined inline in `src/lib/blog.ts` (no CMS, no markdown files). The post route is generated automatically from `BLOG_POSTS` — but adding a post is **not** just a `blog.ts` edit; see below.
+
+### Adding a Blog Post
+
+A blog post lives in **three** places that must stay in sync. Editing only `blog.ts` leaves the LLM-facing indexes stale (the post becomes invisible to `llms.txt`/`llms-full.txt` consumers). Do all of these in **one commit**:
+
+1. **`src/lib/blog.ts`** — add the post object as the **first** element of `BLOG_POSTS` (newest-first). Fields: `slug`, `title`, `date` (`"YYYY-MM-DD"`), `category` (`"crypto" | "smart" | "inherit" | "ai"`), `excerpt`, `readTime` (integer minutes), `content` (template literal; paragraphs separated by blank lines).
+2. **`public/llms.txt`** — under `## Blog`, add `- [<TITLE>](https://seqrets.app/blog/<SLUG>)` immediately **after** the `- [Blog Index](https://seqrets.app/blog)` line (new top post).
+3. **`public/llms-full.txt`** — under `## Blog Posts`, add the same `- [<TITLE>](https://seqrets.app/blog/<SLUG>)` as the **first** post entry.
+4. In **both** LLMS files, update the `**Last updated:**` line (near the top) to the post's date in `Month DD, YYYY` format.
+
+Rules:
+- `<TITLE>` in the two markdown links must be **character-for-character identical** to the title in `blog.ts` (keep em dashes, apostrophes, quotes). `<SLUG>` must match exactly.
+- Only prepend the new entry — never reorder or edit existing ones.
+
+Verify before committing:
+- The count of `slug:` entries in `blog.ts` equals the number of `](https://seqrets.app/blog/` links under the blog section in **each** of `llms.txt` and `llms-full.txt` (all three equal).
+- `npx tsc --noEmit` passes.
 
 ### SEO / Meta
 
