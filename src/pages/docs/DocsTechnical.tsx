@@ -48,6 +48,7 @@ const DocsTechnical = () => {
               {[
                 "Secret Input",
                 "Password + Optional Keyfile",
+                "Pad (192B buckets)",
                 "Argon2id KDF",
                 "XChaCha20-Poly1305 Encrypt",
                 "Shamir Split (K-of-N)",
@@ -432,35 +433,37 @@ const DocsTechnical = () => {
           <div className="space-y-4">
             <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
               <p className="text-sm text-muted-foreground/80 mb-4">
-                Each share is a pipe-delimited string. v1.11+ adds optional
-                recovery-metadata segments at the end. The SHA-256 hash covers
-                whatever segments are present (legacy 3-part inputs for
-                pre-v1.11 shares; first three plus the metadata segments for
-                v1.11+ shares with the toggle enabled) and is verified
-                automatically at generation and restoration.
+                Each share is a pipe-delimited string. The{" "}
+                <strong className="text-foreground">SHA-256 hash always sits last</strong> and covers
+                everything before it — so the hash input is simply the whole
+                string up to <code className="font-mono">|sha256:</code>. It is
+                verified automatically at generation and restoration.
               </p>
               <div className="rounded-lg border border-border/20 bg-background/50 px-4 py-3 font-mono text-xs text-muted-foreground/70 mb-4 space-y-1.5">
                 <div>
-                  <span className="text-muted-foreground/40">Legacy / toggle off:</span>{" "}
+                  <span className="text-muted-foreground/40">Legacy (pre-v1.11):</span>{" "}
                   seQRets|&lt;salt&gt;|&lt;data&gt;|sha256:&lt;64-char hex&gt;
                 </div>
                 <div>
-                  <span className="text-muted-foreground/40">v1.11+ / toggle on:</span>{" "}
-                  seQRets|&lt;salt&gt;|&lt;data&gt;|sha256:&lt;64-char hex&gt;|t=&lt;K&gt;|n=&lt;N&gt;|i=&lt;I&gt;
+                  <span className="text-muted-foreground/40">v1.14+ / toggle on:</span>{" "}
+                  seQRets|&lt;salt&gt;|&lt;data&gt;|v=1|t=&lt;K&gt;|n=&lt;N&gt;|i=&lt;I&gt;|sha256:&lt;64-char hex&gt;
                 </div>
               </div>
               <p className="text-sm text-muted-foreground/80">
                 Backward compatible: legacy 3-part shares without hashes still
                 decode, 4-part shares (sha256 only) still decode, and v1.11+
-                7-part shares add threshold (K), total (N), and 1-based card
+                shares add threshold (K), total (N), and 1-based card
                 index (I) — these drive a per-set live countdown during
-                restore. The metadata is hash-covered so it cannot be tampered
-                with. The toggle is opt-out (default on); anyone scanning a
-                metadata-enabled Qard learns K and N. Without the password
-                that's not enough to recover anything, but it does narrow what
-                an attacker is searching for, so users wanting maximum opacity
-                can disable the toggle when generating shares. The SHA-256
-                hash is one-way and reveals nothing about share contents.
+                restore. Since v1.14 every new share also carries a{" "}
+                <code className="font-mono">v=1</code> format-version marker as
+                its first metadata segment. All metadata is hash-covered so it
+                cannot be tampered with. The toggle is opt-out (default on);
+                anyone scanning a metadata-enabled Qard learns K and N. Without
+                the password that's not enough to recover anything, but it does
+                narrow what an attacker is searching for, so users wanting
+                maximum opacity can disable the toggle when generating shares.
+                The SHA-256 hash is one-way and reveals nothing about share
+                contents.
               </p>
             </div>
 
@@ -479,7 +482,7 @@ const DocsTechnical = () => {
                 <tbody className="divide-y divide-border/20">
                   {[
                     ["Hash function", "SHA-256 via @noble/hashes/sha256"],
-                    ["Hash input", 'SHA-256 over the share string. Legacy/4-part shares: SHA-256("seQRets|salt|data"). v1.11+ shares with recovery-metadata enabled: SHA-256("seQRets|salt|data|t=K|n=N|i=I") — metadata is included in the hash so it cannot be tampered with.'],
+                    ["Hash input", 'Everything before |sha256: — the hash always sits last. Legacy/4-part shares: SHA-256("seQRets|salt|data"). v1.14+ shares with recovery metadata: SHA-256("seQRets|salt|data|v=1|t=K|n=N|i=I") — the version marker and metadata are included in the hash so they cannot be tampered with.'],
                     ["Hash output", "64 hex characters (~71 chars with sha256: prefix)"],
                     ["Verification (generation)", "All shares are round-trip verified before being presented"],
                     ["Verification (restore)", "Desktop: auto-verified on scan/import with visible shield icon. Web: verified silently in the background (no UI) — the hash is still checked round-trip, there's just no indicator shown to the user."],
@@ -513,12 +516,89 @@ const DocsTechnical = () => {
                 echo -n "seQRets|salt|data" | shasum -a 256
               </div>
               <p className="text-sm text-muted-foreground/80 mb-3">
-                For v1.11+ shares with the recovery-metadata toggle enabled,
-                include the metadata segments in the hash input:
+                For v1.14+ shares, include the version marker and any metadata
+                segments — i.e. everything before{" "}
+                <code className="font-mono">|sha256:</code>:
               </p>
               <div className="rounded-lg border border-border/20 bg-background/50 px-4 py-3 font-mono text-xs text-muted-foreground/70">
-                echo -n "seQRets|salt|data|t=K|n=N|i=I" | shasum -a 256
+                echo -n "seQRets|salt|data|v=1|t=K|n=N|i=I" | shasum -a 256
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Length Privacy & Format Version */}
+        <section>
+          <h2 className="font-display text-xl font-bold text-foreground mb-4">
+            Length Privacy &amp; Format Version (v1.14+)
+          </h2>
+          <div className="space-y-4">
+            <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
+              <h3 className="text-sm font-bold text-foreground mb-3">
+                Padding — a Qard doesn't leak its secret's size
+              </h3>
+              <p className="text-sm text-muted-foreground/80 mb-4">
+                Stream ciphers produce ciphertext the same length as their
+                input, so before v1.14 a Qard's size correlated with the size of
+                the secret inside it. Since v1.14 the compressed payload is
+                zero-padded up to a multiple of{" "}
+                <strong className="text-foreground">192 bytes</strong> before
+                encryption. Every common secret — a 12-word seed, a 24-word
+                seed, a labeled backup — lands in the same first bucket and
+                produces an identically sized Qard, so an observer holding a
+                Qard learns only "at most N buckets," which for typical secrets
+                is nothing at all.
+              </p>
+              <p className="text-sm text-muted-foreground/80">
+                Padding is applied after compression (compression would collapse
+                it), is covered by the authentication tag, and needs no unpad
+                step on restore — gzip streams are self-terminating and both
+                deployed decompressors ignore trailing zero bytes. That is also
+                why pre-v1.14 apps and previously downloaded copies of{" "}
+                <code className="font-mono">recover.html</code> restore padded
+                Qards without any update. Padding applies to Qard share payloads
+                only; vault and plan files are updatable disk artifacts.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
+              <h3 className="text-sm font-bold text-foreground mb-3">
+                Format-version marker — built for decades
+              </h3>
+              <p className="text-sm text-muted-foreground/80">
+                Every v1.14+ Qard carries a hash-covered{" "}
+                <code className="font-mono">v=1</code> marker as its first
+                metadata segment. Qards are frozen artifacts — printed cards,
+                steel plates — so the marker exists for longevity: it lets
+                future software tell{" "}
+                <em>"this backup is damaged"</em> (checksum mismatch) apart from{" "}
+                <em>"this software predates this Qard's format"</em>, and show an
+                heir a clear "update your app" message instead of a false
+                corruption error. Shares with no{" "}
+                <code className="font-mono">v=</code> segment are pre-v1.14 and
+                parse under the original rules; old parsers ignore unknown
+                key=value segments and still hash them correctly, so v=1 shares
+                restore in pre-v1.14 software.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
+              <h3 className="text-sm font-bold text-foreground mb-3">
+                Label blind export
+              </h3>
+              <p className="text-sm text-muted-foreground/80">
+                Labels are always encrypted inside the payload. By default they
+                are <em>also</em> printed on card faces and used in file names,
+                which is convenient for telling Qards apart. The{" "}
+                <strong className="text-foreground">
+                  "Show label on Qards &amp; file names"
+                </strong>{" "}
+                switch (on by default) gates every plaintext surface: turn it
+                off for a blind export, where cards, files, and smart-card
+                entries show only a card number and set ID. Useful whenever a
+                third party handles your cards — a print shop or an etching
+                service learns nothing but a number.
+              </p>
             </div>
           </div>
         </section>

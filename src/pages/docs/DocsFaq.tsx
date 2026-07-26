@@ -53,6 +53,14 @@ const FAQ_DATA: FaqCategory[] = [
         a: "A mathematically proven threshold scheme where a secret is split into N shares, and any K of those shares (the threshold) can reconstruct it. Fewer than K shares reveal zero information about the original — this is information-theoretic security, not computational. It is also quantum-resistant.",
       },
       {
+        q: "Can someone tell how big my secret is by looking at a Qard?",
+        a: "No. Since v1.14, payloads are padded to fixed-size buckets (192 bytes) before encryption, so a Qard's size no longer reveals the size of the secret inside it — a 12-word seed, a 24-word seed, and a labeled backup all produce identically sized Qards. A single Qard reveals nothing about your secret: not its contents, and not even its length. The padding is applied after compression and covered by the authentication tag, and it needs no special handling on restore — which is why older versions of the app, and copies of recover.html you already downloaded, restore padded Qards without any update.",
+      },
+      {
+        q: "Can I keep labels off my printed Qards?",
+        a: "Yes. Labels are always encrypted inside the payload, but by default they're also printed on card faces and used in file names so you can tell Qards apart. The \"Show label on Qards & file names\" switch (on by default) controls only those plaintext surfaces — turn it off for a blind export, where cards, files, and smart-card entries show nothing but a card number and set ID. This is useful whenever someone else handles your cards: a print shop or an etching service learns nothing but a number.",
+      },
+      {
         q: "Does seQRets phone home or collect telemetry?",
         a: "No. There are no analytics, no tracking pixels, no error reporting services. The app makes exactly one optional network call — to fetch the current Bitcoin price for display. Even that can be disabled by going offline.",
       },
@@ -101,6 +109,10 @@ const FAQ_DATA: FaqCategory[] = [
       {
         q: "What happens if seqrets.app goes offline?",
         a: "Your secrets remain recoverable. We maintain a separate open-source recovery tool called seQRets Recover — one HTML file, no install, no network, works offline in any modern browser. Save a copy of recover.html alongside your Qards and it will keep working long after this website is gone. The seQRets share format is documented, and the recovery tool lives in its own repository (github.com/seQRets/seQRets-Recover) with its own release chain, independent of the main app. Any developer could also reimplement it from scratch in an afternoon.",
+      },
+      {
+        q: "Do I need to re-download the recovery tool when seQRets updates?",
+        a: "No. The copy of recover.html you already stored with your Qards and estate documents keeps working — Qards created by the newest version of seQRets restore in older copies of the recovery tool without any update. We verify this against the published tool before shipping a release, because a recovery tool that quietly stops reading new backups would defeat the entire point. Newer releases only add things like friendlier error messages, so there's no urgency to swap the copy in your safe. Every Qard also carries a format-version marker, so if a backup ever were made by a version too new for the software reading it, you'd get a clear \"update your app\" message rather than a misleading \"this file is corrupted\" error.",
       },
       {
         q: "Can I verify the recovery tool isn't tampered with?",

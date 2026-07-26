@@ -81,7 +81,7 @@ const SecurityPage = () => {
                 </div>
                 <h3 className="font-display text-base font-bold text-foreground mb-2">QR Code Output</h3>
                 <p className="text-sm text-muted-foreground/80">
-                  Each share is rendered as a printable QR code designed to be distributed — stored in separate locations, given to trusted people, or locked in different safes. No single QR code is useful on its own.
+                  Each share is rendered as a printable QR code designed to be distributed — stored in separate locations, given to trusted people, or locked in different safes. No single QR code is useful on its own. A Qard reveals <strong className="text-foreground">nothing about your secret — not its contents, and not even its size</strong>: payloads are padded to fixed-size buckets before encryption, so a 12-word seed, a 24-word seed, and a labeled backup all produce identically sized Qards.
                 </p>
               </div>
             </div>

@@ -2,7 +2,7 @@
 
 > seQRets is an open-source, zero-knowledge cryptographic tool for securing, splitting, and sharing secrets (crypto seed phrases, private keys, passwords) using Shamir's Secret Sharing and XChaCha20-Poly1305 encryption. Secrets are encoded as printable QR codes called Qards. Runs entirely offline — no servers, accounts, or telemetry. Licensed under AGPLv3. A product of Toothjockey LLC (North Dakota, USA).
 
-**Last updated:** July 25, 2026
+**Last updated:** July 26, 2026
 
 - Source Code: https://github.com/seQRets/seQRets-app
 - Web App (free): https://app.seqrets.app
@@ -20,7 +20,9 @@
 | Key Derivation | Argon2id (64 MB memory, 4 iterations) |
 | Optional Keyfile | Second-factor binary file — concatenated with password before Argon2id. Generated keyfiles are 256-bit CSPRNG. |
 | Secret Splitting | Shamir's Secret Sharing over GF(256) via audited `shamir-secret-sharing` library (Cure53 + Zellic). Single-Qard mode (N=1) bypasses Shamir. |
-| Share Integrity | SHA-256 hash embedded in each share — auto-verified at generation and restoration |
+| Share Integrity | SHA-256 hash embedded in each share as the last segment — auto-verified at generation and restoration |
+| Length Privacy | Payloads padded to 192-byte buckets before encryption (v1.14+) — a Qard's size doesn't reveal the secret's size |
+| Format Version | Every v1.14+ Qard carries a hash-covered `v=1` marker so future software can tell "damaged backup" from "software too old" |
 | Hardware Wallet Verification | BIP-32 master fingerprint (XFP, 8 hex chars) shown below each SeedQR via `@scure/bip32` |
 | Output Format | QR codes (Qards) — printable, scannable; reveal dialog is view-only and blur-by-default |
 | PWA | Installable, offline-capable via service worker |
@@ -40,11 +42,12 @@
 
 1. **Secret Input** — Secret enters memory (BIP-39 mnemonic detection for seed phrases; Trezor-style SLIP-39 recovery shares are also detected and RS1024-checksum validated on entry)
 2. **Password + Optional Keyfile** — Password bytes and optional keyfile bytes are concatenated
-3. **Argon2id KDF** — Combined input derives a 256-bit encryption key (64 MB memory, 4 iterations, 16-byte random salt)
-3. **XChaCha20-Poly1305 Encrypt** — Secret is authenticated-encrypted (256-bit key, 192-bit random nonce)
-4. **Shamir Split (K-of-N)** — Ciphertext is split into N shares using Shamir's Secret Sharing over GF(256). Any K shares reconstruct; K-1 or fewer reveal nothing.
-5. **QR Encode (Qards)** — Each share is Base64-encoded and rendered as a printable QR code.
-6. **SHA-256 Verify** — Each share is round-trip verified with an embedded SHA-256 hash before being presented. Secret is destroyed from memory.
+3. **Pad (192-byte buckets)** — The compressed payload is zero-padded to a multiple of 192 bytes so the encrypted output's size doesn't reveal the secret's size (v1.14+; shares only)
+4. **Argon2id KDF** — Combined input derives a 256-bit encryption key (64 MB memory, 4 iterations, 16-byte random salt)
+5. **XChaCha20-Poly1305 Encrypt** — Padded data is authenticated-encrypted (256-bit key, 192-bit random nonce)
+6. **Shamir Split (K-of-N)** — Ciphertext is split into N shares using Shamir's Secret Sharing over GF(256). Any K shares reconstruct; K-1 or fewer reveal nothing.
+7. **QR Encode (Qards)** — Each share is Base64-encoded and rendered as a printable QR code.
+8. **SHA-256 Verify** — Each share is round-trip verified with an embedded SHA-256 hash before being presented. Secret is destroyed from memory.
 
 The secret is encrypted BEFORE splitting with Shamir. Each Qard holds an encrypted fragment, not plaintext. The Desktop app uses Rust compiler-fence zeroization to erase the secret from memory.
 
@@ -93,14 +96,16 @@ The secret is encrypted BEFORE splitting with Shamir. Each Qard holds an encrypt
 Each share is a pipe-delimited string. v1.11+ adds optional recovery-metadata segments:
 
 ```
-Legacy / toggle off:  seQRets|<salt>|<data>|sha256:<64-char hex>
-v1.11+ / toggle on:   seQRets|<salt>|<data>|sha256:<64-char hex>|t=<K>|n=<N>|i=<I>
+Legacy (pre-v1.11):   seQRets|<salt>|<data>|sha256:<64-char hex>
+v1.14+ / toggle on:   seQRets|<salt>|<data>|v=1|t=<K>|n=<N>|i=<I>|sha256:<64-char hex>
 ```
+
+The SHA-256 hash **always sits last** and covers everything before it, so the hash input is simply the whole string up to `|sha256:`. (Note: a small number of v1.11.0-era test Qards placed `sha256:` before the metadata; the parser locates the hash segment by content, not position, so those still verify.)
 
 | Property | Value |
 |----------|-------|
 | Hash function | SHA-256 via @noble/hashes/sha256 |
-| Hash input | Legacy/4-part shares: SHA-256("seQRets|salt|data"). v1.11+ shares with recovery-metadata enabled: SHA-256("seQRets|salt|data|t=K|n=N|i=I") — metadata is included in the hash so it cannot be tampered with. |
+| Hash input | Everything before `|sha256:` — the hash always sits last. Legacy/4-part shares: SHA-256("seQRets\|salt\|data"). v1.14+ shares with recovery metadata: SHA-256("seQRets\|salt\|data\|v=1\|t=K\|n=N\|i=I") — the version marker and metadata are included in the hash so they cannot be tampered with. |
 | Hash output | 64 hex characters (~71 chars with sha256: prefix) |
 | Verification (generation) | All shares round-trip verified before being presented |
 | Verification (restore) | Desktop: auto-verified on scan/import with shield icon. Web: silent acceptance. |
@@ -110,7 +115,26 @@ v1.11+ / toggle on:   seQRets|<salt>|<data>|sha256:<64-char hex>|t=<K>|n=<N>|i=<
 | Security | One-way — the hash cannot be reversed to recover share data |
 
 Manual terminal verification (legacy/4-part): `echo -n "seQRets|salt|data" | shasum -a 256`
-Manual terminal verification (v1.11+ with metadata): `echo -n "seQRets|salt|data|t=K|n=N|i=I" | shasum -a 256`
+Manual terminal verification (v1.14+ with version marker and metadata): `echo -n "seQRets|salt|data|v=1|t=K|n=N|i=I" | shasum -a 256`
+
+### Length Privacy, Format Version & Blind Export (v1.14+)
+
+**Length-privacy padding.** Stream ciphers produce ciphertext the same length as their input, so before v1.14 a Qard's size correlated with the size of the secret inside it. Since v1.14 the compressed payload is zero-padded up to a multiple of **192 bytes** before encryption. Every common secret (12- or 24-word seeds, with or without a label) lands in the same first bucket, so an observer holding a Qard learns only "at most N buckets" — for typical secrets, nothing at all.
+
+| Property | Value |
+|----------|-------|
+| Bucket size | 192 bytes |
+| Applied | After compression (compression would collapse the padding), before encryption |
+| Integrity | Padding is covered by the XChaCha20-Poly1305 authentication tag |
+| Restore | No unpad step — gzip streams self-terminate and deployed decompressors ignore trailing zero bytes |
+| Backward compatibility | Pre-v1.14 apps and previously downloaded `recover.html` copies restore padded Qards without modification |
+| Scope | Qard share payloads only; vault and plan files are unpadded (they are updatable disk artifacts) |
+
+Claim to use: **"a single Qard reveals nothing about your secret — not its contents, and not even its size."**
+
+**Format-version marker.** Every v1.14+ Qard carries a hash-covered `v=1` marker as its first metadata segment. Qards are frozen artifacts (printed cards, steel plates), so the marker exists for longevity: it lets future software distinguish "this backup is damaged" (checksum mismatch) from "this software predates this Qard's format" — the latter raising a clear "created by a newer version — update" error instead of misparsing. An heir holding a healthy backup is therefore told exactly that. Shares with no `v=` segment are pre-v1.14 and parse under the original rules; old parsers ignore unknown `key=value` segments and still hash them correctly, so `v=1` shares restore in pre-v1.14 software.
+
+**Label blind export.** Labels are always encrypted inside the payload. By default they are *also* printed on card faces and used in file names, which helps users tell Qards apart. The **"Show label on Qards & file names"** switch (default ON) gates every plaintext surface: turned off, cards, files, and smart-card entries show only a card number and set ID. Useful whenever a third party handles the cards — a print shop or etching service learns nothing but a number.
 
 ### QR Reveal Dialog
 
@@ -152,7 +176,7 @@ Trezor-style SLIP-39 recovery shares are recognized on entry and after restore, 
 | Module | `slip39.ts` — validation-only, zero dependencies, embeds the official 1024-word SLIP-39 wordlist |
 | Test vectors | Verified against all 45 official SatoshiLabs SLIP-39 test vectors |
 | Storage | Stored as plain text (not converted to entropy) to preserve per-share metadata (identifier, group parameters, iteration exponent) |
-| Restore output | Numbered word grid for re-entry into a hardware wallet — no SeedQR (SeedQR is BIP-39-only) |
+| Restore output | Numbered word grid for re-entry into a hardware wallet — no SeedQR (SeedQR is BIP-39-only). BIP-39 restores also show the numbered grid, plus the wallet fingerprint (e.g. `73C5DA0A`) for post-import verification. |
 | Key material | Never splits, combines, or reconstructs shares — reads and verifies word sequences only |
 | Availability | Web and desktop |
 | Introduced | v1.13.0 |
@@ -398,7 +422,9 @@ seQRets Recover is an independent, single-file recovery tool for the seQRets sha
 | Relationship to main app | Independent reference implementation — separate repo, separate release chain. NOT a fallback shipped inside the main app. |
 | Install | None. One HTML file, opens in any modern browser. |
 | Network usage | None at runtime. Strict Content-Security-Policy (`connect-src 'none'`) enforces this at the browser level. |
-| Share format | `seQRets|<base64 salt>|<base64 nonce+ciphertext>|sha256:<hex>` (plaintext, self-describing, documented) |
+| Share format | `seQRets|<base64 salt>|<base64 nonce+ciphertext>[|v=1][|t=K|n=N|i=I]|sha256:<hex>` (plaintext, self-describing, documented; hash always last) |
+| Current version | v1.7.0 — adds only a friendlier error message for hypothetical future formats |
+| Backward compatibility | **Deliberate guarantee:** Qards created by the newest seQRets restore in older, previously downloaded copies of `recover.html` with no update — verified against the published tool before each release. The copy stored with a user's estate documents keeps working; there is no urgency to swap it. |
 | Cryptographic primitives | Argon2id (m=65536, t=4, p=1, dkLen=32), XChaCha20-Poly1305 (24-byte nonce), Shamir over GF(256), gzip via pako, BIP-39 reassembly via @scure/bip39 — all MIT/BSD licensed |
 | Verification | Every release publishes a SHA-256 hash on the GitHub releases page |
 
@@ -526,7 +552,7 @@ Yes. Full source code is on GitHub under AGPLv3. You can audit the encryption, s
 Any text-based secret: crypto seed phrases (BIP-39), private keys, passwords, recovery codes, API keys, or personal notes. Maximum input is constrained by QR code capacity (~2,953 bytes).
 
 **Does seQRets support SLIP-39 (Trezor) recovery shares?**
-Yes. seQRets detects Trezor-style SLIP-39 recovery shares (20 or 33 words, including multi-share sets entered one per line) and validates them against their built-in RS1024 checksum on entry and after restore, so a mistyped word is caught before encryption. Detection is validation-only (`slip39.ts`): zero dependencies, embeds the official 1024-word list, verified against all 45 official SatoshiLabs test vectors; it never splits, combines, or reconstructs shares. Unlike BIP-39, SLIP-39 phrases are stored as plain text (not converted to entropy) to preserve per-share metadata; on restore they display as a numbered word grid for hardware-wallet re-entry (SeedQR is offered for BIP-39 mnemonics only). Available on web and desktop; introduced in v1.13.0.
+Yes — and this matters because Trezor Suite now backs up new wallets with a 20-word SLIP-39 phrase by default ("seQRets speaks SLIP-39 — bring your Trezor's new-style backup"); before v1.13 these phrases could not be encrypted at all. seQRets detects Trezor-style SLIP-39 recovery shares (20 or 33 words, including multi-share sets entered one per line) and validates them against their built-in RS1024 checksum on entry and after restore, so a mistyped word is caught before encryption. Detection is validation-only (`slip39.ts`): zero dependencies, embeds the official 1024-word list, verified against all 45 official SatoshiLabs test vectors; it never splits, combines, or reconstructs shares. Unlike BIP-39, SLIP-39 phrases are stored as plain text (not converted to entropy) to preserve per-share metadata; on restore they display as a numbered word grid for hardware-wallet re-entry (SeedQR is offered for BIP-39 mnemonics only; BIP-39 restores also get the numbered grid plus the wallet fingerprint). seQRets validates and protects SLIP-39 shares; it does NOT generate, split, or combine them — that happens on the wallet. Available on web and desktop; introduced in v1.13.0.
 
 ### Security
 
@@ -541,6 +567,15 @@ If you encrypted with a keyfile and lose it, your secret cannot be decrypted. Th
 
 **What is Shamir's Secret Sharing?**
 A mathematically proven threshold scheme where a secret is split into N shares, and any K can reconstruct it. Fewer than K shares reveal zero information — this is information-theoretic security, not computational. It is also quantum-resistant.
+
+**Can someone tell how big my secret is by looking at a Qard?**
+No. Since v1.14, payloads are padded to fixed-size 192-byte buckets before encryption, so a Qard's size no longer reveals the size of the secret inside it — a 12-word seed, a 24-word seed, and a labeled backup all produce identically sized Qards. A single Qard reveals nothing about your secret: not its contents, and not even its length. Padding is applied after compression and covered by the authentication tag, and needs no special handling on restore — which is why older app versions and previously downloaded recover.html copies restore padded Qards without any update.
+
+**Can I keep labels off my printed Qards?**
+Yes. Labels are always encrypted inside the payload, but by default they are also printed on card faces and used in file names so you can tell Qards apart. The "Show label on Qards & file names" switch (default ON) controls only those plaintext surfaces — turn it off for a blind export, where cards, files, and smart-card entries show nothing but a card number and set ID. Useful whenever someone else handles your cards: a print shop or etching service learns nothing but a number.
+
+**Do I need to re-download the recovery tool when seQRets updates?**
+No. The copy of recover.html already stored with your Qards and estate documents keeps working — Qards created by the newest seQRets restore in older copies of the recovery tool without any update. This is verified against the published tool before shipping a release, because a recovery tool that quietly stopped reading new backups would defeat the entire point. Newer releases (current: v1.7.0) only add things like friendlier error messages. Every Qard also carries a format-version marker, so a backup made by a version too new for the software reading it produces a clear "update your app" message rather than a misleading "corrupted file" error.
 
 **Does seQRets collect telemetry?**
 No. No analytics, no tracking pixels, no error reporting. The app makes one optional network call — to fetch the current Bitcoin price. That can be disabled by going offline.
