@@ -292,10 +292,10 @@ const PreviewLandingB = () => {
             <div className="mx-auto max-w-6xl">
               <motion.div {...rise} className="text-center">
                 <p className="font-display text-[12px] font-bold uppercase tracking-[0.16em] text-[var(--gold)]">
-                  Why us
+                  By design
                 </p>
                 <h2 className="mt-4 font-display text-[30px] font-bold leading-[1.18] tracking-[-0.03em] md:text-[38px]">
-                  Why people trust it with the real thing
+                  None of this runs on trust
                 </h2>
               </motion.div>
 
@@ -429,7 +429,16 @@ const PreviewLandingB = () => {
                 </h2>
                 <p className="mx-auto mt-5 max-w-lg text-[15px] leading-[1.7] text-[var(--ink2)]">
                   seQRets is open source, so you don&rsquo;t have to take our word
-                  for how it works — and it keeps working whether or not we do.
+                  for how it works — the{" "}
+                  <a
+                    href="https://github.com/seQRets/seQRets-app"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-[var(--gold)] underline underline-offset-2 transition-opacity hover:opacity-80"
+                  >
+                    full source is on GitHub
+                  </a>{" "}
+                  to download and read. And it keeps working whether or not we do.
                 </p>
               </motion.div>
 
