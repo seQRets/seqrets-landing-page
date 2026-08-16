@@ -441,7 +441,7 @@ const PreviewLandingB = () => {
                     rel="noopener noreferrer"
                     className="font-semibold text-[var(--gold)] underline underline-offset-2 transition-opacity hover:opacity-80"
                   >
-                    full source is on GitHub
+                    full code base is on GitHub
                   </a>{" "}
                   to download and read. And it keeps working whether or not we do.
                 </p>

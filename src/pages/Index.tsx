@@ -7,7 +7,7 @@ import SecuritySection from "@/components/landing/SecuritySection";
 import ComparisonTable from "@/components/landing/ComparisonTable";
 import DesktopCTA from "@/components/landing/DesktopCTA";
 import OpenSource from "@/components/landing/OpenSource";
-import Footer from "@/components/landing/Footer";
+import { PreviewFooter } from "@/components/preview/PreviewChrome";
 
 const Index = () => {
   return (
@@ -23,7 +23,7 @@ const Index = () => {
         <ExploreTiles />
         <OpenSource />
       </main>
-      <Footer />
+      <PreviewFooter mode="dark" />
     </div>
   );
 };

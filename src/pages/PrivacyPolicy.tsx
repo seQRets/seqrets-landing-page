@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { ShieldCheck, Eye, Database, Globe, Cookie, Bot, Mail, Server, Coins, UserCheck, Clock, Plane } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
-import Footer from "@/components/landing/Footer";
+import { PreviewFooter } from "@/components/preview/PreviewChrome";
 import PageHead from "@/components/PageHead";
 
 const PrivacyPolicy = () => {
@@ -312,7 +312,7 @@ const PrivacyPolicy = () => {
 
         </div>
       </main>
-      <Footer />
+      <PreviewFooter mode="dark" />
     </div>
   );
 };

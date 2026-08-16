@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Shield, ShieldCheck, Copy, Download, Check, Terminal, Mail, Globe } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
-import Footer from "@/components/landing/Footer";
+import { PreviewFooter } from "@/components/preview/PreviewChrome";
 import PageHead from "@/components/PageHead";
 
 const PGP_KEY = `-----BEGIN PGP PUBLIC KEY BLOCK-----
@@ -294,7 +294,7 @@ gpg --encrypt --armor \\
         </div>
 
       </main>
-      <Footer />
+      <PreviewFooter mode="dark" />
     </div>
   );
 };

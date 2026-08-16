@@ -207,8 +207,20 @@ export const PreviewNav = ({
   </header>
 );
 
-export const PreviewFooter = () => (
-  <footer className="border-t border-[var(--line)] bg-[var(--band)] px-6 py-14">
+/**
+ * Site footer.
+ *
+ * `mode` is only needed OUTSIDE the preview pages. Those pages set the
+ * palette as custom properties on a wrapper element, so the footer inherits
+ * it and follows their light/dark switch — pass nothing there. Everywhere
+ * else those properties are undefined and every var() below would collapse,
+ * so the caller names a mode and the footer carries the palette itself.
+ */
+export const PreviewFooter = ({ mode }: { mode?: PreviewMode }) => (
+  <footer
+    style={mode ? (THEMES_APP[mode] as React.CSSProperties) : undefined}
+    className="border-t border-[var(--line)] bg-[var(--band)] px-6 py-14"
+  >
     <div className="mx-auto max-w-6xl">
       <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
@@ -223,9 +235,14 @@ export const PreviewFooter = () => (
         </div>
 
         {[
-          { h: "Learn", links: [["How it works", "/how-it-works"], ["Features", "/features"], ["Security", "/security"], ["Blog", "/blog"]] },
+          /*
+            "A closer look" matches that page's own H1. It used to read "How
+            it works", which collided with the nav's #how anchor — same label,
+            same page, two destinations.
+          */
+          { h: "Learn", links: [["A closer look", "/how-it-works"], ["Features", "/features"], ["Security", "/security"], ["Blog", "/blog"]] },
           { h: "Docs", links: [["Documentation", "/docs"], ["FAQ", "/docs/faq"], ["Threat model", "/docs/threat-model"], ["Recovery tool", "/recover"]] },
-          { h: "More", links: [["Shop", "/preview/shop"], ["Contact", "/contact"], ["Privacy", "/privacy"], ["Terms", "/terms"]] },
+          { h: "More", links: [["Shop", "/preview/shop"], ["Contact", "/contact"], ["PGP key", "/pgp"], ["Privacy", "/privacy"], ["Terms", "/terms"]] },
         ].map((col) => (
           <div key={col.h}>
             <p className="font-display text-[13px] font-bold uppercase tracking-[0.14em] text-[var(--ink3)]">
@@ -247,10 +264,20 @@ export const PreviewFooter = () => (
         ))}
       </div>
 
-      <p className="mt-12 border-t border-[var(--line)] pt-7 text-[13px] text-[var(--ink3)]">
-        © {new Date().getFullYear()} seQRets · AGPLv3 · Built for people who keep
-        their own keys.
-      </p>
+      {/*
+        Legal line and disclaimer carried over from the previous footer — this
+        one now renders site-wide, so dropping them would remove them from
+        every page.
+      */}
+      <div className="mt-12 border-t border-[var(--line)] pt-7">
+        <p className="text-[13px] leading-[1.6] text-[var(--ink3)]">
+          © {new Date().getFullYear()} seQRets — a product of Toothjockey LLC.
+          All rights reserved. Licensed under AGPLv3.
+        </p>
+        <p className="mt-2 text-[12px] text-[var(--ink3)]">
+          Your security is your responsibility. Use with caution.
+        </p>
+      </div>
     </div>
   </footer>
 );

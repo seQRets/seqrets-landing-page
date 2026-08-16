@@ -2,7 +2,7 @@ import { useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Calendar, Clock } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
-import Footer from "@/components/landing/Footer";
+import { PreviewFooter } from "@/components/preview/PreviewChrome";
 import PageHead from "@/components/PageHead";
 import { BLOG_POSTS, categoryLabels, type BlogCategory } from "@/lib/blog";
 
@@ -141,7 +141,7 @@ const BlogPage = () => {
         </section>
       </main>
 
-      <Footer />
+      <PreviewFooter mode="dark" />
     </div>
   );
 };

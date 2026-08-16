@@ -30,7 +30,7 @@ import CartDrawer from "@/components/cart/CartDrawer";
 import CartIcon from "@/components/cart/CartIcon";
 import { joinWaitlist } from "@/lib/waitlist";
 import PageHead from "@/components/PageHead";
-import Footer from "@/components/landing/Footer";
+import { PreviewFooter } from "@/components/preview/PreviewChrome";
 import ProductModal from "@/components/shop/ProductModal";
 import type { LucideIcon } from "lucide-react";
 
@@ -589,7 +589,7 @@ const Shop = () => {
         </section>
       </main>
 
-      <Footer />
+      <PreviewFooter mode="dark" />
 
       {/* Product Detail Modal */}
       {modalProduct && (

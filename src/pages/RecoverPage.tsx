@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { LifeBuoy, Globe, Download, Github, ShieldCheck } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
-import Footer from "@/components/landing/Footer";
+import { PreviewFooter } from "@/components/preview/PreviewChrome";
 import PageHead from "@/components/PageHead";
 
 const RECOVER_PAGES_URL = "https://seqrets.github.io/seQRets-Recover/";
@@ -242,7 +242,7 @@ const RecoverPage = () => {
           </a>
         </div>
       </main>
-      <Footer />
+      <PreviewFooter mode="dark" />
     </div>
   );
 };

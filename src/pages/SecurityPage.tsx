@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ShieldCheck, Lock, Atom, Eye, Mail } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
-import Footer from "@/components/landing/Footer";
+import { PreviewFooter } from "@/components/preview/PreviewChrome";
 import PageHead from "@/components/PageHead";
 import FaqAccordion from "@/components/docs/FaqAccordion";
 
@@ -331,7 +331,7 @@ const SecurityPage = () => {
           </section>
         </div>
       </main>
-      <Footer />
+      <PreviewFooter mode="dark" />
     </div>);
 
 };

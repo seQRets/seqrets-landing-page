@@ -8,7 +8,7 @@ import screenshotSmartcard from "@/assets/screenshot-smartcard.webp";
 const screenshotInheritance = "/inherit.webp";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/landing/Navbar";
-import Footer from "@/components/landing/Footer";
+import { PreviewFooter } from "@/components/preview/PreviewChrome";
 import PageHead from "@/components/PageHead";
 
 const sections = [
@@ -266,7 +266,7 @@ const HowItWorksPage = () => {
           </Link>
         </div>
       </main>
-      <Footer />
+      <PreviewFooter mode="dark" />
 
       {/* Lightbox */}
       {lightbox && (

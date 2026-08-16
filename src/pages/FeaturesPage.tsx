@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 import TechnicalDetails from "@/components/ui/TechnicalDetails";
 import WaitlistButton from "@/components/WaitlistButton";
 import Navbar from "@/components/landing/Navbar";
-import Footer from "@/components/landing/Footer";
+import { PreviewFooter } from "@/components/preview/PreviewChrome";
 import PageHead from "@/components/PageHead";
 
 import appDark from "@/assets/app-dark.webp";
@@ -369,7 +369,7 @@ const FeaturesPage = () => {
         </section>
       </main>
 
-      <Footer />
+      <PreviewFooter mode="dark" />
     </div>
   );
 };

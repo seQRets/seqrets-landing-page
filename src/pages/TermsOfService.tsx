@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Scale, AlertTriangle, Shield, FileText, Code, ShoppingBag, Mail, Gavel, UserCheck, Info, Ban, RefreshCw, Building2, ShieldOff } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
-import Footer from "@/components/landing/Footer";
+import { PreviewFooter } from "@/components/preview/PreviewChrome";
 import PageHead from "@/components/PageHead";
 
 const TermsOfService = () => {
@@ -371,7 +371,7 @@ const TermsOfService = () => {
 
         </div>
       </main>
-      <Footer />
+      <PreviewFooter mode="dark" />
     </div>
   );
 };

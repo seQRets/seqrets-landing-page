@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Mail, Lock, ShieldAlert, Scale, Github, MessageSquare, Youtube, Building2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
-import Footer from "@/components/landing/Footer";
+import { PreviewFooter } from "@/components/preview/PreviewChrome";
 import PageHead from "@/components/PageHead";
 
 const ContactPage = () => {
@@ -168,7 +168,7 @@ const ContactPage = () => {
         </section>
 
       </main>
-      <Footer />
+      <PreviewFooter mode="dark" />
     </div>
   );
 };

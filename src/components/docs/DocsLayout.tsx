@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
-import Footer from "@/components/landing/Footer";
+import { PreviewFooter } from "@/components/preview/PreviewChrome";
 import DocsBreadcrumbs from "./DocsBreadcrumbs";
 import DocsSidebar from "./DocsSidebar";
 
@@ -24,7 +24,7 @@ const DocsLayout = () => {
           </main>
         </div>
       </div>
-      <Footer />
+      <PreviewFooter mode="dark" />
     </div>
   );
 };
