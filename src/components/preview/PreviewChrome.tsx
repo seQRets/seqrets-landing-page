@@ -58,14 +58,8 @@ export const THEMES_APP = {
     "--card-drop": "0 22px 30px rgba(40,30,18,.34)",
   },
   dark: {
-    "--pg": "#211C17",
-    /*
-      Lifted from #191512 to buy tonal headroom. Shadows drawn on this colour
-      only have as many 8-bit steps as it sits above black; at 25 they had to
-      be kept tight or they banded. At 46 a soft, wide falloff has room to
-      grade. See --shadow-card below.
-    */
-    "--band": "#2E2721",
+    "--pg": "#14120F",
+    "--band": "#191512",
     "--sf": "#251F19",
     "--ink": "#F5F0E8",
     "--ink2": "#A59B8F",
@@ -75,7 +69,7 @@ export const THEMES_APP = {
     "--gold2": "#C09024",
     "--gold-ink": "#1C1C1C",
     "--goldsoft": "#2B2317",
-    "--pg-blur": "rgba(33,28,23,.85)",
+    "--pg-blur": "rgba(20,18,15,.85)",
     "--gold-line": "rgba(224,169,60,.38)",
     "--gold-fill": "rgba(224,169,60,.16)",
     "--deep": "#0D0B09",
@@ -96,24 +90,26 @@ export const THEMES_APP = {
     "--shadow-sm": "0 10px 30px -14px rgba(0,0,0,.6)",
     /*
       One layer, and every number is load-bearing. A shadow drawn on --band
-      only has as many 8-bit steps as --band sits above black; stretch those
-      too thin and they read as bands rather than a gradient. Two rules, both
-      relying on the fact that a shadow's tail reaches roughly a full BLUR
-      past its edge (not blur/2, which is what the spec's sigma suggests):
+      only has as many 8-bit steps as --band sits above black, and --band is
+      25. Stretch those ~19 steps too thin and they read as contour bands
+      rather than a gradient — the two-layer 80px version this replaced put a
+      visible ring every 5px, on top of a second falloff edge of its own.
+
+      Two rules, both relying on the fact that a shadow's tail reaches roughly
+      a full BLUR past its edge (not blur/2, which the spec's sigma suggests):
 
         offset > spread + blur   — or the tail leaks above the card's top edge
-                                   (44 > 0 + 40). This is why the offset is
-                                   large: it is set by the blur, not by taste.
+                                   (36 > 0 + 26). The offset is set by the
+                                   blur, not by taste.
         band width = blur/levels — blur alone sets the ramp length, so reach
                                    is bought with offset and spread instead.
 
-      The 40px blur is only affordable because --band was lifted to 46 levels;
-      at its old 25 this exact falloff banded badly. Blur and --band move
-      together — raising one without the other brings the stepping back.
+      This is the softest setting that stays clean at 25 levels; a wider,
+      more diffuse falloff needs a lighter --band, not a different shadow.
 
-      Net: ~84px below, ~40px at the sides, nothing above, ~2.5px contours.
+      Net: ~62px below, ~26px at the sides, nothing above.
     */
-    "--shadow-card": "0 44px 40px 0 rgba(0,0,0,.7)",
+    "--shadow-card": "0 36px 26px 0 rgba(0,0,0,.78)",
     /*
       Kept deliberately tight on dark: a wide black blur has nothing darker to
       fall on, so it smears across the app window behind the card as a halo
