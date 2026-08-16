@@ -22,6 +22,7 @@ import {
 
 import appLight from "@/assets/app-light.webp";
 import appDark from "@/assets/app-dark.webp";
+import qard from "@/assets/seQRets-Qard-SatoshisBTC-05.webp";
 
 /* ------------------------------------------------------------------ *
  * DESIGN PREVIEW — CONCEPT B — /preview/b
@@ -93,36 +94,16 @@ const HeroStack = ({ mode }: { mode: PreviewMode }) => (
       className="relative w-full"
     />
 
-    {/* floating Qard, like the reference's payment card */}
-    <div
-      className="absolute -right-2 -top-5 w-[178px] rounded-[14px] p-4 shadow-[shadow:var(--shadow)] sm:-right-6"
-      style={{ background: "linear-gradient(150deg, var(--deep) 0%, var(--gold) 165%)" }}
-    >
-      <div className="flex items-start justify-between">
-        <svg viewBox="0 0 48 48" fill="none" className="h-5 w-5" aria-hidden="true">
-          <path
-            d="M11 7h30v25H21l-9 9 1-9h-2z"
-            stroke="var(--deep-ink)"
-            strokeWidth="3.4"
-            strokeLinejoin="round"
-          />
-        </svg>
-        <span className="rounded bg-white/15 px-2 py-1 text-[9px] font-bold uppercase tracking-[0.1em] text-[var(--deep-ink)]">
-          Qard 3 / 5
-        </span>
-      </div>
-      <div className="mt-3.5 grid grid-cols-8 gap-[2px]">
-        {Array.from({ length: 32 }, (_, i) => (i * 7) % 5 < 2).map((on, i) => (
-          <span
-            key={i}
-            className={`aspect-square rounded-[1px] ${on ? "bg-[var(--deep-on)]" : "bg-[var(--deep-dim)]"}`}
-          />
-        ))}
-      </div>
-      <p className="mt-3 text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[var(--deep-ink2)]">
-        Set afgP3ivE
-      </p>
-    </div>
+    {/*
+      A real Qard exported from the app, in the slot the reference gives its
+      payment card. This is a throwaway set ("Satoshi's BTC", 0SHjA9cp) —
+      never put a Qard from a live set on a public page.
+    */}
+    <img
+      src={qard}
+      alt="A printed seQRets Qard: a QR code above the label Satoshi's BTC, Qard #5, and a warning to store it securely and separately from other Qards"
+      className="absolute -right-3 -top-8 w-[168px] rotate-[4deg] rounded-[10px] border border-[var(--line)] shadow-[shadow:var(--shadow)] sm:-right-8 md:w-[188px]"
+    />
 
     {/* floating restore-progress card */}
     <div className="absolute -left-3 bottom-8 w-[224px] rounded-[16px] border border-[var(--line)] bg-[var(--sf)] p-4 shadow-[shadow:var(--shadow)] sm:-left-8">
