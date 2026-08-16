@@ -163,7 +163,7 @@ const PreviewLandingB = () => {
         <PreviewNav
           links={[
             ["How it works", "#how"],
-            ["Why trust it", "#why"],
+            ["Why it's safe", "#why"],
             ["Get started", "#plans"],
           ]}
           secondary={["Docs", "/docs"]}
@@ -248,10 +248,15 @@ const PreviewLandingB = () => {
             `flow-root` is load-bearing: without it the card's negative top
             margin collapses through the section and drags the band's
             background up with it, so nothing straddles the seam.
+
+            scroll-mt must clear the sticky nav AND that same negative margin.
+            The anchor lands on this section, but the card starts 128px
+            (md: 160px) above it, so a nav-sized margin scrolls the card's
+            header off the top. These are 128/160 plus ~96px of nav and air.
           */}
           <section
             id="how"
-            className="flow-root scroll-mt-20 bg-[var(--band)] px-6 pb-20 md:pb-24"
+            className="flow-root scroll-mt-56 bg-[var(--band)] px-6 pb-20 md:scroll-mt-64 md:pb-24"
           >
             <motion.div
               {...rise}
@@ -295,7 +300,7 @@ const PreviewLandingB = () => {
                   By design
                 </p>
                 <h2 className="mt-4 font-display text-[30px] font-bold leading-[1.18] tracking-[-0.03em] md:text-[38px]">
-                  None of this runs on trust
+                  Nothing in seQRets runs on trust
                 </h2>
               </motion.div>
 
@@ -386,10 +391,10 @@ const PreviewLandingB = () => {
             <div className="mx-auto max-w-6xl">
               <motion.div {...rise}>
                 <p className="font-display text-[12px] font-bold uppercase tracking-[0.16em] text-[var(--deep-gold)]">
-                  What it protects you from
+                  What seQRets protects you from
                 </p>
                 <h2 className="mt-4 max-w-2xl font-display text-[28px] font-bold leading-[1.2] tracking-[-0.03em] text-[var(--deep-ink)] md:text-[36px]">
-                  Every way of losing it, covered by the same idea.
+                  Theft, fire, or death — one design covers all three.
                 </h2>
               </motion.div>
 
