@@ -70,6 +70,11 @@ const routes: RouteRecord[] = [
       { path: "contact", lazy: lazy(() => import("./pages/ContactPage")) },
       { path: "recover", lazy: lazy(() => import("./pages/RecoverPage")) },
 
+      // ── Design preview (noindex, not linked from the site) ──
+      { path: "preview", lazy: lazy(() => import("./pages/PreviewLanding")) },
+      { path: "preview/b", lazy: lazy(() => import("./pages/PreviewLandingB")) },
+      { path: "preview/shop", lazy: lazy(() => import("./pages/PreviewShop")) },
+
       // ── Blog ───────────────────────────────────────────
       { path: "blog", lazy: lazy(() => import("./pages/BlogPage")) },
       {
