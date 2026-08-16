@@ -19,11 +19,12 @@ const TechnicalDetails = ({
 }: TechnicalDetailsProps) => {
   const [open, setOpen] = useState(false);
   return (
-    <div className={`border-t border-border/20 pt-3 ${className}`}>
+    <div className={`border-t border-[var(--line)] pt-3 ${className}`}>
       <button
+        type="button"
         onClick={() => setOpen(!open)}
         aria-expanded={open}
-        className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground/70 hover:text-foreground transition-colors"
+        className="flex items-center gap-1.5 text-xs font-medium text-[var(--ink3)] transition-colors hover:text-[var(--ink)]"
       >
         <ChevronDown
           className={`h-3 w-3 transition-transform duration-200 ${
@@ -38,7 +39,7 @@ const TechnicalDetails = ({
         }`}
       >
         <div className="overflow-hidden">
-          <div className="pt-3 text-xs text-muted-foreground/70 leading-relaxed">
+          <div className="pt-3 text-xs leading-relaxed text-[var(--ink3)]">
             {children}
           </div>
         </div>

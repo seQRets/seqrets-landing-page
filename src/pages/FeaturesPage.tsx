@@ -1,5 +1,6 @@
 import { useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import {
   Shield,
   QrCode,
@@ -13,30 +14,40 @@ import {
   Package,
   Fingerprint,
   Github,
+  ArrowUpRight,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import TechnicalDetails from "@/components/ui/TechnicalDetails";
 import WaitlistButton from "@/components/WaitlistButton";
-import Navbar from "@/components/landing/Navbar";
-import { PreviewFooter } from "@/components/preview/PreviewChrome";
 import PageHead from "@/components/PageHead";
+import { PreviewPage, rise } from "@/components/preview/PreviewChrome";
 
 import appDark from "@/assets/app-dark.webp";
 import appLight from "@/assets/app-light.webp";
 
-type Category = "crypto" | "smart" | "inherit" | "ai";
-
-const accentClasses: Record<Category, { bg: string; text: string; border: string; badge: string; badgeText: string }> = {
-  crypto:  { bg: "bg-accent-crypto/10", text: "text-accent-crypto", border: "border-accent-crypto/30", badge: "bg-accent-crypto/15", badgeText: "text-accent-crypto" },
-  smart:   { bg: "bg-accent-smart/10",  text: "text-accent-smart",  border: "border-accent-smart/30",  badge: "bg-accent-smart/15",  badgeText: "text-accent-smart" },
-  inherit: { bg: "bg-accent-inherit/10", text: "text-accent-inherit", border: "border-accent-inherit/30", badge: "bg-accent-inherit/15", badgeText: "text-accent-inherit" },
-  ai:      { bg: "bg-accent-ai/10",     text: "text-accent-ai",     border: "border-accent-ai/30",     badge: "bg-accent-ai/15",     badgeText: "text-accent-ai" },
-};
+/* ------------------------------------------------------------------ *
+ * /features — third interior page moved onto the redesign.
+ *
+ * Chrome and theming come from PreviewPage; this file is content only.
+ *
+ * The hero keeps its photograph, which is dark and stays dark in both
+ * themes — so it is built from the --deep-* tokens, the same set the
+ * landing page's dark band uses. Those are identical in light and dark on
+ * purpose: it is a fixed surface, not a themed one.
+ *
+ * The per-category accent colours (--accent-crypto and friends) are gone.
+ * They are fixed mid-lightness hues defined once in index.css, so they do
+ * not follow the theme and read poorly on the light background. Nothing
+ * on the page ever named the category, so the colour was carrying no
+ * information a reader could decode.
+ *
+ * Two Tailwind traps to avoid, both silent: an arbitrary box-shadow
+ * wrapping a CSS var parses as a shadow COLOUR and computes to none, and
+ * an opacity modifier on a var() colour computes to transparent.
+ * ------------------------------------------------------------------ */
 
 interface FeatureSection {
   icon: typeof Shield;
   title: string;
-  category: Category;
   description: string;
   details: string[];
   technicalDetails?: string[];
@@ -47,7 +58,6 @@ const sections: FeatureSection[] = [
   {
     icon: Binary,
     title: "BIP-39 & SLIP-39",
-    category: "crypto",
     description:
       "Purpose-built for cryptocurrency seed phrases and recovery shares. Trezor Suite now backs up new wallets with a 20-word SLIP-39 phrase by default — seQRets speaks SLIP-39, so you can protect that backup exactly like a seed phrase, and it validates both formats automatically before you split.",
     details: [
@@ -69,7 +79,6 @@ const sections: FeatureSection[] = [
   {
     icon: Shield,
     title: "Secure Any Secret",
-    category: "crypto",
     description:
       "Not just crypto. Passwords, API keys, legal documents, account credentials, private notes — if it's sensitive, seQRets can encrypt and split it into shares that no single person can read alone.",
     details: [
@@ -88,7 +97,6 @@ const sections: FeatureSection[] = [
   {
     icon: QrCode,
     title: "QR-Coded Shares",
-    category: "smart",
     description:
       "Each share becomes a scannable QR code — a Qard. Print them, laminate them, store them in different locations. When you need your secret back, scan enough Qards to meet your threshold.",
     details: [
@@ -114,7 +122,6 @@ const sections: FeatureSection[] = [
   {
     icon: CreditCard,
     title: "Smart Card Support",
-    category: "smart",
     desktopOnly: true,
     description:
       "Store shares on JCOP smart cards for durable, tamper-evident physical security. Insert your card into the USB reader to back up or restore.",
@@ -134,7 +141,6 @@ const sections: FeatureSection[] = [
   {
     icon: Users,
     title: "Inheritance Planning",
-    category: "inherit",
     desktopOnly: true,
     description:
       "Document every secret, assign assets to beneficiaries, and plan for incapacitation — all in one encrypted plan.",
@@ -155,7 +161,6 @@ const sections: FeatureSection[] = [
   {
     icon: Bot,
     title: "Bob — AI Assistant",
-    category: "ai",
     description:
       "Meet Bob, your built-in security guide. Bob helps you understand encryption concepts, plan your secret management strategy, and make informed decisions — without ever seeing your secrets.",
     details: [
@@ -202,175 +207,209 @@ const FeaturesPage = () => {
   }, [handleScroll]);
 
   return (
-    <div className="min-h-screen bg-background">
+    <PreviewPage>
       <PageHead
         title="Features"
         description="Explore seQRets features: BIP-39 validation, Shamir's Secret Sharing, QR-coded backups, smart card storage, inheritance planning, and Bob the AI assistant."
         path="/features"
       />
-      <Navbar />
 
-      {/* Hero */}
-      <section ref={heroRef} className="relative min-h-[70vh] md:min-h-[80vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 -top-[20%] -bottom-[20%] pointer-events-none will-change-transform">
+      {/* ── Hero — a fixed dark band in both themes ─────────── */}
+      <section
+        ref={heroRef}
+        className="relative flex min-h-[62vh] items-center justify-center overflow-hidden bg-[var(--deep)] md:min-h-[72vh]"
+      >
+        <div className="pointer-events-none absolute -bottom-[20%] -top-[20%] inset-x-0 will-change-transform">
           <img
             ref={bgRef}
             src="/Features_Hero_v2.webp"
             alt=""
             className="h-full w-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/50 to-background" />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to bottom, rgba(13,11,9,.62), rgba(13,11,9,.55) 45%, rgba(13,11,9,.96))",
+            }}
+          />
         </div>
 
-        <div className="relative container mx-auto px-4 md:px-8 text-center pt-16">
-          <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-gradient-silver mb-5">
+        <motion.div
+          initial={{ opacity: 0, y: 26 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+          className="relative mx-auto max-w-3xl px-6 pt-12 text-center"
+        >
+          <p className="font-display text-[12px] font-bold uppercase tracking-[0.16em] text-[var(--deep-gold)]">
             Features
           </p>
-          <h1 className="font-display text-4xl font-black md:text-6xl text-foreground tracking-tight">
-            Built for What You
+          <h1 className="mt-4 font-display text-[38px] font-bold leading-[1.1] tracking-[-0.035em] text-[var(--deep-ink)] sm:text-[46px] md:text-[54px]">
+            Built for what you
             <br />
-            <span className="text-gradient">Can't Afford to Lose</span>
+            can&rsquo;t afford to lose.
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-base text-muted-foreground/80">
-            From seed phrase validation to inheritance planning — every feature is designed to protect your most sensitive information with zero compromise.
+          <p className="mx-auto mt-6 max-w-xl text-[15.5px] leading-[1.7] text-[var(--deep-ink2)]">
+            From seed phrase validation to inheritance planning — every feature
+            is designed to protect your most sensitive information with zero
+            compromise.
           </p>
+        </motion.div>
+      </section>
+
+      {/* ── Feature grid ────────────────────────────────────── */}
+      <section className="px-6 py-20 md:py-24">
+        <div className="mx-auto grid max-w-6xl gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {sections.map((section, i) => (
+            <motion.div
+              key={section.title}
+              id={section.title.toLowerCase().replace(/\s+/g, "-")}
+              {...rise}
+              transition={{ ...rise.transition, delay: (i % 3) * 0.06 }}
+              className="flex scroll-mt-24 flex-col rounded-[22px] border border-[var(--line)] bg-[var(--sf)] p-6 md:p-7"
+            >
+              <div className="flex items-center gap-3">
+                <span className="inline-flex rounded-[12px] bg-[var(--gold-fill)] p-2.5">
+                  <section.icon className="h-5 w-5 text-[var(--gold)]" strokeWidth={1.8} />
+                </span>
+                {section.desktopOnly && (
+                  <span className="rounded-full bg-[var(--gold-fill)] px-2.5 py-0.5 font-display text-[10px] font-semibold uppercase tracking-wide text-[var(--gold)]">
+                    Pro · Desktop
+                  </span>
+                )}
+              </div>
+
+              <h2 className="mt-4 font-display text-[19px] font-bold tracking-[-0.02em]">
+                {section.title}
+              </h2>
+
+              <p className="mt-3 text-[14px] leading-[1.7] text-[var(--ink2)]">
+                {section.description}
+              </p>
+
+              <ul className="mt-5 flex-1 space-y-2.5">
+                {section.details.map((detail, j) => (
+                  <li key={j} className="flex items-start gap-2.5">
+                    <span className="mt-[3px] flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[var(--gold-fill)]">
+                      <Check className="h-2.5 w-2.5 text-[var(--gold)]" strokeWidth={3} />
+                    </span>
+                    <span className="text-[14px] leading-[1.65] text-[var(--ink2)]">
+                      {detail}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              {section.technicalDetails && section.technicalDetails.length > 0 && (
+                <TechnicalDetails className="mt-5">
+                  <ul className="space-y-2">
+                    {section.technicalDetails.map((td, k) => (
+                      <li key={k} className="flex items-start gap-2">
+                        <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-[var(--gold)]" />
+                        <span>{td}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </TechnicalDetails>
+              )}
+
+              {section.desktopOnly && (
+                <p className="mt-3 border-t border-[var(--line)] pt-3 text-[12px] italic text-[var(--ink3)]">
+                  Requires Desktop — see the{" "}
+                  <Link
+                    to="/preview/shop"
+                    className="font-semibold not-italic text-[var(--gold)] underline underline-offset-2"
+                  >
+                    Shop
+                  </Link>
+                  .
+                </p>
+              )}
+            </motion.div>
+          ))}
         </div>
       </section>
 
-      {/* Feature Grid */}
-      <main>
-        <section className="py-16 md:py-24">
-          <div className="container mx-auto px-4 md:px-8">
-            <div className="mx-auto max-w-6xl grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {sections.map((section) => {
-                const accent = accentClasses[section.category];
-                return (
-                  <div
-                    key={section.title}
-                    id={section.title.toLowerCase().replace(/\s+/g, "-")}
-                    className={`scroll-mt-24 rounded-2xl border ${accent.border} bg-card/20 p-6 md:p-7 flex flex-col transition-all duration-300 hover:bg-card/40`}
-                  >
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className={`inline-flex rounded-xl p-2.5 ${accent.bg}`}>
-                        <section.icon className={`h-5 w-5 ${accent.text}`} />
-                      </div>
-                      {section.desktopOnly && (
-                        <span className={`rounded-full px-2.5 py-0.5 font-display text-[10px] font-semibold tracking-wide uppercase ${accent.badge} ${accent.badgeText}`}>
-                          Pro · Desktop
-                        </span>
-                      )}
-                    </div>
+      {/* ── Desktop CTA ─────────────────────────────────────── */}
+      <section className="bg-[var(--band)] px-6 py-20 md:py-24">
+        <div className="mx-auto max-w-4xl text-center">
+          <motion.div {...rise}>
+            <p className="font-display text-[12px] font-bold uppercase tracking-[0.16em] text-[var(--gold)]">
+              Desktop app
+            </p>
+            <h2 className="mt-4 font-display text-[30px] font-bold leading-[1.18] tracking-[-0.03em] md:text-[38px]">
+              Ready to go pro?
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-[15px] leading-[1.7] text-[var(--ink2)]">
+              Everything in the free web app, plus smart card integration, an
+              in-app inheritance plan builder, code signing, and automatic
+              updates — built natively with Rust and Tauri.
+            </p>
+          </motion.div>
 
-                    <h2 className="font-display text-xl font-black text-foreground tracking-tight mb-3">
-                      {section.title}
-                    </h2>
-
-                    <p className="text-sm text-muted-foreground/80 leading-relaxed mb-5">
-                      {section.description}
-                    </p>
-
-                    <ul className="space-y-2.5 mb-4 flex-1">
-                      {section.details.map((detail, j) => (
-                        <li key={j} className="flex items-start gap-2.5">
-                          <div className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full ${accent.bg}`}>
-                            <Check className={`h-2.5 w-2.5 ${accent.text}`} />
-                          </div>
-                          <span className="text-sm text-muted-foreground/80">{detail}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    {section.technicalDetails && section.technicalDetails.length > 0 && (
-                      <TechnicalDetails className="mt-auto">
-                        <ul className="space-y-2">
-                          {section.technicalDetails.map((td, k) => (
-                            <li key={k} className="flex items-start gap-2">
-                              <span className={`mt-1.5 h-1 w-1 shrink-0 rounded-full ${accent.bg}`} />
-                              <span>{td}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </TechnicalDetails>
-                    )}
-
-                    {section.desktopOnly && (
-                      <p className="mt-3 pt-3 border-t border-border/20 text-xs text-muted-foreground/60 italic">
-                        Requires Desktop — see the{" "}
-                        <Link to="/shop" className="text-primary hover:underline not-italic">Shop</Link>.
-                      </p>
-                    )}
-                  </div>
-                );
-              })}
+          <motion.div {...rise} className="mt-12 grid gap-4 md:grid-cols-2">
+            <div className="overflow-hidden rounded-[18px] border border-[var(--line)]">
+              <img src={appDark} alt="The seQRets desktop app in its dark theme" className="w-full object-cover" />
             </div>
-          </div>
-        </section>
-
-        {/* Desktop CTA Section */}
-        <section className="py-20 md:py-28 bg-section-alt">
-          <div className="container mx-auto px-4 md:px-8">
-            <div className="mx-auto max-w-4xl text-center">
-              <p className="font-display text-xs font-bold uppercase tracking-[0.2em] text-gradient-silver mb-4">
-                Desktop App
-              </p>
-              <h2 className="font-display text-4xl font-black md:text-5xl text-foreground tracking-tight mb-6">
-                Ready to{" "}
-                <span className="text-gradient">Go Pro?</span>
-              </h2>
-              <p className="text-base text-muted-foreground/80 mb-12 max-w-2xl mx-auto">
-                Everything in the free web app, plus smart card integration, an in-app inheritance plan builder,
-                code signing, and automatic updates — built natively with Rust and Tauri.
-              </p>
-
-              <div className="mb-12 grid gap-4 md:grid-cols-2 overflow-hidden">
-                <div className="overflow-hidden rounded-2xl border border-border/30">
-                  <img src={appDark} alt="seQRets Desktop — Dark Theme" className="w-full object-cover" />
-                </div>
-                <div className="overflow-hidden rounded-2xl border border-border/30">
-                  <img src={appLight} alt="seQRets Desktop — Light Theme" className="w-full object-cover" />
-                </div>
-              </div>
-
-              <div className="grid gap-3 sm:grid-cols-2 text-left mb-12">
-                {desktopPerks.map((p) => (
-                  <div key={p.label} className="flex items-center gap-3 rounded-2xl border border-border/30 bg-card/20 p-5 transition-all duration-300 hover:bg-card/40">
-                    <div className="rounded-lg bg-primary/10 p-2 flex items-center justify-center">
-                      <p.icon className="h-4 w-4 text-primary" />
-                    </div>
-                    <span className="text-sm text-foreground/80">{p.label}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="rounded-2xl border border-primary/20 bg-primary/5 p-7 text-left mb-10">
-                <h3 className="font-display text-base font-bold text-foreground mb-2">
-                  One-time purchase. No subscription. Yours forever.
-                </h3>
-                <p className="text-sm text-muted-foreground/80 leading-relaxed">
-                  A code-signed desktop app with automatic updates, smart card support, and a portable USB reader — all included. The source code is always free under AGPLv3.
-                </p>
-              </div>
-
-              <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-                <WaitlistButton
-                  source="features-desktop-cta"
-                  label="Join the Waitlist"
-                  className="inline-flex items-center rounded-md bg-primary px-8 py-3.5 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
-                />
-                <Button variant="tertiary" size="lg" className="rounded-md font-display font-semibold" asChild>
-                  <a href="https://github.com/seQRets/seQRets-app" target="_blank" rel="noopener noreferrer">
-                    <Github className="mr-2 h-4 w-4" />
-                    Build from Source
-                  </a>
-                </Button>
-              </div>
+            <div className="overflow-hidden rounded-[18px] border border-[var(--line)]">
+              <img src={appLight} alt="The seQRets desktop app in its light theme" className="w-full object-cover" />
             </div>
-          </div>
-        </section>
-      </main>
+          </motion.div>
 
-      <PreviewFooter mode="dark" />
-    </div>
+          <div className="mt-12 grid gap-3 text-left sm:grid-cols-2">
+            {desktopPerks.map((p, i) => (
+              <motion.div
+                key={p.label}
+                {...rise}
+                transition={{ ...rise.transition, delay: (i % 2) * 0.06 }}
+                className="flex items-center gap-3 rounded-[18px] border border-[var(--line)] bg-[var(--sf)] p-5"
+              >
+                <span className="flex shrink-0 items-center justify-center rounded-[10px] bg-[var(--gold-fill)] p-2">
+                  <p.icon className="h-4 w-4 text-[var(--gold)]" strokeWidth={1.8} />
+                </span>
+                <span className="text-[14px] leading-[1.5] text-[var(--ink2)]">{p.label}</span>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            {...rise}
+            className="mt-10 rounded-[18px] border border-[var(--gold-line)] bg-[var(--gold-fill)] p-7 text-left"
+          >
+            <h3 className="font-display text-[16px] font-bold">
+              One-time purchase. No subscription. Yours forever.
+            </h3>
+            <p className="mt-2 text-[14px] leading-[1.7] text-[var(--ink2)]">
+              A code-signed desktop app with automatic updates, smart card
+              support, and a portable USB reader — all included. The code base is
+              always free under AGPLv3.
+            </p>
+          </motion.div>
+
+          <motion.div
+            {...rise}
+            className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center"
+          >
+            <WaitlistButton
+              source="features-desktop-cta"
+              label="Join the waitlist"
+              className="inline-flex items-center rounded-[10px] bg-[var(--gold)] px-7 py-3.5 font-display text-[14px] font-semibold text-[var(--gold-ink)] transition-transform hover:scale-[1.02]"
+            />
+            <a
+              href="https://github.com/seQRets/seQRets-app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-[10px] border border-[var(--line)] px-7 py-3.5 font-display text-[14px] font-semibold text-[var(--ink)] transition-colors hover:bg-[var(--sf)]"
+            >
+              <Github className="h-4 w-4" />
+              Build from the code base
+              <ArrowUpRight className="h-3.5 w-3.5" />
+            </a>
+          </motion.div>
+        </div>
+      </section>
+    </PreviewPage>
   );
 };
 
