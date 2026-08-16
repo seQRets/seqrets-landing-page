@@ -69,7 +69,7 @@ const routes: RouteRecord[] = [
       { path: "contact", lazy: lazy(() => import("./pages/ContactPage")) },
       { path: "recover", lazy: lazy(() => import("./pages/RecoverPage")) },
 
-      // ── Redesign (noindex; this branch only) ──────────────
+      // ── Redesign (this branch only) ───────────────────────
       // "/" above serves the new landing page. These two are kept so
       // previously shared preview links keep resolving.
       { path: "preview/b", lazy: lazy(() => import("./pages/PreviewLandingB")) },

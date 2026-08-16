@@ -151,7 +151,6 @@ const PreviewLandingB = () => {
     <>
       <Head>
         <title>seQRets — Secure. Split. Share.</title>
-        <meta name="robots" content="noindex, nofollow" />
       </Head>
 
       <div
