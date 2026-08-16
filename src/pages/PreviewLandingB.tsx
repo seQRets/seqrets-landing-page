@@ -6,8 +6,6 @@ import {
   ArrowUpRight,
   ArrowRight,
   Lock,
-  Scissors,
-  MapPin,
   CloudOff,
 } from "lucide-react";
 
@@ -46,17 +44,17 @@ const USE_FOR = ["Seed phrases", "Master passwords", "Recovery codes"];
 
 const STEPS = [
   {
-    Icon: Lock,
+    n: "1",
     t: "Lock it up",
     p: "Type in what you want to protect and set a password. It's encrypted on your own device — nothing is sent anywhere.",
   },
   {
-    Icon: Scissors,
+    n: "2",
     t: "Split it into Qards",
-    p: "The encrypted result is split into Qards — QR codes you can print, store, or distribute digitally. You choose the numbers: five Qards, say, where any three can rebuild it.",
+    p: "The encrypted result is split into Qards — QR codes you can print, store, or distribute digitally. You choose how many to create, and how many it takes to restore. For example, 5 Qards total, with 3 required.",
   },
   {
-    Icon: MapPin,
+    n: "3",
     t: "Spread them out",
     p: "One at your sister's. One in a safe deposit box. Two at home. Any three, plus the password you set, bring the secret back — one or two reveal nothing at all.",
   },
@@ -261,11 +259,11 @@ const PreviewLandingB = () => {
             >
               {/* header: eyebrow + heading left, supporting copy right */}
               <p className="font-display text-[12px] font-bold uppercase tracking-[0.16em] text-[var(--gold)]">
-                How it works
+                How the seQRets app works
               </p>
               <div className="mt-4 grid gap-6 md:grid-cols-[1.05fr_0.95fr] md:gap-16">
                 <h2 className="font-display text-[29px] font-bold leading-[1.2] tracking-[-0.03em] md:text-[35px]">
-                  Three steps. That&rsquo;s the whole idea.
+                  Three steps to security.
                 </h2>
                 <p className="text-[15px] leading-[1.75] text-[var(--ink2)] md:pt-1.5">
                   No dashboard, no settings to get wrong. You open it, pick what
@@ -278,8 +276,10 @@ const PreviewLandingB = () => {
               <div className="mt-14 grid gap-10 md:grid-cols-3 md:gap-14">
                 {STEPS.map((s) => (
                   <div key={s.t}>
-                    <s.Icon className="h-7 w-7 text-[var(--gold)]" strokeWidth={1.5} />
-                    <h3 className="mt-5 font-display text-[16px] font-bold">{s.t}</h3>
+                    <p className="font-display text-[46px] font-bold leading-none text-[var(--gold)]">
+                      {s.n}
+                    </p>
+                    <h3 className="mt-4 font-display text-[16px] font-bold">{s.t}</h3>
                     <p className="mt-2.5 text-[13.5px] leading-[1.7] text-[var(--ink2)]">{s.p}</p>
                   </div>
                 ))}
