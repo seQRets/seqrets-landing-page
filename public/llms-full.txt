@@ -698,6 +698,7 @@ echo "Your message" | gpg --encrypt --armor --recipient seqrets@proton.me
 
 ## Blog Posts
 
+- [210,000 Bitcoin Just Moved Without Changing Owners. The Largest Re-Keying Event in Bitcoin's History Is Happening Right Now — Under Deadline, in Fear, and Mostly Onto Paper.](https://seqrets.app/blog/great-rekeying-210000-btc-custody-migration-2026)
 - [The Most Trusted Bitcoin Wallet Was Guessing Its Own Keys for Five Years. 1,778 BTC Later, the Only Setups Still Standing Are the Ones That Never Trusted One Device.](https://seqrets.app/blog/coldcard-rng-flaw-single-sig-swept-multisig-held-2026)
 - [The Wallet Did the Stealing. SecondFi Shut Down Forever This Week Because Every Signature Its Users Ever Made Handed Their Private Key to Anyone Reading the Blockchain.](https://seqrets.app/blog/secondfi-nonce-flaw-every-signature-leaked-the-key-2026)
 - [Crypto Hacks Are 'Down 47%' This Year. That's the Illusion. The Real Story in CertiK's Numbers: Attackers Stopped Hunting Bugs and Started Hunting Keys — at $13 Million a Wallet.](https://seqrets.app/blog/certik-h1-2026-wallet-compromise-keys-not-code)
