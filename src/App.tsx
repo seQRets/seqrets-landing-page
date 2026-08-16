@@ -3,7 +3,6 @@ import { Head } from "vite-react-ssg";
 import type { RouteRecord } from "vite-react-ssg";
 import { CartProvider } from "./contexts/CartContext";
 import ErrorBoundary from "./components/ErrorBoundary";
-import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import { BLOG_POSTS } from "./lib/blog";
 
@@ -60,7 +59,7 @@ const routes: RouteRecord[] = [
     Component: RootLayout,
     children: [
       // ── Landing ────────────────────────────────────────
-      { index: true, Component: Index },
+      { index: true, lazy: lazy(() => import("./pages/PreviewLandingB")) },
       { path: "how-it-works", lazy: lazy(() => import("./pages/HowItWorksPage")) },
       { path: "features", lazy: lazy(() => import("./pages/FeaturesPage")) },
       { path: "security", lazy: lazy(() => import("./pages/SecurityPage")) },
@@ -70,8 +69,9 @@ const routes: RouteRecord[] = [
       { path: "contact", lazy: lazy(() => import("./pages/ContactPage")) },
       { path: "recover", lazy: lazy(() => import("./pages/RecoverPage")) },
 
-      // ── Design preview (noindex, not linked from the site) ──
-      { path: "preview", lazy: lazy(() => import("./pages/PreviewLanding")) },
+      // ── Redesign (noindex; this branch only) ──────────────
+      // "/" above serves the new landing page. These two are kept so
+      // previously shared preview links keep resolving.
       { path: "preview/b", lazy: lazy(() => import("./pages/PreviewLandingB")) },
       { path: "preview/shop", lazy: lazy(() => import("./pages/PreviewShop")) },
 

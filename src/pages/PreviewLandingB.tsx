@@ -25,7 +25,7 @@ import appDark from "@/assets/app-dark.webp";
 import qard from "@/assets/seQRets-Qard-SatoshisBTC-05.webp";
 
 /* ------------------------------------------------------------------ *
- * DESIGN PREVIEW — CONCEPT B — /preview/b
+ * REDESIGN — the landing page for this branch, served at "/"
  *
  * Follows the Finpay reference layout section for section:
  *   nav (ghost + filled CTA) → split hero with an inline action unit and
@@ -139,7 +139,7 @@ const CornerArrow = ({ on = "light" }: { on?: "light" | "accent" }) => (
 
 /* ── Page ───────────────────────────────────────────────────────── */
 const PreviewLandingB = () => {
-  const [mode, setMode] = useState<PreviewMode>("light");
+  const [mode, setMode] = useState<PreviewMode>("dark");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -150,7 +150,7 @@ const PreviewLandingB = () => {
   return (
     <>
       <Head>
-        <title>Design Preview B | seQRets</title>
+        <title>seQRets — Secure. Split. Share.</title>
         <meta name="robots" content="noindex, nofollow" />
       </Head>
 
@@ -552,7 +552,7 @@ const PreviewLandingB = () => {
         </main>
 
         <PreviewFooter />
-        <ThemeToggle mode={mode} setMode={setMode} concept="B" />
+        <ThemeToggle mode={mode} setMode={setMode} />
       </div>
     </>
   );

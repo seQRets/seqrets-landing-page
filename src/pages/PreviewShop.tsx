@@ -26,7 +26,7 @@ import {
 } from "@/lib/stripe";
 import { joinWaitlist } from "@/lib/waitlist";
 import {
-  THEMES,
+  THEMES_APP,
   rise,
   PreviewNav,
   PreviewFooter,
@@ -225,7 +225,7 @@ const PreviewShop = () => {
     else setError(result.error || "Something went wrong");
   }
 
-  const vars = { ...THEMES[mode] } as React.CSSProperties;
+  const vars = { ...THEMES_APP[mode] } as React.CSSProperties;
 
   return (
     <>

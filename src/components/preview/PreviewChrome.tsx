@@ -12,59 +12,6 @@ import { Sun, Moon } from "lucide-react";
 
 export type PreviewMode = "light" | "dark";
 
-export const THEMES = {
-  light: {
-    "--pg": "#FAF6EF",
-    "--band": "#F3EBDD",
-    "--sf": "#FFFFFF",
-    "--ink": "#1B1714",
-    "--ink2": "#6E635A",
-    "--ink3": "#9A9089",
-    "--line": "#E7DCCB",
-    "--gold": "#A9772E",
-    "--gold2": "#E3B466",
-    "--goldsoft": "#F6EBD8",
-    "--pg-blur": "rgba(250,246,239,.85)",
-    "--gold-line": "rgba(169,119,46,.38)",
-    "--gold-fill": "rgba(169,119,46,.18)",
-    "--shadow": "0 24px 60px -24px rgba(60,44,24,.28)",
-    "--shadow-sm": "0 8px 24px -12px rgba(60,44,24,.22)",
-    "--c1": "#0E7C74",
-    "--c1bg": "#E2F2F0",
-    "--c2": "#A9772E",
-    "--c2bg": "#F8EDDA",
-    "--c3": "#2E7D4F",
-    "--c3bg": "#E4F1E9",
-    "--c4": "#6B4FA8",
-    "--c4bg": "#EDE7F8",
-  },
-  dark: {
-    "--pg": "#121010",
-    "--band": "#1A1614",
-    "--sf": "#1E1A17",
-    "--ink": "#F6F0E6",
-    "--ink2": "#A2968A",
-    "--ink3": "#7C7167",
-    "--line": "#302923",
-    "--gold": "#E3B466",
-    "--gold2": "#C9954A",
-    "--goldsoft": "#2A2117",
-    "--pg-blur": "rgba(18,16,16,.85)",
-    "--gold-line": "rgba(227,180,102,.38)",
-    "--gold-fill": "rgba(227,180,102,.18)",
-    "--shadow": "0 24px 60px -24px rgba(0,0,0,.7)",
-    "--shadow-sm": "0 8px 24px -12px rgba(0,0,0,.6)",
-    "--c1": "#4ECDC4",
-    "--c1bg": "#142422",
-    "--c2": "#E3B466",
-    "--c2bg": "#261E12",
-    "--c3": "#5FCB8E",
-    "--c3bg": "#152317",
-    "--c4": "#A98BE0",
-    "--c4bg": "#1D1728",
-  },
-} as const;
-
 /**
  * Concept B palette — sampled directly from the seQRets desktop app
  * (src/assets/app-light.webp): #E6E0D9 window body, #FAF8F6 cards,
@@ -178,7 +125,7 @@ export const PreviewNav = ({
 }) => (
   <header className="sticky top-0 z-40 border-b border-[var(--line)] bg-[var(--pg-blur)] backdrop-blur-xl">
     <div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-6">
-      <Link to="/preview" className="flex items-center gap-2.5">
+      <Link to="/" className="flex items-center gap-2.5">
         <Mark className="h-7 w-7 text-[var(--ink)]" />
         <span className="font-display text-[21px] font-extrabold tracking-tight">seQRets</span>
       </Link>
@@ -282,41 +229,14 @@ export const PreviewFooter = () => (
 export const ThemeToggle = ({
   mode,
   setMode,
-  concept,
 }: {
   mode: PreviewMode;
   setMode: (m: PreviewMode) => void;
-  /** Which mock-up this is, so the bar can link to the other one. */
-  concept?: "A" | "B";
 }) => (
   <div className="fixed bottom-5 left-1/2 z-50 flex -translate-x-1/2 items-center gap-1.5 rounded-full border border-[var(--line)] bg-[var(--sf)] p-1.5 shadow-[shadow:var(--shadow)]">
-    {concept ? (
-      <div className="flex items-center gap-1">
-        {(
-          [
-            ["A", "/preview"],
-            ["B", "/preview/b"],
-          ] as const
-        ).map(([label, to]) => (
-          <Link
-            key={label}
-            to={to}
-            className={`rounded-full px-3 py-2 text-[13px] font-bold transition-colors ${
-              concept === label
-                ? "bg-[var(--goldsoft)] text-[var(--gold)]"
-                : "text-[var(--ink3)] hover:text-[var(--ink)]"
-            }`}
-          >
-            {label}
-          </Link>
-        ))}
-        <span className="mx-1 h-5 w-px bg-[var(--line)]" />
-      </div>
-    ) : (
-      <span className="px-3 text-[12px] font-semibold uppercase tracking-wider text-[var(--ink3)]">
-        Preview
-      </span>
-    )}
+    <span className="px-3 text-[12px] font-semibold uppercase tracking-wider text-[var(--ink3)]">
+      Preview
+    </span>
     {(["light", "dark"] as const).map((m) => (
       <button
         key={m}
