@@ -1,15 +1,31 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Shield, QrCode, Users, CreditCard, MessageSquare, X, LifeBuoy } from "lucide-react";
+import { motion } from "framer-motion";
+import { Shield, QrCode, Users, CreditCard, MessageSquare, X, LifeBuoy, ArrowUpRight } from "lucide-react";
 import screenshotRestore from "@/assets/screenshot-restore.webp";
 import screenshotBob from "@/assets/screenshot-bob.webp";
 import screenshotSecure from "@/assets/screenshot-secure.webp";
 import screenshotSmartcard from "@/assets/screenshot-smartcard.webp";
 const screenshotInheritance = "/inherit.webp";
-import { Button } from "@/components/ui/button";
-import Navbar from "@/components/landing/Navbar";
-import { PreviewFooter } from "@/components/preview/PreviewChrome";
 import PageHead from "@/components/PageHead";
+import { PreviewPage, rise } from "@/components/preview/PreviewChrome";
+
+/* ------------------------------------------------------------------ *
+ * /how-it-works — first interior page moved onto the redesign.
+ *
+ * All chrome and theming comes from PreviewPage, so this file only
+ * describes its own content. Colours are palette tokens rather than the
+ * old shadcn semantic classes, which is what gives the page a light
+ * theme: the previous version was dark-only because bg-background and
+ * text-muted-foreground resolve to a single fixed palette.
+ *
+ * Two Tailwind traps this file has to avoid, both of which fail silently:
+ *   - an arbitrary box-shadow wrapping a CSS var parses as a shadow COLOUR,
+ *     so box-shadow computes to none. It needs the explicit shadow: prefix,
+ *     as written on the cards below.
+ *   - an opacity modifier applied to a var() colour computes to transparent.
+ *     Translucent values need their own token, hence --gold-fill.
+ * ------------------------------------------------------------------ */
 
 const sections = [
   {
@@ -94,188 +110,224 @@ const HowItWorksPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background">
+    <PreviewPage>
       <PageHead
         title="How It Works"
         description="See how seQRets encrypts your secrets, splits them into QR-coded shares, and distributes them to your heirs using Shamir's Secret Sharing. Includes seQRets Recover — an open-source recovery tool for long-term independence."
         path="/how-it-works"
       />
-      <Navbar />
-      <main className="pt-24 pb-16">
-        {/* Hero */}
-        <div className="container mx-auto px-4 md:px-8 mb-20">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="font-display text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground mb-4">
-              How It Works
-            </p>
-            <h1 className="font-display text-4xl font-bold md:text-5xl lg:text-6xl text-foreground mb-6">
-              A Closer Look at seQRets
-            </h1>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Walk through each feature of the app — from encrypting your first secret to distributing
-              smart cards for inheritance planning.
-            </p>
-          </div>
-        </div>
 
-        {/* Sections */}
-        <div className="container mx-auto px-4 md:px-8 space-y-24">
-          {sections.map((section, i) => {
-            const Icon = section.icon;
-            const isEven = i % 2 === 0;
-            return (
-              <section key={section.id} id={section.id} className="scroll-mt-24">
-                <div className={`mx-auto max-w-6xl grid gap-10 md:gap-16 items-center md:grid-cols-2 ${isEven ? "" : "md:[direction:rtl]"}`}>
-                  {/* Screenshot placeholder */}
-                  <div className={`${isEven ? "" : "md:[direction:ltr]"}`}>
-                    <div
-                      className={`aspect-video rounded-xl border border-border/50 bg-card/50 flex items-center justify-center overflow-hidden ${section.screenshot ? "cursor-pointer transition-transform hover:scale-[1.02]" : ""}`}
-                      onClick={() => section.screenshot && setLightbox(section.screenshot)}
-                    >
-                      {section.screenshot ? (
-                        <img src={section.screenshot} alt={section.title} className="w-full h-full object-cover" />
-                      ) : (
-                        <div className="text-center p-8">
-                          <Icon className="mx-auto h-12 w-12 text-muted-foreground/40 mb-3" />
-                          <p className="text-sm text-muted-foreground/60">Screenshot coming soon</p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
+      {/* ── Hero ────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden px-6 pb-16 pt-16 md:pt-24">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute right-0 top-0 h-[420px] w-[46%] opacity-[.55]"
+          style={{ background: "radial-gradient(60% 55% at 70% 30%, var(--goldsoft), transparent)" }}
+        />
+        <motion.div
+          initial={{ opacity: 0, y: 26 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+          className="relative mx-auto max-w-3xl text-center"
+        >
+          <p className="font-display text-[12px] font-bold uppercase tracking-[0.16em] text-[var(--gold)]">
+            A closer look
+          </p>
+          <h1 className="mt-4 font-display text-[38px] font-bold leading-[1.1] tracking-[-0.035em] sm:text-[46px] md:text-[54px]">
+            Every part of the app, one at a time.
+          </h1>
+          <p className="mx-auto mt-6 max-w-xl text-[15.5px] leading-[1.7] text-[var(--ink2)]">
+            From encrypting your first secret to writing Qards onto smart cards
+            for the people who will need them.
+          </p>
+        </motion.div>
+      </section>
 
-                  {/* Content */}
-                  <div className={`${isEven ? "" : "md:[direction:ltr]"}`}>
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 border border-primary/20">
-                        <Icon className="h-5 w-5 text-primary" />
-                      </div>
-                      <span className="font-display text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">
-                        Feature
-                      </span>
-                    </div>
-                    <h2 className="font-display text-3xl font-bold text-foreground mb-4">
-                      {section.title}
-                    </h2>
-                    <p className="text-muted-foreground leading-relaxed mb-6">
-                      {section.description}
-                    </p>
-                    <ul className="space-y-3">
-                      {section.details.map((detail, j) => (
-                        <li key={j} className="flex items-start gap-3 text-sm text-muted-foreground">
-                          <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
-                            {j + 1}
-                          </span>
-                          {detail}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </section>
-            );
-          })}
-        </div>
-
-        {/* seQRets Recover — Independent Recovery Tool */}
-        <div className="container mx-auto px-4 md:px-8 mt-24">
-          <div className="mx-auto max-w-4xl rounded-2xl border border-border/50 bg-card/40 p-8 md:p-10">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 border border-primary/20">
-                <LifeBuoy className="h-5 w-5 text-primary" />
+      {/* ── Feature walkthrough ─────────────────────────────── */}
+      <div className="space-y-24 px-6 pb-8 md:space-y-28">
+        {sections.map((section, i) => {
+          const Icon = section.icon;
+          const isEven = i % 2 === 0;
+          return (
+            <motion.section
+              key={section.id}
+              id={section.id}
+              {...rise}
+              className="mx-auto grid max-w-6xl scroll-mt-24 items-center gap-10 md:grid-cols-2 md:gap-16"
+            >
+              {/* Screenshot */}
+              <div className={isEven ? "" : "md:order-2"}>
+                <button
+                  type="button"
+                  onClick={() => setLightbox(section.screenshot)}
+                  aria-label={`Enlarge the ${section.title} screenshot`}
+                  className="block w-full overflow-hidden rounded-[18px] border border-[var(--line)] bg-[var(--sf)] shadow-[shadow:var(--shadow)] transition-transform hover:scale-[1.02]"
+                >
+                  <img
+                    src={section.screenshot}
+                    alt={`The ${section.title} screen in the seQRets app`}
+                    className="aspect-video w-full object-cover"
+                  />
+                </button>
               </div>
-              <span className="font-display text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">
-                Open-Source Recovery Tool
-              </span>
-            </div>
-            <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
-              seQRets Recover
-            </h2>
-            <p className="text-muted-foreground leading-relaxed mb-4">
-              <strong className="text-foreground">seQRets Recover</strong> is a
-              separate, single-file recovery tool for the seQRets share format.
-              One HTML file with a ~400-line crypto core, no install, no network.
-              Open it in any modern browser, paste your Qards in, enter your
-              password, and your secret comes back. It uses the same audited
-              cryptographic primitives as the main app (XChaCha20-Poly1305,
-              Argon2id, Shamir's Secret Sharing).
-            </p>
-            <p className="text-muted-foreground leading-relaxed mb-6">
-              Save a copy of{" "}
-              <code className="text-xs bg-background/60 border border-border/40 rounded px-1.5 py-0.5 text-foreground">
-                recover.html
-              </code>{" "}
-              alongside your Qards. Anyone holding the threshold of Qards plus
-              the password can recover the secret with nothing but a web browser
-              — no installation, no account, no dependency on this project still
-              being around. It's a quiet architectural guarantee: the share
-              format is open, and a reference implementation lives in its own
-              repo with its own release chain.
-            </p>
 
-            <div className="flex flex-wrap gap-3 mb-6">
-              <Link
-                to="/recover"
-                className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
-              >
-                Get the Recovery Tool →
-              </Link>
+              {/* Content */}
+              <div className={isEven ? "" : "md:order-1"}>
+                <div className="flex items-center gap-3">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-[12px] bg-[var(--gold-fill)]">
+                    <Icon className="h-5 w-5 text-[var(--gold)]" strokeWidth={1.8} />
+                  </span>
+                  <span className="font-display text-[12px] font-bold uppercase tracking-[0.16em] text-[var(--ink3)]">
+                    Feature {String(i + 1).padStart(2, "0")}
+                  </span>
+                </div>
+
+                <h2 className="mt-5 font-display text-[27px] font-bold leading-[1.2] tracking-[-0.03em] md:text-[32px]">
+                  {section.title}
+                </h2>
+                <p className="mt-3.5 text-[15px] leading-[1.7] text-[var(--ink2)]">
+                  {section.description}
+                </p>
+
+                <ul className="mt-7 space-y-3.5">
+                  {section.details.map((detail, j) => (
+                    <li key={j} className="flex items-start gap-3.5">
+                      <span className="mt-px flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--gold-fill)] font-display text-[12px] font-bold text-[var(--gold)]">
+                        {j + 1}
+                      </span>
+                      <span className="text-[14px] leading-[1.65] text-[var(--ink2)]">
+                        {detail}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </motion.section>
+          );
+        })}
+      </div>
+
+      {/* ── seQRets Recover ─────────────────────────────────── */}
+      <section className="px-6 py-24">
+        <motion.div
+          {...rise}
+          className="mx-auto max-w-4xl rounded-[26px] border border-[var(--card-line)] bg-[var(--sf)] p-8 shadow-[shadow:var(--shadow-card)] md:p-12"
+        >
+          <div className="flex items-center gap-3">
+            <span className="flex h-10 w-10 items-center justify-center rounded-[12px] bg-[var(--gold-fill)]">
+              <LifeBuoy className="h-5 w-5 text-[var(--gold)]" strokeWidth={1.8} />
+            </span>
+            <span className="font-display text-[12px] font-bold uppercase tracking-[0.16em] text-[var(--ink3)]">
+              Open-source recovery tool
+            </span>
+          </div>
+
+          <h2 className="mt-5 font-display text-[27px] font-bold leading-[1.2] tracking-[-0.03em] md:text-[32px]">
+            seQRets Recover
+          </h2>
+
+          <p className="mt-4 text-[15px] leading-[1.7] text-[var(--ink2)]">
+            <strong className="font-semibold text-[var(--ink)]">seQRets Recover</strong>{" "}
+            is a separate, single-file recovery tool for the seQRets share
+            format. One HTML file with a ~400-line crypto core, no install, no
+            network. Open it in any modern browser, paste your Qards in, enter
+            your password, and your secret comes back. It uses the same
+            cryptographic primitives as the main app (XChaCha20-Poly1305,
+            Argon2id, Shamir&rsquo;s Secret Sharing).
+          </p>
+
+          <p className="mt-4 text-[15px] leading-[1.7] text-[var(--ink2)]">
+            Save a copy of{" "}
+            <code className="rounded border border-[var(--line)] bg-[var(--pg)] px-1.5 py-0.5 font-mono text-[13px] text-[var(--ink)]">
+              recover.html
+            </code>{" "}
+            alongside your Qards. Anyone holding the threshold of Qards plus the
+            password can recover the secret with nothing but a web browser — no
+            installation, no account, no dependency on this project still being
+            around. The share format is open, and a reference implementation
+            lives in its own repo with its own release chain.
+          </p>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link
+              to="/recover"
+              className="inline-flex items-center gap-1.5 rounded-[10px] bg-[var(--gold)] px-5 py-3 font-display text-[14px] font-semibold text-[var(--gold-ink)] transition-transform hover:scale-[1.02]"
+            >
+              Get the recovery tool
+              <ArrowUpRight className="h-3.5 w-3.5" />
+            </Link>
+            <a
+              href="https://github.com/seQRets/seQRets-Recover"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-[10px] border border-[var(--line)] px-5 py-3 font-display text-[14px] font-semibold text-[var(--ink)] transition-colors hover:bg-[var(--band)]"
+            >
+              View the code base
+              <ArrowUpRight className="h-3.5 w-3.5" />
+            </a>
+          </div>
+
+          <div className="mt-8 rounded-[16px] border border-[var(--line)] bg-[var(--pg)] p-5">
+            <p className="font-display text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--ink3)]">
+              Verify your download
+            </p>
+            <p className="mt-2.5 text-[14px] leading-[1.6] text-[var(--ink2)]">
+              Every release publishes a SHA-256 hash so you can verify a copy
+              received through an untrusted channel before using it with real
+              credentials.
+            </p>
+            <code className="mt-3 block overflow-x-auto rounded-[10px] border border-[var(--line)] bg-[var(--band)] px-3.5 py-2.5 font-mono text-[13px] text-[var(--ink)]">
+              shasum -a 256 recover.html
+            </code>
+            <p className="mt-2.5 text-[13px] text-[var(--ink3)]">
+              Compare against the hash published on the{" "}
               <a
-                href="https://github.com/seQRets/seQRets-Recover"
+                href="https://github.com/seQRets/seQRets-Recover/releases/latest"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-md border border-border/60 bg-background/40 px-5 py-2.5 text-sm font-semibold text-foreground transition-all hover:bg-card/60"
+                className="font-semibold text-[var(--gold)] underline underline-offset-2 transition-opacity hover:opacity-80"
               >
-                View source on GitHub →
+                latest release page
               </a>
-            </div>
-
-            <div className="rounded-lg border border-border/30 bg-background/40 p-4">
-              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground/70 mb-2">
-                Verify your download
-              </p>
-              <p className="text-sm text-muted-foreground/80 mb-2">
-                Every release publishes a SHA-256 hash so you can verify a copy
-                received through an untrusted channel before using it with real
-                credentials.
-              </p>
-              <code className="block text-xs bg-background/60 border border-border/40 rounded px-3 py-2 text-muted-foreground/90 font-mono overflow-x-auto">
-                shasum -a 256 recover.html
-              </code>
-              <p className="text-xs text-muted-foreground/60 mt-2">
-                Compare against the hash published on the{" "}
-                <a
-                  href="https://github.com/seQRets/seQRets-Recover/releases/latest"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary hover:underline"
-                >
-                  latest release page
-                </a>
-                .
-              </p>
-            </div>
+              .
+            </p>
           </div>
-        </div>
+        </motion.div>
+      </section>
 
-        {/* Bottom CTA */}
-        <div className="container mx-auto px-4 md:px-8 mt-24 text-center">
-          <Link to="/shop">
-            <Button size="lg" className="font-display font-semibold">
-              Browse the Shop →
-            </Button>
+      {/* ── Bottom CTA ──────────────────────────────────────── */}
+      <section className="px-6 pb-24">
+        <motion.div {...rise} className="mx-auto max-w-2xl text-center">
+          <h2 className="font-display text-[27px] font-bold leading-[1.2] tracking-[-0.03em] md:text-[32px]">
+            Ready for something you can hold?
+          </h2>
+          <p className="mx-auto mt-4 max-w-md text-[15px] leading-[1.7] text-[var(--ink2)]">
+            The app is free. The hardware around it — smart cards, readers, and
+            kits — is what turns a backup into something physical.
+          </p>
+          <Link
+            to="/preview/shop"
+            className="mt-7 inline-flex items-center gap-1.5 rounded-[10px] bg-[var(--gold)] px-6 py-3.5 font-display text-[14px] font-semibold text-[var(--gold-ink)] transition-transform hover:scale-[1.02]"
+          >
+            Browse the shop
+            <ArrowUpRight className="h-3.5 w-3.5" />
           </Link>
-        </div>
-      </main>
-      <PreviewFooter mode="dark" />
+        </motion.div>
+      </section>
 
-      {/* Lightbox */}
+      {/* ── Lightbox ────────────────────────────────────────── */}
       {lightbox && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 cursor-pointer"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Enlarged screenshot"
+          className="fixed inset-0 z-50 flex cursor-pointer items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
           onClick={() => setLightbox(null)}
         >
           <button
-            className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors"
+            type="button"
+            aria-label="Close"
+            className="absolute right-6 top-6 text-white/70 transition-colors hover:text-white"
             onClick={() => setLightbox(null)}
           >
             <X className="h-8 w-8" />
@@ -283,12 +335,12 @@ const HowItWorksPage = () => {
           <img
             src={lightbox}
             alt="Screenshot enlarged"
-            className="max-w-full max-h-[90vh] rounded-xl shadow-2xl object-contain"
+            className="max-h-[90vh] max-w-full rounded-[18px] object-contain shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           />
         </div>
       )}
-    </div>
+    </PreviewPage>
   );
 };
 

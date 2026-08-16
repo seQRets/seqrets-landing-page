@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Sun, Moon } from "lucide-react";
 
@@ -309,3 +310,58 @@ export const ThemeToggle = ({
     ))}
   </div>
 );
+
+/**
+ * Nav for interior pages.
+ *
+ * The landing page passes its own list because its links are in-page
+ * anchors; everywhere else they have to be real routes, or they only work
+ * from one page.
+ */
+export const INTERIOR_NAV: [string, string][] = [
+  ["How it works", "/how-it-works"],
+  ["Security", "/security"],
+  ["Shop", "/preview/shop"],
+];
+
+/**
+ * Page shell for restyled interior pages.
+ *
+ * Owns the one piece of scaffolding every themed page needs and nothing
+ * else: the light/dark state, the palette applied as custom properties, and
+ * the shared nav/footer/switcher. Restyling a page is then a matter of
+ * dropping its content in here and restyling that content — no per-page
+ * copy of the theme wiring, which is what would drift.
+ *
+ * The landing page and shop predate this and still wire it up themselves;
+ * they can move over without any change in behaviour.
+ */
+export const PreviewPage = ({
+  navLinks = INTERIOR_NAV,
+  initialMode = "dark",
+  children,
+}: {
+  navLinks?: [string, string][];
+  initialMode?: PreviewMode;
+  children: React.ReactNode;
+}) => {
+  const [mode, setMode] = useState<PreviewMode>(initialMode);
+  const vars = { ...THEMES_APP[mode] } as React.CSSProperties;
+
+  return (
+    <div
+      style={vars}
+      className="min-h-screen bg-[var(--pg)] font-body text-[var(--ink)] antialiased transition-colors duration-300"
+    >
+      <PreviewNav
+        links={navLinks}
+        secondary={["Docs", "/docs"]}
+        cta={{ label: "Open the app", href: "https://app.seqrets.app" }}
+        ctaStyle="accent"
+      />
+      <main>{children}</main>
+      <PreviewFooter />
+      <ThemeToggle mode={mode} setMode={setMode} />
+    </div>
+  );
+};

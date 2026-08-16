@@ -165,6 +165,7 @@ const PreviewLandingB = () => {
             ["How it works", "#how"],
             ["Why it's safe", "#why"],
             ["Get started", "#plans"],
+            ["Shop", "/preview/shop"],
           ]}
           secondary={["Docs", "/docs"]}
           cta={{ label: "Open the app", href: "https://app.seqrets.app" }}
