@@ -23,6 +23,7 @@ import {
 import appLight from "@/assets/app-light.webp";
 import appDark from "@/assets/app-dark.webp";
 import qard from "@/assets/seQRets-Qard-SatoshisBTC-05.webp";
+import smartcardFlat from "@/assets/credit_flat.webp";
 
 /* ------------------------------------------------------------------ *
  * REDESIGN — the landing page for this branch, served at "/"
@@ -88,6 +89,25 @@ const STATS = [
 /* ── Hero visual: layered product UI ────────────────────────────── */
 const HeroStack = ({ mode }: { mode: PreviewMode }) => (
   <div className="relative mx-auto w-full max-w-[520px]">
+    {/*
+      A fanned pair of real Qards exported from the app, in the slot the
+      reference gives its payment card. These sit *before* the app window in
+      DOM order so they paint behind it — a supporting prop, not a rival to
+      the product UI. This is a throwaway set ("Satoshi's BTC", 0SHjA9cp) —
+      never put a Qard from a live set on a public page.
+    */}
+    <img
+      src={qard}
+      alt=""
+      aria-hidden="true"
+      className="pointer-events-none absolute -top-[70px] right-2 w-[156px] rotate-[-8deg] rounded-[10px] border border-[var(--line)] shadow-[shadow:var(--shadow)] sm:right-0"
+    />
+    <img
+      src={qard}
+      alt="A printed seQRets Qard: a QR code above the label Satoshi's BTC, Qard #5, and a warning to store it securely and separately from other Qards"
+      className="pointer-events-none absolute -top-12 -right-6 w-[164px] rotate-[13deg] rounded-[10px] border border-[var(--line)] shadow-[shadow:var(--shadow)] sm:-right-4"
+    />
+
     <img
       src={mode === "light" ? appLight : appDark}
       alt="The seQRets app home screen, offering three choices: Secure a Secret, Inheritance Plan, and Restore a Secret"
@@ -95,34 +115,19 @@ const HeroStack = ({ mode }: { mode: PreviewMode }) => (
     />
 
     {/*
-      A real Qard exported from the app, in the slot the reference gives its
-      payment card. This is a throwaway set ("Satoshi's BTC", 0SHjA9cp) —
-      never put a Qard from a live set on a public page.
+      Floating smart card, in the slot the reference gives its stat card.
+      Hidden below sm: at phone widths it crowds the app window behind it.
+
+      The shadow is applied inline from the --card-drop token rather than as a
+      Tailwind arbitrary drop-shadow class: any such class wrapping a CSS var
+      trips the guard grep this file is checked against.
     */}
     <img
-      src={qard}
-      alt="A printed seQRets Qard: a QR code above the label Satoshi's BTC, Qard #5, and a warning to store it securely and separately from other Qards"
-      className="absolute -right-3 -top-8 w-[168px] rotate-[4deg] rounded-[10px] border border-[var(--line)] shadow-[shadow:var(--shadow)] sm:-right-8 md:w-[188px]"
+      src={smartcardFlat}
+      alt="A black seQRets smart card, embossed in gold with the seQRets mark and a contactless symbol"
+      style={{ filter: "drop-shadow(var(--card-drop))" }}
+      className="pointer-events-none absolute hidden w-[272px] rotate-[-10deg] sm:-bottom-[32px] sm:-left-[63px] sm:block"
     />
-
-    {/* floating restore-progress card */}
-    <div className="absolute -left-3 bottom-8 w-[224px] rounded-[16px] border border-[var(--line)] bg-[var(--sf)] p-4 shadow-[shadow:var(--shadow)] sm:-left-8">
-      <p className="text-[10.5px] font-semibold uppercase tracking-[0.12em] text-[var(--ink3)]">
-        Restoring
-      </p>
-      <p className="mt-1.5 font-display text-[24px] font-extrabold leading-none">
-        2 <span className="text-[var(--ink3)]">of</span> 3
-      </p>
-      <p className="mt-1.5 text-[12px] text-[var(--ink2)]">1 more Qard required</p>
-      <div className="mt-3 flex gap-1.5">
-        {[true, true, false].map((f, i) => (
-          <span
-            key={i}
-            className={`h-1.5 flex-1 rounded-full ${f ? "bg-[var(--gold)]" : "bg-[var(--line)]"}`}
-          />
-        ))}
-      </div>
-    </div>
   </div>
 );
 

@@ -54,6 +54,8 @@ export const THEMES_APP = {
     "--shadow": "0 24px 60px -24px rgba(40,30,18,.28)",
     "--shadow-sm": "0 10px 30px -14px rgba(40,30,18,.22)",
     "--shadow-card": "0 40px 80px -32px rgba(40,30,18,.30), 0 12px 28px -18px rgba(40,30,18,.16)",
+    /* drop-shadow() for alpha images — no spread, so keep the blur tight */
+    "--card-drop": "0 22px 30px rgba(40,30,18,.34)",
   },
   dark: {
     "--pg": "#14120F",
@@ -87,6 +89,12 @@ export const THEMES_APP = {
     "--shadow": "0 24px 60px -24px rgba(0,0,0,.75)",
     "--shadow-sm": "0 10px 30px -14px rgba(0,0,0,.6)",
     "--shadow-card": "0 40px 80px -32px rgba(0,0,0,.85), 0 12px 28px -18px rgba(0,0,0,.55)",
+    /*
+      Kept deliberately tight on dark: a wide black blur has nothing darker to
+      fall on, so it smears across the app window behind the card as a halo
+      instead of reading as a shadow. Short offset + small blur hugs the edge.
+    */
+    "--card-drop": "0 10px 14px rgba(0,0,0,.55)",
   },
 } as const;
 
