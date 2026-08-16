@@ -149,7 +149,9 @@ const DocsProducts = () => {
       offers: {
         "@type": "Offer",
         // Pricing is not finalized; only advertise a concrete price once the shop is live.
-        ...(SHOP_LIVE ? { price: (p.priceInCents / 100).toFixed(2) } : {}),
+        ...(SHOP_LIVE && p.priceInCents != null
+          ? { price: (p.priceInCents / 100).toFixed(2) }
+          : {}),
         priceCurrency: "USD",
         availability: "https://schema.org/PreOrder",
         url: "https://seqrets.app/shop",

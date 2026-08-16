@@ -190,9 +190,15 @@ export default function ProductModal({
                                     {qty > 1 ? `${qty}\u00D7 ` : ""}
                                     {item.name}
                                   </span>
-                                  <span className="text-muted-foreground/60">
-                                    {formatPrice(item.priceInCents * qty)}
-                                  </span>
+                                  {SHOP_LIVE && (
+                                    <span className="text-muted-foreground/60">
+                                      {formatPrice(
+                                        item.priceInCents == null
+                                          ? undefined
+                                          : item.priceInCents * qty,
+                                      )}
+                                    </span>
+                                  )}
                                 </li>
                               );
                             },
@@ -206,17 +212,29 @@ export default function ProductModal({
                   <div className="shrink-0 border-t border-border/20 p-6 md:px-8 md:py-5">
                     <div className="flex items-center justify-between mb-3">
                       <div>
-                        <span className="font-display text-2xl font-bold text-foreground">
-                          {formatPrice(product.priceInCents * quantity)}
-                        </span>
-                        {!product.priceFinal && (
-                          <span className="ml-2 text-sm text-muted-foreground/60">
-                            or less
-                          </span>
-                        )}
-                        {quantity > 1 && (
-                          <span className="ml-2 text-xs text-muted-foreground/40">
-                            ({formatPrice(product.priceInCents)} each)
+                        {SHOP_LIVE ? (
+                          <>
+                            <span className="font-display text-2xl font-bold text-foreground">
+                              {formatPrice(
+                                product.priceInCents == null
+                                  ? undefined
+                                  : product.priceInCents * quantity,
+                              )}
+                            </span>
+                            {!product.priceFinal && (
+                              <span className="ml-2 text-sm text-muted-foreground/60">
+                                or less
+                              </span>
+                            )}
+                            {quantity > 1 && (
+                              <span className="ml-2 text-xs text-muted-foreground/40">
+                                ({formatPrice(product.priceInCents)} each)
+                              </span>
+                            )}
+                          </>
+                        ) : (
+                          <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                            Launch pricing TBA
                           </span>
                         )}
                       </div>

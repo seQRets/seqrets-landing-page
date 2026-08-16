@@ -16,8 +16,17 @@ export const getStripe = () => {
 };
 
 // ─── Product Catalog ─────────────────────────────────────────────
-// Prices are committed. The `priceFinal` flag (kept for future use) hides
-// the "or less" disclaimer in the UI when true.
+// PRICING IS UNANNOUNCED. Amounts are deliberately absent from this
+// catalog so they don't ship in the client bundle — anything defined
+// here is readable by anyone who opens devtools, regardless of whether
+// the UI renders it.
+//
+// Checkout is unaffected: `priceId` points at a Stripe Price, and Stripe
+// computes the amount server-side at session creation.
+//
+// Before flipping SHOP_LIVE to true, restore `priceInCents` here with the
+// announced prices (or have the checkout Worker return them), and set
+// `priceFinal: true` on anything whose price is final.
 export type ProductSlug =
   | "desktop-app"
   | "backup-bundle"
@@ -33,8 +42,10 @@ export interface ProductInfo {
   slug: ProductSlug;
   name: string;
   description: string;
-  priceInCents: number;
-  priceFinal: boolean; // false = estimated ceiling, true = real price
+  /** Absent until pricing is announced — see the note above. */
+  priceInCents?: number;
+  /** false/absent = estimated ceiling, true = real price */
+  priceFinal?: boolean;
   priceId: string; // Stripe Price ID — replace with real IDs after creating products
   features: string[];
   badge?: string;
@@ -51,8 +62,6 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     name: "Desktop App",
     description:
       "Code-signed, auto-updating binary with smart card support. macOS, Windows & Linux.",
-    priceInCents: 9900,
-    priceFinal: true,
     priceId: "price_1T8b06JrPvZLpOYSoQmbw6Am",
     features: [
       "Code-signed binary",
@@ -68,8 +77,6 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     name: "Backup Bundle",
     description:
       "Everything you need to back up your secrets to a physical smart card with a portable reader.",
-    priceInCents: 14900,
-    priceFinal: true,
     priceId: "price_1T8b2NJrPvZLpOYSWz4kPGjR",
     badge: "Popular",
     highlight: true,
@@ -89,8 +96,6 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     name: "Inheritance Bundle",
     description:
       "A complete inheritance kit \u2014 distribute secret shares across multiple cards with tamper-proof packaging.",
-    priceInCents: 29900,
-    priceFinal: true,
     priceId: "price_1T8b36JrPvZLpOYSF5inqQjK",
     badge: "Best Value",
     features: [
@@ -109,8 +114,6 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     name: "Smart Card",
     description:
       "JCOP-based smart card, branded with the seQRets logo.",
-    priceInCents: 3900,
-    priceFinal: true,
     priceId: "price_1T8b3hJrPvZLpOYSRMKDcSm7",
     features: ["Contact interface", "JCOP applet compatible"],
     category: "accessory",
@@ -121,8 +124,6 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     name: "Smart Card 3-Pack",
     description:
       "Three JCOP smart cards at a discount \u2014 for extra heirs, backups, or replacements.",
-    priceInCents: 9900,
-    priceFinal: true,
     priceId: "price_1T8bsDJrPvZLpOYSsO5BORyz",
     badge: "Save",
     features: ["3\u00D7 branded smart cards", "Volume discount"],
@@ -134,8 +135,6 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     name: "USB Card Reader",
     description:
       "Compact, portable USB smart card reader. Plug-and-play on all platforms.",
-    priceInCents: 2900,
-    priceFinal: true,
     priceId: "price_1T8b4CJrPvZLpOYSbfoPtIvm",
     features: ["USB-A connector", "macOS / Windows / Linux"],
     category: "accessory",
@@ -146,8 +145,6 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     name: "Tamper-Evident Envelopes",
     description:
       "Pack of 5 security envelopes that reveal any opening attempt.",
-    priceInCents: 1499,
-    priceFinal: true,
     priceId: "price_1T8b4kJrPvZLpOYS1d7cNz9e",
     features: ["5-pack", "Void pattern on tamper"],
     category: "accessory",
@@ -158,8 +155,6 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     name: "Fireproof Case",
     description:
       "Compact fireproof document & card case rated to 1,200 \u00B0F for 30 minutes.",
-    priceInCents: 4900,
-    priceFinal: true,
     priceId: "price_1T8b5rJrPvZLpOYSAEiQqSlR",
     features: ["Fits cards & documents", "1,200 \u00B0F / 30 min rated"],
     category: "accessory",
@@ -170,8 +165,6 @@ export const PRODUCTS: Record<ProductSlug, ProductInfo> = {
     name: "Inheritance Guide (PDF)",
     description:
       "Step-by-step guide for setting up a dead man\u2019s switch and distributing shares to heirs.",
-    priceInCents: 2400,
-    priceFinal: true,
     priceId: "price_1T8b6PJrPvZLpOYS6MqyLB2M",
     features: ["Printable PDF", "Legal considerations checklist"],
     category: "accessory",
@@ -236,6 +229,7 @@ export async function createCheckoutSession(
   return url;
 }
 
-export function formatPrice(cents: number): string {
+export function formatPrice(cents: number | undefined): string {
+  if (cents == null) return "—";
   return `$${(cents / 100).toFixed(cents % 100 === 0 ? 0 : 2)}`;
 }

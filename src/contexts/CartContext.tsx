@@ -147,7 +147,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const totalPrice = useMemo(
     () =>
       state.items.reduce(
-        (sum, i) => sum + PRODUCTS[i.slug].priceInCents * i.quantity,
+        (sum, i) => sum + (PRODUCTS[i.slug].priceInCents ?? 0) * i.quantity,
         0,
       ),
     [state.items],
