@@ -21,16 +21,16 @@ const DocsThreatModel = () => {
       />
 
       <div className="mb-10">
-        <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-gradient-silver mb-4">
+        <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-[var(--ink2)] mb-4">
           Threat Model
         </p>
-        <h1 className="font-display text-3xl md:text-4xl font-black text-foreground tracking-tight mb-4">
-          Honest <span className="text-gradient">Threat Analysis</span>
+        <h1 className="font-display text-3xl md:text-4xl font-black text-[var(--ink)] tracking-tight mb-4">
+          Honest <span className="text-[var(--gold)]">Threat Analysis</span>
         </h1>
-        <p className="text-muted-foreground/80">
+        <p className="text-[var(--ink2)]">
           What seQRets protects against, what it doesn't, and the assumptions
           the security model depends on. For the narrative discussion, see the{" "}
-          <Link to="/security" className="text-primary hover:underline">
+          <Link to="/security" className="text-[var(--gold)] hover:underline">
             Security page
           </Link>
           .
@@ -40,25 +40,25 @@ const DocsThreatModel = () => {
       <div className="space-y-12">
         {/* Protected against */}
         <section>
-          <h2 className="font-display text-xl font-bold text-foreground mb-4">
+          <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-4">
             What seQRets Protects Against
           </h2>
-          <div className="overflow-x-auto rounded-2xl border border-border/30">
+          <div className="overflow-x-auto rounded-2xl border border-[var(--line)]">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-border/30 bg-card/30">
-                  <th className="text-left p-4 font-display font-bold text-foreground">
+                <tr className="border-b border-[var(--line)] bg-[var(--sf)]">
+                  <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                     Threat
                   </th>
-                  <th className="text-left p-4 font-display font-bold text-foreground">
+                  <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                     How Protected
                   </th>
-                  <th className="text-left p-4 font-display font-bold text-foreground">
+                  <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                     Confidence
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border/20">
+              <tbody className="divide-y divide-[color:var(--line)]">
                 {[
                   [
                     "Physical theft of a single share",
@@ -123,14 +123,14 @@ const DocsThreatModel = () => {
                 ].map(([threat, how, confidence]) => (
                   <tr
                     key={threat}
-                    className="hover:bg-card/20 transition-colors"
+                    className="hover:bg-[var(--band)] transition-colors"
                   >
-                    <td className="p-4 font-medium text-foreground">
+                    <td className="p-4 font-medium text-[var(--ink)]">
                       {threat}
                     </td>
-                    <td className="p-4 text-muted-foreground/80">{how}</td>
+                    <td className="p-4 text-[var(--ink2)]">{how}</td>
                     <td className="p-4">
-                      <span className="inline-flex items-center rounded-full bg-green-500/10 px-2.5 py-0.5 text-xs font-medium text-green-400">
+                      <span className="inline-flex items-center rounded-full bg-[var(--gold-fill)] px-2.5 py-0.5 text-xs font-medium text-[var(--gold)]">
                         {confidence}
                       </span>
                     </td>
@@ -143,25 +143,25 @@ const DocsThreatModel = () => {
 
         {/* NOT protected against */}
         <section>
-          <h2 className="font-display text-xl font-bold text-foreground mb-4">
+          <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-4">
             What seQRets Does NOT Protect Against
           </h2>
-          <div className="overflow-x-auto rounded-2xl border border-border/30">
+          <div className="overflow-x-auto rounded-2xl border border-[var(--line)]">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-border/30 bg-card/30">
-                  <th className="text-left p-4 font-display font-bold text-foreground">
+                <tr className="border-b border-[var(--line)] bg-[var(--sf)]">
+                  <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                     Threat
                   </th>
-                  <th className="text-left p-4 font-display font-bold text-foreground">
+                  <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                     Why Not
                   </th>
-                  <th className="text-left p-4 font-display font-bold text-foreground">
+                  <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                     Mitigation
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border/20">
+              <tbody className="divide-y divide-[color:var(--line)]">
                 {[
                   [
                     "Compromised device at encryption time",
@@ -201,13 +201,13 @@ const DocsThreatModel = () => {
                 ].map(([threat, why, mitigation]) => (
                   <tr
                     key={threat}
-                    className="hover:bg-card/20 transition-colors"
+                    className="hover:bg-[var(--band)] transition-colors"
                   >
-                    <td className="p-4 font-medium text-foreground">
+                    <td className="p-4 font-medium text-[var(--ink)]">
                       {threat}
                     </td>
-                    <td className="p-4 text-muted-foreground/80">{why}</td>
-                    <td className="p-4 text-muted-foreground/80">
+                    <td className="p-4 text-[var(--ink2)]">{why}</td>
+                    <td className="p-4 text-[var(--ink2)]">
                       {mitigation}
                     </td>
                   </tr>
@@ -219,24 +219,24 @@ const DocsThreatModel = () => {
 
         {/* Assumptions */}
         <section>
-          <h2 className="font-display text-xl font-bold text-foreground mb-4">
+          <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-4">
             Security Assumptions
           </h2>
-          <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
-            <p className="text-sm text-muted-foreground/80 mb-4">
+          <div className="rounded-2xl border border-[var(--line)] bg-[var(--sf)] p-6">
+            <p className="text-sm text-[var(--ink2)] mb-4">
               The seQRets security model holds when the following assumptions
               are true:
             </p>
-            <ol className="space-y-3 text-sm text-muted-foreground/80 list-decimal list-inside">
+            <ol className="space-y-3 text-sm text-[var(--ink2)] list-decimal list-inside">
               <li>
-                <strong className="text-foreground">
+                <strong className="text-[var(--ink)]">
                   The device is not compromised
                 </strong>{" "}
                 at the moment of encryption/decryption. No active keylogger,
                 screen capture, or memory-reading malware is running.
               </li>
               <li>
-                <strong className="text-foreground">
+                <strong className="text-[var(--ink)]">
                   The password is strong
                 </strong>{" "}
                 and not reused from other services. Argon2id makes brute-force
@@ -251,7 +251,7 @@ const DocsThreatModel = () => {
                 makes brute-force infeasible regardless of password strength.
               </li>
               <li>
-                <strong className="text-foreground">
+                <strong className="text-[var(--ink)]">
                   The keyfile (if used) is backed up securely
                 </strong>{" "}
                 and stored separately from shares and passwords. Keyfile loss is
@@ -259,14 +259,14 @@ const DocsThreatModel = () => {
                 multiple secure locations.
               </li>
               <li>
-                <strong className="text-foreground">
+                <strong className="text-[var(--ink)]">
                   Shares are stored securely
                 </strong>{" "}
                 in separate locations. The threshold model only works if an
                 attacker cannot access K shares.
               </li>
               <li>
-                <strong className="text-foreground">
+                <strong className="text-[var(--ink)]">
                   The cryptographic primitives are secure.
                 </strong>{" "}
                 XChaCha20-Poly1305 and Argon2id are well-studied and
@@ -274,7 +274,7 @@ const DocsThreatModel = () => {
                 security ecosystem, not just seQRets.
               </li>
               <li>
-                <strong className="text-foreground">
+                <strong className="text-[var(--ink)]">
                   The source code matches the running binary.
                 </strong>{" "}
                 For the desktop app, code signing provides this guarantee. For
@@ -286,31 +286,31 @@ const DocsThreatModel = () => {
 
         {/* Comparison to alternatives */}
         <section>
-          <h2 className="font-display text-xl font-bold text-foreground mb-4">
+          <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-4">
             Comparison to Alternatives
           </h2>
-          <div className="overflow-x-auto rounded-2xl border border-border/30">
+          <div className="overflow-x-auto rounded-2xl border border-[var(--line)]">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-border/30 bg-card/30">
-                  <th className="text-left p-4 font-display font-bold text-foreground">
+                <tr className="border-b border-[var(--line)] bg-[var(--sf)]">
+                  <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                     Method
                   </th>
-                  <th className="text-left p-4 font-display font-bold text-foreground">
+                  <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                     Single Point of Failure
                   </th>
-                  <th className="text-left p-4 font-display font-bold text-foreground">
+                  <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                     Fire/Flood Risk
                   </th>
-                  <th className="text-left p-4 font-display font-bold text-foreground">
+                  <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                     Theft Risk
                   </th>
-                  <th className="text-left p-4 font-display font-bold text-foreground">
+                  <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                     Inheritance Ready
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border/20">
+              <tbody className="divide-y divide-[color:var(--line)]">
                 {[
                   ["Paper backup", "Yes", "High", "High", "No"],
                   ["Metal seed plate", "Yes", "Low", "High", "No"],
@@ -338,15 +338,15 @@ const DocsThreatModel = () => {
                 ].map(([method, spof, fire, theft, inherit]) => (
                   <tr
                     key={method}
-                    className="hover:bg-card/20 transition-colors"
+                    className="hover:bg-[var(--band)] transition-colors"
                   >
-                    <td className="p-4 font-medium text-foreground">
+                    <td className="p-4 font-medium text-[var(--ink)]">
                       {method}
                     </td>
-                    <td className="p-4 text-muted-foreground/80">{spof}</td>
-                    <td className="p-4 text-muted-foreground/80">{fire}</td>
-                    <td className="p-4 text-muted-foreground/80">{theft}</td>
-                    <td className="p-4 text-muted-foreground/80">{inherit}</td>
+                    <td className="p-4 text-[var(--ink2)]">{spof}</td>
+                    <td className="p-4 text-[var(--ink2)]">{fire}</td>
+                    <td className="p-4 text-[var(--ink2)]">{theft}</td>
+                    <td className="p-4 text-[var(--ink2)]">{inherit}</td>
                   </tr>
                 ))}
               </tbody>
@@ -356,10 +356,10 @@ const DocsThreatModel = () => {
 
         {/* Known limitations */}
         <section>
-          <h2 className="font-display text-xl font-bold text-foreground mb-4">
+          <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-4">
             Known Limitations
           </h2>
-          <div className="rounded-2xl border border-border/30 bg-card/20 p-6 space-y-3">
+          <div className="rounded-2xl border border-[var(--line)] bg-[var(--sf)] p-6 space-y-3">
             {[
               {
                 label: "No third-party audit yet",
@@ -383,8 +383,8 @@ const DocsThreatModel = () => {
               },
             ].map(({ label, detail }) => (
               <div key={label}>
-                <p className="text-sm font-medium text-foreground">{label}</p>
-                <p className="text-sm text-muted-foreground/70">{detail}</p>
+                <p className="text-sm font-medium text-[var(--ink)]">{label}</p>
+                <p className="text-sm text-[var(--ink2)]">{detail}</p>
               </div>
             ))}
           </div>

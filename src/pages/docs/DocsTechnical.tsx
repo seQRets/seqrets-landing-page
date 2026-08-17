@@ -25,13 +25,13 @@ const DocsTechnical = () => {
       />
 
       <div className="mb-10">
-        <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-gradient-silver mb-4">
+        <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-[var(--ink2)] mb-4">
           Technical Overview
         </p>
-        <h1 className="font-display text-3xl md:text-4xl font-black text-foreground tracking-tight mb-4">
-          Cryptographic <span className="text-gradient">Architecture</span>
+        <h1 className="font-display text-3xl md:text-4xl font-black text-[var(--ink)] tracking-tight mb-4">
+          Cryptographic <span className="text-[var(--gold)]">Architecture</span>
         </h1>
-        <p className="text-muted-foreground/80">
+        <p className="text-[var(--ink2)]">
           How seQRets protects your secrets — algorithms, parameters, and design
           decisions. No marketing, just facts.
         </p>
@@ -40,10 +40,10 @@ const DocsTechnical = () => {
       <div className="space-y-12">
         {/* Pipeline */}
         <section>
-          <h2 className="font-display text-xl font-bold text-foreground mb-4">
+          <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-4">
             Processing Pipeline
           </h2>
-          <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
+          <div className="rounded-2xl border border-[var(--line)] bg-[var(--sf)] p-6">
             <div className="flex flex-wrap items-center gap-2 text-sm font-mono">
               {[
                 "Secret Input",
@@ -56,16 +56,16 @@ const DocsTechnical = () => {
                 "SHA-256 Verify",
               ].map((step, i) => (
                 <span key={step} className="flex items-center gap-2">
-                  <span className="rounded-lg bg-primary/10 px-3 py-1.5 text-primary font-medium">
+                  <span className="rounded-lg bg-[var(--gold-fill)] px-3 py-1.5 text-[var(--gold)] font-medium">
                     {step}
                   </span>
                   {i < 5 && (
-                    <span className="text-muted-foreground/40">&rarr;</span>
+                    <span className="text-[var(--ink3)]">&rarr;</span>
                   )}
                 </span>
               ))}
             </div>
-            <p className="text-sm text-muted-foreground/70 mt-4">
+            <p className="text-sm text-[var(--ink2)] mt-4">
               The secret enters memory, is encrypted under a key derived from
               your password (and optional keyfile), split into threshold shares,
               rendered as QR codes, integrity-verified with SHA-256, and then
@@ -77,31 +77,31 @@ const DocsTechnical = () => {
 
         {/* Crypto primitives table */}
         <section>
-          <h2 className="font-display text-xl font-bold text-foreground mb-4">
+          <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-4">
             Cryptographic Primitives
           </h2>
-          <div className="overflow-x-auto rounded-2xl border border-border/30">
+          <div className="overflow-x-auto rounded-2xl border border-[var(--line)]">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-border/30 bg-card/30">
-                  <th className="text-left p-4 font-display font-bold text-foreground">
+                <tr className="border-b border-[var(--line)] bg-[var(--sf)]">
+                  <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                     Algorithm
                   </th>
-                  <th className="text-left p-4 font-display font-bold text-foreground">
+                  <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                     Purpose
                   </th>
-                  <th className="text-left p-4 font-display font-bold text-foreground">
+                  <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                     Key / Output Size
                   </th>
-                  <th className="text-left p-4 font-display font-bold text-foreground">
+                  <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                     Library (Web)
                   </th>
-                  <th className="text-left p-4 font-display font-bold text-foreground">
+                  <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                     Library (Desktop)
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border/20">
+              <tbody className="divide-y divide-[color:var(--line)]">
                 {[
                   [
                     "XChaCha20-Poly1305",
@@ -141,19 +141,19 @@ const DocsTechnical = () => {
                 ].map(([algo, purpose, size, webLib, desktopLib]) => (
                   <tr
                     key={algo}
-                    className="hover:bg-card/20 transition-colors"
+                    className="hover:bg-[var(--band)] transition-colors"
                   >
-                    <td className="p-4 font-medium text-foreground font-mono text-xs">
+                    <td className="p-4 font-medium text-[var(--ink)] font-mono text-xs">
                       {algo}
                     </td>
-                    <td className="p-4 text-muted-foreground/80">{purpose}</td>
-                    <td className="p-4 text-muted-foreground/80 font-mono text-xs">
+                    <td className="p-4 text-[var(--ink2)]">{purpose}</td>
+                    <td className="p-4 text-[var(--ink2)] font-mono text-xs">
                       {size}
                     </td>
-                    <td className="p-4 text-muted-foreground/80 font-mono text-xs">
+                    <td className="p-4 text-[var(--ink2)] font-mono text-xs">
                       {webLib}
                     </td>
-                    <td className="p-4 text-muted-foreground/80 font-mono text-xs">
+                    <td className="p-4 text-[var(--ink2)] font-mono text-xs">
                       {desktopLib}
                     </td>
                   </tr>
@@ -165,25 +165,25 @@ const DocsTechnical = () => {
 
         {/* Argon2id parameters */}
         <section>
-          <h2 className="font-display text-xl font-bold text-foreground mb-4">
+          <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-4">
             Argon2id Parameters
           </h2>
-          <div className="overflow-x-auto rounded-2xl border border-border/30">
+          <div className="overflow-x-auto rounded-2xl border border-[var(--line)]">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-border/30 bg-card/30">
-                  <th className="text-left p-4 font-display font-bold text-foreground">
+                <tr className="border-b border-[var(--line)] bg-[var(--sf)]">
+                  <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                     Parameter
                   </th>
-                  <th className="text-left p-4 font-display font-bold text-foreground">
+                  <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                     Value
                   </th>
-                  <th className="text-left p-4 font-display font-bold text-foreground">
+                  <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                     Purpose
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border/20">
+              <tbody className="divide-y divide-[color:var(--line)]">
                 {[
                   [
                     "Memory cost",
@@ -218,13 +218,13 @@ const DocsTechnical = () => {
                 ].map(([param, val, purpose]) => (
                   <tr
                     key={param}
-                    className="hover:bg-card/20 transition-colors"
+                    className="hover:bg-[var(--band)] transition-colors"
                   >
-                    <td className="p-4 font-medium text-foreground">{param}</td>
-                    <td className="p-4 text-muted-foreground/80 font-mono text-xs">
+                    <td className="p-4 font-medium text-[var(--ink)]">{param}</td>
+                    <td className="p-4 text-[var(--ink2)] font-mono text-xs">
                       {val}
                     </td>
-                    <td className="p-4 text-muted-foreground/80">{purpose}</td>
+                    <td className="p-4 text-[var(--ink2)]">{purpose}</td>
                   </tr>
                 ))}
               </tbody>
@@ -234,21 +234,21 @@ const DocsTechnical = () => {
 
         {/* Keyfile Support */}
         <section>
-          <h2 className="font-display text-xl font-bold text-foreground mb-4">
+          <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-4">
             Optional Keyfile
           </h2>
           <div className="space-y-4">
-            <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
-              <p className="text-sm text-muted-foreground/80 mb-4">
+            <div className="rounded-2xl border border-[var(--line)] bg-[var(--sf)] p-6">
+              <p className="text-sm text-[var(--ink2)] mb-4">
                 seQRets supports an optional keyfile as a second authentication
                 factor. When provided, the keyfile bytes are concatenated with
                 the password bytes before being fed into Argon2id — the keyfile
                 is not hashed separately or used as a pepper.
               </p>
-              <div className="rounded-lg border border-border/20 bg-background/50 px-4 py-3 font-mono text-xs text-muted-foreground/70 mb-4">
+              <div className="rounded-lg border border-[var(--line)] bg-[var(--band)] px-4 py-3 font-mono text-xs text-[var(--ink2)] mb-4">
                 key = Argon2id(password_bytes || keyfile_bytes, salt, m=65536, t=4, p=1, dkLen=32)
               </div>
-              <p className="text-sm text-muted-foreground/80">
+              <p className="text-sm text-[var(--ink2)]">
                 Both the web app (TypeScript) and the desktop app (Rust) use
                 identical concatenation logic. When no keyfile is provided, only
                 the password is used. A wrong or missing keyfile causes the
@@ -257,19 +257,19 @@ const DocsTechnical = () => {
               </p>
             </div>
 
-            <div className="overflow-x-auto rounded-2xl border border-border/30">
+            <div className="overflow-x-auto rounded-2xl border border-[var(--line)]">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-border/30 bg-card/30">
-                    <th className="text-left p-4 font-display font-bold text-foreground">
+                  <tr className="border-b border-[var(--line)] bg-[var(--sf)]">
+                    <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                       Property
                     </th>
-                    <th className="text-left p-4 font-display font-bold text-foreground">
+                    <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                       Value
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-border/20">
+                <tbody className="divide-y divide-[color:var(--line)]">
                   {[
                     ["Generated size", "32 bytes (256 bits) — CSPRNG"],
                     ["Accepted formats", ".bin, .key"],
@@ -279,23 +279,23 @@ const DocsTechnical = () => {
                   ].map(([prop, val]) => (
                     <tr
                       key={prop}
-                      className="hover:bg-card/20 transition-colors"
+                      className="hover:bg-[var(--band)] transition-colors"
                     >
-                      <td className="p-4 font-medium text-foreground whitespace-nowrap">
+                      <td className="p-4 font-medium text-[var(--ink)] whitespace-nowrap">
                         {prop}
                       </td>
-                      <td className="p-4 text-muted-foreground/80">{val}</td>
+                      <td className="p-4 text-[var(--ink2)]">{val}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
 
-            <div className="rounded-2xl border border-primary/15 bg-primary/5 p-6">
-              <h3 className="text-sm font-bold text-foreground mb-3">
+            <div className="rounded-2xl border-2 border-[var(--gold)] bg-[var(--sf)] p-6">
+              <h3 className="text-sm font-bold text-[var(--ink)] mb-3">
                 What keyfiles defend against
               </h3>
-              <ul className="space-y-2 text-sm text-muted-foreground/80">
+              <ul className="space-y-2 text-sm text-[var(--ink2)]">
                 {[
                   "Keyloggers — a binary file is never typed, so keystroke capture is useless",
                   "Shoulder surfing — nothing to observe visually during authentication",
@@ -303,18 +303,18 @@ const DocsTechnical = () => {
                   "Physical coercion — if the keyfile is stored in a separate physical location, the user genuinely cannot decrypt on demand",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-2">
-                    <span className="text-green-500 mt-0.5">&#10003;</span>
+                    <span className="text-[var(--gold)] mt-0.5">&#10003;</span>
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="rounded-2xl border border-yellow-500/20 bg-yellow-500/5 p-6">
-              <h3 className="text-sm font-bold text-foreground mb-3">
+            <div className="rounded-2xl border-2 border-[var(--gold)] bg-[var(--sf)] p-6">
+              <h3 className="text-sm font-bold text-[var(--ink)] mb-3">
                 Important: keyfile loss is irrecoverable
               </h3>
-              <p className="text-sm text-muted-foreground/80">
+              <p className="text-sm text-[var(--ink2)]">
                 If you encrypt with a keyfile and lose it, the secret cannot be
                 decrypted. There is no recovery mechanism. Back up your keyfile
                 separately from your shares and password.
@@ -325,11 +325,11 @@ const DocsTechnical = () => {
 
         {/* Shamir's Secret Sharing */}
         <section>
-          <h2 className="font-display text-xl font-bold text-foreground mb-4">
+          <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-4">
             Shamir's Secret Sharing
           </h2>
           <div className="space-y-4">
-            <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
+            <div className="rounded-2xl border border-[var(--line)] bg-[var(--sf)] p-6">
               <div className="grid gap-4 sm:grid-cols-2">
                 {[
                   {
@@ -358,13 +358,13 @@ const DocsTechnical = () => {
                   },
                 ].map(({ label, value, detail }) => (
                   <div key={label}>
-                    <p className="text-xs text-muted-foreground/60 uppercase tracking-wider mb-1">
+                    <p className="text-xs text-[var(--ink3)] uppercase tracking-wider mb-1">
                       {label}
                     </p>
-                    <p className="text-sm font-medium text-foreground mb-1">
+                    <p className="text-sm font-medium text-[var(--ink)] mb-1">
                       {value}
                     </p>
-                    <p className="text-xs text-muted-foreground/70">{detail}</p>
+                    <p className="text-xs text-[var(--ink2)]">{detail}</p>
                   </div>
                 ))}
               </div>
@@ -374,22 +374,22 @@ const DocsTechnical = () => {
 
         {/* QR Code Encoding */}
         <section>
-          <h2 className="font-display text-xl font-bold text-foreground mb-4">
+          <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-4">
             QR Code Encoding
           </h2>
-          <div className="overflow-x-auto rounded-2xl border border-border/30">
+          <div className="overflow-x-auto rounded-2xl border border-[var(--line)]">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-border/30 bg-card/30">
-                  <th className="text-left p-4 font-display font-bold text-foreground">
+                <tr className="border-b border-[var(--line)] bg-[var(--sf)]">
+                  <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                     Property
                   </th>
-                  <th className="text-left p-4 font-display font-bold text-foreground">
+                  <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                     Value
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border/20">
+              <tbody className="divide-y divide-[color:var(--line)]">
                 {[
                   ["Data format", "Base64-encoded ciphertext share"],
                   ["Error correction", "Level M (15% recovery)"],
@@ -412,12 +412,12 @@ const DocsTechnical = () => {
                 ].map(([prop, val]) => (
                   <tr
                     key={prop}
-                    className="hover:bg-card/20 transition-colors"
+                    className="hover:bg-[var(--band)] transition-colors"
                   >
-                    <td className="p-4 font-medium text-foreground whitespace-nowrap">
+                    <td className="p-4 font-medium text-[var(--ink)] whitespace-nowrap">
                       {prop}
                     </td>
-                    <td className="p-4 text-muted-foreground/80">{val}</td>
+                    <td className="p-4 text-[var(--ink2)]">{val}</td>
                   </tr>
                 ))}
               </tbody>
@@ -427,29 +427,29 @@ const DocsTechnical = () => {
 
         {/* Share Format & Integrity */}
         <section>
-          <h2 className="font-display text-xl font-bold text-foreground mb-4">
+          <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-4">
             Share Format &amp; Integrity Verification
           </h2>
           <div className="space-y-4">
-            <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
-              <p className="text-sm text-muted-foreground/80 mb-4">
+            <div className="rounded-2xl border border-[var(--line)] bg-[var(--sf)] p-6">
+              <p className="text-sm text-[var(--ink2)] mb-4">
                 Each share is a pipe-delimited string. The{" "}
-                <strong className="text-foreground">SHA-256 hash always sits last</strong> and covers
+                <strong className="text-[var(--ink)]">SHA-256 hash always sits last</strong> and covers
                 everything before it — so the hash input is simply the whole
                 string up to <code className="font-mono">|sha256:</code>. It is
                 verified automatically at generation and restoration.
               </p>
-              <div className="rounded-lg border border-border/20 bg-background/50 px-4 py-3 font-mono text-xs text-muted-foreground/70 mb-4 space-y-1.5">
+              <div className="rounded-lg border border-[var(--line)] bg-[var(--band)] px-4 py-3 font-mono text-xs text-[var(--ink2)] mb-4 space-y-1.5">
                 <div>
-                  <span className="text-muted-foreground/40">Legacy (pre-v1.11):</span>{" "}
+                  <span className="text-[var(--ink3)]">Legacy (pre-v1.11):</span>{" "}
                   seQRets|&lt;salt&gt;|&lt;data&gt;|sha256:&lt;64-char hex&gt;
                 </div>
                 <div>
-                  <span className="text-muted-foreground/40">v1.14+ / toggle on:</span>{" "}
+                  <span className="text-[var(--ink3)]">v1.14+ / toggle on:</span>{" "}
                   seQRets|&lt;salt&gt;|&lt;data&gt;|v=1|t=&lt;K&gt;|n=&lt;N&gt;|i=&lt;I&gt;|sha256:&lt;64-char hex&gt;
                 </div>
               </div>
-              <p className="text-sm text-muted-foreground/80">
+              <p className="text-sm text-[var(--ink2)]">
                 Backward compatible: legacy 3-part shares without hashes still
                 decode, 4-part shares (sha256 only) still decode, and v1.11+
                 shares add threshold (K), total (N), and 1-based card
@@ -467,19 +467,19 @@ const DocsTechnical = () => {
               </p>
             </div>
 
-            <div className="overflow-x-auto rounded-2xl border border-border/30">
+            <div className="overflow-x-auto rounded-2xl border border-[var(--line)]">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-border/30 bg-card/30">
-                    <th className="text-left p-4 font-display font-bold text-foreground">
+                  <tr className="border-b border-[var(--line)] bg-[var(--sf)]">
+                    <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                       Property
                     </th>
-                    <th className="text-left p-4 font-display font-bold text-foreground">
+                    <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                       Value
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-border/20">
+                <tbody className="divide-y divide-[color:var(--line)]">
                   {[
                     ["Hash function", "SHA-256 via @noble/hashes/sha256"],
                     ["Hash input", 'Everything before |sha256: — the hash always sits last. Legacy/4-part shares: SHA-256("seQRets|salt|data"). v1.14+ shares with recovery metadata: SHA-256("seQRets|salt|data|v=1|t=K|n=N|i=I") — the version marker and metadata are included in the hash so they cannot be tampered with.'],
@@ -492,35 +492,35 @@ const DocsTechnical = () => {
                   ].map(([prop, val]) => (
                     <tr
                       key={prop}
-                      className="hover:bg-card/20 transition-colors"
+                      className="hover:bg-[var(--band)] transition-colors"
                     >
-                      <td className="p-4 font-medium text-foreground whitespace-nowrap">
+                      <td className="p-4 font-medium text-[var(--ink)] whitespace-nowrap">
                         {prop}
                       </td>
-                      <td className="p-4 text-muted-foreground/80">{val}</td>
+                      <td className="p-4 text-[var(--ink2)]">{val}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
 
-            <div className="rounded-2xl border border-primary/15 bg-primary/5 p-6">
-              <h3 className="text-sm font-bold text-foreground mb-3">
+            <div className="rounded-2xl border-2 border-[var(--gold)] bg-[var(--sf)] p-6">
+              <h3 className="text-sm font-bold text-[var(--ink)] mb-3">
                 Manual verification
               </h3>
-              <p className="text-sm text-muted-foreground/80 mb-3">
+              <p className="text-sm text-[var(--ink2)] mb-3">
                 Users can independently verify any share in a terminal. For
                 legacy or 4-part shares (no recovery metadata):
               </p>
-              <div className="rounded-lg border border-border/20 bg-background/50 px-4 py-3 font-mono text-xs text-muted-foreground/70 mb-3">
+              <div className="rounded-lg border border-[var(--line)] bg-[var(--band)] px-4 py-3 font-mono text-xs text-[var(--ink2)] mb-3">
                 echo -n "seQRets|salt|data" | shasum -a 256
               </div>
-              <p className="text-sm text-muted-foreground/80 mb-3">
+              <p className="text-sm text-[var(--ink2)] mb-3">
                 For v1.14+ shares, include the version marker and any metadata
                 segments — i.e. everything before{" "}
                 <code className="font-mono">|sha256:</code>:
               </p>
-              <div className="rounded-lg border border-border/20 bg-background/50 px-4 py-3 font-mono text-xs text-muted-foreground/70">
+              <div className="rounded-lg border border-[var(--line)] bg-[var(--band)] px-4 py-3 font-mono text-xs text-[var(--ink2)]">
                 echo -n "seQRets|salt|data|v=1|t=K|n=N|i=I" | shasum -a 256
               </div>
             </div>
@@ -529,27 +529,27 @@ const DocsTechnical = () => {
 
         {/* Length Privacy & Format Version */}
         <section>
-          <h2 className="font-display text-xl font-bold text-foreground mb-4">
+          <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-4">
             Length Privacy &amp; Format Version (v1.14+)
           </h2>
           <div className="space-y-4">
-            <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
-              <h3 className="text-sm font-bold text-foreground mb-3">
+            <div className="rounded-2xl border border-[var(--line)] bg-[var(--sf)] p-6">
+              <h3 className="text-sm font-bold text-[var(--ink)] mb-3">
                 Padding — a Qard doesn't leak its secret's size
               </h3>
-              <p className="text-sm text-muted-foreground/80 mb-4">
+              <p className="text-sm text-[var(--ink2)] mb-4">
                 Stream ciphers produce ciphertext the same length as their
                 input, so before v1.14 a Qard's size correlated with the size of
                 the secret inside it. Since v1.14 the compressed payload is
                 zero-padded up to a multiple of{" "}
-                <strong className="text-foreground">192 bytes</strong> before
+                <strong className="text-[var(--ink)]">192 bytes</strong> before
                 encryption. Every common secret — a 12-word seed, a 24-word
                 seed, a labeled backup — lands in the same first bucket and
                 produces an identically sized Qard, so an observer holding a
                 Qard learns only "at most N buckets," which for typical secrets
                 is nothing at all.
               </p>
-              <p className="text-sm text-muted-foreground/80">
+              <p className="text-sm text-[var(--ink2)]">
                 Padding is applied after compression (compression would collapse
                 it), is covered by the authentication tag, and needs no unpad
                 step on restore — gzip streams are self-terminating and both
@@ -561,11 +561,11 @@ const DocsTechnical = () => {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
-              <h3 className="text-sm font-bold text-foreground mb-3">
+            <div className="rounded-2xl border border-[var(--line)] bg-[var(--sf)] p-6">
+              <h3 className="text-sm font-bold text-[var(--ink)] mb-3">
                 Format-version marker — built for decades
               </h3>
-              <p className="text-sm text-muted-foreground/80">
+              <p className="text-sm text-[var(--ink2)]">
                 Every v1.14+ Qard carries a hash-covered{" "}
                 <code className="font-mono">v=1</code> marker as its first
                 metadata segment. Qards are frozen artifacts — printed cards,
@@ -582,15 +582,15 @@ const DocsTechnical = () => {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
-              <h3 className="text-sm font-bold text-foreground mb-3">
+            <div className="rounded-2xl border border-[var(--line)] bg-[var(--sf)] p-6">
+              <h3 className="text-sm font-bold text-[var(--ink)] mb-3">
                 Label blind export
               </h3>
-              <p className="text-sm text-muted-foreground/80">
+              <p className="text-sm text-[var(--ink2)]">
                 Labels are always encrypted inside the payload. By default they
                 are <em>also</em> printed on card faces and used in file names,
                 which is convenient for telling Qards apart. The{" "}
-                <strong className="text-foreground">
+                <strong className="text-[var(--ink)]">
                   "Show label on Qards &amp; file names"
                 </strong>{" "}
                 switch (on by default) gates every plaintext surface: turn it
@@ -605,24 +605,24 @@ const DocsTechnical = () => {
 
         {/* BIP-32 Master Fingerprint (XFP) */}
         <section>
-          <h2 className="font-display text-xl font-bold text-foreground mb-4">
+          <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-4">
             Hardware-Wallet Verification (BIP-32 XFP)
           </h2>
           <div className="space-y-4">
-            <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
-              <p className="text-sm text-muted-foreground/80 mb-4">
+            <div className="rounded-2xl border border-[var(--line)] bg-[var(--sf)] p-6">
+              <p className="text-sm text-[var(--ink2)] mb-4">
                 When restoring a BIP-39 mnemonic, the reveal dialog's SeedQR tab
-                displays the <strong className="text-foreground">BIP-32 master fingerprint</strong> (XFP) beneath the QR —
+                displays the <strong className="text-[var(--ink)]">BIP-32 master fingerprint</strong> (XFP) beneath the QR —
                 an 8-character hex string derived from the master public key.
                 Many hardware wallets (Jade, Coldcard, Trezor, and others)
                 initialize without ever displaying the mnemonic, but almost all
                 of them show the XFP on the home screen after import. Matching
                 the two proves the correct seed was loaded.
               </p>
-              <div className="rounded-lg border border-border/20 bg-background/50 px-4 py-3 font-mono text-xs text-muted-foreground/70 mb-4">
+              <div className="rounded-lg border border-[var(--line)] bg-[var(--band)] px-4 py-3 font-mono text-xs text-[var(--ink2)] mb-4">
                 XFP = HDKey.fromMasterSeed(mnemonicToSeedSync(phrase, "")).fingerprint (hex, uppercase)
               </div>
-              <p className="text-sm text-muted-foreground/80">
+              <p className="text-sm text-[var(--ink2)]">
                 The seed buffer is zeroized immediately after fingerprint
                 computation. The XFP is derived from the master <em>public</em> key
                 and reveals nothing about the seed — it is safe to display
@@ -631,19 +631,19 @@ const DocsTechnical = () => {
               </p>
             </div>
 
-            <div className="overflow-x-auto rounded-2xl border border-border/30">
+            <div className="overflow-x-auto rounded-2xl border border-[var(--line)]">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-border/30 bg-card/30">
-                    <th className="text-left p-4 font-display font-bold text-foreground">
+                  <tr className="border-b border-[var(--line)] bg-[var(--sf)]">
+                    <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                       Property
                     </th>
-                    <th className="text-left p-4 font-display font-bold text-foreground">
+                    <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                       Value
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-border/20">
+                <tbody className="divide-y divide-[color:var(--line)]">
                   {[
                     ["Format", "8 uppercase hex characters (e.g. 73C5DA0A)"],
                     ["Library", "@scure/bip32 (audited, same author as @scure/bip39)"],
@@ -654,12 +654,12 @@ const DocsTechnical = () => {
                   ].map(([prop, val]) => (
                     <tr
                       key={prop}
-                      className="hover:bg-card/20 transition-colors"
+                      className="hover:bg-[var(--band)] transition-colors"
                     >
-                      <td className="p-4 font-medium text-foreground whitespace-nowrap">
+                      <td className="p-4 font-medium text-[var(--ink)] whitespace-nowrap">
                         {prop}
                       </td>
-                      <td className="p-4 text-muted-foreground/80">{val}</td>
+                      <td className="p-4 text-[var(--ink2)]">{val}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -670,19 +670,19 @@ const DocsTechnical = () => {
 
         {/* SLIP-39 Detection */}
         <section>
-          <h2 className="font-display text-xl font-bold text-foreground mb-4">
+          <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-4">
             SLIP-39 Detection (Trezor Recovery Shares)
           </h2>
           <div className="space-y-4">
-            <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
-              <p className="text-sm text-muted-foreground/80 mb-4">
-                Trezor-style <strong className="text-foreground">SLIP-39</strong> recovery shares (20 or 33 words,
+            <div className="rounded-2xl border border-[var(--line)] bg-[var(--sf)] p-6">
+              <p className="text-sm text-[var(--ink2)] mb-4">
+                Trezor-style <strong className="text-[var(--ink)]">SLIP-39</strong> recovery shares (20 or 33 words,
                 including multi-share sets entered one per line) are recognized on entry and validated against their
-                built-in <strong className="text-foreground">RS1024 checksum</strong> — any single mistyped word is
+                built-in <strong className="text-[var(--ink)]">RS1024 checksum</strong> — any single mistyped word is
                 caught before encryption, and the checksum is verified again after restore.
               </p>
-              <p className="text-sm text-muted-foreground/80">
-                Unlike BIP-39, SLIP-39 phrases are stored as <strong className="text-foreground">plain text</strong>
+              <p className="text-sm text-[var(--ink2)]">
+                Unlike BIP-39, SLIP-39 phrases are stored as <strong className="text-[var(--ink)]">plain text</strong>
                 {" "}rather than converted to entropy: each share carries metadata (identifier, group parameters,
                 iteration exponent) that must be reproduced exactly. The detection module is validation-only — it
                 never splits, combines, or otherwise handles key material. No SeedQR is offered (SeedQR is a
@@ -690,19 +690,19 @@ const DocsTechnical = () => {
               </p>
             </div>
 
-            <div className="overflow-x-auto rounded-2xl border border-border/30">
+            <div className="overflow-x-auto rounded-2xl border border-[var(--line)]">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-border/30 bg-card/30">
-                    <th className="text-left p-4 font-display font-bold text-foreground">
+                  <tr className="border-b border-[var(--line)] bg-[var(--sf)]">
+                    <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                       Property
                     </th>
-                    <th className="text-left p-4 font-display font-bold text-foreground">
+                    <th className="text-left p-4 font-display font-bold text-[var(--ink)]">
                       Value
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-border/20">
+                <tbody className="divide-y divide-[color:var(--line)]">
                   {[
                     ["Detected shares", "20- or 33-word SLIP-39 shares, including multi-share sets (one per line)"],
                     ["Validation", "RS1024 checksum — a mistyped word is caught before encryption and re-verified after restore"],
@@ -715,12 +715,12 @@ const DocsTechnical = () => {
                   ].map(([prop, val]) => (
                     <tr
                       key={prop}
-                      className="hover:bg-card/20 transition-colors"
+                      className="hover:bg-[var(--band)] transition-colors"
                     >
-                      <td className="p-4 font-medium text-foreground whitespace-nowrap">
+                      <td className="p-4 font-medium text-[var(--ink)] whitespace-nowrap">
                         {prop}
                       </td>
-                      <td className="p-4 text-muted-foreground/80">{val}</td>
+                      <td className="p-4 text-[var(--ink2)]">{val}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -731,15 +731,15 @@ const DocsTechnical = () => {
 
         {/* Zero-Knowledge Claims */}
         <section>
-          <h2 className="font-display text-xl font-bold text-foreground mb-4">
+          <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-4">
             Zero-Knowledge Claims
           </h2>
           <div className="space-y-4">
-            <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
-              <h3 className="text-sm font-bold text-foreground mb-3">
+            <div className="rounded-2xl border border-[var(--line)] bg-[var(--sf)] p-6">
+              <h3 className="text-sm font-bold text-[var(--ink)] mb-3">
                 What "zero-knowledge" means for seQRets
               </h3>
-              <ul className="space-y-2 text-sm text-muted-foreground/80">
+              <ul className="space-y-2 text-sm text-[var(--ink2)]">
                 {[
                   "No server — all processing happens locally on your device",
                   "No account — no registration, no login, no user database",
@@ -748,23 +748,23 @@ const DocsTechnical = () => {
                   "No network dependency — the app works fully offline after initial load (web) or always (desktop)",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-2">
-                    <span className="text-green-500 mt-0.5">&#10003;</span>
+                    <span className="text-[var(--gold)] mt-0.5">&#10003;</span>
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="rounded-2xl border border-yellow-500/20 bg-yellow-500/5 p-6">
-              <h3 className="text-sm font-bold text-foreground mb-3">
+            <div className="rounded-2xl border-2 border-[var(--gold)] bg-[var(--sf)] p-6">
+              <h3 className="text-sm font-bold text-[var(--ink)] mb-3">
                 Explicit Caveats
               </h3>
-              <ul className="space-y-2 text-sm text-muted-foreground/80">
+              <ul className="space-y-2 text-sm text-[var(--ink2)]">
                 {[
                   "Bob AI assistant (optional) — if you provide a Google Gemini API key and ask Bob a question, your question is sent to Google's Gemini API. No secret data is included.",
                   "BTC price display (optional) — the app fetches the current Bitcoin price from a public API for display purposes. No user data is transmitted. Disabled when offline.",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-2">
-                    <span className="text-yellow-500 mt-0.5">&#9888;</span>
+                    <span className="text-[var(--gold)] mt-0.5">&#9888;</span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -775,11 +775,11 @@ const DocsTechnical = () => {
 
         {/* Source Code References */}
         <section>
-          <h2 className="font-display text-xl font-bold text-foreground mb-4">
+          <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-4">
             Source Code
           </h2>
-          <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
-            <p className="text-sm text-muted-foreground/80 mb-4">
+          <div className="rounded-2xl border border-[var(--line)] bg-[var(--sf)] p-6">
+            <p className="text-sm text-[var(--ink2)] mb-4">
               The full source code is available for audit and independent verification.
             </p>
             <div className="space-y-2 text-sm">
@@ -798,14 +798,14 @@ const DocsTechnical = () => {
                 },
               ].map(({ label, url }) => (
                 <div key={label} className="flex items-center gap-3">
-                  <span className="text-muted-foreground/60 w-32 shrink-0">
+                  <span className="text-[var(--ink3)] w-32 shrink-0">
                     {label}
                   </span>
                   <a
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary hover:underline truncate"
+                    className="text-[var(--gold)] hover:underline truncate"
                   >
                     {url.replace("https://", "")}
                   </a>
@@ -813,9 +813,9 @@ const DocsTechnical = () => {
               ))}
             </div>
           </div>
-          <p className="text-sm text-muted-foreground/60 mt-4">
+          <p className="text-sm text-[var(--ink3)] mt-4">
             For the full web vs. desktop security comparison, see the{" "}
-            <Link to="/security" className="text-primary hover:underline">
+            <Link to="/security" className="text-[var(--gold)] hover:underline">
               Security page
             </Link>
             .

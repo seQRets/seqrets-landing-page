@@ -169,13 +169,13 @@ const DocsInheritance = () => {
       />
 
       <div className="mb-10">
-        <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-gradient-silver mb-4">
+        <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-[var(--ink2)] mb-4">
           Inheritance Guide
         </p>
-        <h1 className="font-display text-3xl md:text-4xl font-black text-foreground tracking-tight mb-4">
-          Crypto <span className="text-gradient">Inheritance Planning</span>
+        <h1 className="font-display text-3xl md:text-4xl font-black text-[var(--ink)] tracking-tight mb-4">
+          Crypto <span className="text-[var(--gold)]">Inheritance Planning</span>
         </h1>
-        <p className="text-muted-foreground/80">
+        <p className="text-[var(--ink2)]">
           A step-by-step guide for distributing your crypto seed phrase to
           trusted people and locations using Shamir's Secret Sharing. Designed
           to be followed by humans or by AI agents assisting with setup.
@@ -186,51 +186,57 @@ const DocsInheritance = () => {
         {STEPS.map((step, i) => (
           <section
             key={step.title}
-            className="rounded-2xl border border-border/30 bg-card/20 p-6"
+            className="rounded-2xl border border-[var(--line)] bg-[var(--sf)] p-6"
           >
             <div className="flex items-start gap-4 mb-4">
-              <span className="flex items-center justify-center h-8 w-8 rounded-full bg-primary/10 text-primary text-sm font-bold shrink-0">
+              <span className="flex items-center justify-center h-8 w-8 rounded-full bg-[var(--gold-fill)] text-[var(--gold)] text-sm font-bold shrink-0">
                 {i + 1}
               </span>
               <div>
-                <h2 className="font-display text-lg font-bold text-foreground">
+                <h2 className="font-display text-lg font-bold text-[var(--ink)]">
                   {step.title}
                 </h2>
-                <p className="text-sm text-muted-foreground/80 mt-1">
+                <p className="text-sm text-[var(--ink2)] mt-1">
                   {step.description}
                 </p>
               </div>
             </div>
-            <ul className="space-y-2 text-sm text-muted-foreground/80 ml-12 mb-4">
+            <ul className="space-y-2 text-sm text-[var(--ink2)] ml-12 mb-4">
               {step.items.map((item) => (
                 <li key={item} className="flex items-start gap-2">
-                  <span className="text-primary mt-0.5 shrink-0">&#8226;</span>
+                  <span className="text-[var(--gold)] mt-0.5 shrink-0">&#8226;</span>
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
-            <div className="ml-12 rounded-xl bg-primary/5 border border-primary/10 px-4 py-3">
-              <p className="text-xs text-muted-foreground/60 uppercase tracking-wider mb-1">
+            {/*
+              A note style rather than an emphasis one: this box repeats
+              under every step, and it is nested inside a card that is
+              already --sf, so it needs its own inset surface and a rule
+              that marks it without shouting eight times down the page.
+            */}
+            <div className="ml-12 rounded-xl border-l-2 border-[var(--gold)] bg-[var(--band)] px-4 py-3">
+              <p className="text-xs text-[var(--ink3)] uppercase tracking-wider mb-1">
                 Expected Outcome
               </p>
-              <p className="text-sm text-foreground/80">{step.outcome}</p>
+              <p className="text-sm text-[var(--ink2)]">{step.outcome}</p>
             </div>
           </section>
         ))}
       </div>
 
       {/* Shop CTA */}
-      <div className="mt-10 rounded-2xl border border-primary/20 bg-primary/5 p-8 text-center">
-        <h3 className="font-display text-xl font-bold text-foreground mb-2">
+      <div className="mt-10 rounded-2xl border-2 border-[var(--gold)] bg-[var(--sf)] p-8 text-center">
+        <h3 className="font-display text-xl font-bold text-[var(--ink)] mb-2">
           Need the hardware?
         </h3>
-        <p className="text-sm text-muted-foreground/80 mb-6">
+        <p className="text-sm text-[var(--ink2)] mb-6">
           The Inheritance Bundle includes everything listed in Step 1 — smart
           cards, reader, envelopes, fireproof case, and the printed guide.
         </p>
         <Link
-          to="/shop"
-          className="inline-flex items-center gap-2 rounded-md bg-primary px-7 py-3 text-sm font-bold text-primary-foreground transition-all hover:bg-primary/90"
+          to="/preview/shop"
+          className="inline-flex items-center gap-2 rounded-[10px] bg-[var(--gold)] px-7 py-3 font-display text-sm font-semibold text-[var(--gold-ink)] transition-transform hover:scale-[1.02]"
         >
           Browse the Shop &rarr;
         </Link>

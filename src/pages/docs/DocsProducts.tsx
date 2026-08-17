@@ -169,15 +169,15 @@ const DocsProducts = () => {
       />
 
       <div className="mb-10">
-        <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-gradient-silver mb-4">
+        <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-[var(--ink2)] mb-4">
           Product Specs
         </p>
-        <h1 className="font-display text-3xl md:text-4xl font-black text-foreground tracking-tight mb-4">
-          Product <span className="text-gradient">Specifications</span>
+        <h1 className="font-display text-3xl md:text-4xl font-black text-[var(--ink)] tracking-tight mb-4">
+          Product <span className="text-[var(--gold)]">Specifications</span>
         </h1>
-        <p className="text-muted-foreground/80">
+        <p className="text-[var(--ink2)]">
           Technical specifications for all seQRets products.{" "}
-          <Link to="/shop" className="text-primary hover:underline">
+          <Link to="/preview/shop" className="text-[var(--gold)] hover:underline">
             Visit the shop
           </Link>{" "}
           to purchase.
@@ -187,7 +187,7 @@ const DocsProducts = () => {
       <div className="space-y-12">
         {PRODUCT_CATEGORIES.map((category) => (
           <div key={category.label}>
-            <h2 className="font-display text-xl font-bold text-foreground mb-4 border-b border-border/20 pb-2">
+            <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-4 border-b border-[var(--line)] pb-2">
               {category.label}
             </h2>
             <div className="space-y-6">
@@ -200,18 +200,18 @@ const DocsProducts = () => {
             <section
               key={slug}
               id={slug}
-              className="rounded-2xl border border-border/30 bg-card/20 p-6"
+              className="rounded-2xl border border-[var(--line)] bg-[var(--sf)] p-6"
             >
               <div className="flex items-start justify-between gap-4 mb-4">
                 <div>
-                  <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/50">
+                  <span className="text-[10px] font-semibold uppercase tracking-widest text-[var(--ink3)]">
                     {product.tag}
                   </span>
-                  <h2 className="font-display text-lg font-bold text-foreground">
+                  <h2 className="font-display text-lg font-bold text-[var(--ink)]">
                     {product.name}
                   </h2>
                   {product.badge && (
-                    <span className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary mt-1">
+                    <span className="inline-flex items-center rounded-full bg-[var(--gold-fill)] px-2.5 py-0.5 text-xs font-medium text-[var(--gold)] mt-1">
                       {product.badge}
                     </span>
                   )}
@@ -219,38 +219,38 @@ const DocsProducts = () => {
                 <div className="text-right shrink-0">
                   {SHOP_LIVE ? (
                     <>
-                      <p className="font-display text-lg font-bold text-foreground">
+                      <p className="font-display text-lg font-bold text-[var(--ink)]">
                         {formatPrice(product.priceInCents)}
                       </p>
                       {!product.priceFinal && (
-                        <p className="text-xs text-muted-foreground/60">or less</p>
+                        <p className="text-xs text-[var(--ink3)]">or less</p>
                       )}
                     </>
                   ) : (
-                    <p className="font-display text-sm font-semibold text-muted-foreground/70">
+                    <p className="font-display text-sm font-semibold text-[var(--ink2)]">
                       Pricing TBA
                     </p>
                   )}
                 </div>
               </div>
 
-              <p className="text-sm text-muted-foreground/80 mb-4">
+              <p className="text-sm text-[var(--ink2)] mb-4">
                 {spec?.extendedDescription ?? product.description}
               </p>
 
               {/* Bundle contents */}
               {bundleItems && (
                 <div className="mb-4">
-                  <h3 className="text-sm font-bold text-foreground mb-2">
+                  <h3 className="text-sm font-bold text-[var(--ink)] mb-2">
                     What's Included
                   </h3>
-                  <ul className="space-y-1 text-sm text-muted-foreground/80">
+                  <ul className="space-y-1 text-sm text-[var(--ink2)]">
                     {bundleItems.map(({ slug: itemSlug, qty }) => (
                       <li key={itemSlug} className="flex items-center gap-2">
-                        <span className="text-primary">&#8226;</span>
+                        <span className="text-[var(--gold)]">&#8226;</span>
                         {qty}&times; {PRODUCTS[itemSlug].name}
                         {SHOP_LIVE && (
-                          <span className="text-muted-foreground/50">
+                          <span className="text-[var(--ink3)]">
                             ({formatPrice(PRODUCTS[itemSlug].priceInCents)} each)
                           </span>
                         )}
@@ -262,18 +262,18 @@ const DocsProducts = () => {
 
               {/* Specs table */}
               {spec?.specs && spec.specs.length > 0 && (
-                <div className="overflow-x-auto rounded-xl border border-border/20">
+                <div className="overflow-x-auto rounded-xl border border-[var(--line)]">
                   <table className="w-full text-sm">
-                    <tbody className="divide-y divide-border/15">
+                    <tbody className="divide-y divide-[color:var(--line)]">
                       {spec.specs.map(([label, value]) => (
                         <tr
                           key={label}
-                          className="hover:bg-card/20 transition-colors"
+                          className="hover:bg-[var(--band)] transition-colors"
                         >
-                          <td className="p-3 font-medium text-foreground whitespace-nowrap w-40">
+                          <td className="p-3 font-medium text-[var(--ink)] whitespace-nowrap w-40">
                             {label}
                           </td>
-                          <td className="p-3 text-muted-foreground/80">
+                          <td className="p-3 text-[var(--ink2)]">
                             {value}
                           </td>
                         </tr>
@@ -290,7 +290,7 @@ const DocsProducts = () => {
                     {product.features.map((f) => (
                       <li
                         key={f}
-                        className="rounded-full bg-card/40 border border-border/20 px-3 py-1 text-xs text-muted-foreground/70"
+                        className="rounded-full bg-[var(--band)] border border-[var(--line)] px-3 py-1 text-xs text-[var(--ink2)]"
                       >
                         {f}
                       </li>

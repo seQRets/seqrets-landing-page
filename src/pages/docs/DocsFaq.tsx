@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import DocsHead from "@/components/docs/DocsHead";
-import FaqAccordion from "@/components/docs/FaqAccordion";
+import PreviewFaq from "@/components/preview/PreviewFaq";
 
 interface FaqCategory {
   heading: string;
@@ -199,16 +199,16 @@ const DocsFaq = () => {
       />
 
       <div className="mb-10">
-        <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-gradient-silver mb-4">
+        <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-[var(--ink2)] mb-4">
           FAQ
         </p>
-        <h1 className="font-display text-3xl md:text-4xl font-black text-foreground tracking-tight mb-4">
-          Frequently Asked <span className="text-gradient">Questions</span>
+        <h1 className="font-display text-3xl md:text-4xl font-black text-[var(--ink)] tracking-tight mb-4">
+          Frequently Asked <span className="text-[var(--gold)]">Questions</span>
         </h1>
-        <p className="text-muted-foreground/80">
+        <p className="text-[var(--ink2)]">
           Answers to common questions about seQRets. For a deeper security
           analysis, see the{" "}
-          <Link to="/security" className="text-primary hover:underline">
+          <Link to="/security" className="text-[var(--gold)] hover:underline">
             Security page
           </Link>
           .
@@ -218,12 +218,12 @@ const DocsFaq = () => {
       <div className="space-y-10">
         {FAQ_DATA.map((category) => (
           <section key={category.heading}>
-            <h2 className="font-display text-lg font-bold text-foreground mb-4">
+            <h2 className="font-display text-lg font-bold text-[var(--ink)] mb-4">
               {category.heading}
             </h2>
             <div className="space-y-2">
               {category.items.map(({ q, a }) => (
-                <FaqAccordion key={q} question={q} answer={a} />
+                <PreviewFaq key={q} question={q} answer={a} />
               ))}
             </div>
           </section>

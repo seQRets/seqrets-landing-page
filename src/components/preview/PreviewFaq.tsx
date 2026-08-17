@@ -4,11 +4,10 @@ import { ChevronDown } from "lucide-react";
 /* ------------------------------------------------------------------ *
  * Themed FAQ accordion.
  *
- * A palette-token twin of components/docs/FaqAccordion, which styles
- * against shadcn semantics and so cannot follow the light/dark switch.
- * That one is still used by /docs/faq; this exists rather than changing
- * it in place so the two palettes do not fight over one component.
- * Behaviour is identical — the grid-rows trick animates height without
+ * Started as a palette-token twin of components/docs/FaqAccordion, kept
+ * separate while that one still served the unrestyled /docs/faq. Now
+ * that /docs is on the palette this is the only accordion left and the
+ * shadcn version is gone. The grid-rows trick animates height without
  * measuring content.
  * ------------------------------------------------------------------ */
 

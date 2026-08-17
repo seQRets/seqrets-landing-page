@@ -20,10 +20,10 @@ const DocsSidebar = () => {
             <Link
               to={`/docs/${item.path}`}
               onClick={() => setMobileOpen(false)}
-              className={`flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-colors ${
+              className={`flex items-center gap-2.5 rounded-lg px-3 py-2 text-[14px] transition-colors ${
                 active
-                  ? "bg-primary/10 text-primary font-medium"
-                  : "text-muted-foreground/70 hover:text-foreground hover:bg-card/30"
+                  ? "bg-[var(--gold-fill)] font-medium text-[var(--gold)]"
+                  : "text-[var(--ink2)] hover:bg-[var(--sf)] hover:text-[var(--ink)]"
               }`}
             >
               <Icon className="h-4 w-4 shrink-0" />
@@ -37,22 +37,23 @@ const DocsSidebar = () => {
 
   return (
     <>
-      {/* Desktop sidebar */}
-      <aside className="hidden lg:block w-56 shrink-0 sticky top-24 self-start">
+      {/* Desktop sidebar — offset by the 72px sticky nav plus a little air */}
+      <aside className="sticky top-[88px] hidden w-56 shrink-0 self-start lg:block">
         {navContent}
       </aside>
 
       {/* Mobile dropdown */}
-      <div className="lg:hidden mb-6">
+      <div className="mb-6 lg:hidden">
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="flex items-center gap-2 rounded-lg border border-border/30 bg-card/20 px-4 py-2.5 text-sm font-medium text-foreground/80 w-full"
+          aria-expanded={mobileOpen}
+          className="flex w-full items-center gap-2 rounded-lg border border-[var(--line)] bg-[var(--sf)] px-4 py-2.5 text-[14px] font-medium text-[var(--ink)]"
         >
           <Menu className="h-4 w-4" />
           Docs Menu
         </button>
         {mobileOpen && (
-          <div className="mt-2 rounded-lg border border-border/30 bg-card/30 p-3">
+          <div className="mt-2 rounded-lg border border-[var(--line)] bg-[var(--sf)] p-3">
             {navContent}
           </div>
         )}

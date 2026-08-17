@@ -8,14 +8,17 @@ const DocsBreadcrumbs = () => {
   const current = DOCS_NAV.find((item) => item.path === segment);
 
   return (
-    <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-sm text-muted-foreground/60 mb-8">
-      <Link to="/docs" className="hover:text-foreground transition-colors">
+    <nav
+      aria-label="Breadcrumb"
+      className="mb-8 flex items-center gap-1.5 text-[13.5px] text-[var(--ink3)]"
+    >
+      <Link to="/docs" className="transition-colors hover:text-[var(--ink)]">
         Docs
       </Link>
       {current && current.path !== "" && (
         <>
           <ChevronRight className="h-3.5 w-3.5" />
-          <span className="text-foreground/80">{current.label}</span>
+          <span className="text-[var(--ink2)]">{current.label}</span>
         </>
       )}
     </nav>
