@@ -287,7 +287,7 @@ const SecurityPage = () => {
             </p>
           </div>
           <Link
-            to="/preview/shop"
+            to="/shop"
             className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-[10px] bg-[var(--gold)] px-6 py-3 font-display text-[14px] font-semibold text-[var(--gold-ink)] transition-transform hover:scale-[1.02]"
           >
             Get the app
@@ -456,7 +456,7 @@ const SecurityPage = () => {
             zeroization, and zero browser attack surface.
           </p>
           <Link
-            to="/preview/shop"
+            to="/shop"
             className="mt-7 inline-flex items-center gap-1.5 rounded-[10px] bg-[var(--gold)] px-6 py-3.5 font-display text-[14px] font-semibold text-[var(--gold-ink)] transition-transform hover:scale-[1.02]"
           >
             Get the app

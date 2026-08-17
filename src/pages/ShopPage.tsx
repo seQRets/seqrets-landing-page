@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Head } from "vite-react-ssg";
 import { motion } from "framer-motion";
 import {
   Monitor,
@@ -25,6 +24,7 @@ import {
   type ProductSlug,
 } from "@/lib/stripe";
 import { joinWaitlist } from "@/lib/waitlist";
+import PageHead from "@/components/PageHead";
 import {
   THEMES_APP,
   rise,
@@ -39,10 +39,17 @@ import appLight from "@/assets/app-light.webp";
 import qards from "@/assets/qr-qards.webp";
 
 /* ------------------------------------------------------------------ *
- * DESIGN PREVIEW — /preview/shop
+ * /shop — the storefront, rebuilt in the new visual language.
  *
- * The existing storefront, rebuilt in the new visual language. Same nine
- * products, same SHOP_LIVE gating; only the presentation changes.
+ * Same nine products and the same SHOP_LIVE gating as the page it
+ * replaces; only the presentation changed. It predates PreviewPage and
+ * still wires the theme up itself, as the landing page does, because its
+ * nav is in-page anchors rather than the interior route list.
+ *
+ * pages/Shop.tsx is the version this supersedes. Nothing routes to it
+ * any more, but it is the reference for the cart, product modal and
+ * Stripe checkout wiring that has to come back when SHOP_LIVE flips —
+ * all of which is unreachable while the shop is not selling.
  * ------------------------------------------------------------------ */
 
 const ICONS: Record<ProductSlug, LucideIcon> = {
@@ -194,7 +201,7 @@ const AccessoryCard = ({ product }: { product: ProductInfo }) => {
 };
 
 /* ── Page ───────────────────────────────────────────────────────── */
-const PreviewShop = () => {
+const ShopPage = () => {
   const [mode, setMode] = useState<PreviewMode>("dark");
   const [email, setEmail] = useState("");
   const [interest, setInterest] = useState("any");
@@ -229,21 +236,30 @@ const PreviewShop = () => {
 
   return (
     <>
-      <Head>
-        <title>Shop — Design Preview | seQRets</title>
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
+      <PageHead
+        title="Shop"
+        description="Hardware, software, and kits to protect your crypto secrets. Smart cards, USB readers, bundles, and the seQRets Desktop App."
+        path="/shop"
+      />
 
       <div
         style={vars}
         className="min-h-screen bg-[var(--pg)] font-body text-[var(--ink)] antialiased transition-colors duration-300"
       >
+        {/*
+          Anchors rather than the interior route list, as on the landing
+          page — but the same secondary link and accent CTA as every
+          other page, so the nav does not change shape here.
+        */}
         <PreviewNav
           links={[
             ["Bundles", "#bundles"],
             ["Individual items", "#items"],
             ["Back to Home", "/"],
           ]}
+          secondary={["Docs", "/docs"]}
+          cta={{ label: "Open the app", href: "https://app.seqrets.app" }}
+          ctaStyle="accent"
         />
 
         <main>
@@ -438,4 +454,4 @@ const PreviewShop = () => {
   );
 };
 
-export default PreviewShop;
+export default ShopPage;

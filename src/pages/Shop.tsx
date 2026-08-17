@@ -34,6 +34,18 @@ import { PreviewFooter } from "@/components/preview/PreviewChrome";
 import ProductModal from "@/components/shop/ProductModal";
 import type { LucideIcon } from "lucide-react";
 
+/* ------------------------------------------------------------------ *
+ * The pre-redesign storefront. NOTHING ROUTES HERE — pages/ShopPage.tsx
+ * serves /shop.
+ *
+ * Kept because it is the only place the commerce path is wired up: the
+ * cart (useCart / CartDrawer / CartIcon), the product detail modal, and
+ * the buy buttons that call it. All of that sits behind SHOP_LIVE, which
+ * is false, so none of it is reachable today — but it has to be ported
+ * onto ShopPage when the shop starts selling and prices come back into
+ * lib/stripe.ts. Delete this file once that port is done.
+ * ------------------------------------------------------------------ */
+
 const slugIconMap: Record<ProductSlug, LucideIcon> = {
   "desktop-app": Monitor,
   "backup-bundle": Shield,

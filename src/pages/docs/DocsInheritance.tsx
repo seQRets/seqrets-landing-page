@@ -235,7 +235,7 @@ const DocsInheritance = () => {
           cards, reader, envelopes, fireproof case, and the printed guide.
         </p>
         <Link
-          to="/preview/shop"
+          to="/shop"
           className="inline-flex items-center gap-2 rounded-[10px] bg-[var(--gold)] px-7 py-3 font-display text-sm font-semibold text-[var(--gold-ink)] transition-transform hover:scale-[1.02]"
         >
           Browse the Shop &rarr;

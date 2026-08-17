@@ -70,10 +70,12 @@ const routes: RouteRecord[] = [
       { path: "recover", lazy: lazy(() => import("./pages/RecoverPage")) },
 
       // ── Redesign (this branch only) ───────────────────────
-      // "/" above serves the new landing page. These two are kept so
-      // previously shared preview links keep resolving.
+      // "/" above serves the new landing page and "shop" below serves the
+      // new storefront. These two are kept so previously shared preview
+      // links keep resolving; the shop one redirects rather than serving
+      // the storefront a second time.
       { path: "preview/b", lazy: lazy(() => import("./pages/PreviewLandingB")) },
-      { path: "preview/shop", lazy: lazy(() => import("./pages/PreviewShop")) },
+      { path: "preview/shop", lazy: lazy(() => import("./pages/PreviewShopRedirect")) },
 
       // ── Blog ───────────────────────────────────────────
       { path: "blog", lazy: lazy(() => import("./pages/BlogPage")) },
@@ -98,7 +100,10 @@ const routes: RouteRecord[] = [
       },
 
       // ── Shop / Checkout (client-only, not prerendered) ─
-      { path: "shop", lazy: lazy(() => import("./pages/Shop")) },
+      // pages/Shop.tsx is the pre-redesign storefront. It is no longer
+      // routed, but keeps the cart, product modal and checkout wiring
+      // that has to be ported back when SHOP_LIVE flips.
+      { path: "shop", lazy: lazy(() => import("./pages/ShopPage")) },
       { path: "checkout/success", lazy: lazy(() => import("./pages/CheckoutSuccess")) },
       { path: "checkout/cancel", lazy: lazy(() => import("./pages/CheckoutCancel")) },
 

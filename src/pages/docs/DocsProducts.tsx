@@ -177,7 +177,7 @@ const DocsProducts = () => {
         </h1>
         <p className="text-[var(--ink2)]">
           Technical specifications for all seQRets products.{" "}
-          <Link to="/preview/shop" className="text-[var(--gold)] hover:underline">
+          <Link to="/shop" className="text-[var(--gold)] hover:underline">
             Visit the shop
           </Link>{" "}
           to purchase.

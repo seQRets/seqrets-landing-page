@@ -147,7 +147,7 @@ const DocsHub = () => {
           {[
             { to: "/security", label: "Security Deep Dive", desc: "Threat model, FAQ, seed phrase analysis" },
             { to: "/how-it-works", label: "How It Works", desc: "Visual walkthrough with screenshots" },
-            { to: "/preview/shop", label: "Shop", desc: "Hardware bundles and accessories" },
+            { to: "/shop", label: "Shop", desc: "Hardware bundles and accessories" },
           ].map(({ to, label, desc }) => (
             <Link
               key={to}

@@ -243,7 +243,7 @@ export const PreviewFooter = ({ mode }: { mode?: PreviewMode }) => (
           */
           { h: "Learn", links: [["A closer look", "/how-it-works"], ["Features", "/features"], ["Security", "/security"], ["Blog", "/blog"]] },
           { h: "Docs", links: [["Documentation", "/docs"], ["FAQ", "/docs/faq"], ["Threat model", "/docs/threat-model"], ["Recovery tool", "/recover"]] },
-          { h: "More", links: [["Shop", "/preview/shop"], ["Contact", "/contact"], ["PGP key", "/pgp"], ["Privacy", "/privacy"], ["Terms", "/terms"]] },
+          { h: "More", links: [["Shop", "/shop"], ["Contact", "/contact"], ["PGP key", "/pgp"], ["Privacy", "/privacy"], ["Terms", "/terms"]] },
         ].map((col) => (
           <div key={col.h}>
             <p className="font-display text-[13px] font-bold uppercase tracking-[0.14em] text-[var(--ink3)]">
@@ -321,7 +321,7 @@ export const ThemeToggle = ({
 export const INTERIOR_NAV: [string, string][] = [
   ["How it works", "/how-it-works"],
   ["Security", "/security"],
-  ["Shop", "/preview/shop"],
+  ["Shop", "/shop"],
 ];
 
 /**

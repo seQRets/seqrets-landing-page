@@ -306,7 +306,7 @@ const HowItWorksPage = () => {
             kits — is what turns a backup into something physical.
           </p>
           <Link
-            to="/preview/shop"
+            to="/shop"
             className="mt-7 inline-flex items-center gap-1.5 rounded-[10px] bg-[var(--gold)] px-6 py-3.5 font-display text-[14px] font-semibold text-[var(--gold-ink)] transition-transform hover:scale-[1.02]"
           >
             Browse the shop

@@ -318,7 +318,7 @@ const FeaturesPage = () => {
                 <p className="mt-3 border-t border-[var(--line)] pt-3 text-[12px] italic text-[var(--ink3)]">
                   Requires Desktop — see the{" "}
                   <Link
-                    to="/preview/shop"
+                    to="/shop"
                     className="font-semibold not-italic text-[var(--gold)] underline underline-offset-2"
                   >
                     Shop
