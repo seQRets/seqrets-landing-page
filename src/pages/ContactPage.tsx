@@ -1,175 +1,296 @@
 import { useEffect } from "react";
-
-import { Mail, Lock, ShieldAlert, Scale, Github, MessageSquare, Youtube, Building2 } from "lucide-react";
 import { Link } from "react-router-dom";
-import Navbar from "@/components/landing/Navbar";
-import { PreviewFooter } from "@/components/preview/PreviewChrome";
+import { motion } from "framer-motion";
+import {
+  Mail,
+  Lock,
+  ShieldAlert,
+  Scale,
+  Github,
+  MessageSquare,
+  Youtube,
+  Building2,
+  ArrowUpRight,
+} from "lucide-react";
 import PageHead from "@/components/PageHead";
+import { PreviewPage, rise } from "@/components/preview/PreviewChrome";
+
+/* ------------------------------------------------------------------ *
+ * /contact — fifth interior page moved onto the redesign.
+ *
+ * Chrome and theming come from PreviewPage; this file is content only.
+ *
+ * The security-disclosure card used to be red, via the shadcn
+ * `destructive` token. The redesign palette has no such colour, and
+ * inventing a theme-aware one for a single card is not worth it — so the
+ * two cards that were emphasised before (security, encrypted comms) keep
+ * their emphasis another way: a solid 2px gold border on the same surface
+ * as the plain cards. A translucent gold fill was tried first and read as
+ * a muddy brown box with no weight — on this palette the accent carries
+ * far better as a hard edge than as a wash.
+ *
+ * Two Tailwind traps to avoid, both silent: an arbitrary box-shadow
+ * wrapping a CSS var parses as a shadow COLOUR and computes to none, and
+ * an opacity modifier on a var() colour computes to transparent.
+ * ------------------------------------------------------------------ */
+
+const CHANNELS = [
+  {
+    icon: Github,
+    label: "Report a bug or request a feature:",
+    linkText: "GitHub Issues",
+    href: "https://github.com/seQRets/seQRets-app/issues",
+  },
+  {
+    icon: MessageSquare,
+    label: "Ask a question or join the discussion:",
+    linkText: "GitHub Discussions",
+    href: "https://github.com/seQRets/seQRets-app/discussions",
+  },
+  {
+    icon: Youtube,
+    label: "Watch tutorials and updates:",
+    linkText: "YouTube",
+    href: "https://www.youtube.com/@SVRNMoney",
+  },
+];
 
 const ContactPage = () => {
-  useEffect(() => { window.scrollTo(0, 0); }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-background">
+    <PreviewPage>
       <PageHead
         title="Contact"
         description="How to reach seQRets — general questions, security disclosures, licensing, and encrypted communication. A product of Toothjockey LLC."
         path="/contact"
       />
-      <Navbar />
-      <main className="container mx-auto px-4 md:px-8 py-24 max-w-4xl">
 
-        {/* Header */}
-        <div className="mb-16 text-center">
-          <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground/70 mb-5">
-            Get in Touch
+      {/* ── Hero ────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden px-6 pb-14 pt-16 md:pt-24">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute right-0 top-0 h-[420px] w-[46%] opacity-[.55]"
+          style={{ background: "radial-gradient(60% 55% at 70% 30%, var(--goldsoft), transparent)" }}
+        />
+        <motion.div
+          initial={{ opacity: 0, y: 26 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+          className="relative mx-auto max-w-3xl text-center"
+        >
+          <p className="font-display text-[12px] font-bold uppercase tracking-[0.16em] text-[var(--gold)]">
+            Get in touch
           </p>
-          <h1 className="font-display text-4xl font-black md:text-6xl text-foreground tracking-tight mb-6">
-            Contact <span className="text-gradient">seQRets</span>
+          <h1 className="mt-4 font-display text-[38px] font-bold leading-[1.1] tracking-[-0.035em] sm:text-[46px] md:text-[54px]">
+            Pick the channel that fits.
           </h1>
-          <p className="text-lg text-muted-foreground/80 max-w-2xl mx-auto">
-            One page for every way to reach us. Pick the channel that fits what you need.
+          <p className="mx-auto mt-6 max-w-xl text-[15.5px] leading-[1.7] text-[var(--ink2)]">
+            One page for every way to reach us — general questions, security
+            disclosures, licensing, and encrypted mail.
           </p>
-        </div>
+        </motion.div>
+      </section>
 
-        {/* Primary contact cards */}
-        <div className="grid gap-4 md:grid-cols-2 mb-12">
-
+      {/* ── Primary contact cards ───────────────────────────── */}
+      <section className="px-6 pb-14">
+        <div className="mx-auto grid max-w-4xl gap-4 md:grid-cols-2">
           {/* General */}
-          <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
-            <div className="inline-flex rounded-xl bg-primary/10 p-3 mb-4">
-              <Mail className="h-5 w-5 text-primary" />
-            </div>
-            <h2 className="font-display text-lg font-bold text-foreground mb-2">General Questions</h2>
-            <p className="text-sm text-muted-foreground/80 mb-3">
-              Questions about the product, the website, partnerships, press, or anything not covered below.
+          <motion.div
+            {...rise}
+            className="rounded-[22px] border border-[var(--line)] bg-[var(--sf)] p-6"
+          >
+            <span className="inline-flex rounded-[12px] bg-[var(--gold-fill)] p-3">
+              <Mail className="h-5 w-5 text-[var(--gold)]" strokeWidth={1.8} />
+            </span>
+            <h2 className="mt-4 font-display text-[17px] font-bold">General questions</h2>
+            <p className="mt-2 text-[14px] leading-[1.7] text-[var(--ink2)]">
+              Questions about the product, the website, partnerships, press, or
+              anything not covered below.
             </p>
-            <a href="mailto:hello@seqrets.app" className="text-sm font-medium text-primary hover:underline">
+            <a
+              href="mailto:hello@seqrets.app"
+              className="mt-3 inline-block font-semibold text-[14px] text-[var(--gold)] underline underline-offset-2 transition-opacity hover:opacity-80"
+            >
               hello@seqrets.app
             </a>
-          </div>
+          </motion.div>
 
-          {/* Security */}
-          <div className="rounded-2xl border border-destructive/20 bg-destructive/5 p-6">
-            <div className="inline-flex rounded-xl bg-destructive/10 p-3 mb-4">
-              <ShieldAlert className="h-5 w-5 text-destructive" />
-            </div>
-            <h2 className="font-display text-lg font-bold text-foreground mb-2">Security Disclosures</h2>
-            <p className="text-sm text-muted-foreground/80 mb-3">
-              Found a vulnerability? Report it here. For sensitive reports, please encrypt your message
-              with our PGP key first (see below).
+          {/* Security disclosures — emphasised */}
+          <motion.div
+            {...rise}
+            transition={{ ...rise.transition, delay: 0.06 }}
+            className="rounded-[22px] border-2 border-[var(--gold)] bg-[var(--sf)] p-6"
+          >
+            <span className="inline-flex rounded-[12px] bg-[var(--gold-fill)] p-3">
+              <ShieldAlert className="h-5 w-5 text-[var(--gold)]" strokeWidth={1.8} />
+            </span>
+            <h2 className="mt-4 font-display text-[17px] font-bold">Security disclosures</h2>
+            <p className="mt-2 text-[14px] leading-[1.7] text-[var(--ink2)]">
+              Found a vulnerability? Report it here. For sensitive reports,
+              please encrypt your message with our PGP key first (see below).
             </p>
-            <a href="mailto:security@seqrets.app" className="text-sm font-medium text-primary hover:underline">
+            <a
+              href="mailto:security@seqrets.app"
+              className="mt-3 inline-block font-semibold text-[14px] text-[var(--gold)] underline underline-offset-2 transition-opacity hover:opacity-80"
+            >
               security@seqrets.app
             </a>
-          </div>
+          </motion.div>
 
-          {/* Licensing */}
-          <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
-            <div className="inline-flex rounded-xl bg-primary/10 p-3 mb-4">
-              <Scale className="h-5 w-5 text-primary" />
-            </div>
-            <h2 className="font-display text-lg font-bold text-foreground mb-2">Commercial Licensing</h2>
-            <p className="text-sm text-muted-foreground/80 mb-3">
-              seQRets is open source under AGPL-3.0-or-later. For proprietary or enterprise use where
-              AGPL obligations aren't feasible, get a commercial license.
+          {/* Commercial licensing */}
+          <motion.div
+            {...rise}
+            transition={{ ...rise.transition, delay: 0.12 }}
+            className="rounded-[22px] border border-[var(--line)] bg-[var(--sf)] p-6"
+          >
+            <span className="inline-flex rounded-[12px] bg-[var(--gold-fill)] p-3">
+              <Scale className="h-5 w-5 text-[var(--gold)]" strokeWidth={1.8} />
+            </span>
+            <h2 className="mt-4 font-display text-[17px] font-bold">Commercial licensing</h2>
+            <p className="mt-2 text-[14px] leading-[1.7] text-[var(--ink2)]">
+              seQRets is open source under AGPL-3.0-or-later. For proprietary or
+              enterprise use where AGPL obligations aren&rsquo;t feasible, get a
+              commercial license.
             </p>
-            <a href="mailto:licensing@seqrets.app" className="text-sm font-medium text-primary hover:underline">
+            <a
+              href="mailto:licensing@seqrets.app"
+              className="mt-3 inline-block font-semibold text-[14px] text-[var(--gold)] underline underline-offset-2 transition-opacity hover:opacity-80"
+            >
               licensing@seqrets.app
             </a>
-          </div>
+          </motion.div>
 
-          {/* Encrypted / PGP */}
-          <div className="rounded-2xl border border-primary/20 bg-primary/5 p-6">
-            <div className="inline-flex rounded-xl bg-primary/10 p-3 mb-4">
-              <Lock className="h-5 w-5 text-primary" />
-            </div>
-            <h2 className="font-display text-lg font-bold text-foreground mb-2">Encrypted Communication</h2>
-            <p className="text-sm text-muted-foreground/80 mb-3">
-              For anything sensitive, send us an end-to-end encrypted message. Our PGP public key, fingerprint,
-              and step-by-step instructions live on a dedicated page.
+          {/* Encrypted communication — emphasised */}
+          <motion.div
+            {...rise}
+            transition={{ ...rise.transition, delay: 0.18 }}
+            className="rounded-[22px] border-2 border-[var(--gold)] bg-[var(--sf)] p-6"
+          >
+            <span className="inline-flex rounded-[12px] bg-[var(--gold-fill)] p-3">
+              <Lock className="h-5 w-5 text-[var(--gold)]" strokeWidth={1.8} />
+            </span>
+            <h2 className="mt-4 font-display text-[17px] font-bold">Encrypted communication</h2>
+            <p className="mt-2 text-[14px] leading-[1.7] text-[var(--ink2)]">
+              For anything sensitive, send us an end-to-end encrypted message
+              using Proton Mail or our PGP public key. Follow the link below for
+              step-by-step instructions.
             </p>
-            <div className="flex flex-col gap-1.5">
-              <Link to="/pgp" className="text-sm font-medium text-primary hover:underline">
-                View our PGP key & instructions →
-              </Link>
-              <a href="mailto:seqrets@proton.me" className="text-xs text-muted-foreground/70 hover:text-foreground transition-colors">
-                seqrets@proton.me
-              </a>
-            </div>
-          </div>
-
+            {/*
+              The proton address used to sit here too. It is spelled out on
+              /pgp — in the mailto, the gpg --recipient commands, and the
+              Proton-to-Proton note — so repeating it here only raised the
+              question of which address to use.
+            */}
+            <Link
+              to="/pgp"
+              className="mt-3 inline-flex items-center gap-1.5 font-semibold text-[14px] text-[var(--gold)] underline underline-offset-2 transition-opacity hover:opacity-80"
+            >
+              View our PGP key &amp; instructions
+              <ArrowUpRight className="h-3.5 w-3.5" />
+            </Link>
+          </motion.div>
         </div>
+      </section>
 
-        {/* Community & channels */}
-        <section className="mb-12">
-          <h2 className="font-display text-2xl font-bold text-foreground mb-6 text-center">
-            Community &amp; Other Channels
-          </h2>
-          <div className="rounded-2xl border border-border/30 bg-card/20 p-6">
-            <ul className="space-y-4 text-sm text-muted-foreground/80">
-              <li className="flex items-start gap-3">
-                <Github className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                <span>
-                  <strong className="text-foreground">Report a bug or request a feature:</strong>{" "}
-                  <a href="https://github.com/seQRets/seQRets-app/issues" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                    GitHub Issues
+      {/* ── Community & other channels ──────────────────────── */}
+      <section className="px-6 pb-14">
+        <div className="mx-auto max-w-4xl">
+          <motion.h2
+            {...rise}
+            className="text-center font-display text-[27px] font-bold leading-[1.2] tracking-[-0.03em] md:text-[32px]"
+          >
+            Community &amp; other channels
+          </motion.h2>
+
+          <motion.ul
+            {...rise}
+            className="mt-8 space-y-4 rounded-[22px] border border-[var(--line)] bg-[var(--sf)] p-7"
+          >
+            {CHANNELS.map((c) => (
+              <li key={c.href} className="flex items-start gap-3.5">
+                <c.icon
+                  className="mt-0.5 h-5 w-5 shrink-0 text-[var(--gold)]"
+                  strokeWidth={1.8}
+                />
+                <span className="text-[14.5px] leading-[1.65] text-[var(--ink2)]">
+                  <strong className="font-semibold text-[var(--ink)]">{c.label}</strong>{" "}
+                  <a
+                    href={c.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-[var(--gold)] underline underline-offset-2 transition-opacity hover:opacity-80"
+                  >
+                    {c.linkText}
                   </a>
                 </span>
               </li>
-              <li className="flex items-start gap-3">
-                <MessageSquare className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                <span>
-                  <strong className="text-foreground">Ask a question or join the discussion:</strong>{" "}
-                  <a href="https://github.com/seQRets/seQRets-app/discussions" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                    GitHub Discussions
-                  </a>
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <Youtube className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                <span>
-                  <strong className="text-foreground">Watch tutorials and updates:</strong>{" "}
-                  <a href="https://www.youtube.com/@SVRNMoney" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                    YouTube
-                  </a>
-                </span>
-              </li>
-            </ul>
+            ))}
+          </motion.ul>
+        </div>
+      </section>
+
+      {/* ── Legal entity & notices ──────────────────────────── */}
+      <section className="px-6 pb-24">
+        <motion.div
+          {...rise}
+          className="mx-auto flex max-w-4xl items-start gap-5 rounded-[22px] border border-[var(--line)] bg-[var(--sf)] p-8"
+        >
+          <span className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-[12px] bg-[var(--gold-fill)] sm:flex">
+            <Building2 className="h-6 w-6 text-[var(--gold)]" strokeWidth={1.8} />
+          </span>
+          <div>
+            <h2 className="font-display text-[19px] font-bold">
+              Legal entity &amp; notices
+            </h2>
+            <p className="mt-2.5 text-[14.5px] leading-[1.7] text-[var(--ink2)]">
+              seQRets is a product of{" "}
+              <strong className="font-semibold text-[var(--ink)]">Toothjockey LLC</strong>,
+              a limited liability company organized in North Dakota, USA. For
+              legal notices, or questions about our{" "}
+              <Link
+                to="/terms"
+                className="font-semibold text-[var(--gold)] underline underline-offset-2 transition-opacity hover:opacity-80"
+              >
+                Terms of Service
+              </Link>{" "}
+              or{" "}
+              <Link
+                to="/privacy"
+                className="font-semibold text-[var(--gold)] underline underline-offset-2 transition-opacity hover:opacity-80"
+              >
+                Privacy Policy
+              </Link>
+              , email{" "}
+              <a
+                href="mailto:hello@seqrets.app"
+                className="font-semibold text-[var(--gold)] underline underline-offset-2 transition-opacity hover:opacity-80"
+              >
+                hello@seqrets.app
+              </a>
+              .
+            </p>
+            <p className="mt-4 text-[14.5px] leading-[1.7] text-[var(--ink2)]">
+              <strong className="font-semibold text-[var(--ink)]">
+                Mailing address &amp; registered agent
+              </strong>{" "}
+              (for formal notices and service of process):
+            </p>
+            <address className="mt-1.5 text-[14.5px] not-italic leading-[1.7] text-[var(--ink2)]">
+              Toothjockey LLC
+              <br />
+              3003 32nd Ave S, Ste 240
+              <br />
+              Fargo, ND 58103
+              <br />
+              USA
+            </address>
           </div>
-        </section>
-
-        {/* Legal entity / notices */}
-        <section>
-          <div className="rounded-2xl border border-border/40 bg-card/30 p-8 flex items-start gap-6">
-            <div className="rounded-xl bg-primary/10 p-3 shrink-0">
-              <Building2 className="h-6 w-6 text-primary" />
-            </div>
-            <div>
-              <h2 className="font-display text-xl font-bold text-foreground mb-2">Legal Entity &amp; Notices</h2>
-              <p className="text-sm text-muted-foreground/80 mb-3">
-                seQRets is a product of <strong className="text-foreground">Toothjockey LLC</strong>, a limited liability
-                company organized in North Dakota, USA. For legal notices, or questions about our{" "}
-                <Link to="/terms" className="text-primary hover:underline">Terms of Service</Link> or{" "}
-                <Link to="/privacy" className="text-primary hover:underline">Privacy Policy</Link>, email{" "}
-                <a href="mailto:hello@seqrets.app" className="text-primary hover:underline">hello@seqrets.app</a>.
-              </p>
-              <p className="text-sm text-muted-foreground/80">
-                <strong className="text-foreground">Mailing address &amp; registered agent</strong> (for formal notices and service of process):
-              </p>
-              <address className="mt-1 not-italic text-sm text-muted-foreground/80 leading-relaxed">
-                Toothjockey LLC<br />
-                3003 32nd Ave S, Ste 240<br />
-                Fargo, ND 58103<br />
-                USA
-              </address>
-            </div>
-          </div>
-        </section>
-
-      </main>
-      <PreviewFooter mode="dark" />
-    </div>
+        </motion.div>
+      </section>
+    </PreviewPage>
   );
 };
 
