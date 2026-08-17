@@ -242,7 +242,7 @@ const PreviewShop = () => {
           links={[
             ["Bundles", "#bundles"],
             ["Individual items", "#items"],
-            ["Back to landing", "/"],
+            ["Back to Home", "/"],
           ]}
         />
 
