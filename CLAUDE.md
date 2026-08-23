@@ -17,6 +17,7 @@ npm run preview      # Preview production build locally
 npm run lint         # ESLint
 npm run test         # Vitest (single run; --passWithNoTests, no test files yet)
 npm run test:watch   # Vitest in watch mode
+npm run blog:sync-llms  # Sync the newest blog post into llms.txt + llms-full.txt (see "Adding a Blog Post")
 ```
 
 `npm run build` is `vite-react-ssg build && node scripts/inject-csp-hashes.mjs`. The post-build script walks every emitted HTML file, hashes any inline `<script>` blocks, and rewrites the CSP `<meta>` tag in each page so the strict CSP doesn't block them.
@@ -45,6 +46,7 @@ npm run test:watch   # Vitest in watch mode
 - `src/lib/` — Utilities: `stripe.ts` (product catalog + checkout), `blog.ts` (blog posts as inline data), `waitlist.ts`, `utils.ts`
 - `src/contexts/CartContext.tsx` — Cart state (useReducer + localStorage persistence)
 - `scripts/inject-csp-hashes.mjs` — Post-build script that hashes inline `<script>` blocks and updates the CSP meta tag in every emitted HTML file
+- `scripts/sync-llms-blog.mjs` — Syncs the newest `BLOG_POSTS` entry into `public/llms.txt` and `public/llms-full.txt`; run via `npm run blog:sync-llms`. Gates on post-count parity across the three files.
 - `workers/` — Cloudflare Workers: `create-checkout` (Stripe Checkout sessions) and `waitlist` (email capture). Each has its own `wrangler.toml`.
 - `public/llms.txt` and `public/llms-full.txt` — LLM-facing canonical documentation (kept in sync with the seQRets app feature set)
 
@@ -62,7 +64,17 @@ All products/pricing are defined inline in `src/lib/stripe.ts` as the `PRODUCTS`
 
 ### Adding a Blog Post
 
-A blog post lives in **three** places that must stay in sync. Editing only `blog.ts` leaves the LLM-facing indexes stale (the post becomes invisible to `llms.txt`/`llms-full.txt` consumers). Do all of these in **one commit**:
+A blog post lives in **three** places that must stay in sync. Editing only `blog.ts` leaves the LLM-facing indexes stale (the post becomes invisible to `llms.txt`/`llms-full.txt` consumers). Do all of these in **one commit**.
+
+**Write the post into `src/lib/blog.ts`, then run the sync script — do not hand-edit the LLMS files:**
+
+```bash
+npm run blog:sync-llms
+```
+
+It reads the newest post from `BLOG_POSTS`, prepends the link line to both LLMS files (copying the title from source, so it can't be mistyped), advances the `**Last updated:**` stamps, and fails with a non-zero exit if the three files disagree. It is idempotent, so re-running is safe. Use `npm run blog:sync-llms -- --check` to verify without writing.
+
+The manual equivalent, if you ever need it:
 
 1. **`src/lib/blog.ts`** — add the post object as the **first** element of `BLOG_POSTS` (newest-first). Fields: `slug`, `title`, `date` (`"YYYY-MM-DD"`), `category` (`"crypto" | "smart" | "inherit" | "ai"`), `excerpt`, `readTime` (integer minutes), `content` (template literal; paragraphs separated by blank lines).
 2. **`public/llms.txt`** — under `## Blog`, add `- [<TITLE>](https://seqrets.app/blog/<SLUG>)` immediately **after** the `- [Blog Index](https://seqrets.app/blog)` line (new top post).
@@ -74,7 +86,7 @@ Rules:
 - Only prepend the new entry — never reorder or edit existing ones.
 
 Verify before committing:
-- The count of `slug:` entries in `blog.ts` equals the number of `](https://seqrets.app/blog/` links under the blog section in **each** of `llms.txt` and `llms-full.txt` (all three equal).
+- `npm run blog:sync-llms -- --check` exits 0 (post counts equal across all three files).
 - `npx tsc --noEmit` passes.
 
 ### SEO / Meta

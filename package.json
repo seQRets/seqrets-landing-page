@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vite-react-ssg build && node scripts/inject-csp-hashes.mjs",
     "build:dev": "vite build --mode development",
+    "blog:sync-llms": "node scripts/sync-llms-blog.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run --passWithNoTests",
