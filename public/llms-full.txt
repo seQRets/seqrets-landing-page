@@ -2,7 +2,7 @@
 
 > seQRets is an open-source, zero-knowledge cryptographic tool for securing, splitting, and sharing secrets (crypto seed phrases, private keys, passwords) using Shamir's Secret Sharing and XChaCha20-Poly1305 encryption. Secrets are encoded as printable QR codes called Qards. Runs entirely offline — no servers, accounts, or telemetry. Licensed under AGPLv3. A product of Toothjockey LLC (North Dakota, USA).
 
-**Last updated:** August 15, 2026
+**Last updated:** August 23, 2026
 
 - Source Code: https://github.com/seQRets/seQRets-app
 - Web App (free): https://app.seqrets.app
@@ -698,6 +698,7 @@ echo "Your message" | gpg --encrypt --armor --recipient seqrets@proton.me
 
 ## Blog Posts
 
+- [Three Weeks After 1,778 Bitcoin Vanished From Hardware Wallets, the Third-Largest Custodian on Earth Announced It Will Hold Your Keys For You. Read the Part About Insurance Before You Say Yes.](https://seqrets.app/blog/citi-custody-plus-bank-bitcoin-custody-wave-2026)
 - [210,000 Bitcoin Just Moved Without Changing Owners. The Largest Re-Keying Event in Bitcoin's History Is Happening Right Now — Under Deadline, in Fear, and Mostly Onto Paper.](https://seqrets.app/blog/great-rekeying-210000-btc-custody-migration-2026)
 - [The Most Trusted Bitcoin Wallet Was Guessing Its Own Keys for Five Years. 1,778 BTC Later, the Only Setups Still Standing Are the Ones That Never Trusted One Device.](https://seqrets.app/blog/coldcard-rng-flaw-single-sig-swept-multisig-held-2026)
 - [The Wallet Did the Stealing. SecondFi Shut Down Forever This Week Because Every Signature Its Users Ever Made Handed Their Private Key to Anyone Reading the Blockchain.](https://seqrets.app/blog/secondfi-nonce-flaw-every-signature-leaked-the-key-2026)
