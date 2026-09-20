@@ -1,6 +1,14 @@
 import { useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Head } from "vite-react-ssg";
+import { PreviewPage } from "@/components/preview/PreviewChrome";
+
+/* ------------------------------------------------------------------ *
+ * /checkout/cancel — the Stripe return page for an abandoned session.
+ *
+ * Same shape as its success twin, and noindex for the same reason.
+ * ------------------------------------------------------------------ */
 
 export default function CheckoutCancel() {
   useEffect(() => {
@@ -8,32 +16,42 @@ export default function CheckoutCancel() {
   }, []);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="mx-auto max-w-md text-center">
-        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-          <ArrowLeft className="h-8 w-8 text-primary" />
+    <PreviewPage>
+      <Head>
+        <title>Checkout cancelled | seQRets</title>
+        <meta name="robots" content="noindex" />
+      </Head>
+
+      <section className="flex min-h-[68vh] items-center justify-center px-6 py-20">
+        <div className="mx-auto max-w-md text-center">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[var(--gold-fill)]">
+            <ArrowLeft className="h-8 w-8 text-[var(--gold)]" />
+          </div>
+
+          <h1 className="mt-6 font-display text-[30px] font-bold tracking-[-0.03em] md:text-[36px]">
+            Checkout cancelled
+          </h1>
+
+          <p className="mt-4 text-[15.5px] leading-[1.7] text-[var(--ink2)]">
+            Your cart is still saved. Come back when you&rsquo;re ready.
+          </p>
+
+          <div className="mt-9 flex flex-col items-center gap-4">
+            <Link
+              to="/shop"
+              className="inline-flex items-center rounded-[10px] bg-[var(--gold)] px-6 py-3.5 font-display text-[14px] font-semibold text-[var(--gold-ink)] transition-transform hover:scale-[1.02]"
+            >
+              Return to the shop
+            </Link>
+            <Link
+              to="/"
+              className="text-[14px] text-[var(--ink3)] transition-colors hover:text-[var(--ink)]"
+            >
+              Go home
+            </Link>
+          </div>
         </div>
-        <h1 className="font-display text-3xl font-bold text-foreground mb-3">
-          Checkout Cancelled
-        </h1>
-        <p className="text-muted-foreground mb-8 leading-relaxed">
-          Your cart is still saved. Come back when you're ready.
-        </p>
-        <div className="flex flex-col items-center gap-3">
-          <Link
-            to="/shop"
-            className="inline-flex items-center rounded-md bg-primary px-6 py-3 font-display text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
-          >
-            Return to Shop
-          </Link>
-          <Link
-            to="/"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Go Home
-          </Link>
-        </div>
-      </div>
-    </div>
+      </section>
+    </PreviewPage>
   );
 }
